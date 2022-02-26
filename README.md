@@ -10,7 +10,7 @@ Currently, the project isn't available right now, because i'm still working on i
 There is some specifics things to know about Orchid :
 
 - Based on Gentoo and 100% compatible.
-- For advanced users, even if the installation will be easier than Gentoo himself.
+- For advanced users, even if the installation will be easier than Gentoo itself.
 - Use my specific mirror, with auto import from Gentoo tree every 4 hours.
 - No-gui installation, I wanted to keep staged install process.
 - All Gentoo packages is available.
