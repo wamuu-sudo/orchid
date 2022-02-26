@@ -21,4 +21,7 @@ There is some specifics things to know about Orchid :
 - No systemd, no flatpak and no snap.
 - Compiling powered.
 
+![OrchidNeofetch](img/Screenshot_20220226_171132.png)
+
+
 Stages and installation guide will be availaible soon.
