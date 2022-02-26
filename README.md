@@ -10,7 +10,7 @@ Currently, the project isn't available right now, because i'm still working on i
 There is some specifics things to know about Orchid :
 
 - We not define as an OS, for now, it will be an enhanced stage 3 with profile plasma. 
-  A script is needed to finish and apply tweaks, setup kernel and installations of X11, KDE and optionnal others besause it can't be included in stage3 (for moment)
+  A script is needed to finish and apply tweaks, setup kernel and installations of X11, KDE and optionnal others besause it can't be included in stage3 (for moment).
   So basically, it's a Gentoo transformation.
 - Based on Gentoo and 100% compatible.
 - For advanced users, even if the installation will be easier and shorter than Gentoo itself.
