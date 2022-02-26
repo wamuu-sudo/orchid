@@ -2,7 +2,7 @@
 
 Orchid is a modern and cute Gentoo-based OS for desktop, laptop and flowers.
 
-![Orchid Logo](img/ORCHID.png)
+![Orchid Logo](img/ORCHID_LOGO.png)
 
 The philosophy behind this project is to purpose an advanced Gentoo pure system, personnalized by me with some tweaks and flowers.
 Currently, the project isn't available right now, because i'm still working on it and it isn't ready.
