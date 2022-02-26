@@ -11,16 +11,17 @@ There is some specifics things to know about Orchid :
 
 - We not define as an OS, for now, it will be only an enhanced stage 3 with all my stuff. So basically, it's a Gentoo transformation.
 - Based on Gentoo and 100% compatible.
-- For advanced users, even if the installation will be easier than Gentoo itself.
+- For advanced users, even if the installation will be easier and shorter than Gentoo itself.
 - Use my specific mirror, with auto import from Gentoo tree every 4 hours.
 - No-gui installation, I wanted to keep staged install process.
 - All Gentoo packages is available.
 - Kernel is gentoo-kernel and always up-to-date. Follow current kernel (5.16.11 actually).
 - New emerge alt : blossom.
-- Eix by default.
-- All X11, KDE, Firefox installed.
-- No systemd, no flatpak and no snap.
-- Compiling powered.
+- EIX by default.
+- All X11, KDE, Firefox installed (a lot of time saved).
+- No systemd and no snap.
+- Flatpak is better fonctionnal than overlays, in most cases.
+- Still source-based.
 
 ![OrchidNeofetch](img/Screenshot_20220226_171132.png)
 
