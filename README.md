@@ -20,7 +20,7 @@ There is some specifics things to know about Orchid :
 - Kernel is gentoo-kernel and always up-to-date. Follow current kernel (5.16.11 actually).
 - New emerge alt : blossom.
 - EIX by default.
-- All X11, KDE, Firefox installed (a lot of time saved).
+- All X11, video drivers, french support and optionnal firefox will be installed by the script.
 - No systemd and no snap.
 - Flatpak is better fonctionnal than overlays, in most cases.
 - Still source-based.
