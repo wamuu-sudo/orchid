@@ -1,11 +1,11 @@
 # Orchid Linux 
 
-Orchid is a modern and cute Gentoo-based for desktop, laptop and flowers.
+Orchid est une variante moderne et soignée de Gentoo, pour les ordianteurs de bureau et ordinateurs portables.
 
 ![Orchid Logo](img/ORCHID_LOGO.png)
 
-The philosophy behind this project is to purpose an advanced Gentoo pure system, personnalized by me with some tweaks.
-Currently, the project isn't available right now, because i'm still working on it and it isn't ready.
+L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et des customisations personnelles.
+Nous travaillons encore sur le projet, mais le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
 There is some specifics things to know about Orchid :
 
@@ -27,9 +27,9 @@ There is some specifics things to know about Orchid :
 ![OrchidNeofetch](img/Screenshot_20220226_171132.png)
 
 
-Stages and installation guide will be availaible soon.
+L'archive et le guide d'installation sera prochainement disponible.
 
-## Contributors
+## Contributeurs
 
-- Juline : Creator and main maintener.
-- Kirik : English documentation tester.
+- Juline : Créatrice du projet.
+- Kirik : Vérification de la documentation.
