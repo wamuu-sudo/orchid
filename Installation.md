@@ -39,9 +39,7 @@ loadkeys fr
 On vérifie que nous disposons bien d'une IP :
 
 ```
-ip  n'hésitez pas à voir si l'heure est bonne. n'hésitez pas à voir si l'heure est bonne
-
-a
+ip a
 ```
 
 Si besoin, demander une IP à notre serveur DHCP :
