@@ -100,9 +100,9 @@ L'utilisation de cfdisk étant assez facile, elle n'est pas traitée ici.
 
 On formate les nouvelles partitions (exemple avec un disque sda) :
 
-mkfs.ext4 /dev/sda3
-mkswap /dev/sda2
-mkfs.vfat -F32 /dev/sda1 
+- mkfs.ext4 /dev/sda3
+- mkswap /dev/sda2
+- mkfs.vfat -F32 /dev/sda1 
 
 Il faut ensuite monter les partitions :
 
