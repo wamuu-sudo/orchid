@@ -90,7 +90,7 @@ cfdisk /dev/sdX
 
 Voici le schéma recommandé :
 
-- Une partition EFI de 256Mo formattée en vfat.
+- Une partition EFI de 256Mo formatée en vfat.
 - Une partition swap de quelques Go, en général 2 ou 4Go.
 - Le reste de l'espace en ext4.
 
@@ -160,7 +160,7 @@ Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on
 
 Configuration du fichier make.conf :
 
-Ici, il faudra juste changer votre nombre de coeurs pour que Orchid tire les meilleurs profits de votre processeur :
+Ici, il faudra juste changer votre nombre de coeurs pour qu'Orchid tire le meilleur profit de votre processeur :
 
 ```
 MAKEOPTS="-jX" X étant votre nombre de coeurs 
@@ -301,7 +301,7 @@ On supprime les fichiers précédemment téléchargés :
 rm -f /mnt/orchid/*.tar.gz
 ```
 
-On revient à la racine du live CD et on démonte tout ce dont on a plus besoin :
+On revient à la racine du live CD et on démonte tout ce dont on n'a plus besoin :
 
 ```
 cd /
@@ -310,7 +310,7 @@ umount -R /mnt/gentoo
 
 On reboot, on enlève le Live CD et on croise les doigts.
 
-Voilà Orchid est installée.
+Voilà, Orchid est installée.
 
 ## Contributeurs
 
