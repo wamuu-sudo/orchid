@@ -18,7 +18,7 @@ Caractéristiques principales d'Orchid :
 - Nous utilisons le noyau gentoo-kernel, toujours à jour et qui suit le canal stable officiel de Linux.
 - Un alias pratique pour emerge : blossom.
 - EIX est installé par défaut.
-- L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphiques. Firefox est aussi disponible en version ESR.
+- L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphiques (sauf Optimus). Firefox est aussi disponible en version ESR.
 - Pas de Snap ni de Systemd. Nous préférons OpenRC. 
 - Flatpak est à priviligié, car il fonctionne souvent mieux que les overlays pour certaines applications.
 - Basée sur les sources.

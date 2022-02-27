@@ -1,33 +1,14 @@
 # Orchid Linux 
 
-Orchid is a modern and cute Gentoo-based for desktop, laptop and flowers.
+Orchid est une variante moderne et soignée de Gentoo, pour les ordianteurs de bureau et ordinateurs portables.
 
 ![Orchid Logo](img/ORCHID_LOGO.png)
 
-The philosophy behind this project is to purpose an advanced Gentoo pure system, personnalized by me with some tweaks.
-Currently, the project isn't available right now, because i'm still working on it and it isn't ready.
+## Télécharger et lancer le LiveCD :
 
-There is some specifics things to know about Orchid :
+Comme nous n'avons pas d'iso spécifique, nous utiliserons l'iso de Gentoo.
 
-- As of now, it is not considered as an OS, it will be an enhanced stage4 archive with profile plasma actived by default. 
-  So basically, it's a Gentoo customization.
-- Based on Gentoo and 100% compatible.
-- It's meant for advanced users, with an install process that is easier and faster than Gentoo itself.
-- You can make use of my own mirror, with an auto import from Gentoo tree every 4 hours.
-- It's a no gui installation, I wanted to keep install process staged.
-- All Gentoo packages are available.
-- Kernel is gentoo-kernel and always up-to-date. Follow current kernel (5.16.11 actually).
-- New emerge alt : blossom.
-- EIX by default.
-- All X11, video drivers, french support and optionnal Firefox will be available by default.
-- No systemd and no snap.
-- Flatpak is more fonctionnal than overlays, in most cases.
-- Still source-based.
-
-![OrchidNeofetch](img/Screenshot_20220226_171132.png)
-
-
-Stages and installation guide will be availaible soon.
+[Télécharger l'iso](https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20220220T170542Z/install-amd64-minimal-20220220T170542Z.iso)
 
 ## Contributors
 
