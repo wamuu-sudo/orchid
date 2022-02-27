@@ -142,9 +142,13 @@ Déplaçons-nous dans la future racine :
 cd /mnt/orchid
 ```
 
-Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet (l'archive est assez volumineuse) :
+Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
-[Version standard KDE](https://orchid.juline.tech)
+[Version standard KDE](https://orchid.juline.tech/stage4-desktop-orchid-2022.02.27.tar.gz)
+
+```
+wget https://orchid.juline.tech/stage4-desktop-orchid-2022.02.27.tar.gz
+```
 
 Extraire ensuite l'archive : 
 
