@@ -10,7 +10,6 @@ Nous travaillons encore sur le projet, mais le guide d'installation est déjà d
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais une variante de Gentoo. 
-- 100% basé sur Gentoo et donc compatible avec.
 - Nous visons malgré tout les utilisateurs avancés, même si notre vision rend les choses plus simples et accessibles.
 - Notre miroir (basiquement un miroir Gentoo complet) est utilisé par défaut, pour ne pas encombrer les miroirs officiels.
 - Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
@@ -18,10 +17,9 @@ Caractéristiques principales d'Orchid :
 - Nous utilisons le noyau gentoo-kernel, toujours à jour et qui suit le canal stable officiel de Linux.
 - Un alias pratique pour emerge : blossom.
 - EIX est installé par défaut.
-- L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphiques (sauf Optimus). Firefox est aussi disponible en version ESR.
+- L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox est aussi disponible en version ESR.
 - Pas de Snap ni de Systemd. Nous préférons OpenRC. 
-- Flatpak est à priviligié, car il fonctionne souvent mieux que les overlays pour certaines applications.
-- Basée sur les sources.
+- Flatpak est a priviligié, car il fonctionne souvent mieux que les overlays pour certaines applications.
 
 ![OrchidNeofetch](img/Screenshot_20220226_171132.png)
 
