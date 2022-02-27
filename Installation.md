@@ -315,4 +315,4 @@ Voila Orchid est installée.
 
 - Juline : Créatrice du projet.
 - Kirik : Vérification de la documentation.
-
+- Chevek : Vérification de la documentation.

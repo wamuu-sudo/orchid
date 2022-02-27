@@ -32,3 +32,4 @@ L'archive sera prochainement disponible.
 
 - Juline : Créatrice du projet.
 - Kirik : Vérification de la documentation.
+- Chevek : Vérification de la documentation.
