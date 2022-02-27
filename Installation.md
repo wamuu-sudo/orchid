@@ -145,6 +145,7 @@ cd /mnt/orchid
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet (l'archive est assez volumineuse) :
 
 [Version standard KDE](https://orchid.juline.tech){: .btn }
+[Click me](http://www.google.com){: .btn}
 
 Extraire ensuite l'archive : 
 
