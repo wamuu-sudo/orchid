@@ -1,0 +1,10 @@
+subarch: amd64
+target: stage2
+version_stamp: openrc-2022.02.26
+rel_type: default
+profile: default/linux/amd64/17.1/desktop/plasma
+snapshot: 2022.02.26
+source_subpath: default/stage1-amd64-openrc-2022.02.26
+compression_mode: pixz
+#portage_confdir: @REPO_DIR@/releases/portage/stages
+#portage_prefix: releng
