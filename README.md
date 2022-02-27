@@ -15,7 +15,6 @@ Caractéristiques principales d'Orchid :
 - Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
 - Tous les paquets de Gentoo sont disponibles.
 - Nous utilisons le noyau gentoo-kernel, toujours à jour et qui suit le canal stable officiel de Linux.
-- Un alias pratique pour emerge : blossom.
 - EIX est installé par défaut.
 - L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox est aussi disponible en version ESR.
 - Pas de Snap ni de Systemd. Nous préférons OpenRC. 
