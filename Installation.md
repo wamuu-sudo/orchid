@@ -156,7 +156,11 @@ tar xJvpf stage*.tar.gz --xattrs
 
 On édite le fichier make.conf pour lui ajouter quelques options supplémentaires.
 
-Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec beaucoup de bonnes options par défaut.
+Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :
+
+- Détection et optimisation de GCC en fonction de votre processeur.
+- Utilisation des fonctions essentielles comme : Pulseaudio, networkmanager, ALSA.
+- Choix des pilotes propriétaires Nvidia.
 
 Configuration du fichier make.conf :
 
