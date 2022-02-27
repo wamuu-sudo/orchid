@@ -309,7 +309,8 @@ umount -R /mnt/gentoo
 ```
 
 On reboot, on enlève le Live CD et on croise les doigts.
-Voila Orchid est installée.
+
+Voilà Orchid est installée.
 
 ## Contributeurs
 
