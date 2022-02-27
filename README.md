@@ -1,6 +1,6 @@
 # Orchid Linux 
 
-Orchid est une variante moderne et soignée de Gentoo, pour les ordianteurs de bureau et ordinateurs portables.
+Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
 ![Orchid Logo](img/ORCHID_LOGO.png)
 
