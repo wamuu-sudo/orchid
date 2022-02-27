@@ -305,7 +305,7 @@ On revient à la racine du live CD et on démonte tout ce dont on n'a plus besoi
 
 ```
 cd /
-umount -R /mnt/gentoo
+umount -R /mnt/orchid
 ```
 
 On reboot, on enlève le Live CD et on croise les doigts.
