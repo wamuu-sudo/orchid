@@ -7,22 +7,21 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordianteurs de b
 L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et des customisations personnelles.
 Nous travaillons encore sur le projet, mais le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
-There is some specifics things to know about Orchid :
+Caractéristiques principales d'Orchid :
 
-- As of now, it is not considered as an OS, it will be an enhanced stage4 archive with profile plasma actived by default. 
-  So basically, it's a Gentoo customization.
-- Based on Gentoo and 100% compatible.
-- It's meant for advanced users, with an install process that is easier and faster than Gentoo itself.
-- You can make use of my own mirror, with an auto import from Gentoo tree every 4 hours.
-- It's a no gui installation, I wanted to keep install process staged.
-- All Gentoo packages are available.
-- Kernel is gentoo-kernel and always up-to-date. Follow current kernel (5.16.11 actually).
-- New emerge alt : blossom.
-- EIX by default.
-- All X11, video drivers, french support and optionnal Firefox will be available by default.
-- No systemd and no snap.
-- Flatpak is more fonctionnal than overlays, in most cases.
-- Still source-based.
+- Nous ne nous définissons pas comme un système d'exploitation à part entière, mais une variante de Gentoo. 
+- 100% basé sur Gentoo et donc compatible avec.
+- Nous visons malgré tout les utilisateurs avancés, même si notre vision rends les choses plus simples et accessibles.
+- Notre miroir (basiquement un miroir Gentoo complet) est utilisé par défaut, pour ne pas encombrer les miroirs officiels.
+- Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
+- Tout les paquets de Gentoo sont disponibles.
+- Nous utilisons le noyau gentoo-kernel, toujours à jour et qui suit le canal stable officiel de Linux.
+- Un alias pratique pour emerge : blossom.
+- EIX est installé par défaut.
+- L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphiques. Firefox est aussi disponible en version ESR.
+- Pas de Snap ni de Systemd. Nous préférons OpenRC. 
+- Flatpak est à priviligié, car il fonctionne souvent mieux que les overlays pour certaines applications.
+- Basée sur les sources.
 
 ![OrchidNeofetch](img/Screenshot_20220226_171132.png)
 
