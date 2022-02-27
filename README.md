@@ -6,6 +6,8 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et des personnalisations.
 
+Attention, le projet est en phase de tests. Il n'est pas utilisable en production.
+
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
 Caractéristiques principales d'Orchid :
