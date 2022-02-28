@@ -21,7 +21,7 @@ Caractéristiques principales d'Orchid :
 - EIX est installé par défaut.
 - L'environnement complet KDE avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox est aussi disponible en version ESR.
 - Pas de Snap ni de Systemd. Nous préférons OpenRC. 
-- Flatpak est a priviligié, car il fonctionne souvent mieux que les overlays pour certaines applications.
+- Flatpak est à privilégier, car il fonctionne souvent mieux que les overlays pour certaines applications.
 
 ![OrchidNeofetch](img/Screenshot_20220226_171132.png)
 
