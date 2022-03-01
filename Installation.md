@@ -153,7 +153,7 @@ wget https://orchid.juline.tech/orchid-root-kde-latest.tar.gz
 Extraire ensuite l'archive : 
 
 ```
-tar xJvpf orchid-root-kde-latest.tar.gz --xattrs
+tar xvpf orchid-root-kde-latest.tar.gz --xattrs
 ```
 
 ## Configuration essentielle avant le chroot :
