@@ -33,4 +33,4 @@ L'archive est disponible au travers du lien fourni dans le guide d'installation.
 - Juline : Créatrice du projet.
 - Kirik : Vérification de la documentation.
 - Chevek : Vérification de la documentation.
-- Vinceff : Vérification de la documentation.
+- Vinceff : Documentation et mise en projet.
