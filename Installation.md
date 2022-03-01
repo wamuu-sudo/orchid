@@ -241,7 +241,7 @@ nano -w /etc/fstab
 Exemple (avec les partitions exemples créées au début) :
 
 ```
-/dev/sda2               /               ext4            defaults,noatime         0 1
+/dev/sda3               /               ext4            defaults,noatime         0 1
 /dev/sda2               none            swap            sw              0 0
 /dev/sda1              /boot/EFI           vfat            defaults         0 0
 ```
