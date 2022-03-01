@@ -9,5 +9,5 @@ clear
 echo "Mises à jours terminées."
 echo ""
 echo "Installation des paquets manquants..."
-#emerge nomdespaquetsàdéployer
+emerge sof-firmware
 echo "Paquets manquants installés."
