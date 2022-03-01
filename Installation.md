@@ -299,6 +299,12 @@ rc-update add NetworkManager default
 rc-update add elogind boot
 ```
 
+## Installation des scripts Orchid :
+
+```
+cd /usr/sbin && wget https://raw.githubusercontent.com/juliiine/orchid/main/orchid-update && chmod +x orchid-update
+```
+
 ## Finalisation :
 
 On sort du chroot : 
