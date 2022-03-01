@@ -251,7 +251,7 @@ Exemple (avec les partitions exemples créées au début) :
  Configurer le nom d'hôte de la machine. Éditer le fichier hostname :
 
 ```
-nano -w /etc/hostname
+nano -w /etc/conf.d/hostname
 ```
 
 ## Utilisateurs : 
