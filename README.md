@@ -10,6 +10,8 @@ Attention, le projet est en phase de tests. Il n'est pas recommandé en producti
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
+Vous pouvez également rejoindre le Discord : [Serveur Discord](https://discord.gg/DeRhvP7M)
+
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
