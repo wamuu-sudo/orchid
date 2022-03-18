@@ -144,16 +144,16 @@ cd /mnt/orchid
 
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
-[Version standard KDE](https://orchid.juline.tech/orchid-root-kde-latest.tar.gz)
+[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-18032022.tar.gz)
 
 ```
-wget https://orchid.juline.tech/orchid-root-kde-latest.tar.gz
+wget https://orchid.juline.tech/stage4-orchid-dwm-18032022.tar.gz
 ```
 
 Extraire ensuite l'archive : 
 
 ```
-tar xvpf orchid-root-kde-latest.tar.gz --xattrs
+tar xvpf stage4-orchid-dwm-18032022.tar.gz --xattrs
 ```
 
 ## Configuration essentielle avant le chroot :
@@ -306,7 +306,7 @@ L'ensemble des dossiers et fichiers nécessaires sont déjà sur le système.
 Il suffit de lancer ces deux scripts *en tant qu'utilisateur non-root* :
 
 ```
-/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
+/usr/share/orchid/fonts/appyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
 ```
 Slim lancera alors directement la session dwm.
 
