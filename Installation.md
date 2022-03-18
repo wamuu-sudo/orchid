@@ -332,7 +332,7 @@ Voilà, Orchid est installée.
 
 ## Contributeurs
 
-- Juline : Créatrice du projet.
+- Wamuu : Créateur du projet.
 - Kirik : Vérification de la documentation.
 - Chevek : Vérification de la documentation.
 - Vinceff : Documentation et mise en projet.
