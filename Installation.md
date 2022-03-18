@@ -299,11 +299,16 @@ rc-update add NetworkManager default
 rc-update add elogind boot
 ```
 
-## Installation des scripts Orchid :
+## Installation de DWM :
+
+L'ensemble des dossiers et fichiers nécessaires sont déjà sur le système.
+
+Il suffit de lancer ces deux scripts *en tant qu'utilisateur non-root* :
 
 ```
-cd /usr/sbin && wget https://raw.githubusercontent.com/juliiine/orchid/main/orchid-update && chmod +x orchid-update
+/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
 ```
+Slim lancera alors directement la session dwm.
 
 ## Finalisation :
 
