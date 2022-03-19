@@ -339,6 +339,30 @@ On reboot, on enlève le Live CD et on croise les doigts.
 
 Voilà, Orchid est installée.
 
+## Usage de DWM :
+
+Raccourci utiles sous DWM :
+
+* Ouvrir dmenu (le lanceur d'appli/flatpaks) :
+
+```Win+p```
+
+* Ouvrir un terminal : 
+
+```Win+Shift+Enter```
+
+* Fermer la fenêtre sous focus : 
+
+```Win+Shift+c```
+
+* Quitter DWM (logout) :
+
+```Win+Shift+q```
+
+## Aller plus loin :
+
+Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://discord.gg/DeRhvP7M)
+
 ## Contributeurs
 
 - Wamuu : Créateur du projet.
