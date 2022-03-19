@@ -8,7 +8,7 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 Comme nous n'avons pas d'iso spécifique, nous utiliserons l'iso de Gentoo.
 
-[Télécharger l'iso](https://bouncer.gentoo.org/fetch/root/all/releases/amd64/autobuilds/20220220T170542Z/install-amd64-minimal-20220220T170542Z.iso)
+[Télécharger l'iso](https://orchid.juline.tech/install-amd64-minimal-20220315T091810Z.iso)
 
 Il faut ensuite "graver" l'iso sur un CD ou une clé USB à l'aide d'outils comme BalenaEtcher ou Rufus.
 
