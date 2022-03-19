@@ -6,7 +6,9 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et un look sympa.
 
-Attention, le projet est en phase de tests. Il n'est pas recommandé en production.
+Attention, le projet est encore en phase de tests. Il n'est pas recommandé en production.
+
+La version Gaming est désormais disponible !
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
@@ -15,6 +17,7 @@ Il est fortement recommandé de rejoindre le Discord : [Orchid Linux](https://di
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
+- Dispose d'une version Gaming icluant de nombreux outils essentiels.
 - Nous visons malgré tout les utilisateurs avancés, même si l'installation est moins fastidieuse.
 - Notre miroir (basiquement un miroir Gentoo complet) est utilisé par défaut, pour ne pas encombrer les miroirs officiels.
 - Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
