@@ -145,15 +145,18 @@ cd /mnt/orchid
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
 [Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-19032022.tar.gz)
+[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022.tar.gz)
+
+Exemple:
 
 ```
-wget https://orchid.juline.tech/stage4-orchid-dwm-19032022.tar.gz
+wget https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022.tar.gz
 ```
 
 Extraire ensuite l'archive : 
 
 ```
-tar xvpf stage4-orchid-dwm-19032022.tar.gz --xattrs
+tar xvpf stage4-*.tar.gz --xattrs
 ```
 
 ## Configuration essentielle avant le chroot :
