@@ -28,8 +28,6 @@ Caractéristiques principales d'Orchid :
 - Pas de version Systemd. Nous préférons OpenRC et Flatpak. 
 - Flatpak est à privilégier, car il fonctionne souvent mieux que les overlays pour certaines applications.
 
-![OrchidNeofetch](img/Screenshot_20220226_171132.pn)
-
 
 L'archive est disponible au travers du lien fourni dans le guide d'installation.
 
