@@ -310,7 +310,7 @@ L'ensemble des dossiers et fichiers nécessaires sont déjà sur le système.
 Il suffit de lancer ces deux scripts *en tant qu'utilisateur non-root* :
 
 ```
-/usr/share/orchid/fonts/appyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
+/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
 ```
 Slim lancera alors directement la session dwm.
 
