@@ -12,7 +12,7 @@ La version Gaming est désormais disponible !
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
-Il est fortement recommandé de rejoindre le Discord : [Orchid Linux](https://discord.gg/DeRhvP7M)
+Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/DeRhvP7M)
 
 Caractéristiques principales d'Orchid :
 
