@@ -7,8 +7,15 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 ## Télécharger et lancer le LiveCD :
 
 Comme nous n'avons pas d'iso spécifique, nous utiliserons l'iso de Gentoo.
+A noter que vous avez deux versions ci-dessous, avec ou sans interface graphique.
+Veuillez-noter que la version avec interface graphique n'est pas du tout représentative du bureau que vous aurez.
+Elle a été implémentée pour permettre de suivre graphiquement ce guide d'installation tout en installant le système.
+Ces ISOS sont fournies par Gentoo, et nous n'en sommes pas responsable.
+Les fichiers nécessaires à la vérification de l'intégrité sont disponibles sur le [miroir](https://orchid.juline.tech).
 
-[Télécharger l'iso](https://orchid.juline.tech/install-amd64-minimal-20220315T091810Z.iso)
+[Télécharger l'iso sans GUI](https://orchid.juline.tech/install-amd64-minimal-20220315T091810Z.iso) [~500Mo]
+
+[Télécharger la version avec GUI](https://orchid.juline.tech/livegui-amd64-20220315T091810Z.iso) [~5Go]
 
 Il faut ensuite "graver" l'iso sur un CD ou une clé USB à l'aide d'outils comme BalenaEtcher ou Rufus.
 
