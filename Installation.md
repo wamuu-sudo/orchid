@@ -288,9 +288,17 @@ passwd utilisateur
 
 Pour installer Grub, on lance la commande : 
 
+EFI :
+
 ```
 grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
 ```
+Ou Bios :
+
+```
+grub-install /dev/sdX
+```
+
 
 Utilisez l'outil grub-mkconfig pour générer grub.cfg :
 
