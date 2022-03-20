@@ -148,7 +148,7 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 
 [Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-20032022-r1.tar.gz) [2.9Go]
 
-[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r1.tar.gz) [2.8Go]
+[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r2.tar.gz) [2.8Go]
 
 [Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz) [2.9Go]
 
