@@ -116,7 +116,7 @@ Activer le swap :
 swapon /dev/sda2
 ```
 
-La partition EFI :
+La partition EFI (pas nécessaire si bios):
 
 ```
 mkdir -p /mnt/orchid/boot/EFI && mount /dev/sda1 /mnt/orchid/boot/EFI
