@@ -144,13 +144,13 @@ cd /mnt/orchid
 
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
-[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-19032022-r1.tar.gz)
+[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-19032022-r1.tar.gz) [3.5Go]
 
-[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz)
+[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz) [2.8Go]
 
-[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r1.tar.gz)
+[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r1.tar.gz) [2.8Go]
 
-[Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz)
+[Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz) [2.6Go]
 
 Exemple:
 
