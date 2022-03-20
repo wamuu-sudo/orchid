@@ -374,5 +374,5 @@ Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://dis
 
 - Wamuu : Créateur du projet.
 - Kirik : Vérification de la documentation.
-- Chevek : Vérification de la documentation.
+- Chevek : Vérification de la documentation, et outils Gaming.
 - Vinceff : Documentation et mise en projet.
