@@ -8,7 +8,7 @@ L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiq
 
 Attention, le projet est encore en phase de tests. Il n'est pas recommandé en production.
 
-La version Gaming est désormais disponible pour la version DWM, ainsi que l'environnement Gnome !
+De nouvelles éditions sont disponibles !
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
