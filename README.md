@@ -8,7 +8,7 @@ L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiq
 
 Attention, le projet est encore en phase de tests. Il n'est pas recommandé en production.
 
-De nouvelles éditions sont disponibles !
+De nouvelles éditions sont disponibles, dont Gnome et KDE !
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
