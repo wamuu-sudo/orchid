@@ -152,6 +152,8 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 
 [Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r2.tar.gz) [2.7Go]
 
+[Version KDE Plasma](https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz) [3.5Go]
+
 Exemple:
 
 ```
