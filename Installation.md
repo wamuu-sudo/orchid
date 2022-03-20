@@ -148,6 +148,10 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 
 [Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz)
 
+[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r1.tar.gz)
+
+[Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz)
+
 Exemple:
 
 ```
@@ -303,7 +307,7 @@ rc-update add NetworkManager default
 rc-update add elogind boot
 ```
 
-## Installation de DWM :
+## Activation de DWM (concerne uniquement les versions DWM):
 
 L'ensemble des dossiers et fichiers nécessaires sont déjà sur le système.
 
