@@ -376,3 +376,4 @@ Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://dis
 - Kirik : Vérification de la documentation.
 - Chevek : Vérification de la documentation, et outils Gaming.
 - Vinceff : Documentation et mise en projet.
+- L'ensemble des membres du serveur Discord Gaming Linux FR.
