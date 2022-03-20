@@ -150,7 +150,7 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 
 [Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r1.tar.gz) [2.8Go]
 
-[Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz) [2.6Go]
+[Version Gnome light](https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r1.tar.gz) [2.9Go]
 
 Exemple:
 
