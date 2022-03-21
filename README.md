@@ -38,5 +38,5 @@ L'archive est disponible au travers du lien fourni dans le guide d'installation.
 - Wamuu : Créateur du projet.
 - Kirik : Vérification de la documentation.
 - Chevek : Vérification de la documentation, et outils Gaming.
-- Vinceff : Documentation et mise en projet.
+- Vinceff : Documentation et mise en projet, directeur de la communication.
 - L'ensemble des membres du serveur Discord Gaming Linux FR.
