@@ -8,7 +8,7 @@ Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé 
 
 L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et un look sympa.
 
-Pour rappel, Gentoo n'est pas conseillée si vous êtes débutant sous Linux, néanmoins, son utilisation est très prédagogique.
+Pour rappel, Gentoo n'est pas conseillée si vous êtes débutant sous Linux, néanmoins, son utilisation est très pédagogique.
 
 Attention, le projet est encore en phase de tests. Il n'est pas recommandé en production.
 
