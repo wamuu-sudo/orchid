@@ -154,18 +154,16 @@ read -p "[Entrée] pour continuer l'installation"
 clear
 # Configurationde fstab
 echo "Fichier fstab :"
-echo "Noter ce qui suit :"
+echo "Cofiguration du fstab"
 if ["$ifbios" = "y"]
 then
-	echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1"
-	echo "/dev/${swap_name}    none    swap    sw    0 0"
+	echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1" >> /etc/fstab
+	echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
 else
-	echo "/dev/${ext4_name}    /    ext4    defaults,noatime           0 1"
-        echo "/dev/${swap_name}    none    swap    sw    0 0"
-	echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0"
+	echo "/dev/${ext4_name}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+        echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
+	echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
-read -p "[Entrée] pour continuer (bien prendre en note)"
-nano -w /etc/fstab
 read -p "[Entrée] pour configurer le nom de la machine"
 # Configuration du nom de la machine
 nano -w /etc/conf.d/hostname
