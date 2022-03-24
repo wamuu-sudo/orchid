@@ -4,6 +4,8 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 ![Orchid Logo](img/ORCHID_LOGO.png)
 
+Version actuelle du projet : Alpha 1.0.1
+
 Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/DeRhvP7M)
 
 L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes, et un look sympa.
