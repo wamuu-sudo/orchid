@@ -86,6 +86,7 @@ date
 echo "Partitionnement terminé !"
 read -p "[Entrée] pour continuer l'installation"
 clear
+#-----Installation du système-----#
 echo "Installation du système complet"
 cd /mnt/orchid
 # Choix du système
@@ -128,6 +129,7 @@ read -p "[Entrée] pour accéder au fichier"
 nano /mnt/orchid/etc/portage/make.conf
 read -p "[Entrée] pour continuer l'installation"
 clear
+#-----Montage et chroot-----#
 echo "Montage et chroot :"
 # Montage
 mount -t proc /proc /mnt/orchid/proc
@@ -165,7 +167,7 @@ fi
 read -p "[Entrée] pour continuer (bien prendre en note)"
 nano -w /etc/fstab
 read -p "[Entrée] pour configurer le nom de la machine"
-# Configurationdu nom de la machine
+# Configuration du nom de la machine
 nano -w /etc/conf.d/hostname
 read -p "[Entrée] pour continuer l'installation"
 clear
@@ -180,6 +182,7 @@ echo "Mot de passe de ${username} :"
 passwd ${username}
 read -p "[Entrée] pour continuer l'installation"
 clear
+#-----Configuration de GRUB-----#
 echo "Configuration de GRUB :"
 # Installation de GRUB Pour BIOS
 if ["$ifbios" = "y"]
@@ -192,6 +195,7 @@ elif ["$ifbios" = "n"]
 fi
 read -p "[Entrée] pour continuer l'installation"
 clear
+#-----Activation des services-----#
 echo "Activation de services :"
 # Activation des services rc
 rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
@@ -202,6 +206,7 @@ then
 fi
 read -p "[Entrée] pour terminer l'installation"
 clear
+#-----Fin de l'installation-----#
 echo "Finalisation :"
 exit
 # On nétoie
