@@ -1,5 +1,0 @@
-#!/bin/bash
-loc=$(pwd)
-cd /etc/portage
-git pull https://github.com/juliiine/orchid-conf.git
-cd $loc
