@@ -390,10 +390,14 @@ Raccourci utiles sous DWM :
 
 Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://discord.gg/DeRhvP7M)
 
+
 ## Contributeurs
 
-- Wamuu : Créateur du projet.
-- Kirik : Vérification de la documentation.
-- Chevek : Vérification de la documentation, et outils Gaming.
-- Vinceff : Documentation et mise en projet, directeur de la communication.
-- L'ensemble des membres du serveur Discord Gaming Linux FR.
+   - Wamuu : Créateur du projet.
+   - Vinceff : Documentation et mise en projet, directeur de la communication.
+   - Chevek : Outils Gaming et optimisation.
+   - Babilinx : Optimisation du projet.
+   - Piaf_Jaune : Responsable look.
+   - Kirik : Vérification de la documentation.
+   - L'ensemble des membres du serveur Discord Gaming Linux FR.
+
