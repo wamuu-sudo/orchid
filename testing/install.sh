@@ -50,7 +50,7 @@ clear
 echo "Evitez de vous tromper lors des étapes qui suivent, sinon vous devrez recommencer."
 read -p "Quel est le nom de la partition swap ? " swap_name
 read -p "quel est le nom de la partition ext4 ? " ext4_name
-read -p "Utilisez-vous un système BIOS ? [y/n] " if_bios
+read -p "Utilisez-vous un système BIOS ? [y/n] " ifbios
 if ["$ifbios" = n]
 then
 	read -p "Quel est le nom de la partition EFI? " EFI_name
