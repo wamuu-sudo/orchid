@@ -42,7 +42,9 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 ## Contributeurs
 
 - Wamuu : Créateur du projet.
-- Kirik : Vérification de la documentation.
-- Chevek : Vérification de la documentation, et outils Gaming.
 - Vinceff : Documentation et mise en projet, directeur de la communication.
+- Chevek : Outils Gaming et optimisation.
+- Babilinx : Optimisation du projet.
+- Piaf_Jaune : Responsable look.
+- Kirik : Vérification de la documentation.
 - L'ensemble des membres du serveur Discord Gaming Linux FR.
