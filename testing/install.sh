@@ -97,7 +97,7 @@ echo "	3) Version Gnome complète [2.8Go]"
 echo "	4) Version Gnome light [2.7Go]"
 echo "	5) Version KDE Plasma [3.5Go]"
 read no_archive
-# Télégrargement du fuchier adéquat
+# Télégrargement du fichier adéquat
 if ["$no_archive" = "1"]
 then
 	wget ${DWM}
@@ -110,19 +110,19 @@ elif ["$no_archive" = "4"]
 elif ["$no_archive" = "5"]
 	wget ${KDE}
 fi
-echo "\nExtraction de l'archive..."
+echo "Extraction de l'archive..."
 # Extraction de l'archive précédament télégrargée
 tar xvpf stage4-*.tar.gz --xattrs
 # Explication de la configuration à faire dans make.conf
-echo "\nConfiguration essentielle avent le chroot:"
+echo "Configuration essentielle avent le chroot:"
 echo "Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :"
 echo " - Détection et optimisation de GCC en fonstion de votre CPU"
 echo " - Utilisation des fonctions essentielles comme Pulseaudio, networgmanager, ALSA."
 echo " - Choix des pilotes graphiques Nvidia"
-echo "\nConfiguration du fichier (s'en souvenir ou prendre note) :"
+echo "Configuration du fichier (s'en souvenir ou prendre note) :"
 echo "Ici, il faudra juste changer votre nombre de coeurs pour qu'Orchid tire le meilleur profit de votre processeur :"
 echo 'MAKEOPTS="-jX" X étant votre nombre de coeurs'
-echo "\nPar défaut Orchid supporte la majorité des cartes graphiques. Vous pouvez néanmoins supprimer celles que vous n'utilisez pas (bien garder fbdev et vesa !):"
+echo "Par défaut Orchid supporte la majorité des cartes graphiques. Vous pouvez néanmoins supprimer celles que vous n'utilisez pas (bien garder fbdev et vesa !):"
 echo 'VIDEO_CARDS="fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi virtualbox vmware"'
 echo "N'oubliez pas d'enregistrer avant de fermer le fichier !"
 read -p "[Entrée] pour accéder au fichier"
