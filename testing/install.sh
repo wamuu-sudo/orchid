@@ -157,7 +157,7 @@ mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 # Chroot
-chroot /mnt/orchid /bin/bash
+cat << EOF | chroot /mnt/orchid /bin/bash
 # MAJ des variables d'environement
 echo 'Mise à jour des variables d environement'
 env--update && source /etc/profile
@@ -231,7 +231,7 @@ read -p "[Entrée] pour terminer l'installation"
 clear
 #-----Fin de l'installation-----#
 echo "Finalisation :"
-exit
+EOF
 # On nétoie
 rm -f /mnt/orchid/*.tar.gz
 cd /
