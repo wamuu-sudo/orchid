@@ -1,8 +1,8 @@
-#!/usr/bin/env bash
+#!/usr/bin/bash
 # Contributeurs :
 #  - Babilinx : code
 #  - Chevek : vérifications
-#  - Wammu : vérifications et test
+#  - Wamuu : vérifications et test
 # jeu. 24 mars 2022
 # Script d'installation pour Orchid Linux
 #
@@ -105,12 +105,16 @@ if [ "$no_archive" = "1" ]
 then
 	wget ${DWM}
 elif [ "$no_archive" = "2" ]
+then
 	wget ${DWM_GE}
 elif [ "$no_archive" = "3" ]
+then
 	wget ${Gnome}
 elif [ "$no_archive" = "4" ]
+then
 	wget ${Gnome_lte}
 elif [ "$no_archive" = "5" ]
+then
 	wget ${KDE}
 fi
 echo "Extraction de l'archive..."
@@ -191,6 +195,7 @@ then
 	grub-install /dev/${disk_name}
 	grub-mkconfig -o /boot/grub/grub.cfg
 elif [ "$ifbios" = "n" ]
+then
 # Installation de GRUB pour UEFI
 	grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
 fi
