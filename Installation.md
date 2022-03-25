@@ -2,7 +2,7 @@
 
 Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
-![Orchid Logo](img/ORCHID_LOGO.png)
+![Orchid Logo](img/Orchid-Think.png)
 
 ## Télécharger et lancer le LiveCD :
 
