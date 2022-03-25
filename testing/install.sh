@@ -3,7 +3,7 @@
 #  - Babilinx : code
 #  - Chevek : vérifications
 #  - Wamuu : vérifications et test
-# jeu. 24 mars 2022
+# mars 2022
 # Script d'installation pour Orchid Linux
 #
 # Initialisation des URLs des archives
