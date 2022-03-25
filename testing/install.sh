@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
-# Babilinx pour Orchid Linux
+# Contributeurs :
+#  - Babilinx : code
+#  - Chevek : vérifications
+#  - Wammu : vérifications et test
 # jeu. 24 mars 2022
 # Script d'installation pour Orchid Linux
 #
