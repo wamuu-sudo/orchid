@@ -33,8 +33,8 @@ Caractéristiques principales d'Orchid :
 - Nous utilisons le noyau gentoo-kernel-bin, qui suit le canal stable LTS officiel de Linux. Un déblocage facilité est possible.
 - `eix` est installé par défaut.
 - L'environnement complet `orchid-dwm` avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox en binaire est aussi installé par défaut. Gnome et KDE Plasma sont aussi disponibles.
-- Pas de version Systemd. Nous préférons OpenRC et Flatpak. 
-- Flatpak est à privilégier, car il fonctionne souvent mieux que les overlays pour certaines applications.
+- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. 
+- Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
 
 Les différentes archives sont disponibles au travers des liens fournis dans le guide d'installation.
