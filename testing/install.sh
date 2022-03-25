@@ -23,7 +23,7 @@ loadkeys fr
 # Check adresse IP
 ip a
 read -p "Disposez-vous d'une adresse IP ? [y/n] " question_IP
-if ["$question_ip" = "n"]
+if [ "$question_ip" = "n" ]
 then
 	# si non, en générer une
 	dhcpcd
@@ -51,7 +51,7 @@ echo "Evitez de vous tromper lors des étapes qui suivent, sinon vous devrez rec
 read -p "Quel est le nom de la partition swap ? " swap_name
 read -p "quel est le nom de la partition ext4 ? " ext4_name
 read -p "Utilisez-vous un système BIOS (=non UEFI) ? [y/n] " ifbios
-if ["$ifbios" = n]
+if [ "$ifbios" = n ]
 then
 	read -p "Quel est le nom de la partition EFI? " EFI_name
 	echo "Formatage de la partition EFI..."
@@ -70,14 +70,14 @@ mkdir /mnt/orchid && mount /dev/${ext4_name} /mnt/orchid
 echo "Activation du swap..."
 swapon /dev/${swap_name}
 # Pour l'EFI
-if ["$ifbios" = n]
+if [ "$ifbios" = n ]
 then
 	mkdir -p /mnt/orchid/boot/EFI && mount /dev/${EFI_name} /mnt/orchid/boot/EFI
 fi
 # Vérification de la date et de l'heure
 date
 read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
-if ["$question_date" = "n"]
+if [ "$question_date" = "n" ]
 then
 	read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
 fi
@@ -98,16 +98,16 @@ echo "	4) Version Gnome light [2.7Go]"
 echo "	5) Version KDE Plasma [3.5Go]"
 read no_archive
 # Télégrargement du fichier adéquat
-if ["$no_archive" = "1"]
+if [ "$no_archive" = "1" ]
 then
 	wget ${DWM}
-elif ["$no_archive" = "2"]
+elif [ "$no_archive" = "2" ]
 	wget ${DWM_GE}
-elif ["$no_archive" = "3"]
+elif [ "$no_archive" = "3" ]
 	wget ${Gnome}
-elif ["$no_archive" = "4"]
+elif [ "$no_archive" = "4" ]
 	wget ${Gnome_lte}
-elif ["$no_archive" = "5"]
+elif [ "$no_archive" = "5" ]
 	wget ${KDE}
 fi
 echo "Extraction de l'archive..."
@@ -144,7 +144,7 @@ echo " "
 # Nouvelle vérification de la date et de l'heure
 date
 read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
-if ["$question_date" = "n"]
+if [ "$question_date" = "n" ]
 then
         read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
 fi
@@ -155,7 +155,7 @@ clear
 # Configurationde fstab
 echo "Fichier fstab :"
 echo "Cofiguration du fstab"
-if ["$ifbios" = "y"]
+if ["$ifbios" = "y" ]
 then
 	echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1" >> /etc/fstab
 	echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
@@ -183,11 +183,11 @@ clear
 #-----Configuration de GRUB-----#
 echo "Configuration de GRUB :"
 # Installation de GRUB Pour BIOS
-if ["$ifbios" = "y"]
+if [ "$ifbios" = "y" ]
 then
 	grub-install /dev/${disk_name}
 	grub-mkconfig -o /boot/grub/grub.cfg
-elif ["$ifbios" = "n"]
+elif [ "$ifbios" = "n" ]
 # Installation de GRUB pour UEFI
 	grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
 fi
@@ -198,7 +198,7 @@ echo "Activation de services :"
 # Activation des services rc
 rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
 # Activationdes services pour DWM
-if ["$no_archive" = "1"]
+if [ "$no_archive" = "1" ]
 then
 /usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
 fi
