@@ -18,7 +18,7 @@ Attention, même si le projet est déployable et utilisable couramment, des prob
 De nouvelles éditions sont disponibles :
 
 - DWM et DWM Gaming.
-- Gnome light et Gnome full.
+- Gnome.
 - KDE Plasma.
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
