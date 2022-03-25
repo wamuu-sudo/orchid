@@ -19,6 +19,7 @@ echo "L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les probl�
 echo "qui pourrait arriver en installant Orchid Linux."
 echo "Lisez très attentivement les instructions"
 echo "Merci d'avoir choisi Orchid Linux !"
+echo ""
 read -p " Pressez [Entrée] pour commencer l'installation"
 clear
 # Passage du clavier en AZERTY
@@ -39,24 +40,28 @@ fdisk -l
 # Demande du non du disque à utiliser
 read -p "Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1) " disk_name
 echo "! ATTENTION ! toutes les données sur ${disk_name} seront éffacées !"
+echo ""
 read -p "Pressez [Entrée] pour continuer si vous avez pris conaisssance des risques..."
 echo "Voici le schéma recommandé :"
 echo " - Une partition EFI de 256Mo formatée en vfat (si UEFI uniquement)."
 echo " - Une partition BIOS boot de 1Mo, en premier (si BIOS uniquement)"
 echo " - Une partition swap de quelques GO, en général 2 ou 4Go"
 echo " - Le reste en ext4 (linux file system)"
+echo ""
 read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez [Entrée] pour lancer cfdisk..."
 clear
 # Lancement de cfdisk pour le partitionnement
 cfdisk /dev/${disk_name}
 clear
 echo "Evitez de vous tromper lors des étapes qui suivent, sinon vous devrez recommencer."
+echo ""
 read -p "Quel est le nom de la partition swap ? " swap_name
 read -p "quel est le nom de la partition ext4 ? " ext4_name
 read -p "Utilisez-vous un système BIOS (=non UEFI) ? [y/n] " ifbios
 if [ "$ifbios" = n ]
 then
 	read -p "Quel est le nom de la partition EFI? " EFI_name
+	echo ""
 	echo "Formatage de la partition EFI..."
 	mkfs.vfat -F32 /dev/${EFI_name}
 fi
@@ -87,13 +92,16 @@ fi
 date ${date}
 date
 echo "Partitionnement terminé !"
+echo ""
 read -p "[Entrée] pour continuer l'installation"
 clear
 #-----Installation du système-----#
 echo "Installation du système complet"
 cd /mnt/orchid
 # Choix du système
-echo "\nChoisissez l'archive du système qui vous convient"
+echo ""
+echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standard) :"
+echo ""
 echo "	1) Version standard DWM [2.2Go]"
 echo "	2) Version DWM Gaming Edition [2.9Go]"
 echo "	3) Version Gnome complète [2.8Go]"
@@ -120,18 +128,24 @@ fi
 echo "Extraction de l'archive..."
 # Extraction de l'archive précédament télégrargée
 tar xvpf stage4-*.tar.gz --xattrs
+clear
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"
+echo ""
 echo "Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :"
 echo " - Détection et optimisation de GCC en fonstion de votre CPU"
 echo " - Utilisation des fonctions essentielles comme Pulseaudio, networgmanager, ALSA."
 echo " - Choix des pilotes graphiques Nvidia"
+echo ""
 echo "Configuration du fichier (s'en souvenir ou prendre note) :"
 echo "Ici, il faudra juste changer votre nombre de coeurs pour qu'Orchid tire le meilleur profit de votre processeur :"
 echo 'MAKEOPTS="-jX" X étant votre nombre de coeurs'
+echo ""
 echo "Par défaut Orchid supporte la majorité des cartes graphiques. Vous pouvez néanmoins supprimer celles que vous n'utilisez pas (bien garder fbdev et vesa !):"
 echo 'VIDEO_CARDS="fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi virtualbox vmware"'
+echo ""
 echo "N'oubliez pas d'enregistrer avant de fermer le fichier !"
+echo ""
 read -p "[Entrée] pour accéder au fichier"
 nano /mnt/orchid/etc/portage/make.conf
 read -p "[Entrée] pour continuer l'installation"
@@ -171,6 +185,7 @@ else
         echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
 	echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
+echo ""
 read -p "[Entrée] pour configurer le nom de la machine"
 # Configuration du nom de la machine
 nano -w /etc/conf.d/hostname
@@ -185,6 +200,7 @@ read -p "Nom de l'utilisateur non-privilégié : " username
 useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
 echo "Mot de passe de ${username} :"
 passwd ${username}
+echo ""
 read -p "[Entrée] pour continuer l'installation"
 clear
 #-----Configuration de GRUB-----#
@@ -210,6 +226,7 @@ if [ "$no_archive" = "1" ]
 then
 /usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
 fi
+echo ""
 read -p "[Entrée] pour terminer l'installation"
 clear
 #-----Fin de l'installation-----#
