@@ -271,7 +271,7 @@ read -p "[Entrée] pour continuer l'installation"
 # On nétoie
 rm -f /mnt/orchid/*.tar.gz
 cd /
-unmount -R /mnt/orchid
+umount -R /mnt/orchid
 read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation ! Merci de nous avoir choisi !"
 # On redémare pour démarer sur le système fraichement installé
 reboot
