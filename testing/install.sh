@@ -164,9 +164,9 @@ cat << EOF | chroot /mnt/orchid /bin/bash
 echo 'Mise à jour des variables d environement'
 env--update && source /etc/profile
 clear
-# Configurationde fstab
+# Configuration de fstab
 echo "Fichier fstab :"
-echo "Cofiguration du fstab"
+echo "Configuration du fstab"
 echo "/dev/${ext4_name}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
 echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
 echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
