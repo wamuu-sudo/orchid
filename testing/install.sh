@@ -252,9 +252,9 @@ fi
 # DWN configuration
 if [ "$no_archive" = "1" ]
 then
-	cat << EOF | chroot /mnt/orchid /bin/bash
-	/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
-	EOF
+cat << EOF | chroot /mnt/orchid /bin/bash
+/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
+EOF
 fi
 #-----Fin de l'installation-----#
 echo "Finalisation :"
@@ -263,7 +263,7 @@ date
 read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
 if [ "$question_date" = "n" ]
 then
-        read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
+read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
 fi
 date ${date}
 date
