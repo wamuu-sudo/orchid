@@ -10,7 +10,6 @@
 DWM='https://orchid.juline.tech/stage4-orchid-dwm-standard-20032022-r1.tar.gz'
 DWM_GE='https://orchid.juline.tech/stage4-orchid-dwm-gaming-20032022-r1.tar.gz'
 Gnome='https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r2.tar.gz'
-Gnome_lte='https://orchid.juline.tech/stage4-orchid-gnome-light-20032022-r2.tar.gz'
 KDE='https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz'
 
 #-----Début du script-----#
@@ -104,9 +103,8 @@ echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standar
 echo ""
 echo "	1) Version standard DWM [2.2Go]"
 echo "	2) Version DWM Gaming Edition [2.9Go]"
-echo "	3) Version Gnome complète [2.8Go]"
-echo "	4) Version Gnome light [2.7Go]"
-echo "	5) Version KDE Plasma [3.5Go]"
+echo "	3) Version Gnome [2.8Go]"
+echo "	4) Version KDE Plasma [3.5Go]"
 read no_archive
 # Télégrargement du fichier adéquat
 if [ "$no_archive" = "1" ]
@@ -119,9 +117,6 @@ elif [ "$no_archive" = "3" ]
 then
 	wget ${Gnome}
 elif [ "$no_archive" = "4" ]
-then
-	wget ${Gnome_lte}
-elif [ "$no_archive" = "5" ]
 then
 	wget ${KDE}
 fi
