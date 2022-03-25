@@ -43,7 +43,7 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 
 - [Wamuu](https://github.com/wamuu-sudo) : Créateur du projet.
 - Vinceff : Documentation et mise en projet, directeur de la communication.
-- [Chevek](https://github.com/sevmek) : Outils Gaming et optimisation.
+- [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet.
 - Piaf_Jaune : Responsable look.
 - Kirik : Vérification de la documentation.
