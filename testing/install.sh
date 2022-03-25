@@ -158,96 +158,96 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 if [ "$ifbios" = "n" ]
 then
-	# Chroot UEFI
-	cat << EOF | chroot /mnt/orchid /bin/bash
-	# MAJ des variables d'environement
-	echo 'Mise à jour des variables d environement'
-	env--update && source /etc/profile
-	clear
-	# Configurationde fstab
-	echo "Fichier fstab :"
-	echo "Cofiguration du fstab"
-	echo "/dev/${ext4_name}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-	echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
-	echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
-	echo ""
-	read -p "[Entrée] pour configurer le nom de la machine"
-	# Configuration du nom de la machine
-	nano -w /etc/conf.d/hostname
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	# Génération du mot de passe root
-	echo "Utilisateurs :"
-	echo "Mot de passe root :"
-	passwd
-	# Création d'un utilisateur non privilégié
-	read -p "Nom de l'utilisateur non-privilégié : " username
-	useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
-	echo "Mot de passe de ${username} :"
-	passwd ${username}
-	echo ""
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	#-----Configuration de GRUB-----#
-	echo "Configuration de GRUB :"
-	# Installation de GRUB pour UEFI
-	grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	#-----Activation des services-----#
-	echo "Activation de services :"
-	# Activation des services rc
-	rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
-	echo ""
-	read -p "[Entrée] pour terminer l'installation"
-	clear
-	EOF
+# Chroot UEFI
+cat << EOF | chroot /mnt/orchid /bin/bash
+# MAJ des variables d'environement
+echo 'Mise à jour des variables d environement'
+env--update && source /etc/profile
+clear
+# Configurationde fstab
+echo "Fichier fstab :"
+echo "Cofiguration du fstab"
+echo "/dev/${ext4_name}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
+echo "/dev/${EFI_name}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
+echo ""
+read -p "[Entrée] pour configurer le nom de la machine"
+# Configuration du nom de la machine
+nano -w /etc/conf.d/hostname
+read -p "[Entrée] pour continuer l'installation"
+clear
+# Génération du mot de passe root
+echo "Utilisateurs :"
+echo "Mot de passe root :"
+passwd
+# Création d'un utilisateur non privilégié
+read -p "Nom de l'utilisateur non-privilégié : " username
+useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
+echo "Mot de passe de ${username} :"
+passwd ${username}
+echo ""
+read -p "[Entrée] pour continuer l'installation"
+clear
+#-----Configuration de GRUB-----#
+echo "Configuration de GRUB :"
+# Installation de GRUB pour UEFI
+grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
+read -p "[Entrée] pour continuer l'installation"
+clear
+#-----Activation des services-----#
+echo "Activation de services :"
+# Activation des services rc
+rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+echo ""
+read -p "[Entrée] pour terminer l'installation"
+clear
+EOF
 # Chroot BIOS
 elif [ "$ifbios" = "y" ]
 then
-	cat << EOF | chroot /mnt/orchid /bin/bash
-	# MAJ des variables d'environement
-	echo 'Mise à jour des variables d environement'
-	env--update && source /etc/profile
-	clear
-	# Configurationde fstab
-	echo "Fichier fstab :"
-	echo "Cofiguration du fstab"
-	echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1" >> /etc/fstab
-	echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
-	echo ""
-	read -p "[Entrée] pour configurer le nom de la machine"
-	# Configuration du nom de la machine
-	nano -w /etc/conf.d/hostname
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	# Génération du mot de passe root
-	echo "Utilisateurs :"
-	echo "Mot de passe root :"
-	passwd
-	# Création d'un utilisateur non privilégié
-	read -p "Nom de l'utilisateur non-privilégié : " username
-	useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
-	echo "Mot de passe de ${username} :"
-	passwd ${username}
-	echo ""
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	#-----Configuration de GRUB-----#
-	echo "Configuration de GRUB :"
-	# Installation de GRUB pour BIOS
-	grub-install /dev/${disk_name}
-	grub-mkconfig -o /boot/grub/grub.cfg
-	read -p "[Entrée] pour continuer l'installation"
-	clear
-	#-----Activation des services-----#
-	echo "Activation de services :"
-	# Activation des services rc
-	rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
-	echo ""
-	read -p "[Entrée] pour terminer l'installation"
-	clear
-	EOF
+cat << EOF | chroot /mnt/orchid /bin/bash
+# MAJ des variables d'environement
+echo 'Mise à jour des variables d environement'
+env--update && source /etc/profile
+clear
+# Configurationde fstab
+echo "Fichier fstab :"
+echo "Cofiguration du fstab"
+echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1" >> /etc/fstab
+echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
+echo ""
+read -p "[Entrée] pour configurer le nom de la machine"
+# Configuration du nom de la machine
+nano -w /etc/conf.d/hostname
+read -p "[Entrée] pour continuer l'installation"
+clear
+# Génération du mot de passe root
+echo "Utilisateurs :"
+echo "Mot de passe root :"
+passwd
+# Création d'un utilisateur non privilégié
+read -p "Nom de l'utilisateur non-privilégié : " username
+useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
+echo "Mot de passe de ${username} :"
+passwd ${username}
+echo ""
+read -p "[Entrée] pour continuer l'installation"
+clear
+#-----Configuration de GRUB-----#
+echo "Configuration de GRUB :"
+# Installation de GRUB pour BIOS
+grub-install /dev/${disk_name}
+grub-mkconfig -o /boot/grub/grub.cfg
+read -p "[Entrée] pour continuer l'installation"
+clear
+#-----Activation des services-----#
+echo "Activation de services :"
+# Activation des services rc
+rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+echo ""
+read -p "[Entrée] pour terminer l'installation"
+clear
+EOF
 fi
 # DWN configuration
 if [ "$no_archive" = "1" ]
