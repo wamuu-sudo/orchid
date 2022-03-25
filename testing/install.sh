@@ -275,14 +275,3 @@ unmount -R /mnt/orchid
 read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation ! Merci de nous avoir choisi !"
 # On redémare pour démarer sur le système fraichement installé
 reboot
-
-
-echo "/dev/${ext4_name}    /    ext4    defaults,noatime	   0 1" >> /etc/fstab
-echo "/dev/${swap_name}    none    swap    sw    0 0" >> /etc/fstab
-
-
-# Installation de GRUB Pour BIOS
-if [ "$ifbios" = "y" ]
-then
-	grub-install /dev/${disk_name}
-	grub-mkconfig -o /boot/grub/grub.cfg
