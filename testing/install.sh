@@ -161,17 +161,6 @@ cat << EOF | chroot /mnt/orchid /bin/bash
 # MAJ des variables d'environement
 echo 'Mise à jour des variables d environement'
 env--update && source /etc/profile
-echo " "
-# Nouvelle vérification de la date et de l'heure
-date
-read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
-if [ "$question_date" = "n" ]
-then
-        read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
-fi
-date ${date}
-date
-read -p "[Entrée] pour continuer l'installation"
 clear
 # Configurationde fstab
 echo "Fichier fstab :"
@@ -232,6 +221,16 @@ clear
 #-----Fin de l'installation-----#
 echo "Finalisation :"
 EOF
+# Nouvelle vérification de la date et de l'heure
+date
+read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
+if [ "$question_date" = "n" ]
+then
+        read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
+fi
+date ${date}
+date
+read -p "[Entrée] pour continuer l'installation"
 # On nétoie
 rm -f /mnt/orchid/*.tar.gz
 cd /
