@@ -9,11 +9,11 @@ INSTALLATION
 
 https://linuxfromscratch.org/blfs/view/stable/general/blocaled.html
 version 0.4 testée avec Gnome 41
-```wget -c https://github.com/lfs-book/blocaled/releases/download/v0.4/
+`wget -c https://github.com/lfs-book/blocaled/releases/download/v0.4/
 tar xvpf blocaled-0.4.tar.xz
 cd blocaled-0.4
 ./configure --prefix=/usr --sysconfdir=/etc --with-localeconfig=/etc/env.d/02locale --with-keyboardconfig=/etc/conf.d/keymaps --with-xkbdconfig=/etc/X11/xorg.conf.d/10-keyboard.conf &&
-make```
+make`
 Now, as the root user:
 `make install`
 
