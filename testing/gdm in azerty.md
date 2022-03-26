@@ -5,20 +5,20 @@ orchid utilise elogind + OpenRC + Wayland avec un user "gdm" qui est actif lmors
 https://github.com/lfs-book/blocaled
 version 0.4
 
-############## INSTALLATION
+INSTALLATION
 
-# https://linuxfromscratch.org/blfs/view/stable/general/blocaled.html
-# version 0.4 testée avec Gnome 41
-wget -c https://github.com/lfs-book/blocaled/releases/download/v0.4/
+https://linuxfromscratch.org/blfs/view/stable/general/blocaled.html
+version 0.4 testée avec Gnome 41
+```wget -c https://github.com/lfs-book/blocaled/releases/download/v0.4/
 tar xvpf blocaled-0.4.tar.xz
 cd blocaled-0.4
 ./configure --prefix=/usr --sysconfdir=/etc --with-localeconfig=/etc/env.d/02locale --with-keyboardconfig=/etc/conf.d/keymaps --with-xkbdconfig=/etc/X11/xorg.conf.d/10-keyboard.conf &&
-make
-# Now, as the root user:
-make install
+make```
+Now, as the root user:
+`make install`
 
-# as root :
-cat > /etc/profile.d/i18n.sh << "EOF"
+as root :
+`cat > /etc/profile.d/i18n.sh << "EOF"
 # Begin /etc/profile.d/i18n.sh
 
 if [ -r /etc/env.d/02locale ]; then source /etc/env.d/02locale; fi
@@ -38,32 +38,32 @@ if [ -n "$LC_MEASUREMENT" ];    then export LC_MEASUREMENT; fi
 if [ -n "$LC_IDENTIFICATION" ]; then export LC_IDENTIFICATION; fi
 
 # End /etc/profile.d/i18n.sh
-EOF
+EOF`
 
 #as root:
-cat > /etc/locale.conf << EOF
+`cat > /etc/locale.conf << EOF
 # Begin /etc/locale.conf
 
 LANG=$LANG
 
 # End /etc/locale.conf
-EOF
+EOF`
 
-# FIXME: bug : the deamon search for /etc/X11/xorg.conf.d/30-keyboard.conf  , but we made clear at configure time it should use /etc/X11/xorg.conf.d/10-keyboard.conf
-# as root: 
-cp /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf  
+FIXME: bug : the deamon search for /etc/X11/xorg.conf.d/30-keyboard.conf  , but we made clear at configure time it should use /etc/X11/xorg.conf.d/10-keyboard.conf
+as root: 
+`cp /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf`
 
 
-# we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.
-# as root:
-source /etc/conf.d/keymaps &&
+we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.
+as root:
+`source /etc/conf.d/keymaps &&
 KEYMAP=${KEYMAP:-fr}          &&
 
 gdbus call --system                                             \
            --dest org.freedesktop.locale1                       \
            --object-path /org/freedesktop/locale1               \
            --method org.freedesktop.locale1.SetVConsoleKeyboard \
-           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
+           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true`
 
 
-##### INSTALLATION COMPLETED, you should now ba able to use gdm with french keyboard
+INSTALLATION COMPLETED, you should now ba able to use gdm with french keyboard
