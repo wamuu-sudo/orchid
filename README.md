@@ -25,6 +25,8 @@ Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
+Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/tools.md).
+
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
