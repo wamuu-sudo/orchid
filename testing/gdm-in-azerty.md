@@ -111,3 +111,12 @@ gdbus call --system                                             \
 ```
 
 INSTALLATION COMPLETED, you should now ba able to use gdm with french keyboard
+
+######################################
+
+Set GNOME in french for some $USER:
+
+as root
+```
+su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'fr')]\"" $USER
+```
