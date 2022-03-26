@@ -61,6 +61,7 @@ EOF
 ```
 
 FIXME: bug : the deamon search for /etc/X11/xorg.conf.d/30-keyboard.conf  , but we made clear at configure time it should use /etc/X11/xorg.conf.d/10-keyboard.conf
+
 as root: 
 ```
 cp /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
