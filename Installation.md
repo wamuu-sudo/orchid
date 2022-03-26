@@ -22,86 +22,59 @@ Les fichiers nécessaires à la vérification de l'intégrité sont disponibles 
 
 [Télécharger la version avec GUI](https://orchid.juline.tech/livegui-amd64-20220315T091810Z.iso) [~5Go]
 
-Il faut ensuite "graver" l'iso sur un CD ou une clé USB à l'aide d'outils comme BalenaEtcher ou Rufus.
-
-Une fois votre support d'installation bootable en main, vous pouvez démarrer sur celui-ci sur votre ordinateur.
+Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'outil comme BalenaEtcher ou encore Ventoy.
 
 ## Prérequis :
 
-Vérifier que la machine dispose du réseau, surtout d'Internet.
-
-Disposer d'une deuxième machine avec un client SSH est un plus (le copier coller sera plus facile).
+La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
 
 ## Préparer l'installation :
 
-Booter sur votre support.
+Vous pouvez démarrer sur votre support.
 
-Le Live CD charge les modules et démarre.
+Suivant l'ISO que vous aurez prise, vous aurez soit un environnement CLI, soit un environnement graphique.
 
-Une invite demande de sélectionner la langue. Je choisis 18 (fr).
-
-Le chargement est terminé lorsque le prompt livecd ~ # s'affiche.
-
-Si le clavier n'est pas en français :
+POur avoir un clavier français (voir fenêtre auverte en auto pour la version GUI) :
 
 ```
 loadkeys fr
 ```
 
-On vérifie que nous disposons bien d'une IP :
+Vérification de l'accès au réseau :
 
 ```
 ip a
 ```
 
-Si besoin, demander une IP à notre serveur DHCP :
+Si vous n'avez pas d'ip, vous pouvez relancer une requête à votre serveur DHCP :
 
 ```
 dhcpcd
 ```
 
-Dans le cas d'une interface wi-fi, on pourra utiliser l'outil semi-graphique :
+Si vous avez besoin du WiFi, l'ISO intègre un outil :
 
 ```
 net-setup
 ```
 
-## Configurer l'accès distant ssh (optionnel) :
-
-On démarre le service ssh :
-
-```
-/etc/init.d/sshd start
-```
-
-Et on initialise le mot de passe root :
-
-```
-passwd
-```
-
-Nous pouvons alors accéder à la machine depuis une autre via SSH.
-
 ## Partitionnement :
 
-Il existe plusieurs manières de partitionner son disque, avec des outils différents.
-
-Moi, je vais utiliser cfdisk, il est plus "facile" à utiliser que fdisk.
-
-Nous pouvons identifier le nom du disque si vous en avez plusieurs :
+Pour repérer le nom de votre disque, vous pouvez utiliser fdisk :
 
 ```
 fdisk -l
 ```
 
-Une fois que vous avez son nom (ex: sda ou nvme0n1), on peut lancer cfdisk avec la bonne valeur :
+Attention, le nom peut varier suivant la technologie employée (nvme ou sata) :
 
 ```
-cfdisk /dev/sdX
+cfdisk /dev/sdX ou cfdisk /dev/nvme0nX
 ```
 
-Voici le schéma recommandé :
+Voici le schéma recommandé pour une utilisation optimale :
 
+- Une partition d'une taille d'1Mo non formatée mais qui dispose du flag "Bios Boot". (Si installation BIOS)
 - Une partition EFI de 256Mo formatée en vfat (si UEFI uniquement).
 - Une partition swap de quelques Go, en général 2 ou 4Go.
 - Le reste de l'espace en ext4.
@@ -116,15 +89,15 @@ mkfs.ext4 /dev/sda3
 mkswap /dev/sda2
 ```
 
-Il faut ensuite monter les partitions :
+Il faut ensuite monter les partitions pour pouvoir travailler dessus:
 
-Pour la partition racine :
+Pour la partition root :
 
 ```
 mkdir /mnt/orchid && mount /dev/sda3 /mnt/orchid
 ```
 
-Activer le swap :
+Activation du swap :
 
 ```
 swapon /dev/sda2
@@ -136,13 +109,13 @@ La partition EFI (pas nécessaire si bios):
 mkdir -p /mnt/orchid/boot/EFI && mount /dev/sda1 /mnt/orchid/boot/EFI
 ```
 
-Vérifions la date du système (doit être à H-1) :
+Vérification de la date du système (doit être à H-1) :
 
 ```
 date
 ```
 
-Modifier si besoin la date et l'heure :
+Pour modifier la date si elle est incorrecte :
 
 ```
 date MMJJhhmmAAAA
@@ -172,13 +145,13 @@ Exemple:
 wget https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz
 ```
 
-Extraire ensuite l'archive : 
+Extraire l'archive téléchargée : 
 
 ```
 tar xvpf stage4-*.tar.gz --xattrs
 ```
 
-## Configuration essentielle avant le chroot :
+## Configuration préliminaire du système :
 
 On édite le fichier make.conf pour lui ajouter quelques options supplémentaires :
 
@@ -212,7 +185,7 @@ Enregistrez le fichier quand vous avez terminé.
 
 ## Montage et chroot :
 
-On monte ensuite les dossiers proc et dev dans /mnt/orchid :
+On monte ensuite les dossiers proc et dev dans /mnt/orchid, qui sont nécessaire au bon fonctionnement du chroot :
 
 ```
 mount -t proc /proc /mnt/orchid/proc
@@ -220,33 +193,31 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 ```
 
-On change l’environnement du live CD pour basculer vers l'environnement final.
-
-On chroot le système :
+On chroot dans le système temporaire :
 
 ```
 chroot /mnt/orchid /bin/bash
 ```
 
-On met à jour des variables d'environnement :
+Il faut mettre à jour certaines variables d'environnement :
 
 ```
 env-update && source /etc/profile
 ```
 
-Pour ne pas s’emmêler les pinceaux, on peut ajouter un repère à notre prompt pour bien distinguer que l'on est en chroot :
+Nous pouvons rajouter un indicateur au shell afin de réperer que nous sommes bien en chroot :
 
 ```
 export PS1="[chroot] $PS1"
 ```
 
-N'hésitez pas à voir si l'heure est bonne :
+On recheck la date :
 
 ```
 date
 ```
 
-Modifier si besoin la date et l'heure :
+Si elle est incorrecte, on l'a modifie à nouveau :
 
 ```
 date MMJJhhmmAAAA
@@ -254,13 +225,13 @@ date MMJJhhmmAAAA
 
 ## Fichier fstab :
 
-Editer le fichier fstab pour renseigner les partitions et leur point de montage :
+Le fichier qui suit est très important, si vous avez une erreur dans celui-ci, le système ne démarrera pas :
 
 ```
 nano -w /etc/fstab
 ```
 
-Exemple (avec les partitions exemples créées au début) :
+Exemple (avec les partitions exemples créées au début pour un disque nommée sda) :
 
 ```
 /dev/sda3               /               ext4            defaults,noatime         0 1
@@ -270,7 +241,7 @@ Exemple (avec les partitions exemples créées au début) :
 
 ## Définir le nom d'hôte :
 
- Configurer le nom d'hôte de la machine. Éditer le fichier hostname :
+ Pour modifier le nom de la machine :
 
 ```
 nano -w /etc/conf.d/hostname
@@ -278,33 +249,34 @@ nano -w /etc/conf.d/hostname
 
 ## Utilisateurs : 
 
-N'oublions pas le plus important, le mot de passe root : 
+Mettre un mot de passe à root : 
 
 ```
 passwd
 ```
 
-Il faut également créer un utilisateur non-priviligié : 
+Nous devons créer un utilisateur standard, pour pouvoir se connecter à votre futur environnement graphique: 
 
 ```
-useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash utilisateur
+useradd -m -G users,wheel,audio,video -s /bin/bash utilisateur
 ```
 
-Et créer son mot de passe :
+Il faut lui appliquer un mot de passe :
 
 ```
 passwd utilisateur
 ```
 
-## Configurer Grub :
+## Configurer l'amorçage du système :
 
-Pour installer Grub, on lance la commande : 
+Pour installer le bootloader Grub : 
 
 EFI :
 
 ```
-grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
+grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
 ```
+
 Ou Bios :
 
 ```
@@ -312,21 +284,10 @@ grub-install /dev/sdX
 ```
 
 
-Utilisez l'outil grub-mkconfig pour générer grub.cfg :
+Générer grub.cfg :
 
 ```
 grub-mkconfig -o /boot/grub/grub.cfg 
-```
-
-## Services à activer :
-
-Voici la liste des services à activer pour que le système fonctionne :
-
-```
-rc-update add display-manager default
-rc-update add dbus default
-rc-update add NetworkManager default
-rc-update add elogind boot
 ```
 
 ## Activation de DWM (concerne uniquement les versions DWM):
@@ -342,28 +303,28 @@ Slim lancera alors directement la session dwm.
 
 ## Finalisation :
 
-On sort du chroot : 
+On sort du système : 
 
 ```
 exit
 ```
 
-On supprime les fichiers précédemment téléchargés :
+Il faut supprimer l'archive téléchargée :
 
 ```
 rm -f /mnt/orchid/*.tar.gz
 ```
 
-On revient à la racine du live CD et on démonte tout ce dont on n'a plus besoin :
+Il faut démonter le système :
 
 ```
 cd /
 umount -R /mnt/orchid
 ```
 
-On reboot, on enlève le Live CD et on croise les doigts.
+Orchid est désormais installée.
 
-Voilà, Orchid est installée.
+On peut `reboot`.
 
 ## Usage de DWM :
 
@@ -390,6 +351,10 @@ Raccourci utiles sous DWM :
 
 Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://discord.gg/DeRhvP7M)
 
+
+## Source : 
+
+Ce document est basé sur le guide d'installation disponible sur Linuxtricks (https://www.linuxtricks.fr/wiki/installer-gentoo-facilement), disponible sous licence CC BY-SA.
 
 ## Contributeurs
 
