@@ -159,9 +159,10 @@ nano -w /mnt/orchid/etc/portage/make.conf
 
 Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :
 
-- Détection et optimisation de GCC en fonction de votre processeur.
+- Optimisation de GCC pour un système générique.
 - Utilisation des fonctions essentielles comme : Pulseaudio, networkmanager, ALSA.
 - Choix des pilotes propriétaires Nvidia.
+- Les locales françaises.
 
 Configuration du fichier make.conf :
 
