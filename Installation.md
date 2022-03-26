@@ -151,10 +151,10 @@ tar xvpf stage4-*.tar.gz --xattrs
 
 ## Configuration préliminaire du système :
 
-On édite le fichier make.conf pour lui ajouter quelques options supplémentaires :
+On édite le fichier make.conf pour modifier quelques options si elles ne vous conviennent pas :
 
 ```
-nano /mnt/orchid/etc/portage/make.conf
+nano -w /mnt/orchid/etc/portage/make.conf
 ```
 
 Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :
