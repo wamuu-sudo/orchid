@@ -120,3 +120,13 @@ as root
 ```
 su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', 'fr')]\"" $USER
 ```
+
+######################################
+
+To change wallpapers on GNOME:
+
+Modify this file
+
+```
+/usr/share/gnome-background-properties/gnome-backgrounds.xml
+```
