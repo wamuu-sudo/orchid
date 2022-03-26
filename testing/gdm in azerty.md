@@ -68,6 +68,7 @@ cp /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 ```
 
 we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.
+
 as root:
 ```
 source /etc/conf.d/keymaps &&
