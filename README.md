@@ -48,6 +48,6 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 - Vinceff : Documentation et mise en projet, directeur de la communication.
 - [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet.
-- Piaf_Jaune : Responsable look.
+- Piaf_Jaune : Responsable look et graphiste.
 - Kirik : Vérification de la documentation.
 - L'ensemble des membres du serveur [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
