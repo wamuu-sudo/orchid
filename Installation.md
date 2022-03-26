@@ -131,22 +131,22 @@ cd /mnt/orchid
 
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
-[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-standard-20032022-r1.tar.gz) [2.2Go]
+[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
 
-[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-20032022-r1.tar.gz) [2.9Go]
+[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
 
-[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r2.tar.gz) [2.8Go]
+[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
 
 Exemple:
 
 ```
-wget https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz
+wget https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2
 ```
 
 Extraire l'archive téléchargée : 
 
 ```
-tar xvpf stage4-*.tar.gz --xattrs
+tar -jxvpf stage4-*.tar.gz --xattrs
 ```
 
 ## Configuration préliminaire du système :
