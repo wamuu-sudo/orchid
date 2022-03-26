@@ -393,7 +393,7 @@ Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://dis
 
 ## Contributeurs
 
-- [Wamuu](https://github.com/wamuu-sudo) : Créateur du projet.
+- [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
 - Vinceff : Documentation et mise en projet, directeur de la communication.
 - [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet.
