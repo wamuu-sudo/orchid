@@ -347,6 +347,8 @@ Raccourci utiles sous DWM :
 
 ## Aller plus loin :
 
+Découvrez nos outils permettant une utilisation simple et rapide d'Orchid : [Nos outils](https://github.com/wamuu-sudo/orchid/blob/main/tools.md)
+
 Vous pouvez rejoindre notre serveur Discord : [Rejoindre le serveur](https://discord.gg/DeRhvP7M)
 
 
