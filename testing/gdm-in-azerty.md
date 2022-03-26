@@ -1,6 +1,35 @@
 Bug du clavier qwerty dans gdm avec orchid linux
 
-orchid utilise elogind + OpenRC + Wayland avec un user "gdm" qui est actif lmors de l'affichage de gdm.
+orchid utilise elogind + OpenRC (+ openrc-settingsd) + Wayland avec un user "gdm" qui est actif lmors de l'affichage de gdm.
+
+# Method using openrc-settingsd
+
+as root: 
+```
+mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
+```
+
+we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.
+
+as root:
+
+```
+source /etc/conf.d/keymaps &&
+KEYMAP=${KEYMAP:-fr}          &&
+
+gdbus call --system                                             \
+           --dest org.freedesktop.locale1                       \
+           --object-path /org/freedesktop/locale1               \
+           --method org.freedesktop.locale1.SetVConsoleKeyboard \
+           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
+```
+
+Now, gdm is using fr layout.
+
+
+##################
+# This method below using blocaled is broken on Orchid as we have openrc-settingsd and it conflict with blocaled, thus the FIXME: cp... below
+##################
 
 Upstream :
 https://github.com/lfs-book/blocaled
