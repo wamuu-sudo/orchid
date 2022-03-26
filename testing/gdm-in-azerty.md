@@ -89,7 +89,7 @@ LANG=$LANG
 EOF
 ```
 
-FIXME: bug : the deamon search for /etc/X11/xorg.conf.d/30-keyboard.conf  , but we made clear at configure time it should use /etc/X11/xorg.conf.d/10-keyboard.conf
+FIXME: bug : The reason is openrc-gsettingsd taking over blocaled. The deamon (openrc-gsettingsd) search for /etc/X11/xorg.conf.d/30-keyboard.conf , but we made clear at configure time (blocaled) it should use /etc/X11/xorg.conf.d/10-keyboard.conf
 
 as root: 
 ```
