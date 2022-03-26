@@ -12,7 +12,7 @@ Nous avons intégrer des commandes permettant l'utilisation et la maintenance du
 Il s'agit de l'outil principal car il permets de récupérer et de garder à jour tout les autres.
 Basiquement, cet outil synchronise les différents sous-repos d'Orchid :
 
-- Les fonds d'écrans.
+- Les fonds d'écrans. (d'origine diverses)
 - Les outils.
 - DWM si vous l'avez choisi.
 - Les outils gaming si vous les avez aussi.
