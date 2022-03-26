@@ -7,9 +7,9 @@
 # Script d'installation pour Orchid Linux
 #
 # Initialisation des URLs des archives
-DWM='https://orchid.juline.tech/stage4-orchid-dwm-standard-20032022-r1.tar.gz'
-DWM_GE='https://orchid.juline.tech/stage4-orchid-dwm-gaming-20032022-r1.tar.gz'
-Gnome='https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r2.tar.gz'
+DWM='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2'
+DWM_GE='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2'
+Gnome='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2'
 KDE='https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz'
 #
 # Disclaimer
@@ -127,7 +127,7 @@ then
 fi
 echo "Extraction de l'archive..."
 # Extraction de l'archive précédament télégrargée
-tar xvpf stage4-*.tar.gz --xattrs
+tar -jxvpf stage4-*.tar.gz --xattrs
 clear
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"

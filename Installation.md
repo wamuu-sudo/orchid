@@ -131,37 +131,38 @@ cd /mnt/orchid
 
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 
-[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwm-standard-20032022-r1.tar.gz) [2.2Go]
+[Version standard DWM](https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
 
-[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwm-gaming-20032022-r1.tar.gz) [2.9Go]
+[Version DWM Gaming Edition](https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
 
-[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnome-full-20032022-r2.tar.gz) [2.8Go]
+[Version Gnome complète](https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
 
 Exemple:
 
 ```
-wget https://orchid.juline.tech/stage4-orchid-dwm-gaming-19032022-r1.tar.gz
+wget https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2
 ```
 
 Extraire l'archive téléchargée : 
 
 ```
-tar xvpf stage4-*.tar.gz --xattrs
+tar -jxvpf stage4-*.tar.gz --xattrs
 ```
 
 ## Configuration préliminaire du système :
 
-On édite le fichier make.conf pour lui ajouter quelques options supplémentaires :
+On édite le fichier make.conf pour modifier quelques options si elles ne vous conviennent pas :
 
 ```
-nano /mnt/orchid/etc/portage/make.conf
+nano -w /mnt/orchid/etc/portage/make.conf
 ```
 
 Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :
 
-- Détection et optimisation de GCC en fonction de votre processeur.
+- Optimisation de GCC pour un système générique.
 - Utilisation des fonctions essentielles comme : Pulseaudio, networkmanager, ALSA.
 - Choix des pilotes propriétaires Nvidia.
+- Les locales françaises.
 
 Configuration du fichier make.conf :
 
@@ -362,7 +363,7 @@ Ce document est basé sur le guide d'installation disponible sur Linuxtricks (ht
 - Vinceff : Documentation et mise en projet, directeur de la communication.
 - [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet.
-- Piaf_Jaune : Responsable look.
+- Piaf_Jaune : Responsable look et graphiste.
 - Kirik : Vérification de la documentation.
 - L'ensemble des membres du serveur [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
 
