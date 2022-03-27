@@ -161,16 +161,16 @@ chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh &&
 # UEFI
 if [ "$ifbios" = "n" ]
 then
-	/mnt/orchid/UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name}
+	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name}
 # BIOS
 elif [ "$ifbios" = "y" ]
 then
-	/mnt/orchid/BIOS-install.sh ${ext4_name} ${swap_name}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
 then
-	/mnt/orchid/DWM-config.sh
+	chroot /mnt/orchid ./DWM-config.sh
 fi
 #
 #-----Fin de l'installation-----#
