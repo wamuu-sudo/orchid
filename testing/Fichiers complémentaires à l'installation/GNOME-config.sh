@@ -12,7 +12,7 @@ LANG_SYSTEM="${LANG:0:2}"
 read -p "Nom de l'utilisateur précédament créé : " username
 mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 source /etc/conf.d/keymaps &&
-KEYMAP=${KEYMAP:-${LANG_SYSTEM}}          &&
+KEYMAP=${LANG_SYSTEM}          &&
 
 gdbus call --system                                             \
            --dest org.freedesktop.locale1                       \
