@@ -127,7 +127,7 @@ then
 fi
 echo "Extraction de l'archive..."
 # Extraction de l'archive précédament télégrargée
-tar -jxvpf stage4-*.tar.gz --xattrs
+tar -jxvpf stage4-*.tar.bz2 --xattrs
 clear
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"
@@ -153,19 +153,19 @@ clear
 #
 #-----Montage et chroot-----#
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget 
-
+wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz"
+tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts éxécutables
 chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh && chmod -x /mnt/orchid/DWM-config.sh
 # Lancement des scripts en fonction du système
 # UEFI
 if [ "$ifbios" = "n" ]
 then
-	/mnt/orchid/UEFI-install.sh
+	/mnt/orchid/UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name}
 # BIOS
 elif [ "$ifbios" = "y" ]
 then
-	/mnt/orchid/BIOS-install.sh
+	/mnt/orchid/BIOS-install.sh ${ext4_name} ${swap_name}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
@@ -174,9 +174,9 @@ then
 fi
 #
 #-----Fin de l'installation-----#
-rm -f /mnt/orchid/*.tar.gz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh
+rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh
 cd /
 umount -R /mnt/orchid
-read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installat>
+read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémare pour démarer sur le système fraichement installé
 reboot
