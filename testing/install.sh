@@ -13,7 +13,8 @@ Gnome='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2'
 KDE='https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz'
 #
 # Disclaimer
-echo "L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les problèmes possibles et inimaginable"
+echo "L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les"
+echo "problèmes possibles et inimaginable"
 echo "qui pourrait arriver en installant Orchid Linux."
 echo "Lisez très attentivement les instructions"
 echo "Merci d'avoir choisi Orchid Linux !"
@@ -47,7 +48,7 @@ echo " - Une partition BIOS boot de 1Mo, en premier (si BIOS uniquement)"
 echo " - Une partition swap de quelques GO, en général 2 ou 4Go"
 echo " - Le reste en ext4 (linux file system)"
 echo ""
-read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez>
+read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez [Entrée] pour continuer"
 clear
 #
 # Lancement de cfdisk pour le partitionnement
