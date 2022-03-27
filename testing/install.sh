@@ -157,7 +157,7 @@ clear
 wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz"
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts éxécutables
-chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh && chmod -x /mnt/orchid/DWM-config.sh
+chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh && chmod -x /mnt/orchid/DWM-config.sh && chmod -x /mnt/orchid/GNOME-config.sh
 # Lancement des scripts en fonction du système
 # UEFI
 if [ "$ifbios" = "n" ]
@@ -172,10 +172,14 @@ fi
 if [ "$no_archive" = "1" ]
 then
 	chroot /mnt/orchid ./DWM-config.sh
+# Configuration clavier pour GNOME
+if [ "$no_archive" = "3" ]
+then
+    chroot /mnt/orchid ./GNOME-config.sh
 fi
 #
 #-----Fin de l'installation-----#
-rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh
+rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
 umount -R /mnt/orchid
 read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
