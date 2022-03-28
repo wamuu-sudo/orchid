@@ -5,7 +5,7 @@
 
 Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
-Version actuelle du projet : Alpha 1.0.2
+Version actuelle du projet : Alpha 1.0.3
 
 Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
 
@@ -22,6 +22,8 @@ De nouvelles éditions sont disponibles :
 - KDE Plasma (en test).
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
+
+Nous testons actuellement le noyau TKG (https://github.com/Frogging-Family/linux-tkg).
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
