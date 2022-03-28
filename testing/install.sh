@@ -154,7 +154,7 @@ clear
 #
 #-----Montage et chroot-----#
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz"
+wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts éxécutables
 chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh && chmod -x /mnt/orchid/DWM-config.sh && chmod -x /mnt/orchid/GNOME-config.sh
