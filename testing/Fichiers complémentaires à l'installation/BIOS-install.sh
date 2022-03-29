@@ -35,7 +35,7 @@ clear
 #-----Configuration de GRUB-----#
 echo "Configuration de GRUB :"
 # Installation de GRUB pour BIOS
-grub-install /dev/${disk_name}
+grub-install /dev/$3
 grub-mkconfig -o /boot/grub/grub.cfg
 read -p "[Entrée] pour continuer l'installation"
 clear
