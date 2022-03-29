@@ -166,7 +166,7 @@ then
 # BIOS
 elif [ "$ifbios" = "y" ]
 then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
