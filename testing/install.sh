@@ -153,6 +153,10 @@ read -p "[Entrée] pour continuer l'installation"
 clear
 #
 #-----Montage et chroot-----#
+echo "On monte les dossiers proc et dev pour le chroot."
+mount -t proc /proc /mnt/orchid/proc
+mount --rbind /dev /mnt/orchid/dev
+mount --rbind /sys /mnt/orchid/sys
 # Téléchargement et extraction des scripts d'install pour le chroot
 wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
