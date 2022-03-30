@@ -6,6 +6,12 @@
 # mars 2022
 # Script de configuration GNOME pour passer le clavier en AZERTY
 #
+# On prépare le chroot pour openrc-gsettingsd -> dbus
+mkdir -p /lib64/rc/init.d
+ln -s /lib64/rc/init.d /run/openrc
+touch /run/openrc/softlevel
+rc-update --update
+rc-service openrc-settingsd start
 # On récupère la langue du système
 if [ -r /etc/env.d/02locale ]; then source /etc/env.d/02locale; fi
 LANG_SYSTEM="${LANG:0:2}"
@@ -19,4 +25,5 @@ gdbus call --system                                             \
            --object-path /org/freedesktop/locale1               \
            --method org.freedesktop.locale1.SetVConsoleKeyboard \
            "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
-su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" $username
+# On lance dbus en shell
+dbus-run-session -- su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" $username
