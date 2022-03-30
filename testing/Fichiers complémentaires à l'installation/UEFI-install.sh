@@ -47,4 +47,3 @@ rc-update add display-manager default && rc-update add dbus default && rc-update
 echo ""
 read -p "[Entrée] pour terminer l'installation"
 clear
-exit

@@ -20,4 +20,3 @@ gdbus call --system                                             \
            --method org.freedesktop.locale1.SetVConsoleKeyboard \
            "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
 su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', ${LAND_SYSTEM})]\"" $username
-exit

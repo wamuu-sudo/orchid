@@ -6,4 +6,3 @@
 # Script de configuration de DWM
 #
 /usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
-exit

@@ -176,6 +176,7 @@ fi
 if [ "$no_archive" = "1" ]
 then
 	chroot /mnt/orchid ./DWM-config.sh
+fi
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "3" ]
 then
