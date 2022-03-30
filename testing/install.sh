@@ -12,12 +12,15 @@ DWM_GE='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2'
 Gnome='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2'
 KDE='https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz'
 #
+# Initialisation des couleurs
+COLOR_YELLOW="\033[0;33m"
+COLOR_RESET="\033[0m"
 # Disclaimer
-echo "L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les"
+echo -e "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les"
 echo "problèmes possibles et inimaginables"
 echo "qui pourrait arriver en installant Orchid Linux."
-echo "Lisez très attentivement les instructions"
-echo "Merci d'avoir choisi Orchid Linux !"
+echo -e "Lisez très attentivement les instructions"
+echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p " Pressez [Entrée] pour commencer l'installation"
 clear
@@ -39,7 +42,7 @@ echo "Partitionnement :"
 fdisk -l
 # Demande du non du disque à utiliser
 read -p "Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1) " disk_name
-echo "! ATTENTION ! toutes les données sur ${disk_name} seront effacées !"
+echo -e "${COLOR_YELLOW}! ATTENTION ! toutes les données sur ${disk_name} seront effacées !${COLOR_RESET}"
 echo ""
 read -p "Pressez [Entrée] pour continuer si vous avez pris conaisssance des risques..."
 echo "Voici le schéma recommandé :"
@@ -48,14 +51,14 @@ echo " - Une partition BIOS boot de 1Mo, en premier (si BIOS uniquement)"
 echo " - Une partition swap de quelques GO, en général 2 ou 4Go"
 echo " - Le reste en ext4 (linux file system)"
 echo ""
-read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez [Entrée] pour continuer"
+read -p "${COLOR_YELLOW}Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard${COLOR_RESET} ; pressez [Entrée] pour continuer"
 clear
 #
 # Lancement de cfdisk pour le partitionnement
 cfdisk /dev/${disk_name}
 clear
 #
-echo "Evitez de vous tromper lors des étapes qui suivent, sinon vous devrez recommencer."
+echo -e "${COLOR_YELLOW}Evitez de vous tromper lors des étapes qui suivent, sinon vous devrez recommencer.${COLOR_RESET}"
 echo ""
 read -p "Quel est le nom de la partition swap ? " swap_name
 read -p "quel est le nom de la partition ext4 ? " ext4_name
@@ -133,6 +136,8 @@ clear
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"
 echo ""
+echo -e "${COLOR_YELLOW}Lisez bien attentivement !${COLOR_RESET}"
+echo ""
 echo "Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on va définir les variables de notre future architecture (nombre de coeurs, carte vidéo, périphériques d'entrée, langue, choix des variables d'utilisation, etc... ). Par défaut, Orchid est déjà configurée avec les bonnes options par défaut :"
 echo " - Détection et optimisation de GCC en fonstion de votre CPU"
 echo " - Utilisation des fonctions essentielles comme Pulseaudio, networgmanager, ALSA."
@@ -145,7 +150,7 @@ echo ""
 echo "Par défaut Orchid supporte la majorité des cartes graphiques. Vous pouvez néanmoins supprimer celles que vous n'utilisez pas (bien garder fbdev et vesa !):"
 echo 'VIDEO_CARDS="fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi virtualbox vmware"'
 echo ""
-echo "N'oubliez pas d'enregistrer avant de fermer le fichier !"
+echo -e "${COLOR_YELLOW}N'oubliez pas d'enregistrer avant de fermer le fichier !${COLOR_RESET}"
 echo ""
 read -p "[Entrée] pour accéder au fichier"
 nano -w /mnt/orchid/etc/portage/make.conf
