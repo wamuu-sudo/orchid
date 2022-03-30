@@ -14,7 +14,7 @@ KDE='https://orchid.juline.tech/stage4-orchid-kde-20032022-r2.tar.gz'
 #
 # Disclaimer
 echo "L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les"
-echo "problèmes possibles et inimaginable"
+echo "problèmes possibles et inimaginables"
 echo "qui pourrait arriver en installant Orchid Linux."
 echo "Lisez très attentivement les instructions"
 echo "Merci d'avoir choisi Orchid Linux !"
@@ -39,7 +39,7 @@ echo "Partitionnement :"
 fdisk -l
 # Demande du non du disque à utiliser
 read -p "Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1) " disk_name
-echo "! ATTENTION ! toutes les données sur ${disk_name} seront éffacées !"
+echo "! ATTENTION ! toutes les données sur ${disk_name} seront effacées !"
 echo ""
 read -p "Pressez [Entrée] pour continuer si vous avez pris conaisssance des risques..."
 echo "Voici le schéma recommandé :"
@@ -153,11 +153,15 @@ read -p "[Entrée] pour continuer l'installation"
 clear
 #
 #-----Montage et chroot-----#
+echo "On monte les dossiers proc et dev pour le chroot."
+mount -t proc /proc /mnt/orchid/proc
+mount --rbind /dev /mnt/orchid/dev
+mount --rbind /sys /mnt/orchid/sys
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz"
+wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts éxécutables
-chmod -x /mnt/orchid/UEFI-install.sh && chmod -x  /mnt/orchid/BIOS-install.sh && chmod -x /mnt/orchid/DWM-config.sh && chmod -x /mnt/orchid/GNOME-config.sh
+chmod +x /mnt/orchid/UEFI-install.sh && chmod +x  /mnt/orchid/BIOS-install.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
 # Lancement des scripts en fonction du système
 # UEFI
 if [ "$ifbios" = "n" ]
@@ -166,12 +170,13 @@ then
 # BIOS
 elif [ "$ifbios" = "y" ]
 then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
 then
 	chroot /mnt/orchid ./DWM-config.sh
+fi
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "3" ]
 then
