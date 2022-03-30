@@ -19,10 +19,10 @@ COLOR_RESET="\033[0m"
 echo -e "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tout les"
 echo "problèmes possibles et inimaginables"
 echo "qui pourrait arriver en installant Orchid Linux."
-echo -e "Lisez très attentivement les instructions"
-echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
+echo "Lisez très attentivement les instructions"
+echo -e "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
-read -p " Pressez [Entrée] pour commencer l'installation"
+read -p "Pressez [Entrée] pour commencer l'installation"
 clear
 # Passage du clavier en AZERTY
 loadkeys fr
