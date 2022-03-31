@@ -24,6 +24,17 @@ echo -e "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez [Entrée] pour commencer l'installation"
 clear
+#-----Questions de configuration-----#
+# Choix du système
+echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standard) :"
+echo ""
+echo "  1) Version standard DWM [2.2Go]"
+echo "  2) Version DWM Gaming Edition [2.9Go]"
+echo "  3) Version Gnome [2.8Go]"
+echo "  4) Version KDE Plasma [3.5Go]"
+read no_archive
+echo ""
+read -p "Quel0est le nom de l'utilisateur que vous voulez créer : " username
 # Passage du clavier en AZERTY
 loadkeys fr
 # Check adresse IP
@@ -65,10 +76,10 @@ read -p "quel est le nom de la partition ext4 ? " ext4_name
 read -p "Utilisez-vous un système BIOS (=non UEFI) ? [y/n] " ifbios
 if [ "$ifbios" = n ]
 then
-        read -p "Quel est le nom de la partition EFI? " EFI_name
-        echo ""
-        echo "Formatage de la partition EFI..."
-        mkfs.vfat -F32 /dev/${EFI_name}
+  read -p "Quel est le nom de la partition EFI? " EFI_name
+  echo ""
+  echo "Formatage de la partition EFI..."
+  mkfs.vfat -F32 /dev/${EFI_name}
 fi
 #
 # Formatage des partitions
@@ -87,14 +98,14 @@ swapon /dev/${swap_name}
 # Pour l'EFI
 if [ "$ifbios" = n ]
 then
-        mkdir -p /mnt/orchid/boot/EFI && mount /dev/${EFI_name} /mnt/orchid/boot/EFI
+  mkdir -p /mnt/orchid/boot/EFI && mount /dev/${EFI_name} /mnt/orchid/boot/EFI
 fi
 # Vérification de la date et de l'heure
 date
 read -p "La date et l'heure sont elles correctes ? (format MMJJhhmmAAAA avec H -1) [y/n] " question_date
 if [ "$question_date" = "n" ]
 then
-        read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
+  read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA" date
 fi
 date ${date}
 date
@@ -106,33 +117,6 @@ clear
 #-----Installation du système-----#
 echo "Installation du système complet"
 cd /mnt/orchid
-# Choix du système
-echo ""
-echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standard) :"
-echo ""
-echo "  1) Version standard DWM [2.2Go]"
-echo "  2) Version DWM Gaming Edition [2.9Go]"
-echo "  3) Version Gnome [2.8Go]"
-echo "  4) Version KDE Plasma [3.5Go]"
-read no_archive
-# Télégrargement du fichier adéquat
-if [ "$no_archive" = "1" ]
-then
-        wget ${DWM}
-elif [ "$no_archive" = "2" ]
-then
-        wget ${DWM_GE}
-elif [ "$no_archive" = "3" ]
-then
-        wget ${Gnome}
-elif [ "$no_archive" = "4" ]
-then
-        wget ${KDE}
-fi
-echo "Extraction de l'archive..."
-# Extraction de l'archive précédament télégrargée
-tar -jxvpf stage4-*.tar.bz2 --xattrs
-clear
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"
 echo ""
@@ -156,6 +140,24 @@ read -p "[Entrée] pour accéder au fichier"
 nano -w /mnt/orchid/etc/portage/make.conf
 read -p "[Entrée] pour continuer l'installation"
 clear
+# Télégrargement du fichier adéquat
+if [ "$no_archive" = "1" ]
+then
+  wget ${DWM}
+elif [ "$no_archive" = "2" ]
+then
+  wget ${DWM_GE}
+elif [ "$no_archive" = "3" ]
+then
+  wget ${Gnome}
+elif [ "$no_archive" = "4" ]
+then
+  wget ${KDE}
+fi
+echo "Extraction de l'archive..."
+# Extraction de l'archive précédament télégrargée
+tar -jxvpf stage4-*.tar.bz2 --xattrs
+clear
 #
 #-----Montage et chroot-----#
 echo "On monte les dossiers proc et dev pour le chroot."
@@ -171,11 +173,11 @@ chmod +x /mnt/orchid/UEFI-install.sh && chmod +x  /mnt/orchid/BIOS-install.sh &&
 # UEFI
 if [ "$ifbios" = "n" ]
 then
-	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name}
+	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username}
 # BIOS
 elif [ "$ifbios" = "y" ]
 then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
@@ -185,7 +187,7 @@ fi
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "3" ]
 then
-    chroot /mnt/orchid ./GNOME-config.sh
+  chroot /mnt/orchid ./GNOME-config.sh
 fi
 #
 #-----Fin de l'installation-----#
