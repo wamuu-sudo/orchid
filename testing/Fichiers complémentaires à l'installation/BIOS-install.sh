@@ -7,7 +7,7 @@
 #
 # Initialisation des couleurs
 COLOR_YELLOW="\033[0;33m"
-COLOR_GREEN="\033[0;32m"
+COLOR_GREEN="\032[0;33m"
 COLOR_RESET="\033[0m"
 # MAJ des variables d'environement
 echo 'Mise à jour des variables d environement'

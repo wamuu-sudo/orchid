@@ -15,7 +15,7 @@ Gnome_GE='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-2
 # 
 # Initialisation des couleurs
 COLOR_YELLOW="\033[0;33m"
-COLOR_GREEN="\033[0;32m"
+COLOR_GREEN="\032[0;33m"
 COLOR_RESET="\033[0m"
 # Disclaimer
 echo -e "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
