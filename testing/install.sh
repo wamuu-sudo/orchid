@@ -33,7 +33,7 @@ echo ""
 echo -e "  ${COLOR_GREEN}1${COLOR_RESET}) Version standard DWM [2.2Go]"
 echo -e "  ${COLOR_GREEN}2${COLOR_RESET}) Version DWM Gaming Edition [2.9Go]"
 echo -e "  ${COLOR_GREEN}3${COLOR_RESET}) Version Gnome [2.8Go]"
-echo "${COLOR_YELLOW} Testing :"
+echo -e "${COLOR_YELLOW} Testing :"
 echo -e "          4${COLOR_RESET}) Version KDE Plasma [3.5Go]"
 echo -e "          ${COLOR_YELLOW}5${COLOR_RESET}) Version Gnome Gaming Edition [9.0Go]"
 read no_archive
