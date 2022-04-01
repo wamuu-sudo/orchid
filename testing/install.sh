@@ -15,7 +15,7 @@ Gnome_GE='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-2
 # 
 # Initialisation des couleurs
 COLOR_YELLOW="\033[0;33m"
-COLOR_GREEN="\032[0;33m"
+COLOR_GREEN="\033[0;32m"
 COLOR_RESET="\033[0m"
 # Disclaimer
 echo -e "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
@@ -30,12 +30,12 @@ clear
 # Choix du système
 echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standard) :"
 echo ""
-echo "  ${COLOR_GREEN}1${COLOR_RESET}) Version standard DWM [2.2Go]"
-echo "  ${COLOR_GREEN}2${COLOR_RESET}) Version DWM Gaming Edition [2.9Go]"
-echo "  ${COLOR_GREEN}3${COLOR_RESET}) Version Gnome [2.8Go]"
+echo -e "  ${COLOR_GREEN}1${COLOR_RESET}) Version standard DWM [2.2Go]"
+echo -e "  ${COLOR_GREEN}2${COLOR_RESET}) Version DWM Gaming Edition [2.9Go]"
+echo -e "  ${COLOR_GREEN}3${COLOR_RESET}) Version Gnome [2.8Go]"
 echo "${COLOR_YELLOW} Testing :"
-echo "          4) Version KDE Plasma [3.5Go]"
-echo "          5) Version Gnome Gaming Edition [9.0Go]${COLOR_RESET}"
+echo -e "          4${COLOR_RESET}) Version KDE Plasma [3.5Go]"
+echo -e "          ${COLOR_YELLOW}5${COLOR_RESET}) Version Gnome Gaming Edition [9.0Go]"
 read no_archive
 echo ""
 read -p "Quel est le nom de l'utilisateur que vous voulez créer : " username
@@ -82,22 +82,22 @@ if [ "$ifbios" = n ]
 then
   read -p "Quel est le nom de la partition EFI ? (ex : sda1) " EFI_name
   echo ""
-  echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI..."
+  echo -e "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI..."
   mkfs.vfat -F32 /dev/${EFI_name}
 fi
 #
 # Formatage des partitions
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap..."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap..."
 mkswap /dev/${swap_name}
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4..."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4..."
 mkfs.ext4 /dev/${ext4_name}
 clear
 #
 # Montage des partitions
-echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions..."
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine..."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions..."
+echo -e "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine..."
 mkdir /mnt/orchid && mount /dev/${ext4_name} /mnt/orchid
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du swap..."
+echo -e "  ${COLOR_GREEN}*${COLOR_RESET} Activation du swap..."
 swapon /dev/${swap_name}
 # Pour l'EFI
 if [ "$ifbios" = n ]
@@ -113,13 +113,13 @@ then
 fi
 date ${date}
 date
-echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 echo ""
 read -p "[Entrée] pour continuer l'installation."
 clear
 #
 #-----Installation du système-----#
-echo "${COLOR_GREEN}*${COLOR_RESET} Installation du système complet."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Installation du système complet."
 cd /mnt/orchid
 # Explication de la configuration à faire dans make.conf
 echo "Configuration essentielle avent le chroot:"
@@ -161,13 +161,13 @@ elif [ "$no_archive" = "5" ]
 then
   wget ${Gnome_GE}
 fi
-echo "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
 # Extraction de l'archive précédemment téléchargée
 tar -jxvpf stage4-*.tar.bz2 --xattrs
 clear
 #
 #-----Montage et chroot-----#
-echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
+echo -e "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
@@ -201,6 +201,6 @@ fi
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
 umount -R /mnt/orchid
-read -p "${COLOR_GREEN}*${COLOR_RESET} Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
+read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
