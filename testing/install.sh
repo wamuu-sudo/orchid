@@ -126,20 +126,13 @@ done
 # Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
 # We will use | as a separator for drivers, as we need to pass this to another script in the chroot, thus we avoid spaces in the string.
 # fbdev and vesa are required
-SELECTED_GPU_DRIVERS_TO_INSTALL="fbdev|vesa"
-j=0
+SELECTED_GPU_DRIVERS_TO_INSTALL="fbdev vesa"
 for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ ))
 do
   if [[ ! "${CHOICES[$i]}" == "${COLOR_RED}-${COLOR_RESET}" ]]; then
-    SELECTED_GPU_DRIVERS_TO_INSTALL+="|${GPU_DRIVERS[$i]}"
-    ((j++))
+    SELECTED_GPU_DRIVERS_TO_INSTALL+=" ${GPU_DRIVERS[$i]}"
   fi
 done
-}
-
-Replace_separator_with_space()
-{
-SELECTED_GPU_DRIVERS_TO_INSTALL_SPACES=${SELECTED_GPU_DRIVERS_TO_INSTALL//|/" "}
 }
 
 ###################################################
@@ -257,8 +250,8 @@ tar -jxvpf stage4-*.tar.bz2 --xattrs
 Line_Processors=$(sed -n '/MAKEOPTS/=' /mnt/orchid/etc/portage/make.conf)
 Line_VideoCards=$(sed -n '/VIDEO_CARDS/=' /mnt/orchid/etc/portage/make.conf)
 # Configuration de make.conf
-sed "${Line_Processors} c MAKEOPTS=\-j${PROCESSORS}" /mnt/orchid/etc/portage/make.conf
-sed "${Line_VideoCards} c VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL_SPACES}" /mnt/orchid/etc/portage/make.conf
+sed "${Line_Processors} c MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
+sed "${Line_VideoCards} c VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" /mnt/orchid/etc/portage/make.conf
 clear
 #
 #-----Montage et chroot-----#
