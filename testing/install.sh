@@ -288,7 +288,7 @@ then
 	chroot /mnt/orchid ./DWM-config.sh
 fi
 # Configuration clavier pour GNOME
-if [ "$no_archive" = "2" || "$no_archive" = "4" ]
+if [ "$no_archive" = "2" -o "$no_archive" = "4" ]
 then
   chroot /mnt/orchid ./GNOME-config.sh
 fi
