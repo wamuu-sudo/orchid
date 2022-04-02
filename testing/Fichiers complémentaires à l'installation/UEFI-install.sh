@@ -10,6 +10,9 @@
 COLOR_YELLOW="\033[0;33m"
 COLOR_GREEN="\033[0;32m"
 COLOR_RESET="\033[0m"
+# Récupération des variables du script précédent
+PROCESSORS="$5"
+SELECTED_GPU_DRIVERS_TO_INSTALL="$6"
 # MAJ des variables d'environnement
 echo -e "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
 env--update && source /etc/profile
@@ -30,10 +33,9 @@ echo -e "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo -e "  Mot de passe root :"
 passwd
 # Création d'un utilisateur non privilégié
-read -p "  Nom de l'utilisateur non-privilégié : " username
-useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
-echo "  Mot de passe de ${username} :"
-passwd ${username}
+useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash $4
+echo "  Mot de passe de $4 :"
+passwd $4
 echo ""
 read -p "[Entrée] pour continuer l'installation."
 clear
