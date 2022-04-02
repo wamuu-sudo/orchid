@@ -10,9 +10,6 @@
 COLOR_YELLOW="\033[0;33m"
 COLOR_GREEN="\033[0;32m"
 COLOR_RESET="\033[0m"
-# Récupération des variables du script précédent
-PROCESSORS="$5"
-SELECTED_GPU_DRIVERS_TO_INSTALL="$6"
 # MAJ des variables d'environnement
 echo -e "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
 env--update && source /etc/profile
