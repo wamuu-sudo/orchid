@@ -6,13 +6,22 @@
 # mars 2022
 # Script d'installation pour Orchid Linux
 #
-# Initialisation des URLs des archives
-DWM='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2'
-DWM_GE='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2'
-Gnome='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2'
-KDE='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz'
-Gnome_GE='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'
-# 
+
+# Available Orchid Linux versions
+ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
+ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' # DWM
+ORCHID_VERSION[1]="Version DWM Gaming Edition [2.9Go]"
+ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' # DWM_GE
+ORCHID_VERSION[2]="Version Gnome [2.8Go]"
+ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' # Gnome
+ORCHID_VERSION[3]="Version KDE Plasma [3.5Go]"
+ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
+ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome_GE
+
+CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
+
+# Colors
 COLOR_YELLOW=$'\033[0;33m'
 COLOR_GREEN=$'\033[0;32m'
 COLOR_RED=$'\033[0;31m'
@@ -20,6 +29,14 @@ COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
 # PASSWRD=""
+
+# Orchid version radiobox selector
+declare -a ORCHID_VERSION
+declare -a ORCHID_URL
+declare -a CHOICES_ORCHID
+ERROR_IN_ORCHID_SELECTOR=" "
+
+# GPU drivers selector
 ERROR_IN_SELECTOR=" "
 declare -a CHOICES
 declare -a GPU_DRIVERS
@@ -34,6 +51,50 @@ GPU_DRIVERS[4]="amdgpu"
 GPU_DRIVERS[5]="radeonsi"
 GPU_DRIVERS[6]="virtualbox"
 GPU_DRIVERS[7]="vmware"
+
+Cli_Orchid_selector()
+{
+echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
+for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ ))
+do
+  if [[ "${ORCHID_URL[$i]}" == *"testing"* ]]; then
+    echo "(${CHOICES_ORCHID[$i]:- }) Testing : ${COLOR_YELLOW}$(($i+1))${COLOR_RESET}) ${ORCHID_VERSION[$i]}"
+  else
+    echo "(${CHOICES_ORCHID[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${ORCHID_VERSION[$i]}"
+  fi
+done
+echo "$ERROR_IN_ORCHID_SELECTOR"
+}
+
+Select_Orchid_version_to_install()
+{
+clear
+while Cli_Orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+    clear
+      if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
+        ((NUM--))
+        #echo "**${CHOICES_ORCHID[$NUM]}**"
+        for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ ))
+        do
+          if [[ $NUM -eq $i ]]; then
+            CHOICES_ORCHID[$i]="${COLOR_GREEN}*${COLOR_RESET}"
+          else
+            CHOICES_ORCHID[$i]=""
+          fi
+        done
+        ERROR_IN_ORCHID_SELECTOR=" "
+      else
+          ERROR_IN_ORCHID_SELECTOR="Choix invalide : $NUM"
+      fi
+done
+# Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
+for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ ))
+do
+  if [[ "${CHOICES_ORCHID[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
+    no_archive=$i
+  fi
+done
+}
 
 Cli_selector()
 {
@@ -94,15 +155,7 @@ read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installa
 clear
 #-----Questions de configuration-----#
 # Choix du système
-echo "Choisissez l'archive du système qui vous convient (ex: 1 pour DWM standard) :"
-echo ""
-echo "  ${COLOR_GREEN}1${COLOR_RESET}) Version standard DWM [2.2Go]"
-echo "  ${COLOR_GREEN}2${COLOR_RESET}) Version DWM Gaming Edition [2.9Go]"
-echo "  ${COLOR_GREEN}3${COLOR_RESET}) Version Gnome [2.8Go]"
-echo "${COLOR_YELLOW} Testing :"
-echo "          4${COLOR_RESET}) Version KDE Plasma [3.5Go]"
-echo "          ${COLOR_YELLOW}5${COLOR_RESET}) Version Gnome Gaming Edition [9.0Go]"
-read no_archive
+Select_Orchid_version_to_install
 echo ""
 read -p "Quel est le nom de l'utilisateur que vous voulez créer : " username
 # Passage du clavier en AZERTY
@@ -195,22 +248,8 @@ PROCESSORS=$(grep -c processor /proc/cpuinfo)
 Select_GPU_drivers_to_install
 clear
 # Téléchargement du fichier adéquat
-if [ "$no_archive" = "1" ]
-then
-  wget ${DWM}
-elif [ "$no_archive" = "2" ]
-then
-  wget ${DWM_GE}
-elif [ "$no_archive" = "3" ]
-then
-  wget ${Gnome}
-elif [ "$no_archive" = "4" ]
-then
-  wget ${KDE}
-elif [ "$no_archive" = "5" ]
-then
-  wget ${Gnome_GE}
-fi
+echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement de la version d'Orchid Linux choisie."
+wget ${ORCHID_URL[$no_archive]}
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
 # Extraction de l'archive précédemment téléchargée
 tar -jxvpf stage4-*.tar.bz2 --xattrs
@@ -237,12 +276,13 @@ then
 	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username} ${PROCESSORS} ${SELECTED_GPU_DRIVERS_TO_INSTALL}
 fi
 # Configuration pour DWM
-if [ "$no_archive" = "1" ]
+# no_archive use computer convention: start at 0
+if [ "$no_archive" = "0" ]
 then
 	chroot /mnt/orchid ./DWM-config.sh
 fi
 # Configuration clavier pour GNOME
-if [ "$no_archive" = "3" || "$no_archive" = "5" ]
+if [ "$no_archive" = "2" || "$no_archive" = "4" ]
 then
   chroot /mnt/orchid ./GNOME-config.sh
 fi
