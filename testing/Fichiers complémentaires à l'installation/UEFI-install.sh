@@ -30,10 +30,9 @@ echo -e "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo -e "  Mot de passe root :"
 passwd
 # Création d'un utilisateur non privilégié
-read -p "  Nom de l'utilisateur non-privilégié : " username
-useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
-echo "  Mot de passe de ${username} :"
-passwd ${username}
+useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash $4
+echo "  Mot de passe de $4 :"
+passwd $4
 echo ""
 read -p "[Entrée] pour continuer l'installation."
 clear

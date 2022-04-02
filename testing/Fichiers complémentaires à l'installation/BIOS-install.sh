@@ -3,7 +3,7 @@
 #  - Chevek : vérifications et debuging
 #  - Wamuu : vérifications et test
 # mars 2022
-# Script d'installation pour UEFI en chroot
+# Script d'installation pour BIOS en chroot
 #
 # Initialisation des couleurs
 COLOR_YELLOW="\033[0;33m"
@@ -28,10 +28,9 @@ echo -e "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo "  Mot de passe root :"
 passwd
 # Création d'un utilisateur non privilégié
-read "  Nom de l'utilisateur non-privilégié : " username
-useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash ${username}
-echo "  Mot de passe de ${username} :"
-passwd ${username}
+useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash $4
+echo "  Mot de passe de $4 :"
+passwd $4
 echo ""
 read -p "[Entrée] pour continuer l'installation."
 clear
