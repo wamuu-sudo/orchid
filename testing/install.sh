@@ -10,14 +10,21 @@
 # Available Orchid Linux versions
 ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
 ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' # DWM
+COUNTED_BY_TREE[0]=326062 #dwms
 ORCHID_VERSION[1]="Version DWM Gaming Edition [2.9Go]"
 ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' # DWM_GE
+COUNTED_BY_TREE[1]=358613 #dwmgaming
 ORCHID_VERSION[2]="Version Gnome [2.8Go]"
 ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' # Gnome
+COUNTED_BY_TREE[2]=424438 #gnomefull
 ORCHID_VERSION[3]="Version KDE Plasma [3.5Go]"
 ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+COUNTED_BY_TREE[3]=744068 #kde
 ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
 ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome_GE
+COUNTED_BY_TREE[4]=436089 #gnome-ge
+
+BAR='=================================================='   # this is full bar, i.e. 50 chars
 
 CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
 
@@ -135,6 +142,27 @@ do
 done
 }
 
+Decompress_with_progress_bar()
+{
+while read line; do
+        pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE[$no_archive]} ))
+        pct_num=$(( $processed * 100 / ${COUNTED_BY_TREE[$no_archive]} ))
+        # Fail safe
+        if [ $pct_num -ge 100 ]; then
+          pct_num=99
+        fi
+        pct_num_pad="   $pct_num%"
+        pct_num_lengh=${#pct_num_pad}
+        position_to_trim=$(($pct_num_lengh - 4))
+        echo -ne "\r${pct_num_pad:$position_to_trim}[${BAR:0:$pct_dash}\033[<1>D>"
+        processed=$((processed+1))
+        # Fail safe
+        if [ $processed -ge ${COUNTED_BY_TREE[$no_archive]} ]; then
+          processed=$((${COUNTED_BY_TREE[$no_archive]} -1))
+        fi
+done
+}
+
 ###################################################
 # Script start here
 # Disclaimer
@@ -245,7 +273,26 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement de la version d'Orchid Linu
 wget ${ORCHID_URL[$no_archive]}
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
 # Extraction de l'archive précédemment téléchargée
-tar -jxvpf stage4-*.tar.bz2 --xattrs
+processed=0
+FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
+FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
+echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
+if [[ "$FILE_TO_DECOMPRESS" == *"dwmstandard"* ]]; then
+  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+elif [[ "$FILE_TO_DECOMPRESS" == *"dwmgaming"* ]]; then 
+  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+elif [[ "$FILE_TO_DECOMPRESS" = *"gnomefull"* ]]; then
+  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+elif [[ "$FILE_TO_DECOMPRESS" = *"kde"* ]]; then
+  tar -xvf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+elif [[ "$FILE_TO_DECOMPRESS" = *"gnome-gamingedition"* ]]; then
+  tar -xvf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+fi
+# Fail safe
+echo -ne "\r100%[${BAR:0:50}]"
+# new line
+echo -ne "\r\v"
+echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
 # Determination de la localisation des lignes à changer
 Line_Processors=$(sed -n '/MAKEOPTS/=' /mnt/orchid/etc/portage/make.conf)
 Line_VideoCards=$(sed -n '/VIDEO_CARDS/=' /mnt/orchid/etc/portage/make.conf)
