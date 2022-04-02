@@ -257,7 +257,7 @@ tar -jxvpf stage4-*.tar.bz2 --xattrs
 Line_Processors=$(sed -n '/MAKEOPTS/=' /mnt/orchid/etc/portage/make.conf)
 Line_VideoCards=$(sed -n '/VIDEO_CARDS/=' /mnt/orchid/etc/portage/make.conf)
 # Configuration de make.conf
-sed "${Line_Processors} c MAKEOPTS=\-j${PROCESSORS}" /mnt/orchid/etc/portage/make.conf
+sed "${Line_Processors} c MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
 sed "${Line_VideoCards} c VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL_SPACES}" /mnt/orchid/etc/portage/make.conf
 clear
 #
