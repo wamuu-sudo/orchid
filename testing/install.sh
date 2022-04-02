@@ -214,6 +214,9 @@ fi
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
 # Extraction de l'archive précédemment téléchargée
 tar -jxvpf stage4-*.tar.bz2 --xattrs
+# Configuration du make.conf
+sed '20 c\ MAKEOPTS=${PROCESSORS}' /mnt/orchid/etc/portage/make.conf # Ligne à déterminer
+sed '20 c\ VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL_SPACES}' /mnt/orchid/etc/portage/make.conf
 clear
 #
 #-----Montage et chroot-----#
@@ -230,11 +233,11 @@ chmod +x /mnt/orchid/UEFI-install.sh && chmod +x  /mnt/orchid/BIOS-install.sh &&
 # UEFI
 if [ "$ifbios" = "n" ]
 then
-	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username} ${PROCESSORS} ${SELECTED_GPU_DRIVERS_TO_INSTALL}
+	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username}
 # BIOS
 elif [ "$ifbios" = "o" ]
 then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username} ${PROCESSORS} ${SELECTED_GPU_DRIVERS_TO_INSTALL}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username}
 fi
 # Configuration pour DWM
 if [ "$no_archive" = "1" ]
