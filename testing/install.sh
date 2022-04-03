@@ -34,10 +34,6 @@ ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
 ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome_GE
 COUNTED_BY_TREE[4]=436089 #gnome-ge
 
-BAR='=================================================='   # this is full bar, i.e. 50 chars
-
-CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
-
 # Colors
 COLOR_YELLOW=$'\033[0;33m'
 COLOR_GREEN=$'\033[0;32m'
@@ -45,7 +41,10 @@ COLOR_RED=$'\033[0;31m'
 COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
-# PASSWRD=""
+
+CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
+
+BAR='=================================================='   # this is full bar, i.e. 50 chars
 
 # Orchid version radiobox selector
 declare -a ORCHID_VERSION
@@ -90,7 +89,6 @@ while Cli_Orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux a
     clear
       if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
         ((NUM--))
-        #echo "**${CHOICES_ORCHID[$NUM]}**"
         for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ ))
         do
           if [[ $NUM -eq $i ]]; then
@@ -104,7 +102,7 @@ while Cli_Orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux a
           ERROR_IN_ORCHID_SELECTOR="Choix invalide : $NUM"
       fi
 done
-# Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
+# Choice has been made by the user, now we need to populate no_archive
 for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ ))
 do
   if [[ "${CHOICES_ORCHID[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
