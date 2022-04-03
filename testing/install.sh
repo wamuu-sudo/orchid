@@ -300,8 +300,10 @@ echo -ne "\r100%[${BAR:0:50}]"
 echo -ne "\r\v"
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
 # Configuration de make.conf
-sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
-sed "/VIDEO_CARDS/c\VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" /mnt/orchid/etc/portage/make.conf
+sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf > tmp1.conf
+sed "/VIDEO_CARDS/c\VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" tmp1.conf > tmp2.conf
+cp tmp2.conf /mnt/orchid/etc/portage/make.conf
+rm -f tmp1.conf && rm -f tmp2.conf
 #
 #-----Montage et chroot-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
@@ -338,9 +340,6 @@ fi
 #-----Fin de l'installation-----#
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
-umount /mnt/orchid/dev
-umount /mnt/orchid/proc
-umount /mnt/orchid/sys
 if [ "$ifbios" = n ]
 then
   umount /mnt/orchid/boot/EFI
