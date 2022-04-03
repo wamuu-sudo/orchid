@@ -176,6 +176,7 @@ done
 ###################################################
 # Script start here
 # Disclaimer
+clear
 echo "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
 echo "problèmes possibles et inimaginables"
 echo "qui pourraient arriver en installant Orchid Linux."
@@ -183,13 +184,14 @@ echo "Lisez très attentivement les instructions."
 echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
-clear
+
 #-----Questions de configuration-----#
 # Choix du système
 Select_Orchid_version_to_install
 echo ""
-read -p "Quel est le nom de l'utilisateur que vous voulez créer : " username
+read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
 # Passage du clavier en AZERTY
+echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
 # Check adresse IP
 ip a
@@ -199,14 +201,13 @@ then
         # si non, en générer une
         dhcpcd
 fi
-clear
 #
 #------Partitionnement-----#
-echo "Partitionnement :"
+echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement :"
 # Affichage des différents disques
 fdisk -l
 # Demande du non du disque à utiliser
-read -p "Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1) " disk_name
+read -p "${COLOR_WHITE}Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1)${COLOR_RESET} " disk_name
 echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur ${disk_name} seront effacées !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer si vous avez pris conaisssance des risques..."
@@ -217,16 +218,14 @@ echo " - Une partition swap de quelques GO, en général 2 ou 4Go"
 echo " - Le reste en ext4 (linux file system)"
 echo ""
 read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-clear
 #
 # Lancement de cfdisk pour le partitionnement
 cfdisk /dev/${disk_name}
-clear
 #
 echo "${COLOR_YELLOW}Evitez de vous tromper lors des étapes qui suivent, sinon il faudra recommencer.${COLOR_RESET}"
 echo ""
-read -p "Quel est le nom de la partition swap ? (ex : sda2) " swap_name
-read -p "Quel est le nom de la partition ext4 ? (ex : sda3) " ext4_name
+read -p "${COLOR_WHITE}Quel est le nom de la partition swap ?${COLOR_RESET} (ex : sda2) " swap_name
+read -p "${COLOR_WHITE}Quel est le nom de la partition ext4 ?${COLOR_RESET} (ex : sda3) " ext4_name
 read -p "Utilisez-vous un système BIOS (non = UEFI) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ifbios
 if [ "$ifbios" = n ]
 then
@@ -237,11 +236,10 @@ then
 fi
 #
 # Formatage des partitions
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap..."
+echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 mkswap /dev/${swap_name}
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4..."
+echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
 mkfs.ext4 /dev/${ext4_name}
-clear
 #
 # Montage des partitions
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
@@ -267,23 +265,21 @@ fi
 #date
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 echo ""
-read -p "${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer l'installation."
-clear
 #
 #-----Installation du système-----#
 # echo "${COLOR_GREEN}*${COLOR_RESET} Installation du système complet."
-echo "Configuration essentielle avant le chroot:"
+echo "${COLOR_GREEN}*${COLOR_RESET} Configuration essentielle avant le chroot :"
 cd /mnt/orchid
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
 PROCESSORS=$(grep -c processor /proc/cpuinfo)
 Select_GPU_drivers_to_install
-clear
 # Téléchargement du fichier adéquat
 echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
 # Extraction de l'archive précédemment téléchargée
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
+# tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
 if [[ "$FILE_TO_DECOMPRESS" == *"dwmstandard"* ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
@@ -309,7 +305,6 @@ Line_VideoCards=$(sed -n '/VIDEO_CARDS/=' /mnt/orchid/etc/portage/make.conf)
 # Configuration de make.conf
 sed "${Line_Processors} c MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
 sed "${Line_VideoCards} c VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" /mnt/orchid/etc/portage/make.conf
-clear
 #
 #-----Montage et chroot-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
@@ -340,12 +335,19 @@ fi
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]
 then
-  chroot /mnt/orchid ./GNOME-config.sh
+  chroot /mnt/orchid ./GNOME-config.sh ${username}
 fi
 #
 #-----Fin de l'installation-----#
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
+umount /mnt/orchid/dev
+umount /mnt/orchid/proc
+umount /mnt/orchid/sys
+if [ "$ifbios" = n ]
+then
+  umount /mnt/orchid/boot/EFI
+fi
 umount -R /mnt/orchid
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
