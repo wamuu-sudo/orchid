@@ -33,7 +33,9 @@ COUNTED_BY_TREE[3]=744068 #kde
 ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
 ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome_GE
 COUNTED_BY_TREE[4]=436089 #gnome-ge
-
+ORCHID_VERSION[5]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
+ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-gnomegaming-systemd-latest.tar.bz2"
+COUNTED_BY_TREE[5]=452794 #gnomegaming-systemd
 # Colors
 COLOR_YELLOW=$'\033[0;33m'
 COLOR_GREEN=$'\033[0;32m'
@@ -277,24 +279,24 @@ PROCESSORS=$(grep -c processor /proc/cpuinfo)
 Select_GPU_drivers_to_install
 clear
 # Téléchargement du fichier adéquat
-echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement de la version d'Orchid Linux choisie."
-wget ${ORCHID_URL[$no_archive]}
-echo "${COLOR_GREEN}*${COLOR_RESET} Extraction de l'archive..."
+echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
 # Extraction de l'archive précédemment téléchargée
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
 echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
 if [[ "$FILE_TO_DECOMPRESS" == *"dwmstandard"* ]]; then
-  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
 elif [[ "$FILE_TO_DECOMPRESS" == *"dwmgaming"* ]]; then 
-  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
 elif [[ "$FILE_TO_DECOMPRESS" = *"gnomefull"* ]]; then
-  tar -jxvpf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
 elif [[ "$FILE_TO_DECOMPRESS" = *"kde"* ]]; then
-  tar -xvf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | Decompress_with_progress_bar
 elif [[ "$FILE_TO_DECOMPRESS" = *"gnome-gamingedition"* ]]; then
-  tar -xvf "$FILE_TO_DECOMPRESS" --xattrs 2>&1 | Decompress_with_progress_bar
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | Decompress_with_progress_bar
+elif [[ "$FILE_TO_DECOMPRESS" = *"gnomegaming-systemd"* ]]; then
+  wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
 fi
 # Fail safe
 echo -ne "\r100%[${BAR:0:50}]"
@@ -345,6 +347,6 @@ fi
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
 umount -R /mnt/orchid
-read -p "Installation terminée !, [Entrée] pour redémarer, pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
+read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
