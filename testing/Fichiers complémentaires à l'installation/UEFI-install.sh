@@ -1,10 +1,21 @@
 #!/usr/bin/env bash
 # Contributeurs :
 #  - Babilinx : code
-#  - Chevek : vérifications et debuging
+#  - Chevek : code
 #  - Wamuu : vérifications et test
 # mars 2022
 # Script d'installation pour UEFI en chroot
+#
+#Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo
+#This program is free software: you can redistribute it and/or modify it under
+#the terms of the GNU General Public License as published by the Free Software
+#Foundation, either version 3 of the License, or (at your option) any later
+#version.
+#This program is distributed in the hope that it will be useful, but WITHOUT
+#ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+#FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+#You should have received a copy of the GNU General Public License along with
+#this program. If not, see https://www.gnu.org/licenses/.
 #
 # Initialisation des couleurs
 COLOR_YELLOW="\033[0;33m"
