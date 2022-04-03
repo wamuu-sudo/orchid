@@ -27,7 +27,7 @@ Nous testons actuellement le noyau TKG (https://github.com/Frogging-Family/linux
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
-Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/tools.md).
+Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
 Caractéristiques principales d'Orchid :
 
