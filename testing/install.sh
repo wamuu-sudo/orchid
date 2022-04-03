@@ -299,12 +299,9 @@ echo -ne "\r100%[${BAR:0:50}]"
 # new line
 echo -ne "\r\v"
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
-# Determination de la localisation des lignes à changer
-Line_Processors=$(sed -n '/MAKEOPTS/=' /mnt/orchid/etc/portage/make.conf)
-Line_VideoCards=$(sed -n '/VIDEO_CARDS/=' /mnt/orchid/etc/portage/make.conf)
 # Configuration de make.conf
-sed "${Line_Processors} c MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
-sed "${Line_VideoCards} c VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" /mnt/orchid/etc/portage/make.conf
+sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
+sed "/VIDEO_CARDS/c\VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" /mnt/orchid/etc/portage/make.conf
 #
 #-----Montage et chroot-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
