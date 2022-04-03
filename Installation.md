@@ -146,7 +146,7 @@ wget https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2
 Extraire l'archive téléchargée : 
 
 ```
-tar -jxvpf stage4-*.tar.gz --xattrs
+tar -jxvpf stage4-*.tar.bz2 --xattrs
 ```
 
 ## Configuration préliminaire du système :
