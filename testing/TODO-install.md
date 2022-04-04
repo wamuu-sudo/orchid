@@ -5,7 +5,7 @@
   * Une font unicode pour la console (avec les symboles)
   * Autodémarrage du script
   * pv installé (pour de vraies barres de progression avec ETA)
-  * un meilleur support pour les VM ? (résolution graphique)
+  * une meilleure résolution graphique de la console ? Avec le noyau bin, voire support pour les VM ?
 
 ## INSTALLATEUR, PHASE I :
 * Les entrées utilisateur :
