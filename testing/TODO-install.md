@@ -42,7 +42,7 @@
     * Installation de grub (EFI ou BIOS)
     * Activation des services openrc
     * Post configuration des versions ( scripts DWM, GNOME & GDM dans la bonne langue, etc.)
-  * Hors chroot : on efface les scripts et l'archove stage 4
+  * Hors chroot : on efface les scripts et l'archive stage 4
   * umount tout (+ fermer les services openrc, systemd ?)
   * Ecran final "installation terminée, enlever le support et reboot [Entrée]"
   * reboot
