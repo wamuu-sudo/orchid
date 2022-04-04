@@ -18,10 +18,10 @@
 #this program. If not, see https://www.gnu.org/licenses/.
 
 # Available Orchid Linux versions
-ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
+ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
 ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' # DWM
 COUNTED_BY_TREE[0]=326062 #dwms
-ORCHID_VERSION[1]="Version DWM Gaming Edition [2.9Go]"
+ORCHID_VERSION[1]="Version DWM Gaming Edition [3.1Go]"
 ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' # DWM_GE
 COUNTED_BY_TREE[1]=358613 #dwmgaming
 ORCHID_VERSION[2]="Version Gnome [2.8Go]"
@@ -302,17 +302,17 @@ FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
-if [[ "$FILE_TO_DECOMPRESS" == *"dwmstandard"* ]]; then
+if [[ "$no_archive" == "0" ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$FILE_TO_DECOMPRESS" == *"dwmgaming"* ]]; then 
+elif [[ "$no_archive" == "1" ]]; then 
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$FILE_TO_DECOMPRESS" = *"gnomefull"* ]]; then
+elif [[ "$no_archive" == "2" ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$FILE_TO_DECOMPRESS" = *"kde"* ]]; then
+elif [[ "$no_archive" == "3" ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$FILE_TO_DECOMPRESS" = *"gnome-gamingedition"* ]]; then
+elif [[ "$no_archive" == "4" ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$FILE_TO_DECOMPRESS" = *"gnomegaming-systemd"* ]]; then
+elif [[ "$no_archive" == "5" ]]; then
   wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
 fi
 # Fail safe
