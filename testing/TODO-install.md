@@ -23,7 +23,7 @@
   * Récapitulatif avant d'effectuer tous les changements (+ RETOUR)
   * Dernier avertissement avant les changements ?
 ## INSTALLATEUR, PHASE II :
-* L'installation du système : à l'écran soit les retous sur les différentes étapes, soit un slide show (libcaca ?)
+* L'installation du système : à l'écran les retours sur les différentes étapes
   * Partitionnement (si automatisé)
   * On monte les partitions (/ + swap + EFI si besoin)
   * Téléchargement et extraction de la version d'Orchid
