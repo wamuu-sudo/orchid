@@ -20,21 +20,27 @@
 # Available Orchid Linux versions
 ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
 ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' # DWM
+ORCHID_COUNT[0]="https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.count"
 COUNTED_BY_TREE[0]=326062 #dwms
 ORCHID_VERSION[1]="Version DWM Gaming Edition [3.1Go]"
 ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' # DWM_GE
+ORCHID_COUNT[1]="https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.count"
 COUNTED_BY_TREE[1]=358613 #dwmgaming
 ORCHID_VERSION[2]="Version Gnome [2.4Go]"
 ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' # Gnome
+ORCHID_COUNT[2]="https://orchid.juline.tech/stage4-orchid-gnomefull-latest.count.txt"
 COUNTED_BY_TREE[2]=424438 #gnomefull
 ORCHID_VERSION[3]="Version KDE Plasma [3.3Go]"
 ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+#ORCHID_COUNT[3]=
 COUNTED_BY_TREE[3]=744068 #kde
 ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
-ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome_GE
+ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome GE
+#ORCHID_COUNT[4]=
 COUNTED_BY_TREE[4]=436089 #gnome-ge
 ORCHID_VERSION[5]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
-ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"
+ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2" # Gnome GE Systemd
+ORCHID_COUNT[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[5]=452794 #gnomegaming-systemd
 # Colors
 COLOR_YELLOW=$'\033[0;33m'
@@ -300,6 +306,9 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
+if [ -n "${ORCHID_COUNT[$no_archive]}" ]; then
+  COUNTED_BY_TREE[$no_archive]=$(wget -q -O- ${ORCHID_COUNT[$no_archive]})
+fi
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
 if [[ "$no_archive" == "0" ]]; then
@@ -322,7 +331,7 @@ echo -ne "\r\v"
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
 # Configuration de make.conf
 sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf > tmp1.conf
-sed "/VIDEO_CARDS/c\VIDEO_CARDS=${SELECTED_GPU_DRIVERS_TO_INSTALL}" tmp1.conf > tmp2.conf
+sed "/VIDEO_CARDS/c\VIDEO_CARDS=\"${SELECTED_GPU_DRIVERS_TO_INSTALL}\"" tmp1.conf > tmp2.conf
 cp tmp2.conf /mnt/orchid/etc/portage/make.conf
 rm -f tmp1.conf && rm -f tmp2.conf
 #
