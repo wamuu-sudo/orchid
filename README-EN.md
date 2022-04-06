@@ -4,24 +4,33 @@
 ![Orchid Logo](img/Orchid-Think.png)
 
 Orchid is a modern and well designed distro of Gentoo for PC and Laptop users
+
 Current version of the project : Beta 1.0.4
 
 We highly recommend joining our Discord server to be kept up-to-date with the updates, and an overall better support [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
+
 The idea behind this project is to deliver a usable GUI Gentoo install , with modern tools and a sleek design, while providing a fast installation.
+
 
 Side note, Gentoo isn't recommended for news linux users , but , trying it is an educative experience.
 
+
 Warning, eventhough this project is deployable and ready-to-use, issues can accure.
 
+
 New editions are availible :
+
 
 - DWM & DWM Gaming.
 - Gnome.
 - KDE Plasma (WIP).
 
+
 Gaming editions come bundled with 32bits libs , vulkan support , wine , and much more.
 
+
 We are currently testing the TKG Kernel (https://github.com/Frogging-Family/linux-tkg).
+
 An installation guide is availible  [here](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
 A documentation page about our tools is availible [here](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
