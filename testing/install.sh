@@ -170,7 +170,7 @@ while read line; do
         pct_num_pad="   $pct_num%"
         pct_num_lengh=${#pct_num_pad}
         position_to_trim=$(($pct_num_lengh - 4))
-        echo -ne "\r${pct_num_pad:$position_to_trim}[${BAR:0:$pct_dash}\033[<1>D>"
+        echo -ne "\r${pct_num_pad:$position_to_trim}[${BAR:0:$pct_dash}\033[D>"
         processed=$((processed+1))
         # Fail safe
         if [ $processed -ge ${COUNTED_BY_TREE[$no_archive]} ]; then
