@@ -31,9 +31,9 @@ Gaming editions come bundled with 32bits libs, vulkan support, wine, and much mo
 
 We are currently testing the TKG Kernel (https://github.com/Frogging-Family/linux-tkg).
 
-An installation guide is availible [here](https://github.com/juliiine/orchid/blob/main/Installation.md).
+An installation guide is availible [here](https://github.com/juliiine/orchid/blob/main/INSTALLATION-EN.md).
 
-A documentation page about our tools is availible [here](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
+A documentation page about our tools is availible [here](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS-EN.md).
 
 What makes Orchid different from other distros:
 
