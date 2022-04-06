@@ -348,7 +348,7 @@ DWM shortcuts :
 
 ## Go further : 
 
-Discover our useful tools : [Our tools](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md)
+Discover our useful tools : [Our tools](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS-EN.md)
 
 Join our discord server : [Join the server](https://discord.gg/DeRhvP7M)
 
