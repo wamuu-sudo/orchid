@@ -54,7 +54,8 @@ clear
 #-----Configuration de GRUB-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 # Installation de GRUB pour UEFI
-grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id=orchid_grub
+grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
+grub-mkconfig -o /boot/grub/grub.cfg
 read -p "${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer l'installation."
 clear
 #-----Activation des services-----#
