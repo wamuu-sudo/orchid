@@ -1,5 +1,5 @@
 # Orchid Linux 
-[Version Française](https://github.com/wamuu-sudo/orchid/README.md)
+[Version Française](https://github.com/wamuu-sudo/orchid/blob/main/README.md)
 
 ![Orchid Logo](img/Orchid-Think.png)
 
