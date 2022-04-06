@@ -203,20 +203,7 @@ read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installa
 Select_Orchid_version_to_install
 echo ""
 # Utilisateurs
-echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
 read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
-create_passwd "user_pass" ${username}
-# Vérification des mots de passe
-if [[ ${user_pass} != "${user_pass2}" ]]; then echo "${COLOR_YELLOW}Les moots de passe ne concordent pas, reéssayez.${COLOR_RESET}" && create_passwd "${username}_pass" ${username} fi
-echo ""
-echo "Utilisateur root : "
-create_passwd "root_pass" "root"
-# Vérification des mots de passe
-# User
-if [[ ${user_pass} != "${user_pass2}" ]]; then echo "${COLOR_YELLOW}Les moots de passe ne concordent pas, reéssayez.${COLOR_RESET}" && create_passwd "${username}_pass" ${username} fi
-# root
-if [[ ${root_pass} != "${root_pass2}" ]]; then echo "${COLOR_YELLOW}Les moots de passe ne concordent pas, reéssayez.${COLOR_RESET}" && create_passwd "root_pass" "root" fi
-echo ""
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
@@ -349,11 +336,11 @@ chmod +x /mnt/orchid/UEFI-install.sh && chmod +x  /mnt/orchid/BIOS-install.sh &&
 # UEFI
 if [ "$ifbios" = "n" ]
 then
-	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username} ${user_pass} ${root_pass}
+	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username}
 # BIOS
 elif [ "$ifbios" = "o" ]
 then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username} ${user_pass} ${root_pass}
+	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username}
 fi
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
