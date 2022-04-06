@@ -344,9 +344,9 @@ then
 fi
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
-if [ "$no_archive" = "0" ]
+if [ "$no_archive" = "0" -o "$no_archive" = "1" ]
 then
-	chroot /mnt/orchid ./DWM-config.sh
+	chroot /mnt/orchid ./DWM-config.sh ${username}
 fi
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]

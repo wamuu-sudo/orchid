@@ -16,4 +16,14 @@
 #You should have received a copy of the GNU General Public License along with
 #this program. If not, see https://www.gnu.org/licenses/.
 
-/usr/share/orchid/fonts/applyorchidfonts && /usr/share/orchid/desktop/dwm/set-dwm
+# Initialisation des couleurs
+COLOR_YELLOW=$'\033[0;33m'
+COLOR_GREEN=$'\033[0;32m'
+COLOR_RED=$'\033[0;31m'
+COLOR_LIGHTBLUE=$'\033[1;34m'
+COLOR_WHITE=$'\033[1;37m'
+COLOR_RESET=$'\033[0m'
+echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de DWM."
+runuser -l $1 -c "/usr/share/orchid/fonts/applyorchidfonts"
+runuser -l $1 -c "/usr/share/orchid/desktop/dwm/set-dwm"
+
