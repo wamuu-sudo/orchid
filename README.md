@@ -3,53 +3,51 @@
 
 ![Orchid Logo](img/Orchid-Think.png)
 
-Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
+Orchid is a modern and well designed distro of Gentoo for PC and Laptop users
+Current version of the project : Beta 1.0.4
 
-Version actuelle du projet : Beta 1.0.4
+We highly recommend joining our Discord server to be kept up-to-date with the updates, and an overall better support [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
+The idea behind this project is to deliver a usable GUI Gentoo install , with modern tools and a sleek design, while providing a fast installation.
 
-Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
+Side note, Gentoo isn't recommended for news linux users , but , trying it is an educative experience.
 
-L'idée derrière ce projet est de fournir un système Gentoo utilisable graphiquement, avec des outils modernes et un look sympa, tout cela avec une installation rapide.
+Warning, eventhough this project is deployable and ready-to-use, issues can accure.
 
-Pour rappel, Gentoo n'est pas conseillée si vous êtes débutant sous Linux, néanmoins, son utilisation est très pédagogique.
+New editions are availible :
 
-Attention, même si le projet est déployable et utilisable couramment, des problèmes peuvent survenir.
-
-De nouvelles éditions sont disponibles :
-
-- DWM et DWM Gaming.
+- DWM & DWM Gaming.
 - Gnome.
-- KDE Plasma (en test).
+- KDE Plasma (WIP).
 
-Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
+Gaming editions come bundled with 32bits libs , vulkan support , wine , and much more.
 
-Nous testons actuellement le noyau TKG (https://github.com/Frogging-Family/linux-tkg).
+We are currently testing the TKG Kernel (https://github.com/Frogging-Family/linux-tkg).
+An installation guide is availible  [here](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
-Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
+A documentation page about our tools is availible [here](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
-Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
+What makes Orchid different from other distros:
 
-Caractéristiques principales d'Orchid :
-
-- Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
-- Nous visons malgré tout les utilisateurs avancés, même si l'installation est moins fastidieuse.
-- Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
-- Tous les paquets de Gentoo sont disponibles.
-- Nous utilisons le noyau gentoo-kernel-bin, qui suit le canal stable LTS officiel de Linux. Un déblocage facilité est possible.
-- `eix` est installé par défaut.
-- L'environnement complet `orchid-dwm` avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox en binaire est aussi installé par défaut. Gnome et KDE Plasma sont aussi disponibles.
-- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. 
-- Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
+- We are not a complete OS per-say , but more of a Gentoo "rice".
+- We mostly focus on advanced users , even if the installation is less of a hastle.
+- For now , we do not have an install script , nor a graphical installer, the installation is done in CLI (faster and simpler than the default Gentoo experience)
+- All Gentoo packages are availible.
+- We use the gentoo-kernel-bin Kernel , which follows the LTS channel of linux. Thus making debuging easy and faster.
+- `eix` pre-installed.
+- A complet `orchid-dwm` environnement with X11 , and support for a large portion of graphic cards (except Optimus) . Firefox-bin pre-insalled. Also Cannonical Gnome and KDE Plasma are availible
+- Only OpenRC installs are availible, while SystemD is usable on Gentoo aswell.
+- We took the decision to integrate Flatpak by default for practicity raisons . It is also used for the Gaming tools in their respective editions. 
 
 
-Les différentes archives sont disponibles au travers des liens fournis dans le guide d'installation.
+Different archives are availible in the links provided in the installation guide.
 
-## Contributeurs
+## Contributors
 
-- [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
-- Vinceff : Documentation et mise en projet, directeur de la communication.
-- [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
-- [Babilinx](https://github.com/babilinx) : Optimisation du projet.
-- Piaf_Jaune : Responsable look et graphiste.
-- Kirik : Vérification de la documentation.
-- L'ensemble des membres du serveur [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
+- [Hydaelyn](https://github.com/wamuu-sudo) : Founder of the project.
+- Vinceff : Documentation & projet management , communication director.
+- [Chevek](https://github.com/chevek) : Gaming tools and Optimisation.
+- [Babilinx](https://github.com/babilinx) : Project Optimisation.
+- Piaf_Jaune : Graphiste & Look'n Feel.
+- Kirik : Documentation verfication.
+- [Crystaline on Methamphetamine](https://archenagechan.github.io) : English translation.
+- All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
