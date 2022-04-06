@@ -1,5 +1,5 @@
 # Orchid Linux 
-[English Version](https://github.com/wamuu-sudo/orchid/README-EN.md)
+[English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
 
 ![Orchid Logo](img/Orchid-Think.png)
 Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
