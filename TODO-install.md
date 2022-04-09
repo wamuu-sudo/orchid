@@ -20,6 +20,7 @@
   * Création de l'utilisateur avec les droits d'administration + son mot de passe + mot de passe pour root (validation du nom choisi + évaluation de la résistance du mot de passe ?) (+ RETOUR)
   * Choix des cartes graphiques (à automatiser plus tard, au moins au niveau du choix proposé) (+ RETOUR)
   * Choix du hostname (+ RETOUR)
+  * Choix de faire une maj complète à la fn de l'installation
   * Récapitulatif avant d'effectuer tous les changements (+ RETOUR)
   * Dernier avertissement avant les changements ?
 ## INSTALLATEUR, PHASE II :
@@ -42,6 +43,9 @@
     * Installation de grub (EFI ou BIOS)
     * Activation des services openrc
     * Post configuration des versions ( scripts DWM, GNOME & GDM dans la bonne langue, etc.)
+    * Ajout du dépot flathub.org pour flatpak
+    * Ajout des CPU_FLAGS au /etc/portage/make.conf
+    * Mise à jour du système si demandé par l'utilisateur (orchid-sync && orchid-update)
   * Hors chroot : on efface les scripts et l'archive stage 4
   * umount tout (+ fermer les services openrc, systemd ?)
   * Ecran final "installation terminée, enlever le support et reboot [Entrée]"
