@@ -2,9 +2,9 @@
 
 ![Orchid Logo](img/Orchid-Think.png)
 
-[Version Française](https://github.com/wamuu-sudo/orchid/blob/main/README.md)
+Orchid is a modern and well designed distro of Gentoo for PC and Laptop users.
 
-Orchid is a modern and well designed distro of Gentoo for PC and Laptop users
+[Version Française](https://github.com/wamuu-sudo/orchid/blob/main/README.md)
 
 Current version of the project : Beta 1.0.4
 
