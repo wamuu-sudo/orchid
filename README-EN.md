@@ -30,7 +30,7 @@ New editions are availible :
 Gaming editions come bundled with 32bits libs, vulkan support, wine, and much more.
 
 
-We are currently testing the TKG Kernel (https://github.com/Frogging-Family/linux-tkg).
+We are offer you , the users, the ability to install  the TKG Kernel (https://github.com/Frogging-Family/linux-tkg).
 
 An installation guide is availible [here](https://github.com/juliiine/orchid/blob/main/INSTALLATION-EN.md).
 
@@ -44,7 +44,9 @@ What makes Orchid different from other distros:
 - All Gentoo packages are availible.
 - We use the gentoo-kernel-bin Kernel, which follows the LTS channel of linux. Thus making debuging easy and faster.
 - `eix` pre-installed.
-- A complet `orchid-dwm` environnement with X11, and support for a large portion of graphic cards (except Optimus). Firefox-bin pre-insalled. Also Cannonical Gnome and KDE Plasma are availible
+- GNOME , KDE Plasma, and Suckless DWM availible for install.
+- A complete dwm environnement `orchid-dwm` availible for download with great optimisations and a sleek design.
+- Firefox pre-installed as a binary so you are ready to go ASAP.
 - Only OpenRC installs are available, while SystemD is usable on Gentoo aswell.
 - We took the decision to integrate Flatpak by default for practicity raisons. It is also used for the Gaming tools in their respective editions. 
 
@@ -58,5 +60,5 @@ Different archives are availible in the links provided in the installation guide
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification.
-- [Crystaline on Methamphetamine](https://archenagechan.github.io) : English translation.
+- [Crystal](https://archenagechan.github.io) : English translation.
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
