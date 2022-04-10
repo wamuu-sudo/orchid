@@ -3,6 +3,10 @@
 ## Branch strategy
 We use github-flow: https://docs.github.com/en/get-started/quickstart/github-flow
 
+The main branch is what we ship to users. It MUST be usable at all time.
+
+If you develop a new feature, use a new branch. Do the job and when it's ready for production and tested, ask for a pull request.
+
 ### Working on a feature within in branch:
 ```
 $ git branch my-feat  # create a branch named "my-feat"; use any name you like.
