@@ -50,6 +50,15 @@ Elle s'utilise comme suit :
  ```
 sudo orchid-update
  ```
+### orchid-update-sleep
+
+Cette commande permets la mise à jour du système et l'extinction du système à la fin, utile avant d'aller dormir.
+Basiquement, elle effectue un `eix-sync && emerge -avuDN @world && shutdown -h now`.
+
+Elle s'utilise comme suit :
+ ```
+sudo orchid-update-sleep
+ ```
 
 ### orchid-boot-update
 
@@ -81,6 +90,25 @@ Elle s'utilise comme suit :
  ```
 sudo orchid-nvidia
  ```
+### orchid-get-tkg
+
+Télécharge l'ensemble des prérequis à la mise en place du noyau TkG. Installe aussi les dépendances manquantes. Mets à jour les dernières versions disponibles.
+La commande à elle seule n'installe rien, il faut lancer la commande ci-dessous par la suite.
+
+Elle s'utilise comme suit :
+ ```
+sudo orchid-get-tkg
+ ```
+
+### orchid-set-tkg
+
+Vérifie les dernières versions du noyau, mets à jour le repo, et exécute le script d'installation et de compilation.
+
+Elle s'utilise comme suit :
+ ```
+sudo orchid-set-tkg
+ ```
+
 
 ## Contributeurs
 
