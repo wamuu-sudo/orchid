@@ -121,10 +121,10 @@ done
 
 Cli_selector()
 {
-echo "Choisissez les pilotes pour votre GPU à installer (par défaut, ils sont tous sélectionnés) :"
+echo "Choisissez les pilotes pour votre GPU à installer (par défaut, il n'y en a aucun) :"
 for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ ))
 do
-  echo "[${CHOICES[$i]:-${COLOR_GREEN}+${COLOR_RESET}}]" $(($i+1))") ${GPU_DRIVERS[$i]}"
+  echo "[${CHOICES[$i]:-${COLOR_RED}-${COLOR_RESET}}]" $(($i+1))") ${GPU_DRIVERS[$i]}"
 done
 echo "$ERROR_IN_SELECTOR"
 }
@@ -136,10 +136,10 @@ while Cli_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec le
     clear
       if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
           ((NUM--))
-          if [[ "${CHOICES[$NUM]}" == "${COLOR_RED}-${COLOR_RESET}" ]]; then
-              CHOICES[NUM]="${COLOR_GREEN}+${COLOR_RESET}"
-          else
+          if [[ "${CHOICES[$NUM]}" == "${COLOR_GREEN}+${COLOR_RESET}" ]]; then
               CHOICES[NUM]="${COLOR_RED}-${COLOR_RESET}"
+          else
+              CHOICES[NUM]="${COLOR_GREEN}+${COLOR_RESET}"
           fi
               ERROR_IN_SELECTOR=" "
       else
@@ -152,7 +152,7 @@ done
 SELECTED_GPU_DRIVERS_TO_INSTALL="fbdev vesa"
 for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ ))
 do
-  if [[ ! "${CHOICES[$i]}" == "${COLOR_RED}-${COLOR_RESET}" ]]; then
+  if [[ "${CHOICES[$i]}" == "${COLOR_GREEN}+${COLOR_RESET}" ]]; then
     SELECTED_GPU_DRIVERS_TO_INSTALL+=" ${GPU_DRIVERS[$i]}"
   fi
 done
