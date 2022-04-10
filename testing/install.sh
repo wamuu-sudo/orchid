@@ -230,7 +230,7 @@ fdisk -l
 read -p "${COLOR_WHITE}Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1)${COLOR_RESET} " disk_name
 echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur ${disk_name} seront effacées !${COLOR_RESET}"
 echo ""
-read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer si vous avez pris conaisssance des risques..."
+read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer si vous avez pris conaissance des risques..."
 echo "Voici le schéma recommandé :"
 echo " - Une partition EFI de 100Mo formatée en vfat (si UEFI uniquement)."
 echo " - Une partition BIOS boot de 1Mo, en premier (si BIOS uniquement)"
