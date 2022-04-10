@@ -19,6 +19,7 @@
   * Le choix de la version d'Orchid (présentation en liste, choix unique) (+ RETOUR)
   * Création de l'utilisateur avec les droits d'administration + son mot de passe + mot de passe pour root (validation du nom choisi + évaluation de la résistance du mot de passe ?) (+ RETOUR)
   * Choix des cartes graphiques (à automatiser plus tard, au moins au niveau du choix proposé) (+ RETOUR)
+    * Désélectionner les pilotes par défaut
   * Choix du hostname (+ RETOUR)
   * Choix de faire une maj complète à la fn de l'installation
   * Récapitulatif avant d'effectuer tous les changements (+ RETOUR)
