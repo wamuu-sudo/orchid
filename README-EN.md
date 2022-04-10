@@ -58,5 +58,5 @@ Different archives are availible in the links provided in the installation guide
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification.
-- [Crystaline on Methamphetamine](https://archenagechan.github.io) : English translation.
+- [Crystal](https://archenagechan.github.io) : English translation.
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
