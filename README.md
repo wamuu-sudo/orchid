@@ -5,7 +5,7 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 [English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
 
-Version actuelle du projet : Beta 1.0.4
+Version actuelle du projet : Beta 1.0.5
 
 Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
 
@@ -23,7 +23,7 @@ De nouvelles éditions sont disponibles :
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
 
-Nous testons actuellement le noyau TKG (https://github.com/Frogging-Family/linux-tkg).
+Nous proposons aussi l'installation du noyau TkG au travers de nos outils (https://github.com/Frogging-Family/linux-tkg).
 
 Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
 
@@ -37,7 +37,9 @@ Caractéristiques principales d'Orchid :
 - Tous les paquets de Gentoo sont disponibles.
 - Nous utilisons le noyau gentoo-kernel-bin, qui suit le canal stable LTS officiel de Linux. Un déblocage facilité est possible.
 - `eix` est installé par défaut.
-- L'environnement complet `orchid-dwm` avec X11 est installé par défaut, avec un large support de cartes graphique (sauf Optimus). Firefox en binaire est aussi installé par défaut. Gnome et KDE Plasma sont aussi disponibles.
+- Gnome, KDE Plasma, et DWM sont disponibles.
+- L'environnement complet `orchid-dwm` est disponible au téléchargement, avec des customisations sympatiques et un look moderne
+- Firefox en binaire est aussi installé par défaut.
 - Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. 
 - Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
@@ -48,8 +50,9 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 
 - [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
 - Vinceff : Documentation et mise en projet, directeur de la communication.
-- [Chevek](https://github.com/chevek) : Outils Gaming et optimisation.
-- [Babilinx](https://github.com/babilinx) : Optimisation du projet.
+- [Chevek](https://github.com/chevek) : Outils Gaming et optimisation, développeur du projet.
+- [Babilinx](https://github.com/babilinx) : Optimisation du projet et développeur du projet.
+- Crystal : Développeur du projet.
 - Piaf_Jaune : Responsable look et graphiste.
 - Kirik : Vérification de la documentation.
 - L'ensemble des membres du serveur [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
