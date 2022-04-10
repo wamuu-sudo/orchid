@@ -9,6 +9,7 @@ If you develop a new feature, use a new branch. Do the job and when it's ready f
 
 ### Working on a feature within in branch:
 ```
+$ git pull origin main  # sync your local main copy with github
 $ git branch my-feat  # create a branch named "my-feat"; use any name you like.
 $ git checkout my-feat   # change to the new branch
 
