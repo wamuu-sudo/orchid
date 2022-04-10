@@ -178,12 +178,15 @@ while read line; do
         fi
 done
 }
-create_passwd() # Spécifier le nom de la variable pour $1 et le nom de l'utilisateur en $2
+
+Test_internet_access()
 {
-	echo "${COLOR_WHITE}Saisisez le mot de passe pour l'utilisateur ${2} : ${COLOR_YELLOW}(le mot de passe n'apparaîtrera pas)${COLOR_RESET}"
-	read -s ${1}
-	echo "${COLOR_WHITE} Resaisisez le mot de passe pour le confirmer :${COLOR_RESET}"
-	read -s ${1}2
+if ping -c 1 82.65.199.131 &> /dev/null # This is orchid.juline.tech
+then
+  test_ip=1 # we have internet access
+else
+  test_ip=0 # we don't have internet access
+fi
 }
 
 ###################################################
@@ -197,8 +200,18 @@ echo "Lisez très attentivement les instructions."
 echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
-
 #-----Questions de configuration-----#
+# Check inet connection
+Test_internet_access
+while [ $test_ip = 0 ]
+do
+  echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
+  # si non, en générer une
+  read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+  dhcpcd
+  Test_internet_access
+done
+echo "${COLOR_GREEN}*${COLOR_RESET} Test de la connection internet OK."
 # Choix du système
 Select_Orchid_version_to_install
 echo ""
@@ -207,14 +220,6 @@ read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer :
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
-# Check adresse IP
-ip a
-read -p "Disposez-vous d'une adresse IP ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " question_IP
-if [ "$question_ip" = "n" ]
-then
-        # si non, en générer une
-        dhcpcd
-fi
 #
 #------Partitionnement-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement :"
