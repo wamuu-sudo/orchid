@@ -3,10 +3,11 @@
 #  - Babilinx : code
 #  - Chevek : code
 #  - Wamuu : vérifications et test
+#  - Crystal : code
 # mars 2022
 # Script d'installation pour Orchid Linux
 #
-#Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo
+#Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
 #This program is free software: you can redistribute it and/or modify it under
 #the terms of the GNU General Public License as published by the Free Software
 #Foundation, either version 3 of the License, or (at your option) any later
