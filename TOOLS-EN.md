@@ -51,6 +51,15 @@ And its used like so:
  ```
 sudo orchid-update
  ```
+### orchid-update-sleep
+
+This tool lets you update the WHOLE system, and shutdown your device after the install
+Basically, an alias for `eix-sync && emerge -avuDN @world && shutdown -h now `.
+
+And its used like this:
+```
+sudo orchid-update-sleep
+```
 
 ### orchid-boot-update
 
@@ -76,12 +85,29 @@ sudo orchid-kernel-up
 ### orchid-nvidia
 
 This command let you use the newest and latest nvidia drivers.
-On it own , this tool doesn't install anything, we need to launch a system update after that.
+On it own, this tool doesn't install anything, we need to launch a system update after that.
 
 And its used like so:
  ```
 sudo orchid-nvidia
  ```
+### orchid-get-tkg (NEW!!)
+
+This command downloads all the dependencies, tools and files you need for a working linux-tkg experience and update the existing install if found 
+By it own, this command does nothing apparent, so you will have to run the `orchid-set-tkg`
+
+Usage:
+```
+sudo orchid-get-tkg
+```
+
+### orchid-set-tkg (NEW!!)
+This command needs to be ran after the `orchid-get-tkg` command to update the kernel version, sync the repo, and runs the setup and compilation script.
+
+This tool is to be used like this:
+```
+sudo orchid-set-tkg
+```
 
 ## Contributors
 
