@@ -8,7 +8,7 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 Comme nous n'avons pas d'iso spécifique, nous utiliserons l'iso de Gentoo.
 
-À noter que vous avez deux versions ci-dessous, avec ou sans interface graphique.
+À noter que vous avez deux versions ci-dessous sont avec ou sans interface graphique.
 
 Veuillez-noter que la version avec interface graphique n'est pas du tout représentative du bureau que vous aurez.
 
@@ -27,6 +27,8 @@ Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'ou
 ## Prérequis :
 
 La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
+
+Avoir XX Go disponibles
 
 ## Préparer l'installation :
 
@@ -74,10 +76,14 @@ cfdisk /dev/sdX ou cfdisk /dev/nvme0nX
 
 Voici le schéma recommandé pour une utilisation optimale :
 
-- Une partition d'une taille d'1Mo non formatée mais qui dispose du flag "Bios Boot". (Si installation BIOS)
-- Une partition EFI de 256Mo formatée en vfat (si UEFI uniquement).
-- Une partition swap de quelques Go, en général 2 ou 4Go.
-- Le reste de l'espace en ext4.
+Si installation BIOS :
+- Une partition d'une taille d'1Mo non formatée mais qui dispose du flag "Bios Boot". (/dev/sda1 ou /dev/nvme0n1)
+
+Si UEFI uniquement :
+- Une partition EFI de 256Mo formatée en vfat. (/dev/sda1 ou /dev/nvme0n1)
+PUIS :
+- Une partition swap de quelques Go, en général 2 ou 4 Go. (/dev/sda2 ou /dev/nvme0n2)
+- Le reste de l'espace en ext4. (/dev/sda3 ou /dev/nvme0n3)
 
 L'utilisation de cfdisk étant assez facile, elle n'est pas traitée ici.
 
@@ -109,7 +115,7 @@ Pour la partition EFI (pas nécessaire si bios):
 mkdir -p /mnt/orchid/boot/EFI && mount /dev/sda1 /mnt/orchid/boot/EFI
 ```
 
-Vérification de la date du système (doit être à H-1) :
+Vérification de la date du système (doit être à H-1 ou H-2 si heure d'été) :
 
 ```
 date
