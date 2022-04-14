@@ -8,13 +8,13 @@ Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de b
 
 Comme nous n'avons pas d'iso spécifique, nous utiliserons l'iso de Gentoo.
 
-A noter que vous avez deux versions ci-dessous, avec ou sans interface graphique.
+À noter que vous avez deux versions ci-dessous, avec ou sans interface graphique.
 
 Veuillez-noter que la version avec interface graphique n'est pas du tout représentative du bureau que vous aurez.
 
 Elle a été implémentée pour permettre de suivre graphiquement ce guide d'installation tout en installant le système.
 
-Ces ISOS sont fournies par Gentoo, et nous n'en sommes pas responsable.
+Ces ISOs sont fournies par Gentoo, et nous n'en sommes pas responsable.
 
 Les fichiers nécessaires à la vérification de l'intégrité sont disponibles sur le [miroir](https://orchid.juline.tech).
 
@@ -22,7 +22,7 @@ Les fichiers nécessaires à la vérification de l'intégrité sont disponibles 
 
 [Télécharger la version avec GUI](https://orchid.juline.tech/livegui-amd64-20220315T091810Z.iso) [~5Go]
 
-Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'outil comme BalenaEtcher ou encore Ventoy.
+Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'outils comme BalenaEtcher ou encore Ventoy.
 
 ## Prérequis :
 
@@ -34,7 +34,7 @@ Vous pouvez démarrer sur votre support.
 
 Suivant l'ISO que vous aurez prise, vous aurez soit un environnement CLI, soit un environnement graphique.
 
-POur avoir un clavier français (voir fenêtre auverte en auto pour la version GUI) :
+Pour avoir un clavier français (voir fenêtre ouverte en auto pour la version GUI) :
 
 ```
 loadkeys fr
@@ -103,7 +103,7 @@ Activation du swap :
 swapon /dev/sda2
 ```
 
-La partition EFI (pas nécessaire si bios):
+Pour la partition EFI (pas nécessaire si bios):
 
 ```
 mkdir -p /mnt/orchid/boot/EFI && mount /dev/sda1 /mnt/orchid/boot/EFI
@@ -166,7 +166,7 @@ Le fichier /etc/portage/make.conf est le fichier de configuration dans lequel on
 
 Configuration du fichier make.conf :
 
-Ici, il faudra juste changer votre nombre de coeurs pour qu'Orchid tire le meilleur profit de votre processeur :
+Ici, il faudra juste changer votre nombre de coeurs pour qu'Orchid tire au mieux profit de votre processeur :
 
 ```
 MAKEOPTS="-jX" X étant votre nombre de coeurs 
@@ -216,7 +216,7 @@ On recheck la date :
 date
 ```
 
-Si elle est incorrecte, on l'a modifie à nouveau :
+Si elle est incorrecte, on la modifie à nouveau :
 
 ```
 date MMJJhhmmAAAA
@@ -224,7 +224,7 @@ date MMJJhhmmAAAA
 
 ## Fichier fstab :
 
-Le fichier qui suit est très important, si vous avez une erreur dans celui-ci, le système ne démarrera pas :
+Le fichier qui suit est très important ! Si vous avez une erreur dans celui-ci, le système ne démarrera pas :
 
 ```
 nano -w /etc/fstab
@@ -240,7 +240,7 @@ Exemple (avec les partitions exemples créées au début pour un disque nommée 
 
 ## Définir le nom d'hôte :
 
- Pour modifier le nom de la machine :
+Pour modifier le nom de la machine :
 
 ```
 nano -w /etc/conf.d/hostname
@@ -254,7 +254,7 @@ Mettre un mot de passe à root :
 passwd
 ```
 
-Nous devons créer un utilisateur standard, pour pouvoir se connecter à votre futur environnement graphique: 
+Nous devons créer un utilisateur standard pour pouvoir se connecter à votre futur environnement graphique : 
 
 ```
 useradd -m -G users,wheel,audio,video -s /bin/bash utilisateur
