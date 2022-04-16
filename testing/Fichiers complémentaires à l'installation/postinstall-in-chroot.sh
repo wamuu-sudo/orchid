@@ -32,7 +32,7 @@ USERNAME=$3
 
 # MAJ des variables d'environnement
 echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
-env--update && source /etc/profile
+env-update && source /etc/profile
 clear
 # Configuration de fstab
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
