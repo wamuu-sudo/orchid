@@ -115,7 +115,7 @@ sudo orchid-set-tkg
 - Vinceff : Documentation & projet management , communication director.
 - [Chevek](https://github.com/chevek) : Gaming tools and Optimisation.
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
+- [Crystal](https://crystal-td.github.io) : English translation
 - Piaf_Jaune : Graphist & Look'n Feel.
-- Kirik : Documentation verification.
-- [Crystal](https://archenagechan.github.io) : English translation.
+- Kirik : Documentation verification..
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
