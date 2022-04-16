@@ -77,6 +77,11 @@ GPU_DRIVERS[5]="radeonsi"
 GPU_DRIVERS[6]="virtualbox"
 GPU_DRIVERS[7]="vmware"
 
+CHOICES_DISK[0]="${COLOR_GREEN}*${COLOR_RESET}"
+# Disks radiobox selector
+declare -a CHOICES_DISK
+ERROR_IN_DISK_SELECTOR=" "
+
 Cli_Orchid_selector()
 {
 echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
@@ -190,6 +195,97 @@ else
 fi
 }
 
+Cli_disk_selector()
+{
+echo "Choisissez le disque sur lequel vous souhaitez installer Orchid Linux :"
+echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur le disque choisi seront effacées !${COLOR_RESET}"
+for (( i = 0; i < ${#DISKS[@]}; i++ ))
+do
+  if [[ ${CHOICES_DISK[$i]} == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
+    echo "(${CHOICES_DISK[$i]:- }) ${COLOR_GREEN}$(($i+1))) ${DISKS[$i]}${COLOR_RESET}"
+  else
+    echo "(${CHOICES_DISK[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${DISKS[$i]}"
+  fi
+  
+done
+echo "$ERROR_IN_DISK_SELECTOR"
+}
+
+Select_disk_to_install()
+{
+clear
+while Cli_disk_selector && read -rp "Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+  clear
+  if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#DISKS[@]} ]]; then
+    ((NUM--))
+      for (( i = 0; i < ${#DISKS[@]}; i++ ))
+      do
+        if [[ $NUM -eq $i ]]; then
+          CHOICES_DISK[$i]="${COLOR_GREEN}*${COLOR_RESET}"
+        else
+          CHOICES_DISK[$i]=""
+        fi
+      done
+      ERROR_IN_DISK_SELECTOR=" "
+    else
+      ERROR_IN_DISK_SELECTOR="Choix invalide : $NUM"
+  fi
+done
+# Choice has been made by the user, now we need to populate $CHOOSEN_DISK and $CHOOSEN_DISK_LABEL (human readable)
+for (( i = 0; i < ${#DISKS[@]}; i++ ))
+do
+  if [[ "${CHOICES_DISK[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
+    CHOOSEN_DISK=${DISKS_LABEL[$i]}
+    CHOOSEN_DISK_LABEL=${DISKS[$i]}
+  fi
+done
+}
+
+Default_swap_size()
+{
+SWAP=$(awk "BEGIN {printf \"%.${prec}f\n\", sqrt($MEM_TOTAL_GB)}") # round(sqrt(RAM))
+}
+
+Auto_partitionning_full_disk()
+{
+SFDISK_CONFIG="label: gpt
+"  # We only do GPT
+SFDISK_CONFIG+="device: ${CHOOSEN_DISK}
+"
+if [ "$ROM" = "UEFI" ]
+then
+  SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=512M,type=uefi
+" # EFI System
+  SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP}G,type=swap
+" # Linux swap
+  SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+" # Linux filesystem data
+elif [ "$ROM" = "BIOS" ]
+then
+  SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
+" # BIOS Boot partition
+  SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP}G,type=swap
+" # Linux swap
+  SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+" # Linux filesystem data
+fi
+echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
+#echo "**$SFDISK_CONFIG**"
+echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
+if [ "$ROM" = "UEFI" ]
+then
+  echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
+  mkfs.vfat -F32 "${CHOOSEN_DISK}1"
+  #echo "**${CHOOSEN_DISK}1**"
+fi
+echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
+mkswap "${CHOOSEN_DISK}2"
+#echo "**${CHOOSEN_DISK}2**"
+echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
+mkfs.ext4 "${CHOOSEN_DISK}3"
+#echo "**${CHOOSEN_DISK}3**"
+}
+
 ###################################################
 # Script start here
 # Disclaimer
@@ -202,6 +298,12 @@ echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
 #-----Questions de configuration-----#
+MEM_TOTAL_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
+if [ $MEM_TOTAL_GB -lt 2 ]
+then
+  echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
+  exit
+fi
 # Check inet connection
 Test_internet_access
 while [ $test_ip = 0 ]
@@ -216,63 +318,93 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Test de la connection internet OK."
 # Choix du système
 Select_Orchid_version_to_install
 echo ""
-# Utilisateurs
-read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
 #
 #------Partitionnement-----#
-echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement :"
-# Affichage des différents disques
-fdisk -l
-# Demande du non du disque à utiliser
-read -p "${COLOR_WHITE}Quel est le nom du disque à utiliser pour l'installation ? (ex: sda ou nvme0n1)${COLOR_RESET} " disk_name
-echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur ${disk_name} seront effacées !${COLOR_RESET}"
-echo ""
-read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer si vous avez pris conaissance des risques..."
-echo "Voici le schéma recommandé :"
-echo " - Une partition EFI de 100Mo formatée en vfat (si UEFI uniquement)."
-echo " - Une partition BIOS boot de 1Mo, en premier (si BIOS uniquement)"
-echo " - Une partition swap de quelques GO, en général 2 ou 4Go"
-echo " - Le reste en ext4 (linux file system)"
-echo ""
-read -p "Prenez note si besoin, et notez bien le nom des partitions (ex: sda1) pour plus tard ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-#
-# Lancement de cfdisk pour le partitionnement
-cfdisk /dev/${disk_name}
-#
-echo "${COLOR_YELLOW}Evitez de vous tromper lors des étapes qui suivent, sinon il faudra recommencer.${COLOR_RESET}"
-echo ""
-read -p "${COLOR_WHITE}Quel est le nom de la partition swap ?${COLOR_RESET} (ex : sda2) " swap_name
-read -p "${COLOR_WHITE}Quel est le nom de la partition ext4 ?${COLOR_RESET} (ex : sda3) " ext4_name
-read -p "Utilisez-vous un système BIOS (non = UEFI) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ifbios
-if [ "$ifbios" = n ]
+# Split an output on new lines:
+SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
+IFS=$'\n' # new line
+DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252)) # Create an array with Disks: MODELs, SIZEs, NAMEs
+IFS=$SAVEIFS   # Restore original IFS
+
+#DISKS[0]="WDC WD5000AADS-00S9B0     465,8G /dev/sda"
+#DISKS[1]="Crucial_CT512MX100SSD1    476,9G /dev/sdb"
+for (( i = 0; i < ${#DISKS[@]}; i++ ))
+do
+  DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}') # extract NAME into DISKS_LABEL, e.g. /dev/sda
+  #echo "*${i}*${DISKS_LABEL[$i]}*${DISKS[$i]}"
+done
+if [[ ${#DISKS[@]} == 1 ]]
 then
-  read -p "Quel est le nom de la partition EFI ? (ex : sda1) " EFI_name
-  echo ""
-  echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI..."
-  mkfs.vfat -F32 /dev/${EFI_name}
+    CHOOSEN_DISK=${DISKS_LABEL[0]}
+    CHOOSEN_DISK_LABEL=${DISKS[0]}
+  else
+    Select_disk_to_install
 fi
-#
-# Formatage des partitions
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
-mkswap /dev/${swap_name}
-echo "${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-mkfs.ext4 /dev/${ext4_name}
-#
-# Montage des partitions
-echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount /dev/${ext4_name} /mnt/orchid
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du swap."
-swapon /dev/${swap_name}
-# Pour l'EFI
-if [ "$ifbios" = n ]
+echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+echo "${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
+
+echo "${COLOR_GREEN}*${COLOR_RESET} Préparation pour le partionnement :"
+if [ -d /sys/firmware/efi ] # test for UEFI or BIOS
 then
-  echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-  mkdir -p /mnt/orchid/boot/EFI && mount /dev/${EFI_name} /mnt/orchid/boot/EFI
+  ROM="UEFI"
+else
+  ROM="BIOS"
 fi
+echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
+echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${MEM_TOTAL_GB} Go."
+read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+if [ "$HIBERNATION" = o ]
+then
+  [ $MEM_TOTAL_GB -ge 2 ] && SWAP="3"
+  [ $MEM_TOTAL_GB -ge 3 ] && SWAP="5"
+  [ $MEM_TOTAL_GB -ge 4 ] && SWAP="6"
+  [ $MEM_TOTAL_GB -ge 5 ] && SWAP="7"
+  [ $MEM_TOTAL_GB -ge 6 ] && SWAP="8"
+  [ $MEM_TOTAL_GB -ge 8 ] && SWAP="11"
+  [ $MEM_TOTAL_GB -ge 12 ] && SWAP="15"
+  [ $MEM_TOTAL_GB -ge 16 ] && SWAP="20"
+  [ $MEM_TOTAL_GB -ge 24 ] && SWAP="29"
+  [ $MEM_TOTAL_GB -ge 32 ] && SWAP="38"
+  [ $MEM_TOTAL_GB -eq 64 ] && SWAP="72"
+  # Fail safe
+  if [ $MEM_TOTAL_GB -gt $SWAP ]
+  then
+    SWAP=$(($MEM_TOTAL_GB +2))
+  fi
+  if [ $MEM_TOTAL_GB -gt 64 ]
+  then
+    [ $MEM_TOTAL_GB -ge 64 ] && SWAP="72"
+    [ $MEM_TOTAL_GB -ge 128 ] && SWAP="139"
+    [ $MEM_TOTAL_GB -ge 256 ] && SWAP="272"
+    [ $MEM_TOTAL_GB -ge 512 ] && SWAP="535"
+    [ $MEM_TOTAL_GB -ge 1024 ] && SWAP="1056"
+    [ $MEM_TOTAL_GB -ge 2048 ] && SWAP="2094"
+    [ $MEM_TOTAL_GB -ge 4096 ] && SWAP="4160"
+    [ $MEM_TOTAL_GB -ge 8192 ] && SWAP="8283"
+    # Fail safe
+    if [ $MEM_TOTAL_GB -gt $SWAP ]
+    then
+      SWAP=$(($MEM_TOTAL_GB +10))
+    fi
+    echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${MEM_TOTAL_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP} Go sur le disque."
+    read -p "Voulez-vous créer une partition SWAP de ${SWAP} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
+    if [ "$HIBERNATION_HIGH" = n ]
+    then
+      Default_swap_size
+    fi
+  fi
+elif [ "$HIBERNATION" = n ]
+then
+  [ $MEM_TOTAL_GB -ge 2 ] && SWAP="2"  # We want at least 4GB to allow compilation. 
+  if [ $MEM_TOTAL_GB -ge 3 ]
+  then
+    Default_swap_size
+  fi
+fi
+echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP} Go."
 # Vérification de la date et de l'heure
 # A priori inutile
 #date
@@ -283,19 +415,61 @@ fi
 #fi
 #date ${date}
 #date
-echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
+# Select GPU
+Select_GPU_drivers_to_install
+# User name:
+read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
+# Summary
+clear
+echo "${COLOR_WHITE}Résumé de l'installation :${COLOR_RESET}"
 echo ""
-#
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} Test de la connection internet."
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+if [ "$HIBERNATION" = o ]
+then
+  echo "${COLOR_GREEN}[OK]${COLOR_RESET} Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${MEM_TOTAL_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP} Go${COLOR_RESET}."
+elif [ "$HIBERNATION" = n ]
+then
+  echo "${COLOR_GREEN}[OK]${COLOR_RESET} Votre RAM a une taille de ${MEM_TOTAL_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP} Go${COLOR_RESET}. (pas d'hibernation possible)"
+fi
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
+echo "${COLOR_GREEN}[OK]${COLOR_RESET} En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${username}${COLOR_RESET}"
+echo ""
+echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
+read -s -n 1 key  # -s: do not echo input character. -n 1: read only 1 character (separate with space)
+if [[ ! $key = "" ]]; then # Input is not the [Enter] key, aborting installation!
+  echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
+  exit
+fi
 #-----Installation du système-----#
+# No more user input after this point!
+clear
+echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
+Auto_partitionning_full_disk
+# Montage des partitions
+echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
+echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
+mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
+echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du swap."
+swapon "${CHOOSEN_DISK}2"
+# Pour l'EFI
+if [ "$ROM" = "UEFI" ]
+then
+  echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
+  mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
+fi
+echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
+
 # echo "${COLOR_GREEN}*${COLOR_RESET} Installation du système complet."
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration essentielle avant le chroot :"
 cd /mnt/orchid
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
 PROCESSORS=$(grep -c processor /proc/cpuinfo)
-Select_GPU_drivers_to_install
 # Téléchargement du fichier adéquat
 echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
-# Extraction de l'archive précédemment téléchargée
+# Download & extraction of the stage4
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
@@ -334,20 +508,14 @@ mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
+# FIXME: ched branch in git! not main...
+wget "https://github.com/wamuu-sudo/orchid/blob/ched/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
-chmod +x /mnt/orchid/UEFI-install.sh && chmod +x  /mnt/orchid/BIOS-install.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
+chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
 # Lancement des scripts en fonction du système
-# UEFI
-if [ "$ifbios" = "n" ]
-then
-	chroot /mnt/orchid ./UEFI-install.sh ${ext4_name} ${swap_name} ${EFI_name} ${username}
-# BIOS
-elif [ "$ifbios" = "o" ]
-then
-	chroot /mnt/orchid ./BIOS-install.sh ${ext4_name} ${swap_name} ${disk_name} ${username}
-fi
+# Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "$no_archive" = "0" -o "$no_archive" = "1" ]
@@ -361,13 +529,14 @@ then
 fi
 #
 #-----Fin de l'installation-----#
-rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
+rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh && rm -f /mnt/orchid/UEFI-install.sh && rm -f /mnt/orchid/BIOS-install.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
-if [ "$ifbios" = n ]
+if [ "$ROM" = "UEFI" ]
 then
   umount /mnt/orchid/boot/EFI
 fi
 umount -R /mnt/orchid
+# Finish
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
