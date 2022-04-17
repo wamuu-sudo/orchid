@@ -25,7 +25,7 @@ Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le
 
 Nous proposons aussi l'installation du noyau TkG au travers de nos outils (https://github.com/Frogging-Family/linux-tkg).
 
-Le guide d'installation est déjà disponible [ici](https://github.com/juliiine/orchid/blob/main/Installation.md).
+Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/INSTALLATION.md).
 
 Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
