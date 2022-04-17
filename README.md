@@ -1,7 +1,7 @@
 # Orchid Linux 
 
 ![Orchid Logo](img/Orchid-Think.png)
-Orchid est une variante moderne et soignée de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
+Orchid est un installateur rapide de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
 [English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
 
