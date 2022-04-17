@@ -58,7 +58,7 @@ echo ""
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Mot de passe root :"
 passwd
 # Création d'un utilisateur non privilégié
-useradd -m -G users,wheel,audio,cdrom,video,portage -s /bin/bash $USERNAME
+useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME
 echo ""
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Mot de passe de $USERNAME :"
 passwd $USERNAME
@@ -78,6 +78,7 @@ then
   grub-install "${CHOOSEN_DISK}"
   grub-mkconfig -o /boot/grub/grub.cfg
 fi
+
 read -p "${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer l'installation."
 clear
 #-----Activation des services-----#
@@ -89,3 +90,15 @@ if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
 fi
+
+#-----Add CPU_FLAGS_X86 to make.conf-----#
+if ! test -x "$(command -v cpuid2cpuflags 2>/dev/null)"; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Installation de cpuid2cpuflags."
+	orchid-sync
+	orchid-install app-portage/cpuid2cpuflags
+fi
+
+echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au make.conf."
+echo "$(echo "$(cpuid2cpuflags)" | sed 's/: /="/')\"" >> /etc/portage/make.conf
+#-----Remove LINGUAS if any to make.conf-----#
+sed -i /LINGUAS=/d /etc/portage/make.conf
