@@ -34,27 +34,27 @@
 ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
 ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.count"
-COUNTED_BY_TREE[0]=326062 	# Number of files in DWM stage
+COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
 ORCHID_VERSION[1]="Version DWM Gaming Edition [3.1Go]"
-ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' 	# DWM GE
+ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
 ORCHID_COUNT[1]="https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.count"
-COUNTED_BY_TREE[1]=358613 	#Number of files in DWM GE stage
+COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
 ORCHID_VERSION[2]="Version Gnome [2.4Go]"
-ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' 	# Gnome
+ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2'       # Gnome
 ORCHID_COUNT[2]="https://orchid.juline.tech/stage4-orchid-gnomefull-latest.count.txt"
-COUNTED_BY_TREE[2]=424438 	# Number of files in Gnome stage
+COUNTED_BY_TREE[2]=424438                                                               # Number of files in Gnome stage
 ORCHID_VERSION[3]="Version KDE Plasma [3.3Go]"
-ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' 	# KDE
+ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
 #ORCHID_COUNT[3]=
-COUNTED_BY_TREE[3]=744068 	# Number of files in KDE stage
+COUNTED_BY_TREE[3]=744068                                                               # Number of files in KDE stage
 ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
-ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' 	# Gnome GE
+ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
 #ORCHID_COUNT[4]=
-COUNTED_BY_TREE[4]=436089 	# Number of files in Gnome GE stage
+COUNTED_BY_TREE[4]=436089                                                               # Number of files in Gnome GE stage
 ORCHID_VERSION[5]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
-ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"		# Gnome GE Systemd
+ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
 ORCHID_COUNT[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
-COUNTED_BY_TREE[5]=452794 # Number of files in Gnome GE SystemD stage
+COUNTED_BY_TREE[5]=452794                                                               # Number of files in Gnome GE SystemD stage
 #-----------------------------------------------------------------------------------
 
 # Setup colors
@@ -68,7 +68,7 @@ COLOR_RESET=$'\033[0m'
 #-----------------------------------------------------------------------------------
 CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
 
-BAR='=================================================='   # This is full bar, i.e. 50 chars
+BAR='=================================================='                                # This is full bar, i.e. 50 chars
 
 # Setup selectors
 #-----------------------------------------------------------------------------------
@@ -214,10 +214,10 @@ decompress_with_progress_bar()
 
 test_internet_access()
 {
-	if ping -c 1 82.65.199.131 &> /dev/null; then # This is orchid.juline.tech
-	  	test_ip=1 # We have internet access
+	if ping -c 1 82.65.199.131 &> /dev/null; then                                       # This is orchid.juline.tech
+	  	test_ip=1                                                                       # We have internet access
 	else
-	  	test_ip=0 # We don't have internet access
+	  	test_ip=0                                                                       # We don't have internet access
 	fi
 }
 
@@ -271,27 +271,26 @@ select_disk_to_install()
 auto_partitionning_full_disk()
 {
 	SFDISK_CONFIG="label: gpt
-	"  # We only do GPT
+	"                                                                                   # We only do GPT
 	SFDISK_CONFIG+="device: ${CHOOSEN_DISK}
 	"
 	if [ "$ROM" = "UEFI" ]; then
 		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=512M,type=uefi
-		" # EFI System
+		"                                                                               # EFI System
 		SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
-		" # Linux SWAP
+		"                                                                               # Linux SWAP
 		SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
-		" # Linux filesystem data
+		"                                                                               # Linux filesystem data
 	elif [ "$ROM" = "BIOS" ]; then
 		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
-		" # BIOS Boot partition
+		"                                                                               # BIOS Boot partition
 	  	SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
-		" # Linux SWAP
+		"                                                                               # Linux SWAP
 	 	 SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
-		" # Linux filesystem data
+		"                                                                               # Linux filesystem data
 	fi
 
 	echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
-	#echo "**$SFDISK_CONFIG**"
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
@@ -307,13 +306,13 @@ auto_partitionning_full_disk()
 
 swap_size_hibernation()
 {
-	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	# Pour une taille de RAM comprise entre 2 et 8 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*2 ))	# 2 fois la taille de la RAM
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*2 )) 	                                        # 2 fois la taille de la RAM
 
-	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	# Pour une taille de RAM comprise entre 8 et 64 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		# 1.5 (3/2) fois la taille de la RAM
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		                                    # 1.5 (3/2) fois la taille de la RAM
 
-	elif (( ${RAM_SIZE_GB} >= 64 )); then	# Pour une taille de RAM supérieure à 64 Go
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 		read -p "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
@@ -328,21 +327,24 @@ swap_size_hibernation()
 
 swap_size_no_hibernation()
 {
-	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	# Pour une taille de RAM comprise entre 2 et 8 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		# 1 fois la taille de la RAM
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		                                        # 1 fois la taille de la RAM
 
-	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	# Pour une taille de RAM comprise entre 8 et 64 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		# 0.5 (1/2) fois la taille de la RAM
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
 
-	elif (( ${RAM_SIZE_GB} >= 64 )); then	# Pour une taille de RAM supérieure à 64 Go
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		read -p "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
 	fi
 }
 
 
 #-----------------------------------------------------------------------------------
+
 #=== SCRIPT START HERE =============================================================
+
 # Disclaimer
+#-----------------------------------------------------------------------------------
 clear
 echo "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
 echo "problèmes possibles et inimaginables"
@@ -351,23 +353,26 @@ echo "Lisez très attentivement les instructions."
 echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+#-----------------------------------------------------------------------------------
 
 # Questions de configuration
-#-----------------------------------------------------------------------------------
-RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
+#===================================================================================
+RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000))   # Total Memory in GB
 if (( $RAM_SIZE_GB < 2 )); then
   	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
   	exit
 fi
 
 # Check Internet connection
+#-----------------------------------------------------------------------------------
 test_internet_access
 while [ $test_ip = 0 ]; do
 	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
   	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-  	dhcpcd		# Génération d'une addresse IP
+  	dhcpcd                                                                              # Génération d'une addresse IP
   	test_internet_access
 done
+#-----------------------------------------------------------------------------------
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Internet OK."
 # Choix du système
@@ -376,18 +381,18 @@ echo ""
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
-#-----------------------------------------------------------------------------------
+#===================================================================================
 
 # Partitionnement
-#-----------------------------------------------------------------------------------
+#===================================================================================
 # Split an output on new lines:
 SAVEIFS=$IFS	# Save current IFS (Internal Field Separator)
 IFS=$'\n'	# New line
-DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))	# Create an array with Disks: MODELs, SIZEs, NAMEs
-IFS=$SAVEIFS	# Restore original IFS
+DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
+IFS=$SAVEIFS	                                                                        # Restore original IFS
 
 for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-  	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		# Extract NAME into DISKS_LABEL, e.g. /dev/sda
+  	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
 done
 
 if [[ ${#DISKS[@]} == 1 ]]; then
@@ -400,7 +405,7 @@ fi
 echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 echo "${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
 echo "${COLOR_GREEN}*${COLOR_RESET} Préparation pour le partionnement :"
-if [ -d /sys/firmware/efi ]; then	# Test for UEFI or BIOS
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
   	ROM="UEFI"
 else
   	ROM="BIOS"
@@ -409,13 +414,16 @@ fi
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
 read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+
 # Calcul de la mémoire SWAP idéale
-if [ "$HIBERNATION" = "o" ]; then	# Si hibernation
+#-----------------------------------------------------------------------------------
+if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
 	swap_size_hibernation
-elif [ "$HIBERNATION" = "n" ]; then		# Si pas d'hibernation
+elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
 	swap_size_no_hibernation
 fi
 
+#-----------------------------------------------------------------------------------
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
 #=================================================
 # Vérification de la date et de l'heure
@@ -433,7 +441,9 @@ echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_G
 select_GPU_drivers_to_install
 # User name:
 read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
+
 # Summary
+#-----------------------------------------------------------------------------------
 clear
 echo "${COLOR_WHITE}Résumé de l'installation :${COLOR_RESET}"
 echo ""
@@ -456,15 +466,18 @@ if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation
   	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
   	exit
 fi
-#-----------------------------------------------------------------------------------
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # Installation du système
 # No more user input after this point!
-#-----------------------------------------------------------------------------------
+#===================================================================================
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 auto_partitionning_full_disk
+
 # Montage des partitions
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
 mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
@@ -479,20 +492,22 @@ fi
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration essentielle avant le chroot :"
 cd /mnt/orchid
+#-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
 PROCESSORS=$(grep -c processor /proc/cpuinfo)
-# Téléchargement du fichier adéquat
-echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
+
 # Download & extraction of the stage4
+#-----------------------------------------------------------------------------------
+echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
-FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	# Just keep the file from the URL
+FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	                                        # Just keep the file from the URL
 if [ -n "${ORCHID_COUNT[$no_archive]}" ]; then
   	COUNTED_BY_TREE[$no_archive]=$(wget -q -O- ${ORCHID_COUNT[$no_archive]})
 fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
-echo -ne "\r    [                                                  ]"	# This is an empty bar, i.e. 50 empty chars
+echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
 if [[ "$no_archive" == "0" ]]; then
   	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "1" ]]; then
@@ -512,15 +527,18 @@ echo -ne "\r100%[${BAR:0:50}]"
 # New line
 echo -ne "\r\v"
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
+#-----------------------------------------------------------------------------------
+
 # Configuration de make.conf
+#-----------------------------------------------------------------------------------
 sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf > tmp1.conf
 sed "/VIDEO_CARDS/c\VIDEO_CARDS=\"${SELECTED_GPU_DRIVERS_TO_INSTALL}\"" tmp1.conf > tmp2.conf
 cp tmp2.conf /mnt/orchid/etc/portage/make.conf
 rm -f tmp1.conf && rm -f tmp2.conf
-#-----------------------------------------------------------------------------------
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # Montage et chroot
-#-----------------------------------------------------------------------------------
+#===================================================================================
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
@@ -530,7 +548,9 @@ wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
+
 # Lancement des scripts en fonction du système
+#-----------------------------------------------------------------------------------
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
 chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username}
 # Configuration pour DWM
@@ -543,9 +563,13 @@ fi
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
   	chroot /mnt/orchid ./GNOME-config.sh ${username}
 fi
-#-----------------------------------------------------------------------------------
+
+#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 
 # Fin de l'installation
+#===================================================================================
+
+# Nétoyage
 #-----------------------------------------------------------------------------------
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
@@ -555,8 +579,9 @@ if [ "$ROM" = "UEFI" ]; then
 fi
 
 umount -R /mnt/orchid
+#-----------------------------------------------------------------------------------
 # Finish
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
-#-----------------------------------------------------------------------------------
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
+#===================================================================================
