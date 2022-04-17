@@ -1,7 +1,0 @@
-[Desktop Entry]
-Name=Librewolf
-Exec=/usr/bin/flatpak run io.gitlab.librewolf-community
-Icon=/usr/share/applications/librewolf.png
-Type=Application
-Categories=WebBrowser;
-Terminal=false
