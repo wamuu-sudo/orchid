@@ -69,7 +69,7 @@ my_function()
         exit
     fi
 
-    for i in {1..$1};
+    for i in {1..$1}; do
         echo "${i} time"
         while (( "${i}" < "${1}" )); do
             echo "${i} < ${1}"
@@ -78,7 +78,6 @@ my_function()
 }
 ```
 ## Line breaks
-### Functions
 - 2 line breaks after the end of a function. Example :
 ```sh
 my_function()
@@ -103,7 +102,7 @@ done
 echo "End of the script"
 ```
 **Exception** : No line break if there are several `fi` or `done` that follow each other.
-Apply the rule __only on the last__.
+Apply the rule **only on the last**.
 ```sh
 if (( "${1}" <= "1" )); then
     echo '$1 must be greater than 1'
@@ -118,4 +117,19 @@ for i in {1..$1}; do
 done # <= Only on the last
 
 echo "End of the script"
+```
+## if, for and while syntax
+- Always write `then`, `do` on the same line than `if`, `for` and `while`. Example :
+```sh
+if (( "${1}" <= "1" )); then            #
+    echo '$1 must be greater than 1'
+    exit
+fi
+
+for i in {1..$1}; do                    #
+    echo "${i} time"
+    while (( "${i}" < "${1}" )); do     #
+        echo "${i} < ${1}"
+    done
+done
 ```
