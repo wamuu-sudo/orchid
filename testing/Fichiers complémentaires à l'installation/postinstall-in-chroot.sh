@@ -99,6 +99,6 @@ if ! test -x "$(command -v cpuid2cpuflags 2>/dev/null)"; then
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au make.conf."
-echo "$(echo "$(cpuid2cpuflags)" | sed 's/: /="/')\"" >> /etc/portage/make.conf
+echo "$(cpuid2cpuflags | sed 's/: /="/')\"" >> /etc/portage/make.conf
 #-----Remove LINGUAS if any to make.conf-----#
 sed -i /LINGUAS=/d /etc/portage/make.conf
