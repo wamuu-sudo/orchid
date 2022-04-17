@@ -1,61 +1,77 @@
 #!/usr/bin/env bash
-# Contributeurs :
-#  - Babilinx : code
-#  - Chevek : code
-#  - Wamuu : vérifications et test
-#  - Crystal : code
-# Création : mars 2022
-# Dernière mise-à-jour : avril 2022
-# Script d'installation pour Orchid Linux
+#===================================================================================
 #
-#Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
-#This program is free software: you can redistribute it and/or modify it under
-#the terms of the GNU General Public License as published by the Free Software
-#Foundation, either version 3 of the License, or (at your option) any later
-#version.
-#This program is distributed in the hope that it will be useful, but WITHOUT
-#ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-#You should have received a copy of the GNU General Public License along with
-#this program. If not, see https://www.gnu.org/licenses/.
+# FILE : install.sh
+#
+# USAGE : su -
+#         ./install.sh
+#
+# DESCRIPTION : Script d'installation pour Orchid Linux.
+#
+# BUGS : ---
+# NOTES : ---
+# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu
+# CREATED : mars 2022
+# REVISION: 17 avril 2022
+#
+# LICENCE :
+# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see https://www.gnu.org/licenses/.
+#===================================================================================
 
-# Available Orchid Linux versions
+#=== PRECONFIGURATION ==============================================================
+
+# Setup all informations from stages
+#-----------------------------------------------------------------------------------
 ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
-ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' # DWM
+ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.count"
-COUNTED_BY_TREE[0]=326062 #dwms
+COUNTED_BY_TREE[0]=326062 	# Number of files in DWM stage
 ORCHID_VERSION[1]="Version DWM Gaming Edition [3.1Go]"
-ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' # DWM_GE
+ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' 	# DWM GE
 ORCHID_COUNT[1]="https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.count"
-COUNTED_BY_TREE[1]=358613 #dwmgaming
+COUNTED_BY_TREE[1]=358613 	#Number of files in DWM GE stage
 ORCHID_VERSION[2]="Version Gnome [2.4Go]"
-ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' # Gnome
+ORCHID_URL[2]='https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2' 	# Gnome
 ORCHID_COUNT[2]="https://orchid.juline.tech/stage4-orchid-gnomefull-latest.count.txt"
-COUNTED_BY_TREE[2]=424438 #gnomefull
+COUNTED_BY_TREE[2]=424438 	# Number of files in Gnome stage
 ORCHID_VERSION[3]="Version KDE Plasma [3.3Go]"
-ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+ORCHID_URL[3]='https://orchid.juline.tech/testing/stage4-orchid-kde-20032022-r2.tar.gz' 	# KDE
 #ORCHID_COUNT[3]=
-COUNTED_BY_TREE[3]=744068 #kde
+COUNTED_BY_TREE[3]=744068 	# Number of files in KDE stage
 ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
-ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' # Gnome GE
+ORCHID_URL[4]='https://orchid.juline.tech/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz' 	# Gnome GE
 #ORCHID_COUNT[4]=
-COUNTED_BY_TREE[4]=436089 #gnome-ge
+COUNTED_BY_TREE[4]=436089 	# Number of files in Gnome GE stage
 ORCHID_VERSION[5]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
-ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2" # Gnome GE Systemd
+ORCHID_URL[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"		# Gnome GE Systemd
 ORCHID_COUNT[5]="https://orchid.juline.tech/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
-COUNTED_BY_TREE[5]=452794 #gnomegaming-systemd
-# Colors
+COUNTED_BY_TREE[5]=452794 # Number of files in Gnome GE SystemD stage
+#-----------------------------------------------------------------------------------
+
+# Setup colors
+#-----------------------------------------------------------------------------------
 COLOR_YELLOW=$'\033[0;33m'
 COLOR_GREEN=$'\033[0;32m'
 COLOR_RED=$'\033[0;31m'
 COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
-
+#-----------------------------------------------------------------------------------
 CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
 
 BAR='=================================================='   # This is full bar, i.e. 50 chars
 
+# Setup selectors
+#-----------------------------------------------------------------------------------
 # Orchid version radiobox selector
 declare -a ORCHID_VERSION
 declare -a ORCHID_URL
@@ -67,7 +83,8 @@ ERROR_IN_SELECTOR=" "
 declare -a CHOICES
 declare -a GPU_DRIVERS
 # Menu GPU_DRIVERS
-# Available drivers: fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi virtualbox vmware
+# Available drivers: fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi
+# virtualbox vmware
 # fbdev & vesa are mandatory
 GPU_DRIVERS[0]="intel"
 GPU_DRIVERS[1]="i915"
@@ -82,7 +99,10 @@ CHOICES_DISK[0]="${COLOR_GREEN}*${COLOR_RESET}"
 # Disks radiobox selector
 declare -a CHOICES_DISK
 ERROR_IN_DISK_SELECTOR=" "
+#-----------------------------------------------------------------------------------
 
+# Setup functions
+#-----------------------------------------------------------------------------------
 CLI_orchid_selector()
 {
 	echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
@@ -195,9 +215,9 @@ decompress_with_progress_bar()
 test_internet_access()
 {
 	if ping -c 1 82.65.199.131 &> /dev/null; then # This is orchid.juline.tech
-	  	test_ip=1 # we have internet access
+	  	test_ip=1 # We have internet access
 	else
-	  	test_ip=0 # we don't have internet access
+	  	test_ip=0 # We don't have internet access
 	fi
 }
 
@@ -276,15 +296,12 @@ auto_partitionning_full_disk()
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
 	  	mkfs.vfat -F32 "${CHOOSEN_DISK}1"
-	  	#echo "**${CHOOSEN_DISK}1**"
 	fi
 
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 	mkswap "${CHOOSEN_DISK}2"
-	#echo "**${CHOOSEN_DISK}2**"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
 	mkfs.ext4 "${CHOOSEN_DISK}3"
-	#echo "**${CHOOSEN_DISK}3**"
 }
 
 
@@ -323,8 +340,8 @@ swap_size_no_hibernation()
 }
 
 
-###################################################
-# Script start here
+#-----------------------------------------------------------------------------------
+#=== SCRIPT START HERE =============================================================
 # Disclaimer
 clear
 echo "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
@@ -334,7 +351,9 @@ echo "Lisez très attentivement les instructions."
 echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
-#-----Questions de configuration-----#
+
+# Questions de configuration
+#-----------------------------------------------------------------------------------
 RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
 if (( $RAM_SIZE_GB < 2 )); then
   	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
@@ -345,9 +364,8 @@ fi
 test_internet_access
 while [ $test_ip = 0 ]; do
 	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
-  	# Si non, en générer une
   	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-  	dhcpcd
+  	dhcpcd		# Génération d'une addresse IP
   	test_internet_access
 done
 
@@ -358,19 +376,18 @@ echo ""
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
-#
-#------Partitionnement-----#
-# Split an output on new lines:
-SAVEIFS=$IFS   # Save current IFS (Internal Field Separator)
-IFS=$'\n' # new line
-DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252)) # Create an array with Disks: MODELs, SIZEs, NAMEs
-IFS=$SAVEIFS   # Restore original IFS
+#-----------------------------------------------------------------------------------
 
-#DISKS[0]="WDC WD5000AADS-00S9B0     465,8G /dev/sda"
-#DISKS[1]="Crucial_CT512MX100SSD1    476,9G /dev/sdb"
+# Partitionnement
+#-----------------------------------------------------------------------------------
+# Split an output on new lines:
+SAVEIFS=$IFS	# Save current IFS (Internal Field Separator)
+IFS=$'\n'	# New line
+DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))	# Create an array with Disks: MODELs, SIZEs, NAMEs
+IFS=$SAVEIFS	# Restore original IFS
+
 for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-  	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}') # Extract NAME into DISKS_LABEL, e.g. /dev/sda
- 	#echo "*${i}*${DISKS_LABEL[$i]}*${DISKS[$i]}"
+  	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		# Extract NAME into DISKS_LABEL, e.g. /dev/sda
 done
 
 if [[ ${#DISKS[@]} == 1 ]]; then
@@ -383,7 +400,7 @@ fi
 echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 echo "${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
 echo "${COLOR_GREEN}*${COLOR_RESET} Préparation pour le partionnement :"
-if [ -d /sys/firmware/efi ]; then # Test for UEFI or BIOS
+if [ -d /sys/firmware/efi ]; then	# Test for UEFI or BIOS
   	ROM="UEFI"
 else
   	ROM="BIOS"
@@ -393,9 +410,9 @@ echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation es
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
 read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
 # Calcul de la mémoire SWAP idéale
-if [ "$HIBERNATION" = "o" ]; then # Si hibernation
+if [ "$HIBERNATION" = "o" ]; then	# Si hibernation
 	swap_size_hibernation
-elif [ "$HIBERNATION" = "n" ]; then # Si pas d'hibernation
+elif [ "$HIBERNATION" = "n" ]; then		# Si pas d'hibernation
 	swap_size_no_hibernation
 fi
 
@@ -434,14 +451,16 @@ echo "${COLOR_GREEN}[OK]${COLOR_RESET} Les pilotes graphiques suivants vont êtr
 echo "${COLOR_GREEN}[OK]${COLOR_RESET} En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${username}${COLOR_RESET}"
 echo ""
 echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
-read -s -n 1 key  # -s: do not echo input character. -n 1: read only 1 character (separate with space)
-if [[ ! $key = "" ]]; then # Input is not the [Enter] key, aborting installation!
+read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
+if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
   	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
   	exit
 fi
+#-----------------------------------------------------------------------------------
 
-#-----Installation du système-----#
+# Installation du système
 # No more user input after this point!
+#-----------------------------------------------------------------------------------
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 auto_partitionning_full_disk
@@ -458,7 +477,6 @@ if [ "$ROM" = "UEFI" ]; then
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
-# echo "${COLOR_GREEN}*${COLOR_RESET} Installation du système complet."
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration essentielle avant le chroot :"
 cd /mnt/orchid
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
@@ -468,13 +486,13 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version
 # Download & extraction of the stage4
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
-FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/} # just keep the file from the URL
+FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	# Just keep the file from the URL
 if [ -n "${ORCHID_COUNT[$no_archive]}" ]; then
   	COUNTED_BY_TREE[$no_archive]=$(wget -q -O- ${ORCHID_COUNT[$no_archive]})
 fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
-echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
+echo -ne "\r    [                                                  ]"	# This is an empty bar, i.e. 50 empty chars
 if [[ "$no_archive" == "0" ]]; then
   	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "1" ]]; then
@@ -491,7 +509,7 @@ fi
 
 # Fail safe
 echo -ne "\r100%[${BAR:0:50}]"
-# new line
+# New line
 echo -ne "\r\v"
 echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
 # Configuration de make.conf
@@ -499,8 +517,10 @@ sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf
 sed "/VIDEO_CARDS/c\VIDEO_CARDS=\"${SELECTED_GPU_DRIVERS_TO_INSTALL}\"" tmp1.conf > tmp2.conf
 cp tmp2.conf /mnt/orchid/etc/portage/make.conf
 rm -f tmp1.conf && rm -f tmp2.conf
-#
-#-----Montage et chroot-----#
+#-----------------------------------------------------------------------------------
+
+# Montage et chroot
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
@@ -523,10 +543,12 @@ fi
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
   	chroot /mnt/orchid ./GNOME-config.sh ${username}
 fi
+#-----------------------------------------------------------------------------------
 
-#
-#-----Fin de l'installation-----#
-rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh && rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
+# Fin de l'installation
+#-----------------------------------------------------------------------------------
+rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
+rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
 if [ "$ROM" = "UEFI" ]; then
   	umount /mnt/orchid/boot/EFI
@@ -535,5 +557,6 @@ fi
 umount -R /mnt/orchid
 # Finish
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
+#-----------------------------------------------------------------------------------
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
