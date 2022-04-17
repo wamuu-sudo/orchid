@@ -41,40 +41,40 @@ Rules :
 ```sh
 my_function()
 {
-	echo "You are done" # One tab between "{" and "}"
+    echo "You are done" # One tab between "{" and "}"
 }
 ```
  - Always use indents for : `for`, `if` and `when`. Example :
  ```sh
- if [ 1 = 1 ]; then
- 	my_function
+if [ 1 = 1 ]; then
+    my_function
 fi
 
 
 for i in {1..5}; do
-	my_function ${i}
+    my_function ${i}
 done
 
 
 while [ 1 = 1 ]; do
-	my_function
+    my_function
 done
 ```
 Example with all things above :
 ```sh
 my_function()
 {
-	if (( "${1}" <= "1" )); then
-		echo '$1 must be greater than 1'
-		exit
-	fi
+    if (( "${1}" <= "1" )); then
+	    echo '$1 must be greater than 1'
+	    exit
+    fi
 
-	for i in {1..$1}; do
-		echo "${i} time"
-		while (( "${i}" < "${1}" )); do
-			echo "${i} < ${1}"
-		done
-	done
+    for i in {1..$1}; do
+	    echo "${i} time"
+	    while (( "${i}" < "${1}" )); do
+		    echo "${i} < ${1}"
+	    done
+    done
 }
 ```
 ## Line breaks
@@ -83,7 +83,7 @@ my_function()
 ```sh
 my_function()
 {
-	echo "You are done"
+    echo "You are done"
 }
 
 
@@ -92,12 +92,12 @@ echo "After the function"
 - 1 line break after `fi`, `done`. Example :
 ```sh
 if (( "${1}" <= "1" )); then
-	echo '$1 must be greater than 1'
-	exit
+    echo '$1 must be greater than 1'
+    exit
 fi
 
 for i in {1..$1}; do
-	echo "${i} time"
+    echo "${i} time"
 done
 
 echo "End of the script"
@@ -106,15 +106,15 @@ echo "End of the script"
 Apply the rule __only on the last__.
 ```sh
 if (( "${1}" <= "1" )); then
-	echo '$1 must be greater than 1'
-	exit
+    echo '$1 must be greater than 1'
+    exit
 fi
 
 for i in {1..$1}; do
-	echo "${i} time"
-	while (( "${i}" < "${1}" )); do
-		echo "${i} < ${1}"
-	done
+    echo "${i} time"
+    while (( "${i}" < "${1}" )); do
+        echo "${i} < ${1}"
+    done
 done # <= Only on the last
 
 echo "End of the script"
