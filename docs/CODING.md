@@ -65,15 +65,15 @@ Example with all things above :
 my_function()
 {
     if (( "${1}" <= "1" )); then
-	    echo '$1 must be greater than 1'
-	    exit
+        echo '$1 must be greater than 1'
+        exit
     fi
 
-    for i in {1..$1}; do
-	    echo "${i} time"
-	    while (( "${i}" < "${1}" )); do
-		    echo "${i} < ${1}"
-	    done
+    for i in {1..$1};
+        echo "${i} time"
+        while (( "${i}" < "${1}" )); do
+            echo "${i} < ${1}"
+        done
     done
 }
 ```
