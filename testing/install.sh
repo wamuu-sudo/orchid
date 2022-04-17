@@ -35,7 +35,7 @@ ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
 ORCHID_URL[0]='https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.count"
 COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
-ORCHID_VERSION[1]="Version DWM Gaming Edition [3.1Go]"
+ORCHID_VERSION[1]="Version DWM Gaming Edition [3.3Go]"
 ORCHID_URL[1]='https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
 ORCHID_COUNT[1]="https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.count"
 COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
@@ -460,9 +460,9 @@ echo "[${COLOR_GREEN}OK${COLOR_RESET}] Version d'Orchid Linux choisie : ${COLOR_
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 if [ "$HIBERNATION" = o ]; then
-  	echo "$[{COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+  	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 elif [ "$HIBERNATION" = n ]; then
-  	echo "$[{COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
+  	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
 fi
 
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
