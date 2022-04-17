@@ -317,7 +317,7 @@ swap_size_no_hibernation()
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		# 0.5 (1/2) fois la taille de la RAM
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	# Pour une taille de RAM supérieure à 64 Go
-		read -p "Entraz la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
+		read -p "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
 }
 
 
@@ -334,7 +334,7 @@ echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
 #-----Questions de configuration-----#
 RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
-if [ $RAM_SIZE_GB -lt 2 ]; then
+if (( $RAM_SIZE_GB < 2 )); then
   	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
   	exit
 fi
