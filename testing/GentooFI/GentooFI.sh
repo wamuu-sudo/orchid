@@ -4,6 +4,8 @@ if [ "$(id -u)" -ne 0 ] ; then
     echo "Veuillez lancer le script en tant que root  D: (sois avec sudo , doas ou su)"
     exit 1
 fi
+
+cp -rf Desktop/* /usr/share/applications/
 #===The browser selection menu function===#
 browser () {
     #===Output the choices===#
