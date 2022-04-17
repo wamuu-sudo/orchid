@@ -31,21 +31,21 @@
   * ~~Téléchargement et extraction de la version d'Orchid~~
   * Mettre les fichiers d'Orchid dans la langue et le clavier choisi
     * Quel fichiers ?
-  * autoconfiguration du make.conf : la langue, le nombre de processeurs, les cartes graphiques, les options du CPU)
-  * Support esync : éditer /etc/security/limits.conf avec nouvelle ligne "$username hard nofile 524288"
+  * ~~autoconfiguration du make.conf : la langue, le nombre de processeurs, les cartes graphiques, les options du CPU~~
+  * ~~Support esync : éditer /etc/security/limits.conf avec nouvelle ligne "$username hard nofile 524288"~~
   * ~~Mount proc, dev et sys pour le chroot~~
   * chroot
     * Mise à jour des variables d'environnement
     * ~~Changement du fstab~~
     * Changement du hostname
     * Mot de passe root
-    * Création de l'utilisation avec les droits d'administration (Quels groups d'appartenance?)
+    * ~~Création de l'utilisateur avec les droits d'administration (Quels groups d'appartenance?)~~
       * Mot de passe de l'utilisateur
     * ~~Installation de grub (EFI ou BIOS)~~
     * ~~Activation des services openrc~~
     * ~~Post configuration des versions ( scripts DWM, GNOME & GDM dans la bonne langue, etc.)~~
-    * Ajout du dépot flathub.org pour flatpak
-    * Ajout des CPU_FLAGS au /etc/portage/make.conf
+    * ~~Ajout du dépot flathub.org pour flatpak~~
+    * ~~Ajout des CPU_FLAGS au /etc/portage/make.conf~~
     * Mise à jour du système si demandé par l'utilisateur (orchid-sync && orchid-update)
   * ~~Hors chroot : on efface les scripts et l'archive stage 4~~
   * umount tout (+ fermer les services openrc, systemd ?)
