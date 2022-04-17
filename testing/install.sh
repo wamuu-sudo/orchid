@@ -249,7 +249,7 @@ select_disk_to_install()
 
 default_swap_size()
 {
-	SWAP=$(awk "BEGIN {printf \"%.${prec}f\n\", sqrt($MEM_TOTAL_GB)}") # round(sqrt(RAM))
+	SWAP_SIZE_GB=$(awk "BEGIN {printf \"%.${prec}f\n\", sqrt($RAM_SIZE_GB)}") # round(sqrt(RAM))
 }
 
 
@@ -263,15 +263,15 @@ auto_partitionning_full_disk()
 	if [ "$ROM" = "UEFI" ]; then
 		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=512M,type=uefi
 		" # EFI System
-		SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP}G,type=swap
-		" # Linux swap
+		SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=SWAP_SIZE_GB
+		" # Linux SWAP_SIZE_GB
 		SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
 		" # Linux filesystem data
 	elif [ "$ROM" = "BIOS" ]; then
 		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
 		" # BIOS Boot partition
-	  	SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP}G,type=swap
-		" # Linux swap
+	  	SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=SWAP_SIZE_GB
+		" # Linux SWAP_SIZE_GB
 	 	 SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
 		" # Linux filesystem data
 	fi
@@ -294,6 +294,18 @@ auto_partitionning_full_disk()
 }
 
 
+swap_size_hibernation()
+{
+
+}
+
+
+swap_size_no_hibernation()
+{
+
+}
+
+
 ###################################################
 # Script start here
 # Disclaimer
@@ -306,8 +318,8 @@ echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
 #-----Questions de configuration-----#
-MEM_TOTAL_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
-if [ $MEM_TOTAL_GB -lt 2 ]; then
+RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000)) # Total Memory in GB
+if [ $RAM_SIZE_GB -lt 2 ]; then
   	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
   	exit
 fi
@@ -322,7 +334,7 @@ while [ $test_ip = 0 ]; do
   	test_internet_access
 done
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Test de la connection internet OK."
+echo "${COLOR_GREEN}*${COLOR_RESET} Internet OK."
 # Choix du système
 select_orchid_version_to_install
 echo ""
@@ -361,54 +373,55 @@ else
 fi
 
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
-echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${MEM_TOTAL_GB} Go."
+echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
 read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+# Calcul de la mémoire SWAP_SIZE_GB idéale
 if [ "$HIBERNATION" = o ]; then
-	[ $MEM_TOTAL_GB -ge 2 ] && SWAP="3"
-	[ $MEM_TOTAL_GB -ge 3 ] && SWAP="5"
-	[ $MEM_TOTAL_GB -ge 4 ] && SWAP="6"
-	[ $MEM_TOTAL_GB -ge 5 ] && SWAP="7"
-	[ $MEM_TOTAL_GB -ge 6 ] && SWAP="8"
-	[ $MEM_TOTAL_GB -ge 8 ] && SWAP="11"
-	[ $MEM_TOTAL_GB -ge 12 ] && SWAP="15"
-	[ $MEM_TOTAL_GB -ge 16 ] && SWAP="20"
-	[ $MEM_TOTAL_GB -ge 24 ] && SWAP="29"
-	[ $MEM_TOTAL_GB -ge 32 ] && SWAP="38"
-	[ $MEM_TOTAL_GB -eq 64 ] && SWAP="72"
+	[ $RAM_SIZE_GB -ge 2 ] && SWAP_SIZE_GB="3"
+	[ $RAM_SIZE_GB -ge 3 ] && SWAP_SIZE_GB="5"
+	[ $RAM_SIZE_GB -ge 4 ] && SWAP_SIZE_GB="6"
+	[ $RAM_SIZE_GB -ge 5 ] && SWAP_SIZE_GB="7"
+	[ $RAM_SIZE_GB -ge 6 ] && SWAP_SIZE_GB="8"
+	[ $RAM_SIZE_GB -ge 8 ] && SWAP_SIZE_GB="11"
+	[ $RAM_SIZE_GB -ge 12 ] && SWAP_SIZE_GB="15"
+	[ $RAM_SIZE_GB -ge 16 ] && SWAP_SIZE_GB="20"
+	[ $RAM_SIZE_GB -ge 24 ] && SWAP_SIZE_GB="29"
+	[ $RAM_SIZE_GB -ge 32 ] && SWAP_SIZE_GB="38"
+	[ $RAM_SIZE_GB -eq 64 ] && SWAP_SIZE_GB="72"
 	# Fail safe
-	if [ $MEM_TOTAL_GB -gt $SWAP ]; then
-		SWAP=$(($MEM_TOTAL_GB +2))
+	if [ $RAM_SIZE_GB -gt $SWAP_SIZE_GB ]; then
+		SWAP_SIZE_GB=$(($RAM_SIZE_GB +2))
 	fi
 
-	if [ $MEM_TOTAL_GB -gt 64 ]; then
-		[ $MEM_TOTAL_GB -ge 64 ] && SWAP="72"
-		[ $MEM_TOTAL_GB -ge 128 ] && SWAP="139"
-		[ $MEM_TOTAL_GB -ge 256 ] && SWAP="272"
-		[ $MEM_TOTAL_GB -ge 512 ] && SWAP="535"
-		[ $MEM_TOTAL_GB -ge 1024 ] && SWAP="1056"
-		[ $MEM_TOTAL_GB -ge 2048 ] && SWAP="2094"
-		[ $MEM_TOTAL_GB -ge 4096 ] && SWAP="4160"
-		[ $MEM_TOTAL_GB -ge 8192 ] && SWAP="8283"
+	if [ $RAM_SIZE_GB -gt 64 ]; then
+		[ $RAM_SIZE_GB -ge 64 ] && SWAP_SIZE_GB="72"
+		[ $RAM_SIZE_GB -ge 128 ] && SWAP_SIZE_GB="139"
+		[ $RAM_SIZE_GB -ge 256 ] && SWAP_SIZE_GB="272"
+		[ $RAM_SIZE_GB -ge 512 ] && SWAP_SIZE_GB="535"
+		[ $RAM_SIZE_GB -ge 1024 ] && SWAP_SIZE_GB="1056"
+		[ $RAM_SIZE_GB -ge 2048 ] && SWAP_SIZE_GB="2094"
+		[ $RAM_SIZE_GB -ge 4096 ] && SWAP_SIZE_GB="4160"
+		[ $RAM_SIZE_GB -ge 8192 ] && SWAP_SIZE_GB="8283"
 		# Fail safe
-		if [ $MEM_TOTAL_GB -gt $SWAP ]; then
-		  	SWAP=$(($MEM_TOTAL_GB +10))
+		if [ $RAM_SIZE_GB -gt $SWAP_SIZE_GB ]; then
+		  	SWAP_SIZE_GB=$(($RAM_SIZE_GB +10))
 		fi
 
-		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${MEM_TOTAL_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP} Go sur le disque."
-		read -p "Voulez-vous créer une partition SWAP de ${SWAP} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
+		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP_SIZE_GB de ${SWAP_SIZE_GB} Go sur le disque."
+		read -p "Voulez-vous créer une partition SWAP_SIZE_GB de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP_SIZE_GB sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
 		if [ "$HIBERNATION_HIGH" = n ]; then
 		  	default_swap_size
 		fi
 	 fi
 
 elif [ "$HIBERNATION" = n ]; then
-  	[ $MEM_TOTAL_GB -ge 2 ] && SWAP="2"  # We want at least 4GB to allow compilation.
-  	if [ $MEM_TOTAL_GB -ge 3 ]; then
+  	[ $RAM_SIZE_GB -ge 2 ] && SWAP_SIZE_GB="2"  # We want at least 4GB to allow compilation.
+  	if [ $RAM_SIZE_GB -ge 3 ]; then
     	default_swap_size
   	fi
 fi
 
-echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP} Go."
+echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP_SIZE_GB aura une taille de ${SWAP_SIZE_GB} Go."
 #=================================================
 # Vérification de la date et de l'heure
 # A priori inutile
@@ -434,9 +447,9 @@ echo "${COLOR_GREEN}[OK]${COLOR_RESET} Version d'Orchid Linux choisie : ${COLOR_
 echo "${COLOR_GREEN}[OK]${COLOR_RESET} Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
 echo "${COLOR_GREEN}[OK]${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 if [ "$HIBERNATION" = o ]; then
-  	echo "${COLOR_GREEN}[OK]${COLOR_RESET} Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${MEM_TOTAL_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP} Go${COLOR_RESET}."
+  	echo "${COLOR_GREEN}[OK]${COLOR_RESET} Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP_SIZE_GB sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 elif [ "$HIBERNATION" = n ]; then
-  	echo "${COLOR_GREEN}[OK]${COLOR_RESET} Votre RAM a une taille de ${MEM_TOTAL_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP} Go${COLOR_RESET}. (pas d'hibernation possible)"
+  	echo "${COLOR_GREEN}[OK]${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP_SIZE_GB sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
 fi
 
 echo "${COLOR_GREEN}[OK]${COLOR_RESET} Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
@@ -458,7 +471,7 @@ auto_partitionning_full_disk
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
 mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du swap."
+echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP_SIZE_GB."
 swapon "${CHOOSEN_DISK}2"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
