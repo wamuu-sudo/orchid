@@ -143,18 +143,18 @@ select_GPU_drivers_to_install()
 	clear
 	while CLI_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
 		clear
-		  	if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
-				((NUM--))
-			  	if [[ "${CHOICES[$NUM]}" == "${COLOR_GREEN}+${COLOR_RESET}" ]]; then
-					CHOICES[NUM]="${COLOR_RED}-${COLOR_RESET}"
-			  	else
-				  	CHOICES[NUM]="${COLOR_GREEN}+${COLOR_RESET}"
-			  	fi
+		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
+			((NUM--))
+			if [[ "${CHOICES[$NUM]}" == "${COLOR_GREEN}+${COLOR_RESET}" ]]; then
+				CHOICES[NUM]="${COLOR_RED}-${COLOR_RESET}"
+			else
+				CHOICES[NUM]="${COLOR_GREEN}+${COLOR_RESET}"
+			fi
 
-				ERROR_IN_SELECTOR=" "
-		  	else
-			  	ERROR_IN_SELECTOR="Choix invalide : $NUM"
-		  	fi
+			ERROR_IN_SELECTOR=" "
+		else
+			ERROR_IN_SELECTOR="Choix invalide : $NUM"
+		fi
 	done
 	# Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
 	# We will use | as a separator for drivers, as we need to pass this to another script in the chroot, thus we avoid spaces in the string.
