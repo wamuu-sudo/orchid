@@ -82,7 +82,7 @@ CHOICES_DISK[0]="${COLOR_GREEN}*${COLOR_RESET}"
 declare -a CHOICES_DISK
 ERROR_IN_DISK_SELECTOR=" "
 
-Cli_Orchid_selector()
+CLI_orchid_selector()
 {
 	echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
 	for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ )); do
@@ -92,15 +92,15 @@ Cli_Orchid_selector()
 			echo "(${CHOICES_ORCHID[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${ORCHID_VERSION[$i]}"
 		fi
 	done
-	
+
 	echo "$ERROR_IN_ORCHID_SELECTOR"
 }
 
 
-Select_Orchid_version_to_install()
+select_orchid_version_to_install()
 {
 	clear
-	while Cli_Orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
 		clear
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
 			((NUM--))
@@ -111,13 +111,13 @@ Select_Orchid_version_to_install()
 					CHOICES_ORCHID[$i]=""
 				fi
 			done
-			
+
 			ERROR_IN_ORCHID_SELECTOR=" "
 		else
 			ERROR_IN_ORCHID_SELECTOR="Choix invalide : $NUM"
 		fi
 	done
-	
+
 # Choice has been made by the user, now we need to populate no_archive
 	for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ )); do
 		if [[ "${CHOICES_ORCHID[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
@@ -127,21 +127,21 @@ Select_Orchid_version_to_install()
 }
 
 
-Cli_selector()
+CLI_selector()
 {
 	echo "Choisissez les pilotes pour votre GPU à installer (par défaut, il n'y en a aucun) :"
 	for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ )); do
 		echo "[${CHOICES[$i]:-${COLOR_RED}-${COLOR_RESET}}]" $(($i+1))") ${GPU_DRIVERS[$i]}"
 	done
-	
+
 	echo "$ERROR_IN_SELECTOR"
 }
 
 
-Select_GPU_drivers_to_install()
+select_GPU_drivers_to_install()
 {
 	clear
-	while Cli_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
 		clear
 		  	if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
 				((NUM--))
@@ -150,7 +150,7 @@ Select_GPU_drivers_to_install()
 			  	else
 				  	CHOICES[NUM]="${COLOR_GREEN}+${COLOR_RESET}"
 			  	fi
-				
+
 				ERROR_IN_SELECTOR=" "
 		  	else
 			  	ERROR_IN_SELECTOR="Choix invalide : $NUM"
@@ -168,7 +168,7 @@ Select_GPU_drivers_to_install()
 }
 
 
-Decompress_with_progress_bar()
+decompress_with_progress_bar()
 {
 	while read line; do
 		pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE[$no_archive]} ))
@@ -177,7 +177,7 @@ Decompress_with_progress_bar()
 		if [ $pct_num -ge 100 ]; then
 		  	pct_num=99
 		fi
-		
+
 		pct_num_pad="   $pct_num%"
 		pct_num_lengh=${#pct_num_pad}
 		position_to_trim=$(($pct_num_lengh - 4))
@@ -191,7 +191,7 @@ Decompress_with_progress_bar()
 }
 
 
-Test_internet_access()
+test_internet_access()
 {
 	if ping -c 1 82.65.199.131 &> /dev/null; then # This is orchid.juline.tech
 	  	test_ip=1 # we have internet access
@@ -201,7 +201,7 @@ Test_internet_access()
 }
 
 
-Cli_disk_selector()
+CLI_disk_selector()
 {
 	echo "Choisissez le disque sur lequel vous souhaitez installer Orchid Linux :"
 	echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur le disque choisi seront effacées !${COLOR_RESET}"
@@ -212,15 +212,15 @@ Cli_disk_selector()
 			echo "(${CHOICES_DISK[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${DISKS[$i]}"
 	  	fi
 	done
-	
+
 	echo "$ERROR_IN_DISK_SELECTOR"
 }
 
 
-Select_disk_to_install()
+select_disk_to_install()
 {
 	clear
-	while Cli_disk_selector && read -rp "Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_disk_selector && read -rp "Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
 		clear
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#DISKS[@]} ]]; then
 			((NUM--))
@@ -231,7 +231,7 @@ Select_disk_to_install()
 			  		CHOICES_DISK[$i]=""
 				fi
 		  	done
-			
+
 		  	ERROR_IN_DISK_SELECTOR=" "
 		else
 		  	ERROR_IN_DISK_SELECTOR="Choix invalide : $NUM"
@@ -247,14 +247,14 @@ Select_disk_to_install()
 }
 
 
-Default_swap_size()
+default_swap_size()
 {
 	SWAP=$(awk "BEGIN {printf \"%.${prec}f\n\", sqrt($MEM_TOTAL_GB)}") # round(sqrt(RAM))
 }
 
 
 
-Auto_partitionning_full_disk()
+auto_partitionning_full_disk()
 {
 	SFDISK_CONFIG="label: gpt
 	"  # We only do GPT
@@ -275,7 +275,7 @@ Auto_partitionning_full_disk()
 	 	 SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
 		" # Linux filesystem data
 	fi
-	
+
 	echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 	#echo "**$SFDISK_CONFIG**"
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
@@ -284,7 +284,7 @@ Auto_partitionning_full_disk()
 	  	mkfs.vfat -F32 "${CHOOSEN_DISK}1"
 	  	#echo "**${CHOOSEN_DISK}1**"
 	fi
-	
+
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 	mkswap "${CHOOSEN_DISK}2"
 	#echo "**${CHOOSEN_DISK}2**"
@@ -313,18 +313,18 @@ if [ $MEM_TOTAL_GB -lt 2 ]; then
 fi
 
 # Check inet connection
-Test_internet_access
+test_internet_access
 while [ $test_ip = 0 ]; do
 	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
   	# Si non, en générer une
   	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
   	dhcpcd
-  	Test_internet_access
+  	test_internet_access
 done
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Test de la connection internet OK."
 # Choix du système
-Select_Orchid_version_to_install
+select_orchid_version_to_install
 echo ""
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
@@ -348,7 +348,7 @@ if [[ ${#DISKS[@]} == 1 ]]; then
     CHOOSEN_DISK=${DISKS_LABEL[0]}
     CHOOSEN_DISK_LABEL=${DISKS[0]}
 else
-    Select_disk_to_install
+    select_disk_to_install
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
@@ -379,7 +379,7 @@ if [ "$HIBERNATION" = o ]; then
 	if [ $MEM_TOTAL_GB -gt $SWAP ]; then
 		SWAP=$(($MEM_TOTAL_GB +2))
 	fi
-	
+
 	if [ $MEM_TOTAL_GB -gt 64 ]; then
 		[ $MEM_TOTAL_GB -ge 64 ] && SWAP="72"
 		[ $MEM_TOTAL_GB -ge 128 ] && SWAP="139"
@@ -393,18 +393,18 @@ if [ "$HIBERNATION" = o ]; then
 		if [ $MEM_TOTAL_GB -gt $SWAP ]; then
 		  	SWAP=$(($MEM_TOTAL_GB +10))
 		fi
-		
+
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${MEM_TOTAL_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP} Go sur le disque."
 		read -p "Voulez-vous créer une partition SWAP de ${SWAP} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
 		if [ "$HIBERNATION_HIGH" = n ]; then
-		  	Default_swap_size
+		  	default_swap_size
 		fi
 	 fi
-	 
+
 elif [ "$HIBERNATION" = n ]; then
-  	[ $MEM_TOTAL_GB -ge 2 ] && SWAP="2"  # We want at least 4GB to allow compilation. 
+  	[ $MEM_TOTAL_GB -ge 2 ] && SWAP="2"  # We want at least 4GB to allow compilation.
   	if [ $MEM_TOTAL_GB -ge 3 ]; then
-    	Default_swap_size
+    	default_swap_size
   	fi
 fi
 
@@ -422,7 +422,7 @@ echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP} Go."
 #date
 #=================================================
 # Select GPU
-Select_GPU_drivers_to_install
+select_GPU_drivers_to_install
 # User name:
 read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
 # Summary
@@ -453,7 +453,7 @@ fi
 # No more user input after this point!
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
-Auto_partitionning_full_disk
+auto_partitionning_full_disk
 # Montage des partitions
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
@@ -485,17 +485,17 @@ fi
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"  # This is an empty bar, i.e. 50 empty chars
 if [[ "$no_archive" == "0" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
-elif [[ "$no_archive" == "1" ]]; then 
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+elif [[ "$no_archive" == "1" ]]; then
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "2" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "3" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | Decompress_with_progress_bar
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "4" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | Decompress_with_progress_bar
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "5" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | Decompress_with_progress_bar
+  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 fi
 
 # Fail safe
