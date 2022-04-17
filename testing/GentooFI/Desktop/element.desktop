@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Element(Matrix)
+Exec=/usr/bin/flatpak run im.riot.Riot
+Icon=/usr/share/applications/element.png
+Type=Application
+Categories=WebBrowser;
+Terminal=false

@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=Brave
+Exec=/usr/bin/flatpak run com.brave.Browser
+Icon=/usr/share/applications/brave_logo.png
+Type=Application
+Categories=WebBrowser;
+Terminal=false

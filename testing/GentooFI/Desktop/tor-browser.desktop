@@ -1,0 +1,8 @@
+
+[Desktop Entry]
+Name=Tor
+Exec=/usr/bin/flatpak run com.github.micahflee.torbrowser-launcher
+Icon=/usr/share/applications/tor-browser.svg
+Type=Application
+Categories=WebBrowser;
+Terminal=false
