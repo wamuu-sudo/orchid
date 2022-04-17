@@ -29,6 +29,7 @@ COLOR_RESET=$'\033[0m'
 CHOOSEN_DISK=$1
 ROM=$2
 USERNAME=$3
+ESYNC_SUPPORT=$4
 
 # MAJ des variables d'environnement
 echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
@@ -83,3 +84,8 @@ clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
 rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+#-----Change limits for esync support-----#
+if [ "$ESYNC_SUPPORT" = "o" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
+	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
+fi
