@@ -45,7 +45,7 @@ my_function()
 }
 ```
  - Always use indents for : `for`, `if` and `when`. Example :
- ```sh
+```sh
 if [ 1 = 1 ]; then
     my_function
 fi
@@ -101,8 +101,8 @@ done
 
 echo "End of the script"
 ```
-**Exception** : No line break if there are several `fi` or `done` that follow each other.
-Apply the rule **only on the last**.
+    **Exception** : No line break if there are several `fi` or `done` that follow each other.
+    Apply the rule **only on the last**.
 ```sh
 if (( "${1}" <= "1" )); then
     echo '$1 must be greater than 1'
@@ -133,3 +133,11 @@ for i in {1..$1}; do                    #
     done
 done
 ```
+## Nomination
+### Functions
+- The name of a function need to be explicit : if your function make the square root of a number, name it `square_root`.
+- We are using snake_case for functions. Example : `cli_orchid_selector`, `cli_disk_selector`, `select_GPU_drivers_to_install`...
+    **Exception** : You can use upper case for acronyms. Example : CPU, GPU, RAM, SDD, HDD...
+### Variables
+- The name of a variable need to be explicit : `DATE` for the date
+- We are using snake_upper_case for functions. Example : `COLOR_YELLOW`, `CHOOSEN_DISK`...
