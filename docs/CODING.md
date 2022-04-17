@@ -101,8 +101,8 @@ done
 
 echo "End of the script"
 ```
-    **Exception** : No line break if there are several `fi` or `done` that follow each other.
-    Apply the rule **only on the last**.
+ **Exception** : No line break if there are several `fi` or `done` that follow each other.
+ Apply the rule **only on the last**.
 ```sh
 if (( "${1}" <= "1" )); then
     echo '$1 must be greater than 1'
