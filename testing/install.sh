@@ -445,7 +445,7 @@ read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer :
 # Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------
 if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
-	GAMING_SUPPORT="o"
+	ESYNC_SUPPORT="o"
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
 	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
 fi
@@ -565,7 +565,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username} ${GAMING_SUPPORT}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username} ${ESYNC_SUPPORT}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then
