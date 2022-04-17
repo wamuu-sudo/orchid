@@ -5,7 +5,7 @@ if [ "$(id -u)" -ne 0 ] ; then
     exit 1
 fi
 
-cp -rf Desktop/* /usr/share/applications/
+cp -rf Script_files/* /usr/share/applications/
 #===The browser selection menu function===#
 browser () {
     #===Output the choices===#
