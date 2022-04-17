@@ -14,8 +14,8 @@ browser () {
     echo "4.Red Chrome(vivaldi)"
     echo "5.Microsoft Chrome(edge)"
     echo "6.Firefox .__."
-    echo "7.Firefox but blue(librewolf)"
-    echo "8.Litterally an Onion(tor browser)"
+    echo "7.Firefox mais blue(librewolf)"
+    echo "8.Un Onion(tor browser)"
     echo "9.Retourner en arriére"
     echo ""
     echo "[Saisissez votre choix:]"
@@ -25,12 +25,12 @@ browser () {
     case "$choix" in
         "1")  orchid-install www-client/google-chrome && main_menu ;;
         "2")  orchid-install www-client/chromium && main_menu ;;
-        "3")  flatpak install flathub com.brave.Browser && cp Desktop/brave.png /usr/share/applications/ && cp Desktop/brave.desktop /usr/share/applications/ && main_menu ;;
+        "3")  flatpak install flathub com.brave.Browser && main_menu ;;
         "4")  orchid-install www-client/vivaldi && main_menu ;;
         "5")  orchid-install www-client/microsoft-edge && main_menu ;;
         "6")  orchid-install www-client/firefox-bin && main_menu ;;
-        "7") flatpak install flathub io.gitlab.librewolf-community && cp Desktop/librewolf.png /usr/share/applications/ && cp Desktop/librewolf.desktop /usr/share/applications/ && main_menu ;;
-        "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && cp Desktop/tor-browser.desktop /usr/share/applications/ && cp Desktop/tor-browser.svg /usr/share/applications/ && main_menu ;;
+        "7") flatpak install flathub io.gitlab.librewolf-community && main_menu ;;
+        "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && main_menu ;;
         "9") main_menu ;;
         #===If incorrect choice, warn the user and re-prompt===#
         *) echo "Veuillez choisir une option valide :D!!" && browser ;;
@@ -248,7 +248,7 @@ com () {
         "1") orchid-install net-im/discord-bin && main_menu ;;
         "2") orchid-install net-irc/hexchat && main_menu ;;
         "3") orchid-install net-irc/weechat && main_menu ;;
-        "4") flatpak install flathub im.riot.Riot && cp Desktop/element.desktop /usr/share/applications/ && cp Desktop/element.png /usr/share/applications/ && main_menu ;;
+        "4") flatpak install flathub im.riot.Riot && main_menu ;;
         "5") orchid-install net-p2p/deluge && main_menu ;;
         "6") orchid-install net-p2p/qbittorrent && main_menu ;;
         "7") orchid-install net-p2p/transmission && main_menu ;;
