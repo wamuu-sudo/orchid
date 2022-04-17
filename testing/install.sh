@@ -4,7 +4,8 @@
 #  - Chevek : code
 #  - Wamuu : vérifications et test
 #  - Crystal : code
-# mars 2022
+# Création : mars 2022
+# Dernière mise-à-jour : avril 2022
 # Script d'installation pour Orchid Linux
 #
 #Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
@@ -318,6 +319,7 @@ swap_size_no_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	# Pour une taille de RAM supérieure à 64 Go
 		read -p "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
+	fi
 }
 
 
