@@ -20,7 +20,7 @@
   * Création de l'utilisateur avec les droits d'administration + son mot de passe + mot de passe pour root (validation du nom choisi + évaluation de la résistance du mot de passe ?) (+ RETOUR)
   * ~~Choix des cartes graphiques~~ (à automatiser plus tard, au moins au niveau du choix proposé) (+ RETOUR)
     * ~~Désélectionner les pilotes par défaut~~
-  * Choix du hostname (+ RETOUR)
+  * ~~Choix du hostname~~ (+ RETOUR)
   * Choix de faire une maj complète à la fin de l'installation
   * ~~Récapitulatif avant d'effectuer tous les changements~~ (+ RETOUR)
   * Dernier avertissement avant les changements ?
@@ -35,10 +35,10 @@
   * ~~Support esync : éditer /etc/security/limits.conf avec nouvelle ligne "$username hard nofile 524288"~~
   * ~~Mount proc, dev et sys pour le chroot~~
   * chroot
-    * Mise à jour des variables d'environnement
+    * ~~Mise à jour des variables d'environnement~~
     * ~~Changement du fstab~~
-    * Changement du hostname
-    * Mot de passe root
+    * ~~Changement du hostname~~
+    * Mots de passe root et utilisateur
     * ~~Création de l'utilisateur avec les droits d'administration (Quels groups d'appartenance?)~~
       * Mot de passe de l'utilisateur
     * ~~Installation de grub (EFI ou BIOS)~~
