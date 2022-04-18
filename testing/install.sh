@@ -359,8 +359,8 @@ read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installa
 #===================================================================================
 RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000))   # Total Memory in GB
 if (( $RAM_SIZE_GB < 2 )); then
-  	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
-  	exit
+	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
+	exit
 fi
 
 # Check Internet connection
@@ -368,9 +368,9 @@ fi
 test_internet_access
 while [ $test_ip = 0 ]; do
 	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
-  	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-  	dhcpcd                                                                              # Génération d'une addresse IP
-  	test_internet_access
+	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+	dhcpcd                                                                              # Génération d'une addresse IP
+	test_internet_access
 done
 #-----------------------------------------------------------------------------------
 
@@ -392,12 +392,12 @@ DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                    
 IFS=$SAVEIFS	                                                                        # Restore original IFS
 
 for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-  	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
+	DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
 done
 
 if [[ ${#DISKS[@]} == 1 ]]; then
-    CHOOSEN_DISK=${DISKS_LABEL[0]}
-    CHOOSEN_DISK_LABEL=${DISKS[0]}
+	CHOOSEN_DISK=${DISKS_LABEL[0]}
+	CHOOSEN_DISK_LABEL=${DISKS[0]}
 else
     select_disk_to_install
 fi
@@ -406,9 +406,9 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux va s'installer sur ${COLOR_GREE
 echo "${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
 echo "${COLOR_GREEN}*${COLOR_RESET} Préparation pour le partionnement :"
 if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
-  	ROM="UEFI"
+	ROM="UEFI"
 else
-  	ROM="BIOS"
+	ROM="BIOS"
 fi
 
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
@@ -442,6 +442,11 @@ select_GPU_drivers_to_install
 # User name:
 read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
 
+# choose your hostname
+#-----------------------------------------------------------------------------------
+read -e -p "Entrez le nom de ce système pour l'identifier sur le réseau [${COLOR_WHITE}orchid${COLOR_RESET}] : " HOSTNAME
+HOSTNAME=${HOSTNAME:-orchid}
+
 # Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------
 if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
@@ -460,23 +465,24 @@ echo "[${COLOR_GREEN}OK${COLOR_RESET}] Version d'Orchid Linux choisie : ${COLOR_
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 if [ "$HIBERNATION" = o ]; then
-  	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 elif [ "$HIBERNATION" = n ]; then
-  	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
 fi
 
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${username}${COLOR_RESET}"
+echo "[${COLOR_GREEN}OK${COLOR_RESET}] Sur le réseau, ce système aura pour nom ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
 if [ "$ESYNC_SUPPORT" = o ]; then
-  	echo "[${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${username}${COLOR_RESET}."
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${username}${COLOR_RESET}."
 fi
 
 echo ""
 echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
 read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
 if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-  	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
-  	exit
+	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
+	exit
 fi
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -497,8 +503,8 @@ echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
 swapon "${CHOOSEN_DISK}2"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
-  	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-  	mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
+	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
+	mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
@@ -515,23 +521,23 @@ processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	                                        # Just keep the file from the URL
 if [ -n "${ORCHID_COUNT[$no_archive]}" ]; then
-  	COUNTED_BY_TREE[$no_archive]=$(wget -q -O- ${ORCHID_COUNT[$no_archive]})
+	COUNTED_BY_TREE[$no_archive]=$(wget -q -O- ${ORCHID_COUNT[$no_archive]})
 fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
 if [[ "$no_archive" == "0" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "1" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "2" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "3" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "4" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "5" ]]; then
-  	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 fi
 
 # Fail safe
@@ -564,7 +570,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username} ${ESYNC_SUPPORT}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username} ${ESYNC_SUPPORT} ${HOSTNAME}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then
@@ -573,7 +579,7 @@ fi
 
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
-  	chroot /mnt/orchid ./GNOME-config.sh ${username}
+	chroot /mnt/orchid ./GNOME-config.sh ${username}
 fi
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -587,7 +593,7 @@ rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/p
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
 if [ "$ROM" = "UEFI" ]; then
-  	umount /mnt/orchid/boot/EFI
+	umount /mnt/orchid/boot/EFI
 fi
 
 umount -R /mnt/orchid

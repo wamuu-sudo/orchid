@@ -30,28 +30,20 @@ CHOOSEN_DISK=$1
 ROM=$2
 USERNAME=$3
 ESYNC_SUPPORT=$4
+HOSTNAME=$5
 
 # MAJ des variables d'environnement
 echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
 env-update && source /etc/profile
-clear
 # Configuration de fstab
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-if [ "$ROM" = "UEFI" ]
-then
-  echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-  echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
+echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
+if [ "$ROM" = "UEFI" ]; then
   echo "${CHOOSEN_DISK}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
-elif [ "$ROM" = "BIOS" ]
-then 
-  echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-  echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
 fi
-echo ""
-read -p "[Entrée] pour configurer le nom de la machine."
-# Configuration du nom de la machine
-nano -w /etc/conf.d/hostname
-clear
+# Configuration du nom de la machine (hostname)
+sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
 # Génération du mot de passe root
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo ""
@@ -64,7 +56,6 @@ echo "  ${COLOR_GREEN}*${COLOR_RESET} Mot de passe de $USERNAME :"
 passwd $USERNAME
 echo ""
 read -p "[Entrée] pour continuer l'installation."
-clear
 #-----Configuration de GRUB-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 if [ "$ROM" = "UEFI" ]
@@ -79,8 +70,6 @@ then
   grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
-read -p "${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer l'installation."
-clear
 #-----Activation des services-----#
 echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
