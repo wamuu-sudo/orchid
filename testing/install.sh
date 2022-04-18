@@ -485,10 +485,10 @@ read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RES
 echo ""
 create_passwd "${USERNAME}"
 echo ""
-verify_password_concordance
+verify_password_concordance "${USERNAME}"
 USER_PASS="${ATTEMPT1}"
 create_passwd "root"
-verify_password_concordance
+verify_password_concordance "root"
 ROOT_PASS="${ATTEMPT1}"
 #-----------------------------------------------------------------------------------
 
