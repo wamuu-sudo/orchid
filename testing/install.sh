@@ -99,6 +99,10 @@ CHOICES_DISK[0]="${COLOR_GREEN}*${COLOR_RESET}"
 # Disks radiobox selector
 declare -a CHOICES_DISK
 ERROR_IN_DISK_SELECTOR=" "
+
+# Regular Expression to test a valid hostname, as per RFC-952 and RFC-1123
+VALID_HOSTNAME_REGEX="^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$"
+
 #-----------------------------------------------------------------------------------
 
 # Setup functions
@@ -339,6 +343,20 @@ swap_size_no_hibernation()
 }
 
 
+test_if_hostname_is_valid()
+{
+if [ ${#HOSTNAME} -le 255 ]; then																								# Total length must not exceed 255
+	if [[ "$HOSTNAME" =~ $VALID_HOSTNAME_REGEX ]]; then
+		IS_HOSTNAME_VALID=1																													# hostname is valid 
+	else
+		IS_HOSTNAME_VALID=0																													# hostname is not valid 
+	fi
+else
+		IS_HOSTNAME_VALID=0																													# hostname is not valid 
+fi
+}
+
+
 #-----------------------------------------------------------------------------------
 
 #=== MAIN ==========================================================================
@@ -444,8 +462,15 @@ read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer :
 
 # choose your hostname
 #-----------------------------------------------------------------------------------
-read -e -p "Entrez le nom de ce système pour l'identifier sur le réseau [${COLOR_WHITE}orchid${COLOR_RESET}] : " HOSTNAME
-HOSTNAME=${HOSTNAME:-orchid}
+IS_HOSTNAME_VALID=0
+while  [ $IS_HOSTNAME_VALID = 0 ]; do
+	read -e -p "Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_WHITE}orchid${COLOR_RESET}] : " HOSTNAME
+	HOSTNAME=${HOSTNAME:-orchid}
+	test_if_hostname_is_valid
+	if [ $IS_HOSTNAME_VALID = 0 ]; then
+		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_RED}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+	fi
+done
 
 # Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------

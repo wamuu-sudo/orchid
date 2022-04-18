@@ -43,6 +43,7 @@ if [ "$ROM" = "UEFI" ]; then
   echo "${CHOOSEN_DISK}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 # Configuration du nom de la machine (hostname)
+echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du nom du système sur le réseau."
 sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
 # Génération du mot de passe root
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
