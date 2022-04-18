@@ -77,6 +77,76 @@ my_function()
     done
 }
 ```
+### Comments
+- First introduction comment. Example with `install.sh` :
+```sh
+#!/usr/bin/env bash
+#===================================================================================
+#
+# FILE : install.sh
+#
+# USAGE : su -
+#         ./install.sh
+#
+# DESCRIPTION : Script d'installation pour Orchid Linux.
+#
+# BUGS : ---
+# NOTES : ---
+# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu
+# CREATED : mars 2022
+# REVISION: 17 avril 2022
+#
+# LICENCE :
+# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see https://www.gnu.org/licenses/.
+#===================================================================================
+```
+- Preconfiguration (before main script) :
+```sh
+#=== PRECONFIGURATION ============================================================== (85 characters)
+# NOTES : --- (if needed)
+
+do_something
+
+#============================================================== PRECONFIGURATION ===
+```
+- Main script :
+```sh
+#=== MAIN ==========================================================================
+# NOTES : --- (if needed)
+
+do_something
+
+#========================================================================== MAIN ===
+```
+
+- Main parts
+```sh
+# Name of the part
+#=================================================================================== (85 characters)
+# NOTES : --- (if needed)
+
+do_something
+#===================================================================================
+```
+
+- Secondary parts
+```sh
+# Name of the part
+#-----------------------------------------------------------------------------------
+# NOTES : (if needed)
+
+do_something
+#-----------------------------------------------------------------------------------
+```
 ## Line breaks
 - 2 line breaks after the end of a function. Example :
 ```sh
