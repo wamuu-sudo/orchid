@@ -63,14 +63,14 @@ browser ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  orchid-install www-client/google-chrome && main_menu ;;
-        "2")  orchid-install www-client/chromium && main_menu ;;
-        "3")  flatpak install flathub com.brave.Browser && main_menu ;;
-        "4")  orchid-install www-client/vivaldi && main_menu ;;
-        "5")  orchid-install www-client/microsoft-edge && main_menu ;;
-        "6")  orchid-install www-client/firefox-bin && main_menu ;;
-        "7") flatpak install flathub io.gitlab.librewolf-community && main_menu ;;
-        "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && main_menu ;;
+        "1")  orchid-install www-client/google-chrome && browser ;;
+        "2")  orchid-install www-client/chromium && browser ;;
+        "3")  flatpak install flathub com.brave.Browser && browser ;;
+        "4")  orchid-install www-client/vivaldi && browser ;;
+        "5")  orchid-install www-client/microsoft-edge && browser ;;
+        "6")  orchid-install www-client/firefox-bin && browser ;;
+        "7") flatpak install flathub io.gitlab.librewolf-community && browser ;;
+        "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && browser ;;
         "9") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && browser ;;
@@ -104,17 +104,17 @@ multimedia ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install media-video/obs-studio && main_menu ;;
-        "2") orchid-install media-sound/mpd && main_menu ;;
-        "3") orchid-install media-gfx/feh && main_menu ;;
-        "4") orchid-install media-gfx/gimp && main_menu ;;
-        "5") orchid-install media-gfx/krita && main_menu ;;
-        "6") orchid-install media-video/mpv && main_menu ;;
-        "7") orchid-install media-video/celluloid && main_menu ;;
-        "8") orchid-install net-misc/youtube-dl && main_menu ;;
-        "9") orchid-install media-video/vlc && main_menu ;;
-        "10") orchid-install media-gfx/blender && main_menu ;;
-        "11") orchid-install media-sound/spotify && main_menu ;;
+        "1") orchid-install media-video/obs-studio && multimedia ;;
+        "2") orchid-install media-sound/mpd && multimedia ;;
+        "3") orchid-install media-gfx/feh && multimedia ;;
+        "4") orchid-install media-gfx/gimp && multimedia ;;
+        "5") orchid-install media-gfx/krita && multimedia ;;
+        "6") orchid-install media-video/mpv && multimedia ;;
+        "7") orchid-install media-video/celluloid && multimedia ;;
+        "8") orchid-install net-misc/youtube-dl && multimedia ;;
+        "9") orchid-install media-video/vlc && multimedia ;;
+        "10") orchid-install media-gfx/blender && multimedia ;;
+        "11") orchid-install media-sound/spotify && multimedia ;;
         "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && multimedia ;;
@@ -151,16 +151,16 @@ utility ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-text/calibre && main_menu ;;
-        "2") orchid-install app-text/zathura app-text/zathura-meta && main_menu ;;
-        "3") orchid-install kde-apps/ark && main_menu ;;
-        "4") orchid-install app-arch/file-roller && main_menu ;;
-        "5") orchid-install app-arch/lxqt-archiver && main_menu ;;
-        "6") orchid-install app-arch/xarcivher && main_menu ;;
-        "7") orchid-install kde-apps/dolphin && main_menu ;;
-        "8") orchid-install x11-misc/pcmanfm && main_menu ;;
-        "9") orchid-install xfce-base/thunar && main_menu ;;
-        "10") orchid-install gnome-base/nautilus && main_menu ;;
+        "1") orchid-install app-text/calibre && utility ;;
+        "2") orchid-install app-text/zathura app-text/zathura-meta && utility ;;
+        "3") orchid-install kde-apps/ark && utility ;;
+        "4") orchid-install app-arch/file-roller && utility ;;
+        "5") orchid-install app-arch/lxqt-archiver && utility ;;
+        "6") orchid-install app-arch/xarcivher && utility ;;
+        "7") orchid-install kde-apps/dolphin && utility ;;
+        "8") orchid-install x11-misc/pcmanfm && utility ;;
+        "9") orchid-install xfce-base/thunar && utility ;;
+        "10") orchid-install gnome-base/nautilus && utility ;;
         "11") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && utility ;;
@@ -187,10 +187,10 @@ office ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-office/libreoffice-bin && main_menu ;;
-        "2") orchid-install app-office/lyx && main_menu ;;
-        "3") orchid-install app-office/scribus && main_menu ;;
-        "4") orchid-install app-office/calligra && main_menu ;;
+        "1") orchid-install app-office/libreoffice-bin && office ;;
+        "2") orchid-install app-office/lyx && office ;;
+        "3") orchid-install app-office/scribus && office ;;
+        "4") orchid-install app-office/calligra && office ;;
         "5") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && office ;;
@@ -227,16 +227,16 @@ text_editors ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-editors/neovim && main_menu ;;
-        "2") orchid-install app-office/vim && main_menu ;;
-        "3") orchid-install app-editors/vim && main_menu ;;
-        "4") orchid-install kde-apps/kate && main_menu ;;
-        "5") orchid-install app-editors/gedit && main_menu ;;
-        "6") orchid-install app-editors/emacs && main_menu ;;
-        "7") orchid-install app-editors/vscode && main_menu ;;
-        "8") orchid-install app-editors/bluefish && main_menu ;;
-        "9") orchid-install dev-util/geany && main_menu ;;
-        "10") orchid-install app-editors/vscodium && main_menu ;;
+        "1") orchid-install app-editors/neovim && text_editors ;;
+        "2") orchid-install app-office/vim && text_editors ;;
+        "3") orchid-install app-editors/vim && text_editors ;;
+        "4") orchid-install kde-apps/kate && text_editors ;;
+        "5") orchid-install app-editors/gedit && text_editors ;;
+        "6") orchid-install app-editors/emacs && text_editors ;;
+        "7") orchid-install app-editors/vscode && text_editors ;;
+        "8") orchid-install app-editors/bluefish && text_editors ;;
+        "9") orchid-install dev-util/geany && text_editors ;;
+        "10") orchid-install app-editors/vscodium && text_editors ;;
         "11") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && text_editors ;;
@@ -273,18 +273,18 @@ system ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install x11-terms/alacritty && main_menu ;;
-        "2") orchid-install x11-terms/gnome-terminal && main_menu ;;
-        "3") orchid-install x11-terms/kitty && main_menu ;;
-        "4") orchid-install kde-apps/konsole && main_menu ;;
-        "5") orchid-install lxde-base/lxterminal && main_menu ;;
-        "6") orchid-install x11-terms/rxvt-unicode && main_menu ;;
-        "7") orchid-install x11-terms/terminator && main_menu ;;
-        "8") orchid-install x11-terms/terminology && main_menu ;;
-        "9") orchid-install x11-terms/xfce4-terminal && main_menu ;;
-        "10") orchid-install x11-terms/xterm && main_menu ;;
-        "11") orchid-install sys-apps/baobab && main_menu ;;
-        "12") orchid-install sys-block/gparted && main_menu ;;
+        "1") orchid-install x11-terms/alacritty && system ;;
+        "2") orchid-install x11-terms/gnome-terminal && system ;;
+        "3") orchid-install x11-terms/kitty && system ;;
+        "4") orchid-install kde-apps/konsole && system ;;
+        "5") orchid-install lxde-base/lxterminal && system ;;
+        "6") orchid-install x11-terms/rxvt-unicode && system ;;
+        "7") orchid-install x11-terms/terminator && system ;;
+        "8") orchid-install x11-terms/terminology && system ;;
+        "9") orchid-install x11-terms/xfce4-terminal && system ;;
+        "10") orchid-install x11-terms/xterm && system ;;
+        "11") orchid-install sys-apps/baobab && system ;;
+        "12") orchid-install sys-block/gparted && system ;;
         "13") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && system ;;
@@ -313,13 +313,13 @@ com ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install net-im/discord-bin && main_menu ;;
-        "2") orchid-install net-irc/hexchat && main_menu ;;
-        "3") orchid-install net-irc/weechat && main_menu ;;
-        "4") flatpak install flathub im.riot.Riot && main_menu ;;
-        "5") orchid-install net-p2p/deluge && main_menu ;;
-        "6") orchid-install net-p2p/qbittorrent && main_menu ;;
-        "7") orchid-install net-p2p/transmission && main_menu ;;
+        "1") orchid-install net-im/discord-bin && com ;;
+        "2") orchid-install net-irc/hexchat && com ;;
+        "3") orchid-install net-irc/weechat && com ;;
+        "4") flatpak install flathub im.riot.Riot && com ;;
+        "5") orchid-install net-p2p/deluge && com ;;
+        "6") orchid-install net-p2p/qbittorrent && com ;;
+        "7") orchid-install net-p2p/transmission && com ;;
         "8") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && com ;;
