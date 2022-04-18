@@ -84,8 +84,6 @@ echo ""
 echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd                                           # Création du mot de passe root
 useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
 echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                                 # Création du mot de passe utilisateur
-echo ""
-read -p "[Entrée] pour continuer l'installation."
 #-----------------------------------------------------------------------------------
 
 # Configuration de GRUB
