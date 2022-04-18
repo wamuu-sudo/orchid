@@ -160,8 +160,8 @@ browser ()
 multimedia ()
 {
     # Affiche les choix possibles
-    echo -e "${On_IBlack}Choisissez l'outil que vous voulez installer:${Color_Off}"
-    echo -e "${On_Black}1. OBS Studio"
+    echo -e "Choisissez l'outil que vous voulez installer:"
+    echo -e "1. OBS Studio"
     echo -e "2. MPD"
     echo -e "3. Feh"
     echo -e "4. GIMP"
@@ -172,7 +172,7 @@ multimedia ()
     echo -e "9. VLC"
     echo -e "10. Blender"
     echo -e "11. Spotify"
-    echo -e "12. Kdenlive${Color_Off}"
+    echo -e "12. Kdenlive"
     echo -e "13. Retourner en arrière"
     echo -e ""
     read -r -p "[Saisissez votre choix]: "  choix
@@ -282,8 +282,8 @@ office ()
 text_editors ()
 {
     # Affiche les choix possibles
-    echo -e "${On_White}Choisissez l'outil que vous voulez installer:${Color_Off}"
-    echo -e "${BWhite}===CLI:==="
+    echo -e "Choisissez l'outil que vous voulez installer:"
+    echo -e "===CLI:==="
     echo -e "1. Neovim"
     echo -e "2. Vim"
     echo -e "===GUI:==="
@@ -295,7 +295,7 @@ text_editors ()
     echo -e "7. Vscode"
     echo -e "8. Bluefish"
     echo -e "9. Geany"
-    echo -e "10. Vscodium${Color_Off}"
+    echo -e "10. Vscodium"
     echo -e "11. Retourner en arrière"
     echo -e "${On_Red}NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)${Color_Off}"
     echo -e ""
@@ -417,10 +417,10 @@ main_menu()
     echo -e "${Green}Veuillez choisir votre destination:${Color_Off}"
     echo -e ""
     echo -e "${Red}1. Navigateurs${Color_Off}"
-    echo -e "${On_Black}2. Multimedia${Color_Off}"
+    echo -e "2. Multimedia"
     echo -e "${Cyan}3. Utilities${Color_Off}"
     echo -e "${Purple}4. Bureautiques${Color_Off}"
-    echo -e "${White}5. Editeurs de texte${Color_Off}"
+    echo -e "5. Editeurs de texte"
     echo -e "${Yellow}6. System${Color_Off}"
     echo -e "${Green}7. Communication & Internet things${Color_Off}"
     echo -e "8. ${BRed}F${BBlack}o${BCyan}s${BPurple}s ${BWhite}G${BYellow}a${BGreen}m${BRed}e${BCyan}s${Color_Off}(WIP)"
