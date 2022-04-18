@@ -1,13 +1,53 @@
 #!/usr/bin/env bash
-#===Check for root rights===#
+#===================================================================================
+#
+# FILE : GantooFI.sh
+#
+# USAGE : su -
+#         ./GentooFI.sh
+#
+# DESCRIPTION : Script d'installation d'applications pour Orchid Linux.
+#
+# BUGS : ---
+# NOTES : ---
+# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu
+# CREATED : avril 2022
+# REVISION: 18 avril 2022
+#
+# LICENCE :
+# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see https://www.gnu.org/licenses/.
+#===================================================================================
+
+#=== PRECONFIGURATION ==============================================================
+
+# Check for root rights
+#-----------------------------------------------------------------------------------
 if [ "$(id -u)" -ne 0 ] ; then
     echo "Veuillez lancer le script en tant que root  D: (soit avec sudo , doas ou su)"
     exit 1
 fi
 
-cp -rf Script_files/* /usr/share/applications/
-#===The browser selection menu function===#
-browser () {
+#-----------------------------------------------------------------------------------
+cp -rf Desktop/* /usr/share/applications/
+
+# Setup functions
+#===================================================================================
+
+#=== browser ======================================================================#
+# DESCRIPTION : Permet la sélection et l'installation D'un ou plusieurs navigateurs
+#               Web.
+
+browser ()
+{
     #===Output the choices===#
     echo "Choisissez le navigateur que vous voulez installer:"
     echo "1.Chrome"
@@ -37,10 +77,15 @@ browser () {
         #===If incorrect choice, warn the user and re-prompt===#
         *) echo "Veuillez choisir une option valide :D!!" && browser ;;
     esac
-
 }
-#===The Multimedia selection menu function===#
-multimedia () {
+
+#====================================================================== browser ===#
+
+#=== multimedia ===================================================================#
+# DESCRIPTION : Permet l'installation d'applications multimédia.
+
+multimedia ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "1.OBS Studio"
@@ -78,8 +123,15 @@ multimedia () {
     esac
 
 }
-#===The Utilites selection menu function===#
-utility () {
+
+#==================================================================== mutimedia ===#
+
+#=== utility ======================================================================#
+# DESCRIPTION : Permet l'installation d'applications utilitaires : Document Readers,
+#               Gestionnaires d'archives et explorateurs de fichiers.
+
+utility ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===Document Readers:==="
@@ -118,8 +170,14 @@ utility () {
     esac
 
 }
-#===The Productivity selection menu function===#
-office () {
+
+#====================================================================== utility ===#
+
+#=== office =======================================================================#
+# DESCRIPTION : Permet l'installation d'applications de bureautique.
+
+office ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "1.LibreOffice"
@@ -143,8 +201,12 @@ office () {
     esac
 
 }
+
+#======================================================================= office ===#
+
 #===The Text Editors selection menu function===#
-text-editors () {
+text-editors ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===CLI:==="
@@ -186,7 +248,8 @@ text-editors () {
 }
 
 #===The System tools selection menu function===#
-system () {
+system ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===Terminals:==="
@@ -230,7 +293,8 @@ system () {
 }
 
 #===The Communication tools selection menu function===#
-com () {
+com ()
+{
     #===Output the choices===#
     echo "Choisissez l'outil que vous voulez installer:"
     echo "1.Discord"
@@ -263,7 +327,8 @@ com () {
 
 
 #===The Main Menu function==#
-main_menu() {
+main_menu()
+{
     echo "Bienvenue au script post-installation orchid!"
     echo "Veuillez choisir votre destination:"
     echo ""
@@ -292,5 +357,10 @@ main_menu() {
         *) echo "Veuillez choisir une option valide :D!!" && main_menu ;;
     esac
 }
+
+
+#===================================================================================
+
+#=== MAIN ==========================================================================
 
 main_menu
