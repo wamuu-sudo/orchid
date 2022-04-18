@@ -32,7 +32,7 @@
 # Check for root rights
 #-----------------------------------------------------------------------------------
 if [ "$(id -u)" -ne 0 ] ; then
-    echo "Veuillez lancer le script en tant que root  D: (soit avec sudo , doas ou su)"
+    echo "Veuillez lancer le script en tant que root D: (soit avec sudo, doas ou su)"
     exit 1
 fi
 
@@ -76,6 +76,8 @@ browser ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && browser ;;
     esac
+
+    clear
 }
 
 #====================================================================== browser ===#
@@ -119,6 +121,8 @@ multimedia ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && multimedia ;;
     esac
+
+    clear
 }
 
 #==================================================================== mutimedia ===#
@@ -164,6 +168,8 @@ utility ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && utility ;;
     esac
+
+    clear
 }
 
 #====================================================================== utility ===#
@@ -193,6 +199,8 @@ office ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && office ;;
     esac
+
+    clear
 }
 
 #======================================================================= office ===#
@@ -238,6 +246,8 @@ text_editors ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && text_editors ;;
     esac
+
+    clear
 }
 
 #================================================================= text_editors ===#
@@ -285,6 +295,8 @@ system ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && system ;;
     esac
+
+    clear
 }
 
 #======================================================================= system ===#
@@ -319,6 +331,8 @@ com ()
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && com ;;
     esac
+
+    clear
 }
 
 #========================================================================== com ===#
@@ -343,7 +357,7 @@ main_menu()
     echo ""
     echo "[Saisissez votre choix:]"
     read -r choix
-    echo "Votre choix était:" $choix
+    clear
     case "$choix" in
         "1") browser ;;
         "2") multimedia ;;
