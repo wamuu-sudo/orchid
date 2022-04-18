@@ -347,17 +347,36 @@ test_if_hostname_is_valid()
 {
 if [ ${#HOSTNAME} -le 255 ]; then																								# Total length must not exceed 255
 	if [[ "$HOSTNAME" =~ $VALID_HOSTNAME_REGEX ]]; then
-		IS_HOSTNAME_VALID=1																													# hostname is valid 
+		IS_HOSTNAME_VALID=1																													# hostname is valid
 	else
-		IS_HOSTNAME_VALID=0																													# hostname is not valid 
+		IS_HOSTNAME_VALID=0																													# hostname is not valid
 	fi
 else
-		IS_HOSTNAME_VALID=0																													# hostname is not valid 
+		IS_HOSTNAME_VALID=0																													# hostname is not valid
 fi
 }
 
 
+create_passwd() # Spécifier le nom de l'utilisateur en $1
+{
+    echo "${COLOR_WHITE}Saisisez le mot de passe pour l'utilisateur ${1} : ${COLOR_YELLOW}(le mot de passe n'apparaîtrera pas)${COLOR_RESET}"
+    read -s ATTEMPT1
+    echo "${COLOR_WHITE}Resaisisez le mot de passe pour le confirmer :${COLOR_RESET}"
+    read -s ATTEMPT2
+}
+
+
+verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
+{
+    while [[ "${ATTEMPT1}" != "${ATTEMPT2}" ]]; do
+    	echo "${COLOR_YELLOW}Les mots de passe ne concordent pas, réessayez.${COLOR_RESET}"
+    	create_passwd "${1}"
+	done
+}
+
 #-----------------------------------------------------------------------------------
+
+#============================================================== PRECONFIGURATION ===
 
 #=== MAIN ==========================================================================
 
@@ -457,8 +476,21 @@ echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_G
 #=================================================
 # Select GPU
 select_GPU_drivers_to_install
-# User name:
-read -p "${COLOR_WHITE}Quel est le nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" username
+
+# Utilisateurs et mots de passe
+#-----------------------------------------------------------------------------------
+echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
+echo ""
+read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
+echo ""
+create_passwd "${USERNAME}"
+echo ""
+verify_password_concordance
+USER_PASS="${ATTEMPT1}"
+create_passwd "root"
+verify_password_concordance
+ROOT_PASS="${ATTEMPT1}"
+#-----------------------------------------------------------------------------------
 
 # choose your hostname
 #-----------------------------------------------------------------------------------
@@ -496,10 +528,10 @@ elif [ "$HIBERNATION" = n ]; then
 fi
 
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
-echo "[${COLOR_GREEN}OK${COLOR_RESET}] En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${username}${COLOR_RESET}"
+echo "[${COLOR_GREEN}OK${COLOR_RESET}] En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Sur le réseau, ce système aura pour nom ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
 if [ "$ESYNC_SUPPORT" = o ]; then
-	echo "[${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${username}${COLOR_RESET}."
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
 fi
 
 echo ""
@@ -595,16 +627,16 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${username} ${ESYNC_SUPPORT} ${HOSTNAME}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${USERNAME} ${ESYNC_SUPPORT} ${HOSTNAME} ${ROOT_PASS} ${USER_PASS}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then
-	chroot /mnt/orchid ./DWM-config.sh ${username}
+	chroot /mnt/orchid ./DWM-config.sh ${USERNAME}
 fi
 
 # Configuration clavier pour GNOME
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
-	chroot /mnt/orchid ./GNOME-config.sh ${username}
+	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME}
 fi
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
@@ -628,3 +660,5 @@ read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour red
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
 #===================================================================================
+
+#========================================================================== MAIN ===
