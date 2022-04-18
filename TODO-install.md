@@ -38,7 +38,7 @@
     * ~~Mise à jour des variables d'environnement~~
     * ~~Changement du fstab~~
     * ~~Changement du hostname~~
-    * Mots de passe root et utilisateur
+    * Mot de passe root
     * ~~Création de l'utilisateur avec les droits d'administration (Quels groups d'appartenance?)~~
       * Mot de passe de l'utilisateur
     * ~~Installation de grub (EFI ou BIOS)~~
