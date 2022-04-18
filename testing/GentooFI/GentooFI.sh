@@ -48,22 +48,21 @@ cp -rf Desktop/* /usr/share/applications/
 
 browser ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez le navigateur que vous voulez installer:"
-    echo "1.Chrome"
-    echo "2.Blue Chrome(chromium)"
-    echo "3.Orange Chrome(brave)"
-    echo "4.Red Chrome(vivaldi)"
-    echo "5.Microsoft Chrome(edge)"
-    echo "6.Firefox .__."
-    echo "7.Firefox mais blue(librewolf)"
-    echo "8.Un Onion(tor browser)"
-    echo "9.Retourner en arrière"
+    echo "1. Chrome"
+    echo "2. Blue Chrome (chromium)"
+    echo "3. Orange Chrome (brave)"
+    echo "4. Red Chrome (vivaldi)"
+    echo "5. Microsoft Chrome (edge)"
+    echo "6. Firefox .__."
+    echo "7. Firefox mais blue (librewolf)"
+    echo "8. Un Onion (tor browser)"
+    echo "9. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1")  orchid-install www-client/google-chrome && main_menu ;;
         "2")  orchid-install www-client/chromium && main_menu ;;
@@ -74,7 +73,7 @@ browser ()
         "7") flatpak install flathub io.gitlab.librewolf-community && main_menu ;;
         "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && main_menu ;;
         "9") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && browser ;;
     esac
 }
@@ -86,25 +85,24 @@ browser ()
 
 multimedia ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
-    echo "1.OBS Studio"
-    echo "2.MPD"
-    echo "3.Feh"
-    echo "4.GIMP"
-    echo "5.Krita"
-    echo "6.MPV"
-    echo "7.Celluloid(MPV GTK GUI)"
-    echo "8.youtube-dl(CLI)"
-    echo "9.VLC"
-    echo "10.Blender"
-    echo "11.Spotify"
-    echo "12.Retourner en arrière"
+    echo "1. OBS Studio"
+    echo "2. MPD"
+    echo "3. Feh"
+    echo "4. GIMP"
+    echo "5. Krita"
+    echo "6. MPV"
+    echo "7. Celluloid(MPV GTK GUI)"
+    echo "8. youtube-dl(CLI)"
+    echo "9. VLC"
+    echo "10. Blender"
+    echo "11. Spotify"
+    echo "12. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install media-video/obs-studio && main_menu ;;
         "2") orchid-install media-sound/mpd && main_menu ;;
@@ -118,10 +116,9 @@ multimedia ()
         "10") orchid-install media-gfx/blender && main_menu ;;
         "11") orchid-install media-sound/spotify && main_menu ;;
         "12") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && multimedia ;;
     esac
-
 }
 
 #==================================================================== mutimedia ===#
@@ -132,27 +129,26 @@ multimedia ()
 
 utility ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===Document Readers:==="
-    echo "1.Calibre"
-    echo "2.Zathura"
+    echo "1. Calibre"
+    echo "2. Zathura"
     echo "===Archive management:==="
-    echo "3.Ark"
-    echo "4.File-roller"
-    echo "5.LXQT Archiver"
-    echo "6.Xarchiver"
+    echo "3. Ark"
+    echo "4. File-roller"
+    echo "5. LXQT Archiver"
+    echo "6. Xarchiver"
     echo "===File management:==="
-    echo "7.Dolphin"
-    echo "8.PCMANFM"
-    echo "9.Thunar"
-    echo "10.Nautilus"
-    echo "11.Retourner en arrière"
+    echo "7. Dolphin"
+    echo "8. PCMANFM"
+    echo "9. Thunar"
+    echo "10. Nautilus"
+    echo "11. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-text/calibre && main_menu ;;
         "2") orchid-install app-text/zathura app-text/zathura-meta && main_menu ;;
@@ -165,10 +161,9 @@ utility ()
         "9") orchid-install xfce-base/thunar && main_menu ;;
         "10") orchid-install gnome-base/nautilus && main_menu ;;
         "11") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && utility ;;
     esac
-
 }
 
 #====================================================================== utility ===#
@@ -178,57 +173,56 @@ utility ()
 
 office ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
-    echo "1.LibreOffice"
-    echo "2.Lyx"
-    echo "3.Scribus"
-    echo "4.Calligra"
-    echo "5.Retourner en arrière"
+    echo "1. LibreOffice"
+    echo "2. Lyx"
+    echo "3. Scribus"
+    echo "4. Calligra"
+    echo "5. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-office/libreoffice-bin && main_menu ;;
         "2") orchid-install app-office/lyx && main_menu ;;
         "3") orchid-install app-office/scribus && main_menu ;;
         "4") orchid-install app-office/calligra && main_menu ;;
         "5") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && office ;;
     esac
-
 }
 
 #======================================================================= office ===#
 
-#===The Text Editors selection menu function===#
-text-editors ()
+#=== text_editors =================================================================#
+# DESCRIPTION : Permet l'installation d'éditeurs de texte.
+
+text_editors ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===CLI:==="
-    echo "1.Neovim"
-    echo "2.Vim"
+    echo "1. Neovim"
+    echo "2. Vim"
     echo "===GUI:==="
-    echo "3.GVIM"
-    echo "4.Kate"
-    echo "5.Gedit"
-    echo "6.Emacs"
+    echo "3. GVIM"
+    echo "4. Kate"
+    echo "5. Gedit"
+    echo "6. Emacs"
     echo "===IDEs==="
-    echo "7.Vscode"
-    echo "8.Bluefish"
-    echo "9.Geany"
-    echo "10.Vscodium"
-    echo "11.Retourner en arrière"
+    echo "7. Vscode"
+    echo "8. Bluefish"
+    echo "9. Geany"
+    echo "10. Vscodium"
+    echo "11. Retourner en arrière"
     echo "NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-editors/neovim && main_menu ;;
         "2") orchid-install app-office/vim && main_menu ;;
@@ -241,37 +235,39 @@ text-editors ()
         "9") orchid-install dev-util/geany && main_menu ;;
         "10") orchid-install app-editors/vscodium && main_menu ;;
         "11") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
-        *) echo "Veuillez choisir une option valide :D!!" && text-editors ;;
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
+        *) echo "Veuillez choisir une option valide :D!!" && text_editors ;;
     esac
-
 }
 
-#===The System tools selection menu function===#
+#================================================================= text_editors ===#
+
+#=== system =======================================================================#
+# DESCRIPTION : Permet l'installation d'outils liés au système.
+
 system ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
     echo "===Terminals:==="
-    echo "1.alacritty"
-    echo "2.Gnome terminal"
-    echo "3.Kitty"
-    echo "4.Konsole"
-    echo "5.Lxterminal"
-    echo "6.rxvt unicode (urxvt)"
-    echo "7.Terminator"
-    echo "8.Terminology"
-    echo "9.XFCE4-terminal"
-    echo "10.Xterm"
+    echo "1. alacritty"
+    echo "2. Gnome terminal"
+    echo "3. Kitty"
+    echo "4. Konsole"
+    echo "5. Lxterminal"
+    echo "6. rxvt unicode (urxvt)"
+    echo "7. Terminator"
+    echo "8. Terminology"
+    echo "9. XFCE4-terminal"
+    echo "10. Xterm"
     echo "===Utilities:==="
-    echo "11.Baobab (disk usage analyzer)"
-    echo "12.GParted"
-    echo "13.Retourner en arrière"
+    echo "11. Baobab (disk usage analyzer)"
+    echo "12. GParted"
+    echo "13. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install x11-terms/alacritty && main_menu ;;
         "2") orchid-install x11-terms/gnome-terminal && main_menu ;;
@@ -286,30 +282,31 @@ system ()
         "11") orchid-install sys-apps/baobab && main_menu ;;
         "12") orchid-install sys-block/gparted && main_menu ;;
         "13") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && system ;;
     esac
-
 }
 
-#===The Communication tools selection menu function===#
+#======================================================================= system ===#
+
+#=== com ==========================================================================#
+# DESCRIPTION : Permet l'installation d'applications liés aux comunications.
 com ()
 {
-    #===Output the choices===#
+    # Affiche les choix possibles
     echo "Choisissez l'outil que vous voulez installer:"
-    echo "1.Discord"
-    echo "2.HexChat"
-    echo "3.Weechat"
-    echo "4.Matrix"
-    echo "5.Deluge"
-    echo "6.Qbittorrent"
-    echo "7.Transmission"
-    echo "8.Retourner en arrière"
+    echo "1. Discord"
+    echo "2. HexChat"
+    echo "3. Weechat"
+    echo "4. Matrix"
+    echo "5. Deluge"
+    echo "6. Qbittorrent"
+    echo "7. Transmission"
+    echo "8. Retourner en arrière"
     echo ""
     echo "[Saisissez votre choix:]"
-    #===Read the users input===#
     read -r choix
-    #===Execute a command according to the user input===#
+    # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install net-im/discord-bin && main_menu ;;
         "2") orchid-install net-irc/hexchat && main_menu ;;
@@ -319,27 +316,30 @@ com ()
         "6") orchid-install net-p2p/qbittorrent && main_menu ;;
         "7") orchid-install net-p2p/transmission && main_menu ;;
         "8") main_menu ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && com ;;
     esac
-
 }
 
+#========================================================================== com ===#
 
-#===The Main Menu function==#
+#=== main_menu ==================================
+# DESCRIPTION : Affiche le menu sélectif trié par famille, pour installer des
+#               applications.
+
 main_menu()
 {
     echo "Bienvenue au script post-installation orchid!"
     echo "Veuillez choisir votre destination:"
     echo ""
-    echo "1.Navigateurs"
-    echo "2.Multimedia"
-    echo "3.Utilities"
-    echo "4.Bureautiques"
-    echo "5.Editeurs de texte"
-    echo "6.System"
-    echo "7.Communication & Internet things"
-    echo "8.Quitter"
+    echo "1. Navigateurs"
+    echo "2. Multimedia"
+    echo "3. Utilities"
+    echo "4. Bureautiques"
+    echo "5. Editeurs de texte"
+    echo "6. System"
+    echo "7. Communication & Internet things"
+    echo "8. Quitter"
     echo ""
     echo "[Saisissez votre choix:]"
     read -r choix
@@ -349,18 +349,21 @@ main_menu()
         "2") multimedia ;;
         "3") utility ;;
         "4") office ;;
-        "5") text-editors ;;
+        "5") text_editors ;;
         "6") system ;;
         "7") com ;;
         "8") exit 1 ;;
-        #===If incorrect choice, warn the user and re-prompt===#
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo "Veuillez choisir une option valide :D!!" && main_menu ;;
     esac
 }
 
+#==================================================================== main_menu ===#
 
-#===================================================================================
+#============================================================== PRECONFIGURATION ===
 
 #=== MAIN ==========================================================================
 
 main_menu
+
+#========================================================================== MAIN ===
