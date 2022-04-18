@@ -1,87 +1,120 @@
 #!/usr/bin/env bash
-# Contributeurs :
-#  - Babilinx : code
-#  - Chevek : code
-#  - Wamuu : vérifications et test
-# mars 2022
-# Script d'installation pour UEFI/BIOS en chroot
+#===================================================================================
 #
-#Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo
-#This program is free software: you can redistribute it and/or modify it under
-#the terms of the GNU General Public License as published by the Free Software
-#Foundation, either version 3 of the License, or (at your option) any later
-#version.
-#This program is distributed in the hope that it will be useful, but WITHOUT
-#ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-#FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-#You should have received a copy of the GNU General Public License along with
-#this program. If not, see https://www.gnu.org/licenses/.
+# FILE : postinstall-in-chroot.sh
 #
+# USAGE : Automatique
+#
+# DESCRIPTION : Script d'installation dans le chroot pour Orchid Linux.
+#
+# BUGS : ---
+# NOTES : Ce script n'est pas à lancer par l'utilisateur, il est lancé automatiquement
+#         lors de l'exécution du script d'installation , install.sh.
+# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu
+# CREATED : mars 2022
+# REVISION : 17 avril 2022
+#
+# LICENCE :
+# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see https://www.gnu.org/licenses/.
+#===================================================================================
+
+#=== PRECONFIGURATION ==============================================================
+
 # Initialisation des couleurs
+#-----------------------------------------------------------------------------------
 COLOR_YELLOW=$'\033[0;33m'
 COLOR_GREEN=$'\033[0;32m'
 COLOR_RED=$'\033[0;31m'
 COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
+#-----------------------------------------------------------------------------------
 
-# Variables from main script:
+# Importation des variables du script principal
+#-----------------------------------------------------------------------------------
 CHOOSEN_DISK=$1
 ROM=$2
 USERNAME=$3
 ESYNC_SUPPORT=$4
 HOSTNAME=$5
+ROOT_PASS=$6
+USER_PASS=$7
+#-----------------------------------------------------------------------------------
+
+#============================================================== PRECONFIGURATION ===
+
+#=== MAIN ==========================================================================
 
 # MAJ des variables d'environnement
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des variables d'environnement."
 env-update && source /etc/profile
+#-----------------------------------------------------------------------------------
+
 # Configuration de fstab
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
 echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
 echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
   echo "${CHOOSEN_DISK}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
+
+#-----------------------------------------------------------------------------------
+
 # Configuration du nom de la machine (hostname)
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du nom du système sur le réseau."
 sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
-# Génération du mot de passe root
+#-----------------------------------------------------------------------------------
+
+# Utilisateurs et mots de passe
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo ""
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Mot de passe root :"
-passwd
-# Création d'un utilisateur non privilégié
-useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME
-echo ""
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Mot de passe de $USERNAME :"
-passwd $USERNAME
+echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd                                           # Création du mot de passe root
+useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
+echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                                 # Création du mot de passe utilisateur
 echo ""
 read -p "[Entrée] pour continuer l'installation."
-#-----Configuration de GRUB-----#
+#-----------------------------------------------------------------------------------
+
+# Configuration de GRUB
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
-if [ "$ROM" = "UEFI" ]
-then
+if [ "$ROM" = "UEFI" ]; then
   # Installation de GRUB pour UEFI
   grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
   grub-mkconfig -o /boot/grub/grub.cfg
-elif [ "$ROM" = "BIOS" ]
-then 
+elif [ "$ROM" = "BIOS" ]; then
   # Installation de GRUB pour BIOS
   grub-install "${CHOOSEN_DISK}"
   grub-mkconfig -o /boot/grub/grub.cfg
 fi
 
-#-----Activation des services-----#
+#-----------------------------------------------------------------------------------
+
+# Activation des services et autres optimisations
+#-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
 rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
-#-----Change limits for esync support-----#
+# Change limits for esync support
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
 fi
 
-#-----Add CPU_FLAGS_X86 to make.conf-----#
+# Add CPU_FLAGS_X86 to make.conf
 if ! test -x "$(command -v cpuid2cpuflags 2>/dev/null)"; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Installation de cpuid2cpuflags."
 	orchid-sync
@@ -90,5 +123,8 @@ fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au make.conf."
 echo "$(cpuid2cpuflags | sed 's/: /="/')\"" >> /etc/portage/make.conf
-#-----Remove LINGUAS if any to make.conf-----#
+# Remove LINGUAS if any to make.conf
 sed -i /LINGUAS=/d /etc/portage/make.conf
+#-----------------------------------------------------------------------------------
+
+#========================================================================== MAIN ===
