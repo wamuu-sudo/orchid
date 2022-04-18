@@ -121,8 +121,7 @@ cp -rf Script_files/* /usr/share/applications/
 
 browser ()
 {
-    # Affiche les choix possibles
-    echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off}"
+echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off}"
     echo -e "${BRed}1. Chrome"
     echo -e "2. Blue Chrome (chromium)"
     echo -e "3. Orange Chrome (brave)"
@@ -131,24 +130,35 @@ browser ()
     echo -e "6. Firefox .__."
     echo -e "7. Firefox mais blue (librewolf)"
     echo -e "8. Un Onion (tor browser)${Color_Off}"
-    echo -e "9. Retourner en arrière"
+    echo -e "9. Appliquer"
+    echo -e "10. Revenir en Arriére"
     echo -e ""
+    echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  orchid-install www-client/google-chrome && browser ;;
-        "2")  orchid-install www-client/chromium && browser ;;
-        "3")  flatpak install flathub com.brave.Browser && browser ;;
-        "4")  orchid-install www-client/vivaldi && browser ;;
-        "5")  orchid-install www-client/microsoft-edge && browser ;;
-        "6")  orchid-install www-client/firefox-bin && browser ;;
-        "7") flatpak install flathub io.gitlab.librewolf-community && browser ;;
-        "8") flatpak install flathub com.github.micahflee.torbrowser-launcher && browser ;;
-        "9") main_menu ;;
+        "1")  packages+=("www-client/google-chrome")  && browser ;;
+        "2")  packages+=("www-client/chromium")  && browser ;;
+        "3")  packages_flathub+=("com.brave.Browser")  && browser ;;
+        "4")  packages+=("www-client/vivaldi")  && browser ;;
+        "5")  packages+=("www-client/microsoft-edge")  && browser ;;
+        "6")  packages+=("www-client/firefox-bin")  && browser ;;
+        "7")  packages_flathub+=("io.gitlab.librewolf-community") && browser ;;
+        "8") packages_flathub+=("com.github.micahflee.torbrowser-launcher") && browser ;;
+        "9")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && browser
+             fi
+                   ;;
+        "10") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && browser ;;
     esac
-
     clear
 }
 
@@ -173,24 +183,37 @@ multimedia ()
     echo -e "10. Blender"
     echo -e "11. Spotify"
     echo -e "12. Kdenlive"
-    echo -e "13. Retourner en arrière"
+    echo -e "${On_Red}13. Appliquer"
+    echo -e "14. Retourner en arrière${Color_Off}"
     echo -e ""
+     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install media-video/obs-studio && multimedia ;;
-        "2") orchid-install media-sound/mpd && multimedia ;;
-        "3") orchid-install media-gfx/feh && multimedia ;;
-        "4") orchid-install media-gfx/gimp && multimedia ;;
-        "5") orchid-install media-gfx/krita && multimedia ;;
-        "6") orchid-install media-video/mpv && multimedia ;;
-        "7") orchid-install media-video/celluloid && multimedia ;;
-        "8") orchid-install net-misc/youtube-dl && multimedia ;;
-        "9") orchid-install media-video/vlc && multimedia ;;
-        "10") orchid-install media-gfx/blender && multimedia ;;
-        "11") orchid-install media-sound/spotify && multimedia ;;
-        "12") orchid-install kde-apps/kdenlive && multimedia ;;
-        "13") main_menu ;;
+        "1") packages+=("media-video/obs-studio") && multimedia ;;
+        "2") packages+=("media-sound/mpd") && multimedia ;;
+        "3") packages+=("media-gfx/feh") && multimedia ;;
+        "4") packages+=("media-gfx/gimp") && multimedia ;;
+        "5") packages+=("media-gfx/krita") && multimedia ;;
+        "6") packages+=("media-video/mpv") && multimedia ;;
+        "7") packages+=("media-video/celluloid") && multimedia ;;
+        "8") packages+=("net-misc/youtube-dl") && multimedia ;;
+        "9") packages+=("media-video/vlc") && multimedia ;;
+        "10") packages+=("media-gfx/blender") && multimedia ;;
+        "11") packages+=("media-sound/spotify") && multimedia ;;
+        "12") packages+=("kde-apps/kdenlive") && multimedia ;;
+        "13")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && multimedia
+             fi
+                   ;;
+
+        "14") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && multimedia ;;
     esac
@@ -221,22 +244,36 @@ utility ()
     echo -e "8. PCMANFM"
     echo -e "9. Thunar"
     echo -e "10. Nautilus${Color_Off}"
-    echo -e "11. Retourner en arrière"
+    echo -e "${On_Cyan}11. Appliquer"
+    echo -e "12. Retourner en arrière${Color_Off}"
     echo -e ""
+     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-text/calibre && utility ;;
-        "2") orchid-install app-text/zathura app-text/zathura-meta && utility ;;
-        "3") orchid-install kde-apps/ark && utility ;;
-        "4") orchid-install app-arch/file-roller && utility ;;
-        "5") orchid-install app-arch/lxqt-archiver && utility ;;
-        "6") orchid-install app-arch/xarcivher && utility ;;
-        "7") orchid-install kde-apps/dolphin && utility ;;
-        "8") orchid-install x11-misc/pcmanfm && utility ;;
-        "9") orchid-install xfce-base/thunar && utility ;;
-        "10") orchid-install gnome-base/nautilus && utility ;;
-        "11") main_menu ;;
+        "1") packages+=("app-text/calibre") && utility ;;
+        "2") packages+=("app-text/zathura app-text/zathura-meta") && utility ;;
+        "3") packages+=("kde-apps/ark") && utility ;;
+        "4") packages+=("app-arch/file-roller") && utility ;;
+        "5") packages+=("app-arch/lxqt-archiver") && utility ;;
+        "6") packages+=("app-arch/xarchiver") && utility ;;
+        "7") packages+=("kde-apps/dolphin") && utility ;;
+        "8") packages+=("x11-misc/pcmanfm") && utility ;;
+        "9") packages+=("xfce-base/thunar") && utility ;;
+        "10") packages+=("gnome-base/nautilus") && utility ;;
+        "11")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && utility
+             fi
+                   ;;
+
+        "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && utility ;;
     esac
@@ -257,16 +294,30 @@ office ()
     echo -e "2. Lyx"
     echo -e "3. Scribus"
     echo -e "4. Calligra${Color_Off}"
-    echo -e "5. Retourner en arrière"
+    echo -e "${On_Purple}5. Appliquer"
+    echo -e "6. Retourner en arrière${Color_Off}"
     echo -e ""
+ echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-office/libreoffice-bin && office ;;
-        "2") orchid-install app-office/lyx && office ;;
-        "3") orchid-install app-office/scribus && office ;;
-        "4") orchid-install app-office/calligra && office ;;
-        "5") main_menu ;;
+        "1") packages+=("app-office/libreoffice-bin") && office ;;
+        "2") packages+=("app-office/lyx") && office ;;
+        "3") packages+=("app-office/scribus") && office ;;
+        "4") packages+=("app-office/calligra") && office ;;
+        "5")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && office
+             fi
+                   ;;
+
+        "6") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && office ;;
     esac
@@ -296,23 +347,37 @@ text_editors ()
     echo -e "8. Bluefish"
     echo -e "9. Geany"
     echo -e "10. Vscodium"
-    echo -e "11. Retourner en arrière"
+    echo -e "11. Appliquer"
+    echo -e "12. Retourner en arrière"
     echo -e "${On_Red}NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)${Color_Off}"
     echo -e ""
+     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install app-editors/neovim && text_editors ;;
-        "2") orchid-install app-office/vim && text_editors ;;
-        "3") orchid-install app-editors/vim && text_editors ;;
-        "4") orchid-install kde-apps/kate && text_editors ;;
-        "5") orchid-install app-editors/gedit && text_editors ;;
-        "6") orchid-install app-editors/emacs && text_editors ;;
-        "7") orchid-install app-editors/vscode && text_editors ;;
-        "8") orchid-install app-editors/bluefish && text_editors ;;
-        "9") orchid-install dev-util/geany && text_editors ;;
-        "10") orchid-install app-editors/vscodium && text_editors ;;
-        "11") main_menu ;;
+        "1") packages+=("app-editors/neovim") && text_editors ;;
+        "2") packages+=("app-office/vim") && text_editors ;;
+        "3") packages+=("app-editors/vim") && text_editors ;;
+        "4") packages+=("kde-apps/kate") && text_editors ;;
+        "5") packages+=("app-editors/gedit") && text_editors ;;
+        "6") packages+=("app-editors/emacs") && text_editors ;;
+        "7") packages+=("app-editors/vscode") && text_editors ;;
+        "8") packages+=("app-editors/bluefish") && text_editors ;;
+        "9") packages+=("dev-util/geany") && text_editors ;;
+        "10") packages+=("app-editors/vscodium") && text_editors ;;
+        "11")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && text_editors
+             fi
+                   ;;
+
+        "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && text_editors ;;
     esac
@@ -344,25 +409,39 @@ system ()
     echo -e "11. Baobab (disk usage analyzer)"
     echo -e "12. GParted"
     echo -e "13. OpenRGB & Plugins${Color_Off}"
-    echo -e "14. Retourner en arrière"
+    echo -e "${On_Yellow}14. Appliquer"
+    echo -e "15. Retourner en arrière${Color_Off}"
     echo -e ""
+ echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install x11-terms/alacritty && system ;;
-        "2") orchid-install x11-terms/gnome-terminal && system ;;
-        "3") orchid-install x11-terms/kitty && system ;;
-        "4") orchid-install kde-apps/konsole && system ;;
-        "5") orchid-install lxde-base/lxterminal && system ;;
-        "6") orchid-install x11-terms/rxvt-unicode && system ;;
-        "7") orchid-install x11-terms/terminator && system ;;
-        "8") orchid-install x11-terms/terminology && system ;;
-        "9") orchid-install x11-terms/xfce4-terminal && system ;;
-        "10") orchid-install x11-terms/xterm && system ;;
-        "11") orchid-install sys-apps/baobab && system ;;
-        "12") orchid-install sys-block/gparted && system ;;
-        "13") orchid-install app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap ;;
-        "14") main_menu ;;
+        "1") packages+=("x11-terms/alacritty") && system ;;
+        "2") packages+=("x11-terms/gnome-terminal") && system ;;
+        "3") packages+=("x11-terms/kitty") && system ;;
+        "4") packages+=("kde-apps/konsole") && system ;;
+        "5") packages+=("lxde-base/lxterminal") && system ;;
+        "6") packages+=("x11-terms/rxvt-unicode") && system ;;
+        "7") packages+=("x11-terms/terminator") && system ;;
+        "8") packages+=("x11-terms/terminology") && system ;;
+        "9") packages+=("x11-terms/xfce4-terminal") && system ;;
+        "10") packages+=("x11-terms/xterm") && system ;;
+        "11") packages+=("sys-apps/baobab") && system ;;
+        "12") packages+=("sys-block/gparted") && system ;;
+        "13") packages+=("app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
+        "14")  if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && system
+             fi
+                   ;;
+
+        "15") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && system ;;
     esac
@@ -385,19 +464,33 @@ com ()
     echo -e "5. Deluge"
     echo -e "6. Qbittorrent"
     echo -e "7. Transmission${Color_Ofow}"
-    echo -e "8. Retourner en arrière"
+    echo -e "8. Appliquer"
+    echo -e "9. Retourner en arrière"
     echo -e ""
+     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") orchid-install net-im/discord-bin && com ;;
-        "2") orchid-install net-irc/hexchat && com ;;
-        "3") orchid-install net-irc/weechat && com ;;
-        "4") flatpak install flathub im.riot.Riot && com ;;
-        "5") orchid-install net-p2p/deluge && com ;;
-        "6") orchid-install net-p2p/qbittorrent && com ;;
-        "7") orchid-install net-p2p/transmission && com ;;
-        "8") main_menu ;;
+        "1") packages+=("net-im/discord-bin") && com ;;
+        "2") packages+=("net-irc/hexchat") && com ;;
+        "3") packages+=("net-irc/weechat") && com ;;
+        "4") packages_flathub+=("im.riot.Riot") && com ;;
+        "5") packages+=("net-p2p/deluge") && com ;;
+        "6") packages+=("net-p2p/qbittorrent") && com ;;
+        "7") packages+=("net-p2p/transmission") && com ;;
+        "8") if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && com
+             fi
+                   ;;
+
+        "9") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && com ;;
     esac
@@ -424,9 +517,12 @@ main_menu()
     echo -e "${Yellow}6. System${Color_Off}"
     echo -e "${Green}7. Communication & Internet things${Color_Off}"
     echo -e "8. ${BRed}F${BBlack}o${BCyan}s${BPurple}s ${BWhite}G${BYellow}a${BGreen}m${BRed}e${BCyan}s${Color_Off}(WIP)"
-    echo -e "${BRed}9. Quitter${Color_Off}"
+    echo -e "9. Appliquer tout"
+    echo -e "${BRed}10. Quitter${Color_Off}"
     echo -e ""
-    read -r -p "[Saisissez votre choix]: "  choix
+  echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+
+   read -r -p "[Saisissez votre choix]: "  choix
     clear
     case "$choix" in
         "1") browser ;;
@@ -437,7 +533,18 @@ main_menu()
         "6") system ;;
         "7") com ;;
         "8") echo "WIP" && main_menu ;;
-        "9") exit 1 ;;
+        "9") if [ "${#packages[*]}" -ge 1 ]; then
+                  orchid-install ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && main_menu
+             fi
+                   ;;
+
+        "10") exit 1 ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "${On_Red}Veuillez choisir une option valide :D!!${Color_Off}" && main_menu ;;
     esac
