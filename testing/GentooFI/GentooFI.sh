@@ -160,8 +160,8 @@ browser ()
 multimedia ()
 {
     # Affiche les choix possibles
-    echo -e "${On_Black}Choisissez l'outil que vous voulez installer:${Color_Off}"
-    echo -e "${BBlack}1. OBS Studio"
+    echo -e "${On_IBlack}Choisissez l'outil que vous voulez installer:${Color_Off}"
+    echo -e "${On_Black}1. OBS Studio"
     echo -e "2. MPD"
     echo -e "3. Feh"
     echo -e "4. GIMP"
@@ -417,7 +417,7 @@ main_menu()
     echo -e "${Green}Veuillez choisir votre destination:${Color_Off}"
     echo -e ""
     echo -e "${Red}1. Navigateurs${Color_Off}"
-    echo -e "${Black}2. Multimedia${Color_Off}"
+    echo -e "${On_Black}2. Multimedia${Color_Off}"
     echo -e "${Cyan}3. Utilities${Color_Off}"
     echo -e "${Purple}4. Bureautiques${Color_Off}"
     echo -e "${White}5. Editeurs de texte${Color_Off}"
