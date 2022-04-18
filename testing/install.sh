@@ -542,8 +542,6 @@ if [ "$UPDATE_ORCHID" = o ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. Cela peut être très long."
 fi
 
-UPDATE_ORCHID
-
 echo ""
 echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
 read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
@@ -629,7 +627,8 @@ mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
+#FIXME: ched->main
+wget "https://github.com/wamuu-sudo/orchid/blob/ched/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
