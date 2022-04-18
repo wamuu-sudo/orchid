@@ -60,8 +60,7 @@ browser ()
     echo "8. Un Onion (tor browser)"
     echo "9. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1")  orchid-install www-client/google-chrome && main_menu ;;
@@ -102,8 +101,7 @@ multimedia ()
     echo "11. Spotify"
     echo "12. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install media-video/obs-studio && main_menu ;;
@@ -150,8 +148,7 @@ utility ()
     echo "10. Nautilus"
     echo "11. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-text/calibre && main_menu ;;
@@ -187,8 +184,7 @@ office ()
     echo "4. Calligra"
     echo "5. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-office/libreoffice-bin && main_menu ;;
@@ -228,8 +224,7 @@ text_editors ()
     echo "11. Retourner en arrière"
     echo "NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install app-editors/neovim && main_menu ;;
@@ -275,8 +270,7 @@ system ()
     echo "12. GParted"
     echo "13. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install x11-terms/alacritty && main_menu ;;
@@ -316,8 +310,7 @@ com ()
     echo "7. Transmission"
     echo "8. Retourner en arrière"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") orchid-install net-im/discord-bin && main_menu ;;
@@ -355,8 +348,7 @@ main_menu()
     echo "7. Communication & Internet things"
     echo "8. Quitter"
     echo ""
-    echo "[Saisissez votre choix:]"
-    read -r choix
+    read -r -p "[Saisissez votre choix]: "  choix
     clear
     case "$choix" in
         "1") browser ;;
