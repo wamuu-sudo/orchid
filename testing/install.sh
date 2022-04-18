@@ -512,6 +512,10 @@ elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
 	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
 fi
 
+# Option pour la configuration d'esync (limits)
+#-----------------------------------------------------------------------------------
+	read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
+
 # Summary
 #-----------------------------------------------------------------------------------
 clear
@@ -533,6 +537,12 @@ echo "[${COLOR_GREEN}OK${COLOR_RESET}] Sur le réseau, ce système aura pour nom
 if [ "$ESYNC_SUPPORT" = o ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
 fi
+
+if [ "$UPDATE_ORCHID" = o ]; then
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. Cela peut être très long."
+fi
+
+UPDATE_ORCHID
 
 echo ""
 echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
@@ -627,7 +637,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${USERNAME} ${ESYNC_SUPPORT} ${HOSTNAME} ${ROOT_PASS} ${USER_PASS}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${USERNAME} ${ESYNC_SUPPORT} ${HOSTNAME} ${ROOT_PASS} ${USER_PASS} ${UPDATE_ORCHID}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then

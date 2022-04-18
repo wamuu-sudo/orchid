@@ -48,6 +48,7 @@ ESYNC_SUPPORT=$4
 HOSTNAME=$5
 ROOT_PASS=$6
 USER_PASS=$7
+UPDATE_ORCHID=$8
 #-----------------------------------------------------------------------------------
 
 #============================================================== PRECONFIGURATION ===
@@ -123,6 +124,22 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au ma
 echo "$(cpuid2cpuflags | sed 's/: /="/')\"" >> /etc/portage/make.conf
 # Remove LINGUAS if any to make.conf
 sed -i /LINGUAS=/d /etc/portage/make.conf
+
+#-----------------------------------------------------------------------------------
+
+# Mise à jour du système
+#-----------------------------------------------------------------------------------
+if [ "$UPDATE_ORCHID" = "o" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
+	orchid-sync
+  eix-sync -q
+  emerge -qvuDN @world
+  flatpak update --assumeyes --noninteractive 
+  grub-mkconfig -o /boot/grub/grub.cfg
+  emerge --depclean -q
+fi
+
+
 #-----------------------------------------------------------------------------------
 
 #========================================================================== MAIN ===
