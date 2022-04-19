@@ -129,9 +129,14 @@ sed -i /LINGUAS=/d /etc/portage/make.conf
 
 # Mise à jour du système
 #-----------------------------------------------------------------------------------
+# We do an orchid-sync, in quiet mode:
+echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des commandes orchid-*."
+git -C /usr/share/orchid/desktop/dwm/dwm-st-slstatus pull -q
+git -C /usr/share/orchid/wallpapers pull -q
+git -C /usr/share/orchid/orchid-bins pull -q 
+cp /usr/share/orchid/orchid-bins/bins/* /usr/bin/
 if [ "$UPDATE_ORCHID" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-	orchid-sync
   eix-sync -q
   emerge -qvuDN @world
   flatpak update --assumeyes --noninteractive 

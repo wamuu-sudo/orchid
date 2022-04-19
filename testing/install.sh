@@ -523,6 +523,8 @@ if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
 	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
 fi
+
+# Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
 read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
 
@@ -641,15 +643,18 @@ rm -f tmp1.conf && rm -f tmp2.conf
 # Montage et chroot
 #===================================================================================
 
-echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
+echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev, sys et run pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
+mount --bind /run /mnt/orchid/run 
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
+#FIXME: ched->main
+wget "https://github.com/wamuu-sudo/orchid/blob/ched/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
+
 
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
@@ -678,11 +683,15 @@ fi
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
+rm -f /mnt/orchid/orchid-backgrounds.xml
 cd /
 if [ "$ROM" = "UEFI" ]; then
 	umount /mnt/orchid/boot/EFI
 fi
-
+umount -f /mnt/orchid/run > /dev/null
+umount -f /mnt/orchid/sys > /dev/null
+umount -f /mnt/orchid/dev > /dev/null
+umount -f /mnt/orchid/proc > /dev/null
 umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE wallpapers SYSTEM "gnome-wp-list.dtd">
+<wallpapers>
+	<wallpaper deleted="false">
+                <name>1</name>
+                <filename>/usr/share/backgrounds/gnome/anime_sea.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>blossom</name>
+                <filename>/usr/share/backgrounds/gnome/blossom.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>dandelion</name>
+                <filename>/usr/share/backgrounds/gnome/dandelion.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+	<wallpaper deleted="false">
+                <name>delta</name>
+                <filename>/usr/share/backgrounds/gnome/delta.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>flowers</name>
+                <filename>/usr/share/backgrounds/gnome/flowers.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>forest</name>
+                <filename>/usr/share/backgrounds/gnome/forest.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+	<wallpaper deleted="false">
+                <name>japanese_village</name>
+                <filename>/usr/share/backgrounds/gnome/japanese_village.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>lofi</name>
+                <filename>/usr/share/backgrounds/gnome/lofi.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>modern_nw</name>
+                <filename>/usr/share/backgrounds/gnome/modern_nw.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+	<wallpaper deleted="false">
+                <name>orchid-catppuccin</name>
+                <filename>/usr/share/backgrounds/gnome/orchid-catppuccin.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>orchid_nw_01</name>
+                <filename>/usr/share/backgrounds/gnome/orchid_nw_01.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>pink_flower</name>
+                <filename>/usr/share/backgrounds/gnome/pink_flower.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+	<wallpaper deleted="false">
+                <name>plant</name>
+                <filename>/usr/share/backgrounds/gnome/plant.png</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>red</name>
+                <filename>/usr/share/backgrounds/gnome/red.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>rocket</name>
+                <filename>/usr/share/backgrounds/gnome/rocket.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+        <wallpaper deleted="false">
+                <name>rocket2</name>
+                <filename>/usr/share/backgrounds/gnome/rocket2.jpg</filename>
+                <options>zoom</options>
+    <pcolor>#ffffff</pcolor>
+    <scolor>#000000</scolor>
+        </wallpaper>
+</wallpapers>
