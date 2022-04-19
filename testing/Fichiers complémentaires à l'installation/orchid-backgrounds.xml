@@ -66,7 +66,7 @@
         </wallpaper>
 	<wallpaper deleted="false">
                 <name>orchid-catppuccin</name>
-                <filename>/usr/share/backgrounds/gnome/orchid-catppuccin.jpg</filename>
+                <filename>/usr/share/backgrounds/gnome/orchid-catppuccin.png</filename>
                 <options>zoom</options>
     <pcolor>#ffffff</pcolor>
     <scolor>#000000</scolor>
@@ -101,7 +101,7 @@
         </wallpaper>
         <wallpaper deleted="false">
                 <name>rocket</name>
-                <filename>/usr/share/backgrounds/gnome/rocket.jpg</filename>
+                <filename>/usr/share/backgrounds/gnome/rocket.png</filename>
                 <options>zoom</options>
     <pcolor>#ffffff</pcolor>
     <scolor>#000000</scolor>
