@@ -44,6 +44,7 @@ LANG_SYSTEM="${LANG:0:2}"
 mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 source /etc/conf.d/keymaps
 KEYMAP=${LANG_SYSTEM}
+/etc/init.d/dbus start
 
 gdbus call --system                                             \
            --dest org.freedesktop.locale1                       \
@@ -52,6 +53,40 @@ gdbus call --system                                             \
            "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
 # On lance dbus en shell
 dbus-run-session -- su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" $1 2>&1
+# Set Wallpapers available to all users:
+# https://help.gnome.org/admin/system-admin-guide/stable/backgrounds-extra.html.en
+mv /orchid-backgrounds.xml /usr/share/gnome-background-properties/
+cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/gnome/
+# Set default Wallpaper: orchid_nw_01.jpg
+# https://help.gnome.org/admin/system-admin-guide/stable/desktop-background.html.en
+mkdir -p /etc/dconf/profile/
+# Create the file:
+cat > /etc/dconf/profile/user<< EOF
+user-db:user
+system-db:local
+EOF
+mkdir -p /etc/dconf/db/local.d/
+# Create the file:
+cat > /etc/dconf/db/local.d/00-background<< EOF
+# Specify the dconf path
+[org/gnome/desktop/background]
+
+# Specify the path to the desktop background image file
+picture-uri='file:///usr/share/backgrounds/gnome/orchid_nw_01.jpg'
+
+# Specify one of the rendering options for the background image:
+picture-options='zoom'
+
+# Specify the left or top color when drawing gradients, or the solid color
+primary-color='000000'
+
+# Specify the right or bottom color when drawing gradients
+secondary-color='FFFFFF'
+EOF
+# Update the system databases:
+dconf update
+# clear stuff:
+/etc/init.d/dbus stop
 rc-service openrc-settingsd stop
 # restaure default setup
 rm -f /etc/rc.conf
