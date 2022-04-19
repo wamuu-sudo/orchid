@@ -107,6 +107,7 @@ VALID_HOSTNAME_REGEX="^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\
 
 # Setup functions
 #-----------------------------------------------------------------------------------
+
 CLI_orchid_selector()
 {
 	echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
@@ -382,6 +383,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 # Disclaimer
 #-----------------------------------------------------------------------------------
+
 clear
 echo "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
 echo "problèmes possibles et inimaginables"
@@ -390,10 +392,12 @@ echo "Lisez très attentivement les instructions."
 echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 echo ""
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+
 #-----------------------------------------------------------------------------------
 
 # Questions de configuration
 #===================================================================================
+
 RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000))   # Total Memory in GB
 if (( $RAM_SIZE_GB < 2 )); then
 	echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
@@ -402,6 +406,7 @@ fi
 
 # Check Internet connection
 #-----------------------------------------------------------------------------------
+
 test_internet_access
 while [ $test_ip = 0 ]; do
 	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
@@ -418,12 +423,12 @@ echo ""
 # Passage du clavier en AZERTY
 echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 loadkeys fr
-#===================================================================================
 
 # Partitionnement
-#===================================================================================
+#-----------------------------------------------------------------------------------
+
 # Split an output on new lines:
-SAVEIFS=$IFS	# Save current IFS (Internal Field Separator)
+SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
 IFS=$'\n'	# New line
 DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
 IFS=$SAVEIFS	                                                                        # Restore original IFS
@@ -451,15 +456,16 @@ fi
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
 read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+#-----------------------------------------------------------------------------------
 
 # Calcul de la mémoire SWAP idéale
 #-----------------------------------------------------------------------------------
+
 if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
 	swap_size_hibernation
 elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
 	swap_size_no_hibernation
 fi
-
 #-----------------------------------------------------------------------------------
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
 #=================================================
@@ -474,11 +480,12 @@ echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_G
 #date ${date}
 #date
 #=================================================
-# Select GPU
-select_GPU_drivers_to_install
+select_GPU_drivers_to_install                                                           # Select GPU
 
 # Utilisateurs et mots de passe
 #-----------------------------------------------------------------------------------
+
+clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
 echo ""
 read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
@@ -490,10 +497,12 @@ USER_PASS="${ATTEMPT1}"
 create_passwd "root"
 verify_password_concordance "root"
 ROOT_PASS="${ATTEMPT1}"
+clear
 #-----------------------------------------------------------------------------------
 
 # choose your hostname
 #-----------------------------------------------------------------------------------
+
 IS_HOSTNAME_VALID=0
 while  [ $IS_HOSTNAME_VALID = 0 ]; do
 	read -e -p "Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_WHITE}orchid${COLOR_RESET}] : " HOSTNAME
@@ -504,20 +513,22 @@ while  [ $IS_HOSTNAME_VALID = 0 ]; do
 	fi
 done
 
+#-----------------------------------------------------------------------------------
+
 # Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------
+
 if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
 	ESYNC_SUPPORT="o"
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
 	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
 fi
-
-# Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------
-	read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
+read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
 
 # Summary
 #-----------------------------------------------------------------------------------
+
 clear
 echo "${COLOR_WHITE}Résumé de l'installation :${COLOR_RESET}"
 echo ""
@@ -549,18 +560,21 @@ if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation
 	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 	exit
 fi
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#-----------------------------------------------------------------------------------
+                                                        # Questions de configuration
+#===================================================================================
 
 # Installation du système
-# No more user input after this point!
 #===================================================================================
+# NOTES : No more user input after this point!
+
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 auto_partitionning_full_disk
 
 # Montage des partitions
 #-----------------------------------------------------------------------------------
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
 mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
@@ -581,6 +595,7 @@ PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
@@ -614,14 +629,18 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
 
 # Configuration de make.conf
 #-----------------------------------------------------------------------------------
+
 sed "/MAKEOPTS/c\MAKEOPTS=\"-j${PROCESSORS}\"" /mnt/orchid/etc/portage/make.conf > tmp1.conf
 sed "/VIDEO_CARDS/c\VIDEO_CARDS=\"${SELECTED_GPU_DRIVERS_TO_INSTALL}\"" tmp1.conf > tmp2.conf
 cp tmp2.conf /mnt/orchid/etc/portage/make.conf
 rm -f tmp1.conf && rm -f tmp2.conf
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#-----------------------------------------------------------------------------------
+                                                           # Installation du système
+#===================================================================================
 
 # Montage et chroot
 #===================================================================================
+
 echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
@@ -634,6 +653,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
+
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
 chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${USERNAME} ${ESYNC_SUPPORT} ${HOSTNAME} ${ROOT_PASS} ${USER_PASS} ${UPDATE_ORCHID}
 # Configuration pour DWM
@@ -646,14 +666,16 @@ fi
 if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
 	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME}
 fi
-
-#=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+#-----------------------------------------------------------------------------------
+                                                                 # Montage et chroot
+#===================================================================================
 
 # Fin de l'installation
 #===================================================================================
 
 # Nétoyage
 #-----------------------------------------------------------------------------------
+
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 cd /
@@ -667,6 +689,7 @@ umount -R /mnt/orchid
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
+                                                             # Fin de l'installation
 #===================================================================================
 
 #========================================================================== MAIN ===
