@@ -101,7 +101,19 @@ declare -a CHOICES_DISK
 ERROR_IN_DISK_SELECTOR=" "
 
 # Regular Expression to test a valid hostname, as per RFC-952 and RFC-1123
+# https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address
 VALID_HOSTNAME_REGEX="^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$"
+
+# Regular Expression to test a valid username
+# https://unix.stackexchange.com/questions/157426/what-is-the-regex-to-validate-linux-users
+# It should start (^) with only a lowercase letter or an underscore ([a-z_]). This occupies exactly 1 character.
+# Then it should be one of either ( ... ):
+# 	From 0 to 31 characters ({0,31}) of lowercase letters, numbers, underscores, and/or hyphens ([a-z0-9_-]),
+# OR (|)
+# 	From 0 to 30 characters of the above plus a US dollar sign symbol (\$) at the end,
+# and then
+# No more characters past this pattern ($).
+VALID_USERNAME_REGEX="^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)$"
 
 #-----------------------------------------------------------------------------------
 
@@ -308,6 +320,35 @@ auto_partitionning_full_disk()
 	mkfs.ext4 "${CHOOSEN_DISK}3"
 }
 
+ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ), 
+{
+while true; do
+	local __ANSWER
+	read -p "$1" __ANSWER
+	if [ -z $__ANSWER ]; then
+		__ANSWER=$2
+	fi
+  case $__ANSWER in
+      "o" | "n" ) echo $__ANSWER; break;;
+      * ) ;;
+  esac
+done
+}
+
+ask_for_numeric_and_validate() # question en $1 (string), nombre par défaut en $2 ( digit ), 
+{
+while true; do
+	local __ANSWER
+	read -p "$1" __ANSWER
+	if [ -z $__ANSWER ]; then
+		__ANSWER=$2
+	fi
+  case $__ANSWER in
+      [[:digit:]]* ) echo $__ANSWER; break;;
+      * ) ;;
+  esac
+done
+}
 
 swap_size_hibernation()
 {
@@ -318,13 +359,14 @@ swap_size_hibernation()
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		                                    # 1.5 (3/2) fois la taille de la RAM
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
-		read -p "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
 		elif [ "$HIBERNATION_HIGH" = "o" ]; then
-			read -p "Entrez la taille du fichier SWAP désirée (en Go): " SWAP_SIZE_GB
+			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 		fi
 	fi
 }
@@ -339,7 +381,8 @@ swap_size_no_hibernation()
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
-		read -p "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 	fi
 }
 
@@ -357,6 +400,14 @@ else
 fi
 }
 
+test_if_username_is_valid()
+{
+if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
+		IS_USERNAME_VALID=1																													# username is valid 
+	else
+		IS_USERNAME_VALID=0																													# username is not valid 
+	fi
+}
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
@@ -374,6 +425,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
     	create_passwd "${1}"
 	done
 }
+
 
 #-----------------------------------------------------------------------------------
 
@@ -455,7 +507,7 @@ fi
 
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
-read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+HIBERNATION=$(ask_yes_or_no_and_validate "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 #-----------------------------------------------------------------------------------
 
 # Calcul de la mémoire SWAP idéale
@@ -488,7 +540,14 @@ select_GPU_drivers_to_install                                                   
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
 echo ""
-read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
+IS_USERNAME_VALID=0
+while  [ $IS_USERNAME_VALID = 0 ]; do
+	read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
+	test_if_username_is_valid
+	if [ $IS_USERNAME_VALID = 0 ]; then
+		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${USERNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+	fi
+done
 echo ""
 create_passwd "${USERNAME}"
 echo ""
@@ -509,7 +568,7 @@ while  [ $IS_HOSTNAME_VALID = 0 ]; do
 	HOSTNAME=${HOSTNAME:-orchid}
 	test_if_hostname_is_valid
 	if [ $IS_HOSTNAME_VALID = 0 ]; then
-		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_RED}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 	fi
 done
 
@@ -521,12 +580,19 @@ done
 if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
 	ESYNC_SUPPORT="o"
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
-	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
+	ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET} " o)
 fi
+
+# Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
+<<<<<<< HEAD
 read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
 echo ""
 read -p "Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " MANUAL_INSTALL
+=======
+UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+
+>>>>>>> 68391b9789f07ef1c8950fbdd652befa20a4f4ec
 # Summary
 #-----------------------------------------------------------------------------------
 
@@ -543,7 +609,7 @@ elif [ "$MANUAL_INSTALL" = "o" ]; then
 fi
 
 if [ "$HIBERNATION" = o ]; then
-	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 elif [ "$HIBERNATION" = n ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
 fi
@@ -650,15 +716,17 @@ rm -f tmp1.conf && rm -f tmp2.conf
 # Montage et chroot
 #===================================================================================
 
-echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev et sys pour le chroot."
+echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev, sys et run pour le chroot."
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
+mount --bind /run /mnt/orchid/run 
 # Téléchargement et extraction des scripts d'install pour le chroot
 wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
+
 
 # Lancement des scripts en fonction du système
 #-----------------------------------------------------------------------------------
@@ -687,11 +755,15 @@ fi
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
+rm -f /mnt/orchid/orchid-backgrounds.xml
 cd /
 if [ "$ROM" = "UEFI" ]; then
 	umount /mnt/orchid/boot/EFI
 fi
-
+umount -f /mnt/orchid/run > /dev/null
+umount -f /mnt/orchid/sys > /dev/null
+umount -f /mnt/orchid/dev > /dev/null
+umount -f /mnt/orchid/proc > /dev/null
 umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish

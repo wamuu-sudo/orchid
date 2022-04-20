@@ -83,7 +83,7 @@ sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo ""
 echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd                                           # Création du mot de passe root
-useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
+useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev,usb -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
 echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                                 # Création du mot de passe utilisateur
 #-----------------------------------------------------------------------------------
 
@@ -129,9 +129,14 @@ sed -i /LINGUAS=/d /etc/portage/make.conf
 
 # Mise à jour du système
 #-----------------------------------------------------------------------------------
+# We do an orchid-sync, in quiet mode:
+echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour des commandes orchid-*."
+git -C /usr/share/orchid/desktop/dwm/dwm-st-slstatus pull -q
+git -C /usr/share/orchid/wallpapers pull -q
+git -C /usr/share/orchid/orchid-bins pull -q 
+cp /usr/share/orchid/orchid-bins/bins/* /usr/bin/
 if [ "$UPDATE_ORCHID" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-	orchid-sync
   eix-sync -q
   emerge -qvuDN @world
   flatpak update --assumeyes --noninteractive 
