@@ -8,7 +8,7 @@
   * une meilleure résolution graphique de la console ? Avec le noyau bin, voire support pour les VM ?
 
 ## INSTALLATEUR, PHASE I :
-* Les entrées utilisateur + VALIDATION de ces données :
+* Les entrées utilisateur ~~+ VALIDATION de ces données~~ :
   * ~~Test automatisé de la connection à internet~~ + essai de réaliser la connection au besoin. Sans connection, échec de l'installation = STOP, EXIT
   * Ecran d'acceuil avec Support i18n (fr, en, etc. : présentation en liste, choix unique)
     * Mettre l'interface dans la langue choisie
