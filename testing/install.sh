@@ -320,6 +320,21 @@ auto_partitionning_full_disk()
 	mkfs.ext4 "${CHOOSEN_DISK}3"
 }
 
+ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ), 
+{
+while true; do
+	local __ANSWER
+	read -p "$1" __ANSWER
+	if [ -z $__ANSWER ]; then
+		__ANSWER=$2
+	fi
+  case $__ANSWER in
+      "o" | "n" ) echo $__ANSWER; break;;
+      * ) ;;
+  esac
+done
+}
+
 
 swap_size_hibernation()
 {
@@ -331,7 +346,7 @@ swap_size_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
-		read -p "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION_HIGH
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
@@ -394,6 +409,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
     	create_passwd "${1}"
 	done
 }
+
 
 #-----------------------------------------------------------------------------------
 
@@ -475,7 +491,7 @@ fi
 
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
-read -p "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " HIBERNATION
+HIBERNATION=$(ask_yes_or_no_and_validate "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 #-----------------------------------------------------------------------------------
 
 # Calcul de la mémoire SWAP idéale
@@ -548,12 +564,12 @@ done
 if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
 	ESYNC_SUPPORT="o"
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
-	read -p "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " ESYNC_SUPPORT
+	ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET} " o)
 fi
 
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
-read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
+UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 
 # Summary
 #-----------------------------------------------------------------------------------
@@ -566,7 +582,7 @@ echo "[${COLOR_GREEN}OK${COLOR_RESET}] Version d'Orchid Linux choisie : ${COLOR_
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 if [ "$HIBERNATION" = o ]; then
-	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'hibernation (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 elif [ "$HIBERNATION" = n ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
 fi
