@@ -590,7 +590,7 @@ fi
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
 UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-MANUAL_INSTALL=$("Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " n)
+MANUAL_INSTALL=$("Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 
 # Summary
 #-----------------------------------------------------------------------------------
