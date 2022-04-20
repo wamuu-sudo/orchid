@@ -335,6 +335,20 @@ while true; do
 done
 }
 
+ask_for_numeric_and_validate() # question en $1 (string), nombre par défaut en $2 ( digit ), 
+{
+while true; do
+	local __ANSWER
+	read -p "$1" __ANSWER
+	if [ -z $__ANSWER ]; then
+		__ANSWER=$2
+	fi
+  case $__ANSWER in
+      [[:digit:]]* ) echo $__ANSWER; break;;
+      * ) ;;
+  esac
+done
+}
 
 swap_size_hibernation()
 {
@@ -345,13 +359,14 @@ swap_size_hibernation()
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		                                    # 1.5 (3/2) fois la taille de la RAM
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
 		elif [ "$HIBERNATION_HIGH" = "o" ]; then
-			read -p "Entrez la taille du fichier SWAP désirée (en Go): " SWAP_SIZE_GB
+			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 		fi
 	fi
 }
@@ -366,7 +381,8 @@ swap_size_no_hibernation()
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
-		read -p "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go): " SWAP_SIZE_GB
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 	fi
 }
 
