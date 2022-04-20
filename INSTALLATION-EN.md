@@ -15,11 +15,11 @@ We implimented it to help you follow this guide graphically while installing the
 
 These ISOS are provided by Gentoo themselves, we arent responsable of any dammage.
 
-The files needed to verify the integrity of these ISOS are availible here [miroir](https://orchid.juline.tech).
+The files needed to verify the integrity of these ISOS are availible here [miroir](https://dl.orchid-linux.org).
 
-[Download the CLI version](https://orchid.juline.tech/install-amd64-minimal-20220315T091810Z.iso) [~500Mo]
+[Download the CLI version](https://dl.orchid-linux.org/install-amd64-minimal-20220315T091810Z.iso) [~500Mo]
 
-[Download the GUI version](https://orchid.juline.tech/livegui-amd64-20220315T091810Z.iso) [~5Go]
+[Download the GUI version](https://dl.orchid-linux.org/livegui-amd64-20220315T091810Z.iso) [~5Go]
 
 You will need to make an USB stick bootable using Rufus, ventoy or Etcher, the choice is yours.
 
@@ -131,16 +131,16 @@ cd /mnt/orchid
 Il faut ensuite télécharger l'archive qui convient pour un système Orchid complet avec wget par exemple (l'archive est assez volumineuse) :
 Now we need to download the archive we want for our Orchid system using wget (the archives are quit big) :
 
-[Standard DWM version](https://orchid.juline.tech/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
+[Standard DWM version](https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
 
-[Gaming DWM version](https://orchid.juline.tech/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
+[Gaming DWM version](https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
 
-[Complete gnome version](https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
+[Complete gnome version](https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
 
 Example:
 
 ```
-wget https://orchid.juline.tech/stage4-orchid-gnomefull-latest.tar.bz2
+wget https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2
 ```
 
 Extract the downloaded archive : 
