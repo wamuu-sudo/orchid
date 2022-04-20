@@ -83,7 +83,7 @@ sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo ""
 echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd                                           # Création du mot de passe root
-useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
+useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev,usb -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
 echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                                 # Création du mot de passe utilisateur
 #-----------------------------------------------------------------------------------
 
