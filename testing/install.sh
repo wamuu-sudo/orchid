@@ -320,7 +320,7 @@ auto_partitionning_full_disk()
 	mkfs.ext4 "${CHOOSEN_DISK}3"
 }
 
-ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ), 
+ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
 {
 while true; do
 	local __ANSWER
@@ -328,6 +328,7 @@ while true; do
 	if [ -z $__ANSWER ]; then
 		__ANSWER=$2
 	fi
+
   case $__ANSWER in
       "o" | "n" ) echo $__ANSWER; break;;
       * ) ;;
@@ -335,7 +336,7 @@ while true; do
 done
 }
 
-ask_for_numeric_and_validate() # question en $1 (string), nombre par défaut en $2 ( digit ), 
+ask_for_numeric_and_validate() # question en $1 (string), nombre par défaut en $2 ( digit ),
 {
 while true; do
 	local __ANSWER
@@ -343,12 +344,14 @@ while true; do
 	if [ -z $__ANSWER ]; then
 		__ANSWER=$2
 	fi
+
   case $__ANSWER in
       [[:digit:]]* ) echo $__ANSWER; break;;
       * ) ;;
   esac
 done
 }
+
 
 swap_size_hibernation()
 {
@@ -403,9 +406,9 @@ fi
 test_if_username_is_valid()
 {
 if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
-		IS_USERNAME_VALID=1																													# username is valid 
+		IS_USERNAME_VALID=1																													# username is valid
 	else
-		IS_USERNAME_VALID=0																													# username is not valid 
+		IS_USERNAME_VALID=0																													# username is not valid
 	fi
 }
 
@@ -548,6 +551,7 @@ while  [ $IS_USERNAME_VALID = 0 ]; do
 		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${USERNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 	fi
 done
+
 echo ""
 create_passwd "${USERNAME}"
 echo ""
@@ -585,14 +589,9 @@ fi
 
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
-<<<<<<< HEAD
-read -p "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " UPDATE_ORCHID
-echo ""
-read -p "Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " MANUAL_INSTALL
-=======
 UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+MANUAL_INSTALL=$("Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/n]${COLOR_RESET} " n)
 
->>>>>>> 68391b9789f07ef1c8950fbdd652befa20a4f4ec
 # Summary
 #-----------------------------------------------------------------------------------
 
@@ -720,7 +719,7 @@ echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev, sys et run 
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
-mount --bind /run /mnt/orchid/run 
+mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
 wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
