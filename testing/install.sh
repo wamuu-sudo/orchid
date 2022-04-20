@@ -101,7 +101,19 @@ declare -a CHOICES_DISK
 ERROR_IN_DISK_SELECTOR=" "
 
 # Regular Expression to test a valid hostname, as per RFC-952 and RFC-1123
+# https://stackoverflow.com/questions/106179/regular-expression-to-match-dns-hostname-or-ip-address
 VALID_HOSTNAME_REGEX="^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\.([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]))*$"
+
+# Regular Expression to test a valid username
+# https://unix.stackexchange.com/questions/157426/what-is-the-regex-to-validate-linux-users
+# It should start (^) with only a lowercase letter or an underscore ([a-z_]). This occupies exactly 1 character.
+# Then it should be one of either ( ... ):
+# 	From 0 to 31 characters ({0,31}) of lowercase letters, numbers, underscores, and/or hyphens ([a-z0-9_-]),
+# OR (|)
+# 	From 0 to 30 characters of the above plus a US dollar sign symbol (\$) at the end,
+# and then
+# No more characters past this pattern ($).
+VALID_USERNAME_REGEX="^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)$"
 
 #-----------------------------------------------------------------------------------
 
@@ -357,6 +369,14 @@ else
 fi
 }
 
+test_if_username_is_valid()
+{
+if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
+		IS_USERNAME_VALID=1																													# username is valid 
+	else
+		IS_USERNAME_VALID=0																													# username is not valid 
+	fi
+}
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
@@ -488,7 +508,14 @@ select_GPU_drivers_to_install                                                   
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
 echo ""
-read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
+IS_USERNAME_VALID=0
+while  [ $IS_USERNAME_VALID = 0 ]; do
+	read -p "${COLOR_WHITE}Nom de l'utilisateur que vous voulez créer : ${COLOR_RESET}" USERNAME
+	test_if_username_is_valid
+	if [ $IS_USERNAME_VALID = 0 ]; then
+		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${USERNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+	fi
+done
 echo ""
 create_passwd "${USERNAME}"
 echo ""
@@ -509,7 +536,7 @@ while  [ $IS_HOSTNAME_VALID = 0 ]; do
 	HOSTNAME=${HOSTNAME:-orchid}
 	test_if_hostname_is_valid
 	if [ $IS_HOSTNAME_VALID = 0 ]; then
-		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_RED}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 	fi
 done
 
