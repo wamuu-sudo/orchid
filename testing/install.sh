@@ -430,10 +430,6 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 }
 
 
-questions_changements_paramètres()
-{
-	
-}
 #-----------------------------------------------------------------------------------
 
 #============================================================== PRECONFIGURATION ===
@@ -626,13 +622,6 @@ fi
 
 if [ "$UPDATE_ORCHID" = o ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. Cela peut être très long."
-fi
-
-echo "
-"
-BACKTRACK=$(ask_yes_or_no_and_validate "${COLOR_YELLOW}Voulez-vous effectuer des changements avant d'instller le système ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-if [ "$BACKTRACK" = "o"]; then
-	questions_changements_paramètres
 fi
 
 echo ""
