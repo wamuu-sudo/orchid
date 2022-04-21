@@ -645,7 +645,7 @@ if [ "$MANUAL_INSTALL" = "n" ]; then
 	auto_partitionning_full_disk
 elif [ "$MANUAL_INSTALL" = "o" ]; then
 	cfdisk "$CHOOSEN_DISK"
-
+fi
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
