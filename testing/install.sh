@@ -432,7 +432,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 questions_changements_paramètres()
 {
-	
+	sleep 1
 }
 #-----------------------------------------------------------------------------------
 
