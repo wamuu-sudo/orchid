@@ -713,7 +713,7 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
+wget "https://github.com/wamuu-sudo/orchid/blob/ched/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
@@ -746,7 +746,7 @@ fi
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
-rm -f /mnt/orchid/orchid-backgrounds.xml
+rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png
 cd /
 if [ "$ROM" = "UEFI" ]; then
 	umount /mnt/orchid/boot/EFI

@@ -25,7 +25,7 @@ COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
 # On prépare le chroot pour openrc-gsettingsd -> dbus
-echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gdm et GNOME pour un clavier fr."
+echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gdm et GNOME pour un clavier fr, l'ajout des wallappers et le logo gdm greeter."
 mkdir -p /lib64/rc/init.d
 ln -s /lib64/rc/init.d /run/openrc
 touch /run/openrc/softlevel
@@ -83,6 +83,24 @@ primary-color='000000'
 # Specify the right or bottom color when drawing gradients
 secondary-color='FFFFFF'
 EOF
+
+# Add a greeter logo to the login screen
+# https://help.gnome.org/admin/system-admin-guide/stable/login-logo.html.en
+# Create the gdm profile
+mv /orchid-logo.png /usr/share/pixmaps/
+cat > /etc/dconf/profile/gdm<< EOF
+user-db:user
+system-db:gdm
+file-db:/usr/share/gdm/greeter-dconf-defaults
+EOF
+# Create a gdm database for machine-wide settings
+mkdir -p /etc/dconf/db/gdm.d/
+cat > /etc/dconf/db/gdm.d/01-logo<< EOF
+[org/gnome/login-screen]
+  logo='/usr/share/pixmaps/orchid-logo.png'
+  
+EOF
+
 # Update the system databases:
 dconf update
 # clear stuff:
