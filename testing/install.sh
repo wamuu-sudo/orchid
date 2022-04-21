@@ -590,7 +590,6 @@ fi
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
 UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-MANUAL_INSTALL=$("Voulez-vous installer Orchid Linux manuellement (avec cfdisk) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 
 # Summary
 #-----------------------------------------------------------------------------------
@@ -601,11 +600,7 @@ echo ""
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Test de la connection internet."
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
-if [ "$MANUAL_INSTALL" = "n" ]; then
-	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-elif [ "$MANUAL_INSTALL" = "o" ]; then
-	echo "${COLOR_GREEN}*${COLOR_RESET} Vous avez choisi d'installer Orchid Linux par vous-même sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-fi
+echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 
 if [ "$HIBERNATION" = o ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
@@ -641,11 +636,8 @@ fi
 
 clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
-if [ "$MANUAL_INSTALL" = "n" ]; then
-	auto_partitionning_full_disk
-elif [ "$MANUAL_INSTALL" = "o" ]; then
-	cfdisk "$CHOOSEN_DISK"
-fi
+auto_partitionning_full_disk
+
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
