@@ -43,18 +43,22 @@ ORCHID_VERSION[2]="Version Gnome [2.4Go]"
 ORCHID_URL[2]='https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2'       # Gnome
 ORCHID_COUNT[2]="https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.count.txt"
 COUNTED_BY_TREE[2]=424438                                                               # Number of files in Gnome stage
-ORCHID_VERSION[3]="Version KDE Plasma [3.3Go]"
-ORCHID_URL[3]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.5Go]"
+ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
+ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.count"
+#COUNTED_BY_TREE[3]=
+ORCHID_VERSION[4]="Version KDE Plasma [3.3Go]"
+ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
 #ORCHID_COUNT[3]=
-COUNTED_BY_TREE[3]=744068                                                               # Number of files in KDE stage
-ORCHID_VERSION[4]="Version Gnome Gaming Edition [9.0Go]"
-ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
+COUNTED_BY_TREE[4]=744068                                                               # Number of files in KDE stage
+ORCHID_VERSION[5]="Version Gnome Gaming Edition [9.0Go]"
+ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
 #ORCHID_COUNT[4]=
-COUNTED_BY_TREE[4]=436089                                                               # Number of files in Gnome GE stage
-ORCHID_VERSION[5]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
-ORCHID_URL[5]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
-ORCHID_COUNT[5]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
-COUNTED_BY_TREE[5]=452794                                                               # Number of files in Gnome GE SystemD stage
+COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
+ORCHID_VERSION[6]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
+ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
+COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
 #-----------------------------------------------------------------------------------
 
 # Setup colors
@@ -581,9 +585,9 @@ done
 # Option pour la configuration d'esync (limits)
 #-----------------------------------------------------------------------------------
 
-if [ "$no_archive" = "1" -o "$no_archive" = "4" -o "$no_archive" = "5" ]; then
+if [ "$no_archive" = "1" -o "$no_archive" = "3" -o "$no_archive" = "5" -o "$no_archive" = "6" ]; then
 	ESYNC_SUPPORT="o"
-elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "3" ]; then
+elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "4" ]; then
 	ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET} " o)
 fi
 
@@ -679,10 +683,12 @@ elif [[ "$no_archive" == "1" ]]; then
 elif [[ "$no_archive" == "2" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "3" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "4" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "5" ]]; then
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
+elif [[ "$no_archive" == "6" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 fi
 
@@ -731,7 +737,7 @@ if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then
 fi
 
 # Configuration clavier pour GNOME
-if [ "$no_archive" = "2" -o "$no_archive" = "4" ]; then
+if [ "$no_archive" = "2" -o "$no_archive" = "5" ]; then
 	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME}
 fi
 #-----------------------------------------------------------------------------------
