@@ -138,7 +138,7 @@ cp /usr/share/orchid/orchid-bins/bins/* /usr/bin/
 if [ "$UPDATE_ORCHID" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
   eix-sync -q
-  emerge -qvuDN @world
+  emerge -qvuDNU @world
   flatpak update --assumeyes --noninteractive 
   grub-mkconfig -o /boot/grub/grub.cfg
   emerge --depclean -q
