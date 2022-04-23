@@ -26,16 +26,13 @@
 # You should have received a copy of the GNU General Public License along with
 # this program. If not, see https://www.gnu.org/licenses/.
 #===================================================================================
+#===Prérequis================================================================================
+# On demande le mot de passe root :
+read -r -p "Veuillez entrer le mot de passe sudo afin de continuer" MDP
 
-#=== PRECONFIGURATION ==============================================================
+#===================================================================================
 
-# Check for root rights
-#-----------------------------------------------------------------------------------
-if [ "$(id -u)" -ne 0 ] ; then
-    echo -e "Veuillez lancer le script en tant que root D: (soit avec sudo, doas ou su)"
-    exit 1
- fi
-#-----------------------------------------------------------------------------------
+
 # Setting Color Variables
 Color_Off='\033[0m'       # Text Reset
 
@@ -110,7 +107,7 @@ On_ICyan='\033[0;106m'    # Cyan
 On_IWhite='\033[0;107m'   # White
 
 #-----------------------------------------------------------------------------------
-cp -rf Script_files/* /usr/share/applications/
+cp -rf Script_files/* ~/Desktop/
 
 # Setup functions
 #===================================================================================
@@ -146,10 +143,10 @@ echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off
         "7")  packages_flathub+=("io.gitlab.librewolf-community") && browser ;;
         "8") packages_flathub+=("com.github.micahflee.torbrowser-launcher") && browser ;;
         "9")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && browser
@@ -203,10 +200,10 @@ multimedia ()
         "11") packages+=("media-sound/spotify") && multimedia ;;
         "12") packages+=("kde-apps/kdenlive") && multimedia ;;
         "13")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && multimedia
@@ -263,10 +260,10 @@ utility ()
         "9") packages+=("xfce-base/thunar") && utility ;;
         "10") packages+=("gnome-base/nautilus") && utility ;;
         "11")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && utility
@@ -307,10 +304,10 @@ office ()
         "3") packages+=("app-office/scribus") && office ;;
         "4") packages+=("app-office/calligra") && office ;;
         "5")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && office
@@ -367,10 +364,10 @@ text_editors ()
         "9") packages+=("dev-util/geany") && text_editors ;;
         "10") packages+=("app-editors/vscodium") && text_editors ;;
         "11")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && text_editors
@@ -431,10 +428,10 @@ system ()
         "12") packages+=("sys-block/gparted") && system ;;
         "13") packages+=("app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
         "14")  if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && system
@@ -480,10 +477,10 @@ com ()
         "6") packages+=("net-p2p/qbittorrent") && com ;;
         "7") packages+=("net-p2p/transmission") && com ;;
         "8") if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && com
@@ -499,7 +496,132 @@ com ()
 }
 
 #========================================================================== com ===#
+#=== games ==========================================================================#
+# DESCRIPTION : Permet l'installation d'applications liés aux jeux.
+games ()
+{
+    # Affiche les choix possibles
+    echo -e "${On_Green}Choisissez les jeux que vous voulez installer:${Color_Off}"
+    echo -e "===Jeux d'action:==="
+    echo -e "${BGreen}1.Chromium B.S.U."
+    echo -e "2. Minetest"
+    echo -e "3. SuperTuxKart"
+    echo -e "===Jeux d'arcade:==="
+    echo -e "4. Frozen Bubble"
+    echo -e "5. Kobo Deluxe"
+    echo -e "6. Open Sonic"
+    echo -e "7. SolarWolf"
+    echo -e "8. SuperTux"
+    echo -e "9. TecnoballZ"
+    echo -e "===Emulateurs de jeux:==="
+    echo -e "10. DeSmuME"
+    echo -e "11. Dolphin"
+    echo -e "12. DOSBox"
+    echo -e "13. Higan"
+    echo -e "14. Mednafen"
+    echo -e "15. mGBA"
+    echo -e "16. Mupen64Plus"
+    echo -e "17. PCSX-Reloaded"
+    echo -e "18. VBA-M"
+    echo -e "19. Yabause"
+    echo -e "20. ZSNES"
+    echo -e "===Jeux FPS:==="
+    echo -e "21. Alien Arena"
+    echo -e "22. Urban Terror"
+    echo -e "23. Xonotic"
+    echo -e "===Jeux RogueLike:==="
+    echo -e "24. Dungeon Crawl Stone Soup"
+    echo -e "25. TomeNET"
+    echo -e "===Jeux RPG:==="
+    echo -e "26. Daimonin"
+    echo -e "27. FreedroidRPG"
+    echo -e "28. Summoning Wars"
+    echo -e "29. The Mana World"
+    echo -e "===Jeux de Simulation:==="
+    echo -e "30. FlightGear"
+    echo -e "31. OpenTTD"
+    echo -e "===Jeux de strategie:==="
+    echo -e "32. 0 A.D."
+    echo -e "33. Dune Legacy"
+    echo -e "34. FreeCiv"
+    echo -e "35. Hedgewars"
+    echo -e "36. MegaGlest"
+    echo -e "37. OpenRA"
+    echo -e "38. UFO: Alien Invasion"
+    echo -e "39. Warzone 2100"
+    echo -e "40. Battle for Wesnoth Athenaeum"
+    echo -e "===Launcheur de jeux:==="
+    echo -e "41. Athenaeum ${Color_Ofow}"
+    echo -e "42. Appliquer"
+    echo -e "43. Retourner en arrière"
+    echo -e ""
+    echo -e "Pour plus d'options hésitez pas a check https://github.com/Chevek/Gaming-Flatpak"
+    echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
 
+    read -r -p "[Saisissez votre choix]: "  choix
+    # Exécution de la commande appropriée.
+    case "$choix" in
+        "1") packages+=("games-action/chromium-bsu") && games ;;
+        "2") packages+=("games-action/minetest") && games ;;
+        "3") packages+=("games-action/supertuxkart") && games ;;
+        "4") packages+=("games-arcade/frozen-bubble") && games ;;
+        "5") packages+=("games-arcade/kobodeluxe") && games ;;
+        "6") packages+=("games-arcade/opensonic") && games ;;
+        "7") packages+=("games-arcade/solarwolf") && games ;;
+        "8") packages+=("games-arcade/supertux") && games ;;
+        "9") packages+=("games-arcade/tecnoballz") && games ;;
+        "10") packages+=("games-emulation/desmume") && games ;;
+        "11") packages+=("games-emulation/dolphin") && games ;;
+        "12") packages+=("games-emulation/dosbox") && games ;;
+        "13") packages+=("games-emulation/higan") && games ;;
+        "14") packages+=("games-emulation/mednafen") && games ;;
+        "15") packages+=("games-emulation/mgba") && games ;;
+        "16") packages+=("games-emulation/mupen64plus") && games ;;
+        "17") packages+=("games-emulation/pcsxr") && games ;;
+        "18") packages+=("games-emulation/vbam") && games ;;
+        "19") packages+=("games-emulation/yabause") && games ;;
+        "20") packages+=("games-emulation/zsnes") && games ;;
+        "21") packages+=("games-fps/alienarena") && games ;;
+        "22") packages+=("games-fps/urbanterror") && games ;;
+        "23") packages+=("games-fps/xonotic") && games ;;
+        "24") packages+=("games-roguelike/stone-soup") && games ;;
+        "25") packages+=("games-roguelike/tomenet") && games ;;
+        "26") packages+=("games-rpg/daimonin-client") && games ;;
+        "27") packages+=("games-rpg/freedroidrpg") && games ;;
+        "28") packages+=("games-rpg/sumwars") && games ;;
+        "29") packages+=("games-rpg/manaplus") && games ;;
+        "30") packages+=("games-simulation/flightgear") && games ;;
+        "31") packages+=("games-simulation/openttd") && games ;;
+        "32") packages+=("games-strategy/0ad") && games ;;
+        "33") packages+=("games-strategy/dunelegacy") && games ;;
+        "34") packages+=("games-strategy/freeciv") && games ;;
+        "35") packages+=("games-strategy/hedgewars") && games ;;
+        "36") packages+=("games-strategy/megaglest") && games ;;
+        "37") packages+=("games-strategy/openra") && games ;;
+        "38") packages+=("games-strategy/ufoai") && games ;;
+        "39") packages+=("games-strategy/warzone2100") && games ;;
+        "40") packages+=("games-strategy/wesnoth") && games ;;
+        "41") packages_flathub+=("com.gitlab.librebob.Athenaeum") && games ;;
+        "42") if [ "${#packages[*]}" -ge 1 ]; then
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && games
+             fi
+                   ;;
+
+        "43") main_menu ;;
+        # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
+        *) echo -e "Veuillez choisir une option valide :D!!" && games ;;
+    esac
+
+    clear
+}
+
+#=== games ==========================================================================#
 #=== main_menu ==================================
 # DESCRIPTION : Affiche le menu sélectif trié par famille, pour installer des
 #               applications.
@@ -532,12 +654,12 @@ main_menu()
         "5") text_editors ;;
         "6") system ;;
         "7") com ;;
-        "8") echo "WIP" && main_menu ;;
+        "8") games ;;
         "9") if [ "${#packages[*]}" -ge 1 ]; then
-                  orchid-install ${packages[*]}
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       flathub install ${packages_flathub[*]}
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && main_menu
