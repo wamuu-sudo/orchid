@@ -28,8 +28,10 @@
 #===================================================================================
 #===Prérequis================================================================================
 # On demande le mot de passe root :
-read -r -p "Veuillez entrer le mot de passe sudo afin de continuer" MDP
-
+read -s -r -p "Veuillez entrer le mot de passe sudo afin de continuer: " MDP
+# declarer le array en associatif
+declare -A packages_flathub
+declare -A packages
 #===================================================================================
 
 
@@ -130,23 +132,28 @@ echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off
     echo -e "9. Appliquer"
     echo -e "10. Revenir en Arriére"
     echo -e ""
-    echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  packages+=("www-client/google-chrome")  && browser ;;
-        "2")  packages+=("www-client/chromium")  && browser ;;
-        "3")  packages_flathub+=("com.brave.Browser")  && browser ;;
-        "4")  packages+=("www-client/vivaldi")  && browser ;;
-        "5")  packages+=("www-client/microsoft-edge")  && browser ;;
-        "6")  packages+=("www-client/firefox-bin")  && browser ;;
-        "7")  packages_flathub+=("io.gitlab.librewolf-community") && browser ;;
-        "8") packages_flathub+=("com.github.micahflee.torbrowser-launcher") && browser ;;
-        "9")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1")  packages+=([Google-Chrome]=www-client/google-chrome)  && browser ;;
+        "2")  packages+=([Google-Chromium]=www-client/chromium)  && browser ;;
+        "3")  packages_flathub+=([brave-flatpak]=com.brave.Browser)  && browser ;;
+        "4")  packages+=([Vivaldi]=www-client/vivaldi)  && browser ;;
+        "5")  packages+=([MS Edge]=www-client/microsoft-edge)  && browser ;;
+        "6")  packages+=([Mozilla Firefox]=www-client/firefox-bin)  && browser ;;
+        "7")  packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && browser ;;
+        "8") packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && browser ;;
+        "9")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+              if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && browser
@@ -183,27 +190,32 @@ multimedia ()
     echo -e "${On_Red}13. Appliquer"
     echo -e "14. Retourner en arrière${Color_Off}"
     echo -e ""
-     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("media-video/obs-studio") && multimedia ;;
-        "2") packages+=("media-sound/mpd") && multimedia ;;
-        "3") packages+=("media-gfx/feh") && multimedia ;;
-        "4") packages+=("media-gfx/gimp") && multimedia ;;
-        "5") packages+=("media-gfx/krita") && multimedia ;;
-        "6") packages+=("media-video/mpv") && multimedia ;;
-        "7") packages+=("media-video/celluloid") && multimedia ;;
-        "8") packages+=("net-misc/youtube-dl") && multimedia ;;
-        "9") packages+=("media-video/vlc") && multimedia ;;
-        "10") packages+=("media-gfx/blender") && multimedia ;;
-        "11") packages+=("media-sound/spotify") && multimedia ;;
-        "12") packages+=("kde-apps/kdenlive") && multimedia ;;
-        "13")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([OBS-Studio]=media-video/obs-studio) && multimedia ;;
+        "2") packages+=([MPD]=media-sound/mpd) && multimedia ;;
+        "3") packages+=([Feh]=media-gfx/feh) && multimedia ;;
+        "4") packages+=([GIMP]=media-gfx/gimp) && multimedia ;;
+        "5") packages+=([Krita]=media-gfx/krita) && multimedia ;;
+        "6") packages+=([MPV]=media-video/mpv) && multimedia ;;
+        "7") packages+=([Celluloid]=media-video/celluloid) && multimedia ;;
+        "8") packages+=([Youtube-dl]=net-misc/youtube-dl) && multimedia ;;
+        "9") packages+=([VLC]=media-video/vlc) && multimedia ;;
+        "10") packages+=([Blender]=media-gfx/blender) && multimedia ;;
+        "11") packages+=([Spotify]=media-sound/spotify) && multimedia ;;
+        "12") packages+=([KdenLive]=kde-apps/kdenlive) && multimedia ;;
+        "13")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+               if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && multimedia
@@ -244,26 +256,31 @@ utility ()
     echo -e "${On_Cyan}11. Appliquer"
     echo -e "12. Retourner en arrière${Color_Off}"
     echo -e ""
-     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("app-text/calibre") && utility ;;
-        "2") packages+=("app-text/zathura app-text/zathura-meta") && utility ;;
-        "3") packages+=("kde-apps/ark") && utility ;;
-        "4") packages+=("app-arch/file-roller") && utility ;;
-        "5") packages+=("app-arch/lxqt-archiver") && utility ;;
-        "6") packages+=("app-arch/xarchiver") && utility ;;
-        "7") packages+=("kde-apps/dolphin") && utility ;;
-        "8") packages+=("x11-misc/pcmanfm") && utility ;;
-        "9") packages+=("xfce-base/thunar") && utility ;;
-        "10") packages+=("gnome-base/nautilus") && utility ;;
-        "11")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([Calibre]=app-text/calibre) && utility ;;
+        "2") packages+=([Zathura]="app-text/zathura app-text/zathura-meta") && utility ;;
+        "3") packages+=([Ark]=kde-apps/ark) && utility ;;
+        "4") packages+=([File-Roller]=app-arch/file-roller) && utility ;;
+        "5") packages+=([LXQT-archiver]app-arch/lxqt-archiver) && utility ;;
+        "6") packages+=([XArchiver]=app-arch/xarchiver) && utility ;;
+        "7") packages+=([Dolphin]=kde-apps/dolphin) && utility ;;
+        "8") packages+=([PCMANFM]=x11-misc/pcmanfm) && utility ;;
+        "9") packages+=([Thunar]=xfce-base/thunar) && utility ;;
+        "10") packages+=([Nautilus]=gnome-base/nautilus) && utility ;;
+        "11") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+              if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && utility
@@ -294,20 +311,25 @@ office ()
     echo -e "${On_Purple}5. Appliquer"
     echo -e "6. Retourner en arrière${Color_Off}"
     echo -e ""
- echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("app-office/libreoffice-bin") && office ;;
-        "2") packages+=("app-office/lyx") && office ;;
-        "3") packages+=("app-office/scribus") && office ;;
-        "4") packages+=("app-office/calligra") && office ;;
-        "5")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([LibreOffice]=app-office/libreoffice-bin) && office ;;
+        "2") packages+=([Lyx]app-office/lyx) && office ;;
+        "3") packages+=([Scribus]app-office/scribus) && office ;;
+        "4") packages+=([Calligra]=app-office/calligra) && office ;;
+        "5")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+              if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && office
@@ -348,26 +370,31 @@ text_editors ()
     echo -e "12. Retourner en arrière"
     echo -e "${On_Red}NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)${Color_Off}"
     echo -e ""
-     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("app-editors/neovim") && text_editors ;;
-        "2") packages+=("app-office/vim") && text_editors ;;
-        "3") packages+=("app-editors/vim") && text_editors ;;
-        "4") packages+=("kde-apps/kate") && text_editors ;;
-        "5") packages+=("app-editors/gedit") && text_editors ;;
-        "6") packages+=("app-editors/emacs") && text_editors ;;
-        "7") packages+=("app-editors/vscode") && text_editors ;;
-        "8") packages+=("app-editors/bluefish") && text_editors ;;
-        "9") packages+=("dev-util/geany") && text_editors ;;
-        "10") packages+=("app-editors/vscodium") && text_editors ;;
-        "11")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([NVim]=app-editors/neovim) && text_editors ;;
+        "2") packages+=([Vim]=app-office/vim) && text_editors ;;
+        "3") packages+=([GVim]=app-editors/vim) && text_editors ;;
+        "4") packages+=([Kate]=kde-apps/kate) && text_editors ;;
+        "5") packages+=([Gedit]=app-editors/gedit) && text_editors ;;
+        "6") packages+=([Emacs]=app-editors/emacs) && text_editors ;;
+        "7") packages+=([VSCode]=app-editors/vscode) && text_editors ;;
+        "8") packages+=([Bluefish]=app-editors/bluefish) && text_editors ;;
+        "9") packages+=([Geany]=dev-util/geany) && text_editors ;;
+        "10") packages+=([Vscodium]=app-editors/vscodium) && text_editors ;;
+        "11") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+              if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && text_editors
@@ -409,29 +436,34 @@ system ()
     echo -e "${On_Yellow}14. Appliquer"
     echo -e "15. Retourner en arrière${Color_Off}"
     echo -e ""
- echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+ echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("x11-terms/alacritty") && system ;;
-        "2") packages+=("x11-terms/gnome-terminal") && system ;;
-        "3") packages+=("x11-terms/kitty") && system ;;
-        "4") packages+=("kde-apps/konsole") && system ;;
-        "5") packages+=("lxde-base/lxterminal") && system ;;
-        "6") packages+=("x11-terms/rxvt-unicode") && system ;;
-        "7") packages+=("x11-terms/terminator") && system ;;
-        "8") packages+=("x11-terms/terminology") && system ;;
-        "9") packages+=("x11-terms/xfce4-terminal") && system ;;
-        "10") packages+=("x11-terms/xterm") && system ;;
-        "11") packages+=("sys-apps/baobab") && system ;;
-        "12") packages+=("sys-block/gparted") && system ;;
-        "13") packages+=("app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
-        "14")  if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([Alacritty]=x11-terms/alacritty) && system ;;
+        "2") packages+=([Gnome-terminal]=x11-terms/gnome-terminal) && system ;;
+        "3") packages+=([Kitty]=x11-terms/kitty) && system ;;
+        "4") packages+=([Konsole]=kde-apps/konsole) && system ;;
+        "5") packages+=([LXterminal]=lxde-base/lxterminal) && system ;;
+        "6") packages+=([URXVT]=x11-terms/rxvt-unicode) && system ;;
+        "7") packages+=([Terminator]=x11-terms/terminator) && system ;;
+        "8") packages+=([Terminology]=x11-terms/terminology) && system ;;
+        "9") packages+=([XFCE-Term]=x11-terms/xfce4-terminal) && system ;;
+        "10") packages+=([Xterm]=x11-terms/xterm) && system ;;
+        "11") packages+=([Baobab]=sys-apps/baobab) && system ;;
+        "12") packages+=([Gparted]=sys-block/gparted) && system ;;
+        "13") packages+=([OpenRGB]="app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
+        "14") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+            if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && system
@@ -464,23 +496,28 @@ com ()
     echo -e "8. Appliquer"
     echo -e "9. Retourner en arrière"
     echo -e ""
-     echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("net-im/discord-bin") && com ;;
-        "2") packages+=("net-irc/hexchat") && com ;;
-        "3") packages+=("net-irc/weechat") && com ;;
-        "4") packages_flathub+=("im.riot.Riot") && com ;;
-        "5") packages+=("net-p2p/deluge") && com ;;
-        "6") packages+=("net-p2p/qbittorrent") && com ;;
-        "7") packages+=("net-p2p/transmission") && com ;;
-        "8") if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([Discord]=net-im/discord-bin) && com ;;
+        "2") packages+=([Hexchat]=net-irc/hexchat) && com ;;
+        "3") packages+=([Weechat]=net-irc/weechat) && com ;;
+        "4") packages_flathub+=([Matrix-flatpak]=im.riot.Riot) && com ;;
+        "5") packages+=([Deluge]=net-p2p/deluge) && com ;;
+        "6") packages+=([Qbittorrent]=net-p2p/qbittorrent) && com ;;
+        "7") packages+=([Transmission]=net-p2p/transmission) && com ;;
+        "8") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+             if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && com
@@ -556,57 +593,62 @@ games ()
     echo -e "43. Retourner en arrière"
     echo -e ""
     echo -e "Pour plus d'options hésitez pas a check https://github.com/Chevek/Gaming-Flatpak"
-    echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=("games-action/chromium-bsu") && games ;;
-        "2") packages+=("games-action/minetest") && games ;;
-        "3") packages+=("games-action/supertuxkart") && games ;;
-        "4") packages+=("games-arcade/frozen-bubble") && games ;;
-        "5") packages+=("games-arcade/kobodeluxe") && games ;;
-        "6") packages+=("games-arcade/opensonic") && games ;;
-        "7") packages+=("games-arcade/solarwolf") && games ;;
-        "8") packages+=("games-arcade/supertux") && games ;;
-        "9") packages+=("games-arcade/tecnoballz") && games ;;
-        "10") packages+=("games-emulation/desmume") && games ;;
-        "11") packages+=("games-emulation/dolphin") && games ;;
-        "12") packages+=("games-emulation/dosbox") && games ;;
-        "13") packages+=("games-emulation/higan") && games ;;
-        "14") packages+=("games-emulation/mednafen") && games ;;
-        "15") packages+=("games-emulation/mgba") && games ;;
-        "16") packages+=("games-emulation/mupen64plus") && games ;;
-        "17") packages+=("games-emulation/pcsxr") && games ;;
-        "18") packages+=("games-emulation/vbam") && games ;;
-        "19") packages+=("games-emulation/yabause") && games ;;
-        "20") packages+=("games-emulation/zsnes") && games ;;
-        "21") packages+=("games-fps/alienarena") && games ;;
-        "22") packages+=("games-fps/urbanterror") && games ;;
-        "23") packages+=("games-fps/xonotic") && games ;;
-        "24") packages+=("games-roguelike/stone-soup") && games ;;
-        "25") packages+=("games-roguelike/tomenet") && games ;;
-        "26") packages+=("games-rpg/daimonin-client") && games ;;
-        "27") packages+=("games-rpg/freedroidrpg") && games ;;
-        "28") packages+=("games-rpg/sumwars") && games ;;
-        "29") packages+=("games-rpg/manaplus") && games ;;
-        "30") packages+=("games-simulation/flightgear") && games ;;
-        "31") packages+=("games-simulation/openttd") && games ;;
-        "32") packages+=("games-strategy/0ad") && games ;;
-        "33") packages+=("games-strategy/dunelegacy") && games ;;
-        "34") packages+=("games-strategy/freeciv") && games ;;
-        "35") packages+=("games-strategy/hedgewars") && games ;;
-        "36") packages+=("games-strategy/megaglest") && games ;;
-        "37") packages+=("games-strategy/openra") && games ;;
-        "38") packages+=("games-strategy/ufoai") && games ;;
-        "39") packages+=("games-strategy/warzone2100") && games ;;
-        "40") packages+=("games-strategy/wesnoth") && games ;;
-        "41") packages_flathub+=("com.gitlab.librebob.Athenaeum") && games ;;
-        "42") if [ "${#packages[*]}" -ge 1 ]; then
+        "1") packages+=([Chromium-BSU]="games-action/chromium-bsu") && games ;;
+        "2") packages+=([Minetest]="games-action/minetest") && games ;;
+        "3") packages+=([Supertuxkart]="games-action/supertuxkart") && games ;;
+        "4") packages+=([Forzen-bubble]="games-arcade/frozen-bubble") && games ;;
+        "5") packages+=([Kobo-deluxe]="games-arcade/kobodeluxe") && games ;;
+        "6") packages+=([Open-Sonic]="games-arcade/opensonic") && games ;;
+        "7") packages+=([Solor-wolf]"games-arcade/solarwolf") && games ;;
+        "8") packages+=([Supertux]="games-arcade/supertux") && games ;;
+        "9") packages+=([TecnoBallz]"games-arcade/tecnoballz") && games ;;
+        "10") packages+=([DesmuME]="games-emulation/desmume") && games ;;
+        "11") packages+=([Dolphin]="games-emulation/dolphin") && games ;;
+        "12") packages+=([DosBox]="games-emulation/dosbox") && games ;;
+        "13") packages+=([Higan]="games-emulation/higan") && games ;;
+        "14") packages+=([Mednafen]="games-emulation/mednafen") && games ;;
+        "15") packages+=([mGBA]="games-emulation/mgba") && games ;;
+        "16") packages+=([Mupen64Plus]="games-emulation/mupen64plus") && games ;;
+        "17") packages+=([PCSXR]="games-emulation/pcsxr") && games ;;
+        "18") packages+=([VBAm]="games-emulation/vbam") && games ;;
+        "19") packages+=([Yabause]="games-emulation/yabause") && games ;;
+        "20") packages+=([Znes]="games-emulation/zsnes") && games ;;
+        "21") packages+=([Alien-Arena]="games-fps/alienarena") && games ;;
+        "22") packages+=([Urban-terror]="games-fps/urbanterror") && games ;;
+        "23") packages+=([Xonotic]="games-fps/xonotic") && games ;;
+        "24") packages+=([Dungeon-CrawlStone-soup]="games-roguelike/stone-soup") && games ;;
+        "25") packages+=([TomeNET]="games-roguelike/tomenet") && games ;;
+        "26") packages+=([Daimonin]="games-rpg/daimonin-client") && games ;;
+        "27") packages+=([Freedroidrpg]="games-rpg/freedroidrpg") && games ;;
+        "28") packages+=([Summoning-Wars]="games-rpg/sumwars") && games ;;
+        "29") packages+=([The-Mana-World]="games-rpg/manaplus") && games ;;
+        "30") packages+=([Flight-Gear]="games-simulation/flightgear") && games ;;
+        "31") packages+=([OpenTTD]="games-simulation/openttd") && games ;;
+        "32") packages+=([0.AD]="games-strategy/0ad") && games ;;
+        "33") packages+=([Dune-Legacy]="games-strategy/dunelegacy") && games ;;
+        "34") packages+=([FreeCIV]="games-strategy/freeciv") && games ;;
+        "35") packages+=([HedgeWars]="games-strategy/hedgewars") && games ;;
+        "36") packages+=([Megaglest]="games-strategy/megaglest") && games ;;
+        "37") packages+=([OpenRA]="games-strategy/openra") && games ;;
+        "38") packages+=([UFO-Alien-Invasion]="games-strategy/ufoai") && games ;;
+        "39") packages+=([Warzone-2100]="games-strategy/warzone2100") && games ;;
+        "40") packages+=([Wesnoth]="games-strategy/wesnoth") && games ;;
+        "41") packages_flathub+=([athenaeum-flatpak]=com.gitlab.librebob.Athenaeum) && games ;;
+        "42") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+            if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                       for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
+
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && games
@@ -642,7 +684,7 @@ main_menu()
     echo -e "9. Appliquer tout"
     echo -e "${BRed}10. Quitter${Color_Off}"
     echo -e ""
-  echo -e "Packets selectionnés : ${packages[*]} ${packages_flathub[*]}"
+  echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
    read -r -p "[Saisissez votre choix]: "  choix
     clear
@@ -655,11 +697,15 @@ main_menu()
         "6") system ;;
         "7") com ;;
         "8") games ;;
-        "9") if [ "${#packages[*]}" -ge 1 ]; then
+        "9") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+             if [ "${#packages[*]}" -ge 1 ]; then
                   echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
                fi
                    if [ "${#packages_flathub[*]}" -ge 1 ]; then
                        echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                       for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
                     fi
                    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
                        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && main_menu
