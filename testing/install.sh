@@ -142,10 +142,10 @@ TERM_COLS=$(tput cols)
 LOGO_COLS=30
 LOGO_LINES=15
 
-BANNER="  ___           _     _     _   _     _                  
+BANNER="  ___           _     _     _   _     _
  / _ \ _ __ ___| |__ (_) __| | | |   (_)_ __  _   ___  __
 | | | | '__/ __| '_ \| |/ _\` | | |   | | '_ \| | | \ \/ /
-| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  < 
+| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  <
  \___/|_|  \___|_| |_|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\"
 
 #-----------------------------------------------------------------------------------
@@ -202,21 +202,21 @@ done <<< "${BANNER}"
 echo_logo()
 {
 cat <<- _EOF_
-              ::              
-            :*@@*:            
-          :*@@@@@@*:          
-         *@@@%++%@@@*         
-      :=:-#@@+  +@@#-:=:      
-    :*@@@#--#@==@#--#@@@*:    
-  :*@@@%*%@*-=::=-#@%*%@@@*:  
- =@@@%@:  =+*    *+=  :@%@@@= 
-  :*@@@%*%@*-=::=-#@%*%@@@*:  
-    :*@@@#--#@==@#--#@@@*:    
-      :=:-#@@+  +@@#-:=:      
-         *@@@%++%@@@*         
-          :*@@@@@@*:          
-            :*@@*:            
-              ::              
+              ::
+            :*@@*:
+          :*@@@@@@*:
+         *@@@%++%@@@*
+      :=:-#@@+  +@@#-:=:
+    :*@@@#--#@==@#--#@@@*:
+  :*@@@%*%@*-=::=-#@%*%@@@*:
+ =@@@%@:  =+*    *+=  :@%@@@=
+  :*@@@%*%@*-=::=-#@%*%@@@*:
+    :*@@@#--#@==@#--#@@@*:
+      :=:-#@@+  +@@#-:=:
+         *@@@%++%@@@*
+          :*@@@@@@*:
+            :*@@*:
+              ::
 _EOF_
 }
 
@@ -360,6 +360,20 @@ CLI_selector()
 
 select_GPU_drivers_to_install()
 {
+  GPU_TYPE=$(lspci | grep -E "VGA|3D" | cut -d ":" -f3)
+  if [[ $GPU_TYPE =~ "NVIDIA" ]]; then           # if nvidia GPU
+    CHOICES[2]="${COLOR_GREEN}+${COLOR_RESET}"   # set "nvidia" to install
+  elif [[ $GPU_TYPE =~ "AMD" ]]; then            # if AMD GPU
+    CHOICES[3]="${COLOR_GREEN}+${COLOR_RESET}"   # set "radeon" and "amdgpu" to install
+    CHOICES[4]="${COLOR_GREEN}+${COLOR_RESET}"
+  elif [[ $GPU_TYPE =~ "INTEL" ]]; then          # If Intel GPU (need to change "INTEL" to true value)
+    CHOICES[0]="${COLOR_GREEN}+${COLOR_RESET}"
+    CHOICES[1]="${COLOR_GREEN}+${COLOR_RESET}"
+  else
+    echo -e "\n${COLOR_YELLOW}*${COLOR_RESET} GPU non reconnu !"
+    sleep 3
+  fi
+
 	clear_under_menu
 	while CLI_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
 		clear_under_menu
@@ -654,7 +668,7 @@ fi
 
 	PAGER=1		# Point to the next step
 	;;
-	1)  
+	1)
 # Check Internet connection
 #-----------------------------------------------------------------------------------
 
@@ -670,7 +684,7 @@ fi
 	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
 	PAGER=2
 	;;
-	2) 
+	2)
 
 # Choix du système
 	select_orchid_version_to_install
@@ -799,7 +813,7 @@ fi
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
 UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-		
+
 	PAGER=11
 	;;
 	11)
