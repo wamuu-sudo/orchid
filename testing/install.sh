@@ -119,10 +119,188 @@ VALID_HOSTNAME_REGEX="^([a-zA-Z0-9]|[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])(\
 # No more characters past this pattern ($).
 VALID_USERNAME_REGEX="^[a-z_]([a-z0-9_-]{0,31}|[a-z0-9_-]{0,30}\\$)$"
 
+# Colors and text formating for the upper part of the installer
+BG_BLUE="$(tput setab 4)"
+BG_BLACK="$(tput setab 0)"
+BG_GREEN="$(tput setab 2)"
+FG_GREEN="$(tput setaf 2)"
+FG_WHITE="$(tput setaf 7)"
+
+TEXT_BOLD="$(tput bold)"
+TEXT_DIM="$(tput dim)"
+TEXT_REV="$(tput rev)"
+TEXT_DEFAULT="$(tput sgr0)"
+
+INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Hibernation|Sélection de la carte graphique|Création de l'utilisateur|Mot de passe root|Nom du système|esync|Mise à jour|Résumé|Installation"
+
+# Default Gentoo Live CD:
+#TERM_COLS=128
+#TERM_LINES=48
+TERM_LINES=$(tput lines)
+TERM_COLS=$(tput cols)
+
+LOGO_COLS=30
+LOGO_LINES=15
+
+BANNER="  ___           _     _     _   _     _                  
+ / _ \ _ __ ___| |__ (_) __| | | |   (_)_ __  _   ___  __
+| | | | '__/ __| '_ \| |/ _\` | | |   | | '_ \| | | \ \/ /
+| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  < 
+ \___/|_|  \___|_| |_|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\"
+
 #-----------------------------------------------------------------------------------
 
 # Setup functions
 #-----------------------------------------------------------------------------------
+
+set_term_size() {
+        TERM_LINES=`tput lines`
+        TERM_COLS=`tput cols`
+				draw_installer_steps
+        return 0
+}
+
+clear_under_menu()
+{
+  # Clear area beneath menu
+  tput cup ${LOGO_LINES} 0 # Move cursor to position row col
+  echo -n ${TEXT_DEFAULT}
+  tput ed # Clear from the cursor to the end of the screen
+  tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
+}
+
+echo_center()
+{
+TEXT_SIZE=0
+TEXT_LINE_START=$(( $LOGO_LINES + 1 ))
+while IFS= read -r TEXT; do
+	for l in "${TEXT[@]}"; do
+		TEXT_ONLY=$(echo -e "$l" | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g')
+		#echo "$TEXT_ONLY"
+		TEXT_STEPS_COL_CENTER=$(( ($TERM_COLS - ${#TEXT_ONLY}) / 2 ))
+		#echo "${#l}**$TEXT_STEPS_COL_CENTER"
+		tput cup $TEXT_LINE_START $TEXT_STEPS_COL_CENTER
+		echo "${l}"
+		((TEXT_LINE_START++))
+	done
+done <<< "${1}"
+}
+
+echo_banner()
+{
+TEXT_LINE_START=0	# the banner is at the top
+while IFS= read -r TEXT; do
+	for l in "${TEXT[@]}"; do
+		BANNER_COL_CENTER=$(( $LOGO_COLS + (($TERM_COLS - $LOGO_COLS - ${#l} ) / 2) ))
+		tput cup $TEXT_LINE_START $BANNER_COL_CENTER
+		echo "${l}"
+		((TEXT_LINE_START++))
+	done
+done <<< "${BANNER}"
+}
+
+echo_logo()
+{
+cat <<- _EOF_
+              ::              
+            :*@@*:            
+          :*@@@@@@*:          
+         *@@@%++%@@@*         
+      :=:-#@@+  +@@#-:=:      
+    :*@@@#--#@==@#--#@@@*:    
+  :*@@@%*%@*-=::=-#@%*%@@@*:  
+ =@@@%@:  =+*    *+=  :@%@@@= 
+  :*@@@%*%@*-=::=-#@%*%@@@*:  
+    :*@@@#--#@==@#--#@@@*:    
+      :=:-#@@+  +@@#-:=:      
+         *@@@%++%@@@*         
+          :*@@@@@@*:          
+            :*@@*:            
+              ::              
+_EOF_
+}
+
+draw_installer_steps()
+{
+echo -n ${BG_GREEN}${FG_WHITE}
+clear
+
+echo_logo
+
+echo_banner
+
+clear_under_menu
+
+TEXT_STEPS_RAW_START_MINIMUM=5
+
+i=1
+TEXT_SIZE=0
+TEXT_STEPS=""
+STEPS_SEPARATOR=" -> "
+MAX_COLS_BANNER_AREA=$(( $TERM_COLS - $LOGO_COLS - ${#STEPS_SEPARATOR} ))
+TEXT_STEPS_COL_WIDTH=$(( $TERM_COLS - $LOGO_COLS ))
+
+TEXT_STEPS_RAW_COUNT=0
+
+while IFS='|' read -ra STEPS; do	# We will count how many lines we need to print all the steps on the screen
+	for l in "${STEPS[@]}"; do
+		if [ $((${#l} + $TEXT_SIZE)) -gt $MAX_COLS_BANNER_AREA ]; then	# We will exceed our limit if we add a new step!
+			((TEXT_STEPS_RAW_COUNT++))
+			TEXT_SIZE=0 # reset text size
+		fi
+		TEXT_SIZE=$((${#l} + $TEXT_SIZE))
+		if [[ ! $i = ${#STEPS[*]} ]]; then # If not the last item, add a separator, e.g. " -> "
+			TEXT_SIZE=$(( $TEXT_SIZE + ${#STEPS_SEPARATOR} ))
+		fi
+		((i++))
+	done
+done <<< "${INSTALLER_STEPS}"
+
+TEXT_STEPS_RAW_START=$(( $TEXT_STEPS_RAW_START_MINIMUM + (($LOGO_LINES - $TEXT_STEPS_RAW_START_MINIMUM - $TEXT_STEPS_RAW_COUNT) / 2) ))
+# reset usefull variables
+i=1
+TEXT_SIZE=0
+TEXT_STEPS=""
+
+echo -n ${BG_GREEN}${FG_WHITE}
+while IFS='|' read -ra STEPS; do
+	for l in "${STEPS[@]}"; do
+
+		if [ $((${#l} + $TEXT_SIZE)) -gt $MAX_COLS_BANNER_AREA ]; then	# We will exceed our limit if we add a new step!
+			TEXT_STEPS_COL_CENTER=$(( $LOGO_COLS + (($TEXT_STEPS_COL_WIDTH - ${TEXT_SIZE}) / 2) ))
+			tput cup $TEXT_STEPS_RAW_START $TEXT_STEPS_COL_CENTER
+			((TEXT_STEPS_RAW_START++))
+			echo "$TEXT_STEPS"	# Print text
+			TEXT_STEPS="" # reset text to print on screen
+			TEXT_SIZE=0 # reset text size
+		fi
+
+		TEXT_SIZE=$((${#l} + $TEXT_SIZE))
+
+		if [[ $PAGER = $(($i-1)) ]]; then	# We are at this step
+			TEXT_STEPS+="${TEXT_REV}${l}${TEXT_DEFAULT}${BG_GREEN}${FG_WHITE}"
+		elif [[ $PAGER -gt $(($i-1)) ]]; then # We have already done those steps
+			TEXT_STEPS+="${TEXT_BOLD}${l}${TEXT_DEFAULT}${BG_GREEN}${FG_WHITE}"
+		else	# We have not done those yet
+			TEXT_STEPS+="${l}"
+		fi
+
+		if [[ ! $i = ${#STEPS[*]} ]]; then # If not the last item, add a separator, e.g. " -> "
+			TEXT_STEPS+=$STEPS_SEPARATOR
+			TEXT_SIZE=$(( $TEXT_SIZE + ${#STEPS_SEPARATOR} ))
+		else	# this is the end of installer STEPS
+			TEXT_STEPS_COL_CENTER=$(( $LOGO_COLS + (($TEXT_STEPS_COL_WIDTH - ${TEXT_SIZE}) / 2) ))
+			tput cup $TEXT_STEPS_RAW_START $TEXT_STEPS_COL_CENTER
+			echo "$TEXT_STEPS"	# Print text
+		fi
+
+		((i++))
+	done
+done <<< "${INSTALLER_STEPS}"
+echo ${TEXT_DEFAULT}
+tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
+}
+
 
 CLI_orchid_selector()
 {
@@ -141,9 +319,9 @@ CLI_orchid_selector()
 
 select_orchid_version_to_install()
 {
-	clear
+	clear_under_menu
 	while CLI_orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
-		clear
+		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
 			((NUM--))
 			for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ )); do
@@ -182,9 +360,9 @@ CLI_selector()
 
 select_GPU_drivers_to_install()
 {
-	clear
+	clear_under_menu
 	while CLI_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
-		clear
+		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
 			((NUM--))
 			if [[ "${CHOICES[$NUM]}" == "${COLOR_GREEN}+${COLOR_RESET}" ]]; then
@@ -261,9 +439,9 @@ CLI_disk_selector()
 
 select_disk_to_install()
 {
-	clear
+	clear_under_menu
 	while CLI_disk_selector && read -rp "Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
-		clear
+		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#DISKS[@]} ]]; then
 			((NUM--))
 			for (( i = 0; i < ${#DISKS[@]}; i++ )); do
@@ -321,7 +499,7 @@ auto_partitionning_full_disk()
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 	mkswap "${CHOOSEN_DISK}2"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-	mkfs.ext4 "${CHOOSEN_DISK}3"
+	mkfs.ext4 -F "${CHOOSEN_DISK}3"
 }
 
 ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
@@ -440,17 +618,28 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 #=== MAIN ==========================================================================
 
+trap set_term_size WINCH	# We trap window changing size to adapt our interface
+tput smcup	# save the screen
+
+PAGER=0		# This variable point us to the current step
+
+while :; do	# infinite loop
+draw_installer_steps		# we draw the upper part of the menu
+  case $PAGER in
+	0)  # Bienvenue
 # Disclaimer
 #-----------------------------------------------------------------------------------
 
-clear
-echo "${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable de tous les"
-echo "problèmes possibles et inimaginables"
-echo "qui pourraient arriver en installant Orchid Linux."
-echo "Lisez très attentivement les instructions."
-echo "Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
-echo ""
-read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+WELCOME="${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable
+de tous les problèmes possibles et inimaginables qui
+pourraient arriver en installant Orchid Linux.
+
+Lisez très attentivement les instructions.
+Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
+#echo "$WELCOME"
+	echo_center "$WELCOME"
+	echo ""
+	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
 
 #-----------------------------------------------------------------------------------
 
@@ -463,26 +652,35 @@ if (( $RAM_SIZE_GB < 2 )); then
 	exit
 fi
 
+	PAGER=1		# Point to the next step
+	;;
+	1)  
 # Check Internet connection
 #-----------------------------------------------------------------------------------
 
-test_internet_access
-while [ $test_ip = 0 ]; do
-	echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
-	read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
-	dhcpcd                                                                              # Génération d'une addresse IP
 	test_internet_access
-done
-#-----------------------------------------------------------------------------------
+	while [ $test_ip = 0 ]; do
+		echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
+		read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+		dhcpcd                                                                              # Génération d'une addresse IP
+		test_internet_access
+	done
+	echo "${COLOR_GREEN}*${COLOR_RESET} Internet OK."
+	echo ""
+	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+	PAGER=2
+	;;
+	2) 
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Internet OK."
 # Choix du système
-select_orchid_version_to_install
-echo ""
+	select_orchid_version_to_install
+	echo ""
 # Passage du clavier en AZERTY
-echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
-loadkeys fr
-
+	echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
+	loadkeys fr
+	PAGER=3
+	;;
+	3)
 # Partitionnement
 #-----------------------------------------------------------------------------------
 
@@ -514,6 +712,11 @@ fi
 
 echo " ${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre RAM a une taille de ${RAM_SIZE_GB} Go."
+echo ""
+	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+	PAGER=4
+	;;
+	4)
 HIBERNATION=$(ask_yes_or_no_and_validate "Voulez-vous pouvoir utiliser l'hibernation (enregistrement de la mémoire sur le disque avant l'arrêt) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 #-----------------------------------------------------------------------------------
 
@@ -527,25 +730,16 @@ elif [ "$HIBERNATION" = "n" ]; then		                                           
 fi
 #-----------------------------------------------------------------------------------
 echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
-#=================================================
-# Vérification de la date et de l'heure
-# A priori inutile
-#date
-#read -p "La date et l'heure sont-elles correctes ? (format MMJJhhmmAAAA, avec hh -1 ou -2) [o/n] " question_date
-#if [ "$question_date" = "n" ]
-#then
-#  read -p "Entrez la date et l'heure au format suivant : MMJJhhmmAAAA." date
-#fi
-#date ${date}
-#date
-#=================================================
-select_GPU_drivers_to_install                                                           # Select GPU
-
-# Utilisateurs et mots de passe
-#-----------------------------------------------------------------------------------
-
-clear
-echo "${COLOR_GREEN}*${COLOR_RESET} Création des utilisateurs"
+echo ""
+	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+	PAGER=5
+	;;
+	5)
+	select_GPU_drivers_to_install                                                           # Select GPU
+	PAGER=6
+	;;
+	6)
+echo "${COLOR_GREEN}*${COLOR_RESET} Création de l'utilisateur :"
 echo ""
 IS_USERNAME_VALID=0
 while  [ $IS_USERNAME_VALID = 0 ]; do
@@ -561,10 +755,17 @@ create_passwd "${USERNAME}"
 echo ""
 verify_password_concordance "${USERNAME}"
 USER_PASS="${ATTEMPT1}"
+	PAGER=7
+	;;
+	7)
+echo "${COLOR_GREEN}*${COLOR_RESET} Mot de passe root :"
+echo ""
 create_passwd "root"
 verify_password_concordance "root"
 ROOT_PASS="${ATTEMPT1}"
-clear
+	PAGER=8
+	;;
+	8)
 #-----------------------------------------------------------------------------------
 
 # choose your hostname
@@ -579,7 +780,9 @@ while  [ $IS_HOSTNAME_VALID = 0 ]; do
 		echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 	fi
 done
-
+	PAGER=9
+	;;
+	9)
 #-----------------------------------------------------------------------------------
 
 # Option pour la configuration d'esync (limits)
@@ -590,15 +793,16 @@ if [ "$no_archive" = "1" -o "$no_archive" = "3" -o "$no_archive" = "5" -o "$no_a
 elif [ "$no_archive" = "0" -o "$no_archive" = "2" -o "$no_archive" = "4" ]; then
 	ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "Voulez-vous configurer votre installation avec esync qui améliore les performances de certains jeux ? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET} " o)
 fi
-
+	PAGER=10
+	;;
+	10)
 # Option pour la mise à jour d'Orchid Linux dans l'installateur
 #-----------------------------------------------------------------------------------
 UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation (cela peut être très long) ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-
-# Summary
-#-----------------------------------------------------------------------------------
-
-clear
+		
+	PAGER=11
+	;;
+	11)
 echo "${COLOR_WHITE}Résumé de l'installation :${COLOR_RESET}"
 echo ""
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Test de la connection internet."
@@ -609,7 +813,7 @@ echo "[${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_G
 if [ "$HIBERNATION" = o ]; then
 	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 elif [ "$HIBERNATION" = n ]; then
-	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}. (pas d'hibernation possible)"
+	echo "[${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 fi
 
 echo "[${COLOR_GREEN}OK${COLOR_RESET}] Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
@@ -630,15 +834,10 @@ if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation
 	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 	exit
 fi
-#-----------------------------------------------------------------------------------
-                                                        # Questions de configuration
-#===================================================================================
+	PAGER=12
+	;;
+	12)	# installation
 
-# Installation du système
-#===================================================================================
-# NOTES : No more user input after this point!
-
-clear
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 auto_partitionning_full_disk
 
@@ -657,7 +856,6 @@ if [ "$ROM" = "UEFI" ]; then
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
-echo "${COLOR_GREEN}*${COLOR_RESET} Configuration essentielle avant le chroot :"
 cd /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
@@ -719,7 +917,8 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/blob/main/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
+# FIXME: ched -> main
+wget "https://github.com/wamuu-sudo/orchid/blob/ched/testing/install-chroot.tar.xz?raw=true" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
@@ -764,9 +963,17 @@ umount -f /mnt/orchid/proc > /dev/null
 umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish
+echo ""
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
+	;;
+	esac
+done
+
+# Restore screen
+#tput rmcup # Restore screen contents
+
                                                              # Fin de l'installation
 #===================================================================================
 
