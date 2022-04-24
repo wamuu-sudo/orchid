@@ -142,10 +142,10 @@ TERM_COLS=$(tput cols)
 LOGO_COLS=30
 LOGO_LINES=15
 
-BANNER="  ___           _     _     _   _     _
+BANNER="  ___           _     _     _   _     _                  
  / _ \ _ __ ___| |__ (_) __| | | |   (_)_ __  _   ___  __
 | | | | '__/ __| '_ \| |/ _\` | | |   | | '_ \| | | \ \/ /
-| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  <
+| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  < 
  \___/|_|  \___|_| |_|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\"
 
 #-----------------------------------------------------------------------------------
@@ -966,14 +966,8 @@ rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/p
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
 rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png
 cd /
-if [ "$ROM" = "UEFI" ]; then
-	umount /mnt/orchid/boot/EFI
-fi
-umount -fl /mnt/orchid/run > /dev/null
-umount -fl /mnt/orchid/sys > /dev/null
-umount -fl /mnt/orchid/dev > /dev/null
-umount -fl /mnt/orchid/proc > /dev/null
-umount -Rl /mnt/orchid
+
+umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish
 echo ""
