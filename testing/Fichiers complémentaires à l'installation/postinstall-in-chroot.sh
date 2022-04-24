@@ -92,7 +92,6 @@ echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                         
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 if [ "$ROM" = "UEFI" ]; then
   # Installation de GRUB pour UEFI
-  mount -o remount,rw /sys/firmware/efi/efivars
   grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
   grub-mkconfig -o /boot/grub/grub.cfg
 elif [ "$ROM" = "BIOS" ]; then
