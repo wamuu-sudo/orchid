@@ -959,7 +959,7 @@ umount -f /mnt/orchid/run > /dev/null
 umount -f /mnt/orchid/sys > /dev/null
 umount -f /mnt/orchid/dev > /dev/null
 umount -f /mnt/orchid/proc > /dev/null
-umount -R /mnt/orchid
+umount -Rl /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish
 echo ""
