@@ -974,6 +974,7 @@ echo ""
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
+break
 	;;
 	esac
 done
