@@ -59,6 +59,11 @@ ORCHID_VERSION[6]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
 ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
 ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
+ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
+ORCHID_URL[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_COUNT[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.count"
+#ORCHID_COUNT[7]=
+
 #-----------------------------------------------------------------------------------
 
 # Setup colors
@@ -901,6 +906,8 @@ elif [[ "$no_archive" == "4" ]]; then
 elif [[ "$no_archive" == "5" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "$no_archive" == "6" ]]; then
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
+elif [[ "$no_archive" == "7" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 fi
 
