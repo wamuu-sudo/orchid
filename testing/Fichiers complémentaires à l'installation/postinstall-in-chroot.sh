@@ -43,12 +43,14 @@ COLOR_RESET=$'\033[0m'
 #-----------------------------------------------------------------------------------
 CHOOSEN_DISK=$1
 ROM=$2
-USERNAME=$3
-ESYNC_SUPPORT=$4
-HOSTNAME=$5
-ROOT_PASS=$6
-USER_PASS=$7
-UPDATE_ORCHID=$8
+ROOT_PASS=$3
+USERNAME=$4
+USER_PASS=$5
+HOSTNAME=$6
+ORCHID_LOGIN=$7
+ESYNC_SUPPORT=$8
+UPDATE_ORCHID=$9
+
 #-----------------------------------------------------------------------------------
 
 #============================================================== PRECONFIGURATION ===
@@ -106,7 +108,11 @@ fi
 #-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
-rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+if [ "$ORCHID_LOGIN" = "BASE" ]; then
+	rc-update add dbus default && rc-update add NetworkManager default
+else
+	rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+fi
 # Change limits for esync support
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
