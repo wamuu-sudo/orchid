@@ -36,7 +36,11 @@ sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc
 #touch /home/${1}/.config/xfce4/helpers.rc
 #echo "WebBrowser=firefox-bin" >> /home/${1}/.config/xfce4/helpers.rc
 #chown -R ${1}:${1} /home/${1}/.config
-mkdir -p /etc/skel/.config/xfce4/
-cat > /etc/skel/.config/xfce4/helpers.rc<< EOF
-WebBrowser=firefox-bin
-EOF
+#mkdir -p /etc/skel/.config/xfce4/
+#cat > /etc/skel/.config/xfce4/helpers.rc<< EOF
+#WebBrowser=firefox-bin
+#EOF
+cp /usr/share/xfce4/helpers/firefox.desktop /usr/share/xfce4/helpers/firefox-bin.desktop
+sed -i 's/Icon=firefox/Icon=firefox-bin/g' /usr/share/xfce4/helpers/firefox-bin.desktop
+sed -i 's/Name=Mozilla Firefox/Name=Mozilla Firefox (bin)/g' /usr/share/xfce4/helpers/firefox-bin.desktop
+sed -i 's/X-XFCE-Binaries=firefox;firefox-gtk2;firefox-gtk;mozilla-firefox;/X-XFCE-Binaries=firefox-bin;/g' /usr/share/xfce4/helpers/firefox-bin.desktop
