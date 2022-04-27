@@ -27,11 +27,8 @@ cp -f /usr/share/orchid/wallpapers/orchid_nw_01.jpg /usr/share/lightdm/backgroun
 sed -i 's/gentoo-bg_65.jpg/orchid_nw_01.jpg/g' /etc/lightdm/lightdm-gtk-greeter.conf
 # Add wallpapers to Xfce
 cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/xfce/
-# Set default wallpaper for user on all 4 workspaces
-runuser -l $1 -c "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace0/last-image -s /usr/share/backgrounds/xfce/orchid_nw_01.jpg"
-runuser -l $1 -c "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace1/last-image -s /usr/share/backgrounds/xfce/orchid_nw_01.jpg"
-runuser -l $1 -c "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace2/last-image -s /usr/share/backgrounds/xfce/orchid_nw_01.jpg"
-runuser -l $1 -c "xfconf-query -c xfce4-desktop -p /backdrop/screen0/monitorVirtual1/workspace3/last-image -s /usr/share/backgrounds/xfce/orchid_nw_01.jpg"
+# Set default wallpaper for any new user
+cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
 # Set Firefox-bin as the default web Browser for the user
-runuser -l $1 -c "xdg-settings set default-web-browser firefox-bin.desktop"
+runuser -u ${1} -- xdg-settings set default-web-browser firefox-bin.desktop
 
