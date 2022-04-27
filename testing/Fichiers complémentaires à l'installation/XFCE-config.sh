@@ -32,4 +32,6 @@ cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
 # Set Firefox-bin as the default web Browser for the user
 #runuser -u ${1} -- xdg-settings set default-web-browser firefox-bin.desktop
 sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc
-
+mkdir -p /home/${1}/.config/xfce4/
+touch /home/${1}/.config/xfce4/helpers.rc
+echo "WebBrowser=firefox-bin" >> /home/${1}/.config/xfce4/helpers.rc
