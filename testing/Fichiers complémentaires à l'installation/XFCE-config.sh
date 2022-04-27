@@ -30,5 +30,6 @@ cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/xfce/
 # Set default wallpaper for any new user
 cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
 # Set Firefox-bin as the default web Browser for the user
-runuser -u ${1} -- xdg-settings set default-web-browser firefox-bin.desktop
+#runuser -u ${1} -- xdg-settings set default-web-browser firefox-bin.desktop
+sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc
 
