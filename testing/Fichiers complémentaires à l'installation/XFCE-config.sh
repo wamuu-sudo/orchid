@@ -35,3 +35,4 @@ sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc
 mkdir -p /home/${1}/.config/xfce4/
 touch /home/${1}/.config/xfce4/helpers.rc
 echo "WebBrowser=firefox-bin" >> /home/${1}/.config/xfce4/helpers.rc
+chown -R ${1}:${1} /home/${1}/.config
