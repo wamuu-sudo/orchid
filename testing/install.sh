@@ -408,8 +408,8 @@ select_GPU_drivers_to_install()
     CHOICES[0]="${COLOR_GREEN}+${COLOR_RESET}"
     CHOICES[1]="${COLOR_GREEN}+${COLOR_RESET}"
   elif [[ $GPU_TYPE =~ "VMware" || $GPU_TYPE =~ "QXL" ]]; then          # If virtualisation
+    CHOICES[6]="${COLOR_GREEN}+${COLOR_RESET}"
     CHOICES[7]="${COLOR_GREEN}+${COLOR_RESET}"
-    CHOICES[8]="${COLOR_GREEN}+${COLOR_RESET}"
   fi
 
 	clear_under_menu
