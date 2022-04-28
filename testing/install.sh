@@ -37,6 +37,7 @@ ORCHID_COUNT[0]="https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.co
 COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
 ORCHID_ESYNC_SUPPORT[0]="ask"	# Ask for esync support
 ORCHID_LOGIN[0]="STANDARD"
+ORCHID_NAME[0]="DWM"	# Name to use inside this script for various tests
 
 ORCHID_VERSION[1]="Version DWM Gaming Edition [3.3Go]"
 ORCHID_URL[1]='https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
@@ -44,6 +45,7 @@ ORCHID_COUNT[1]="https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.coun
 COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
 ORCHID_ESYNC_SUPPORT[1]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[1]="STANDARD"
+ORCHID_NAME[1]="DWM-GE"
 
 ORCHID_VERSION[2]="Version Gnome [2.4Go]"
 ORCHID_URL[2]='https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2'       # Gnome
@@ -51,6 +53,7 @@ ORCHID_COUNT[2]="https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.coun
 COUNTED_BY_TREE[2]=424438                                                               # Number of files in Gnome stage
 ORCHID_ESYNC_SUPPORT[2]="ask"	# Ask for esync support
 ORCHID_LOGIN[2]="STANDARD"
+ORCHID_NAME[2]="GNOME"
 
 ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.5Go]"
 ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
@@ -58,6 +61,7 @@ ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.cou
 #COUNTED_BY_TREE[3]=
 ORCHID_ESYNC_SUPPORT[3]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[3]="STANDARD"
+ORCHID_NAME[3]="XFCE-GE"
 
 ORCHID_VERSION[4]="Version KDE Plasma [3.3Go]"
 ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
@@ -65,6 +69,7 @@ ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2
 COUNTED_BY_TREE[4]=744068                                                               # Number of files in KDE stage
 ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
+ORCHID_NAME[4]="KDE"
 
 ORCHID_VERSION[5]="Version Gnome Gaming Edition [9.0Go]"
 ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
@@ -72,6 +77,7 @@ ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedi
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
 ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[5]="STANDARD"
+ORCHID_NAME[5]="GNOME-GE"
 
 ORCHID_VERSION[6]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
 ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
@@ -79,6 +85,7 @@ ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-s
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
 ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[6]="STANDARD"
+ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
 ORCHID_URL[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
@@ -86,6 +93,7 @@ ORCHID_COUNT[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.c
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
+ORCHID_NAME[7]="BASE-X11"
 
 #-----------------------------------------------------------------------------------
 
@@ -919,21 +927,21 @@ fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
-if [[ "$no_archive" == "0" ]]; then
+if [[ "${ORCHID_NAME[$no_archive]}" == "DWM" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "1" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "DWM-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "2" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "3" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "4" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "5" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "6" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "$no_archive" == "7" ]]; then
+elif [[ "${ORCHID_NAME[$no_archive]}" == "BASE-X11" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 fi
 
@@ -967,7 +975,7 @@ mount --bind /run /mnt/orchid/run
 wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
-chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
+chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh
 
 
 # Lancement des scripts en fonction du système
@@ -977,14 +985,21 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
-if [ "$no_archive" = "0" -o "$no_archive" = "1" ]; then
+if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then
 	chroot /mnt/orchid ./DWM-config.sh ${USERNAME}
 fi
 
 # Configuration clavier pour GNOME
-if [ "$no_archive" = "2" -o "$no_archive" = "5" ]; then
+if [ "${ORCHID_NAME[$no_archive]}" = "GNOME" -o "${ORCHID_NAME[$no_archive]}" = "GNOME-GE" ]; then
 	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME}
 fi
+
+# Configuration pour Xfce (Firefox-bin as default Web Browser)
+if [ "${ORCHID_NAME[$no_archive]}" = "XFCE-GE" ]; then
+	chroot /mnt/orchid ./XFCE-config.sh ${USERNAME}
+fi
+
+
 #-----------------------------------------------------------------------------------
                                                                  # Montage et chroot
 #===================================================================================
@@ -992,12 +1007,12 @@ fi
 # Fin de l'installation
 #===================================================================================
 
-# Nétoyage
+# Nettoyage
 #-----------------------------------------------------------------------------------
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
-rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh
-rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png
+rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh && rm -f /mnt/orchid/XFCE-config.sh
+rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png && rm -f /mnt/orchid/xfce4-desktop.xml
 cd /
 
 umount -R /mnt/orchid
