@@ -25,22 +25,13 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de Xfce."
 # Set background image for Lightdm-gtk-greeter
 cp -f /usr/share/orchid/wallpapers/orchid_nw_01.jpg /usr/share/lightdm/backgrounds/
 sed -i 's/gentoo-bg_65.jpg/orchid_nw_01.jpg/g' /etc/lightdm/lightdm-gtk-greeter.conf
-# Add wallpapers to Xfce
+# Add wallpapers to Xfce. Simply put them in this folder.
 cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/xfce/
 # Set default wallpaper for any new user
-cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/
+cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/ # This is a seed for Xfce in which it will pull our default wallpaper
 # Set Firefox-bin as the default web Browser for the user
-#runuser -u ${1} -- xdg-settings set default-web-browser firefox-bin.desktop
-sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc
-#mkdir -p /home/${1}/.config/xfce4/
-#touch /home/${1}/.config/xfce4/helpers.rc
-#echo "WebBrowser=firefox-bin" >> /home/${1}/.config/xfce4/helpers.rc
-#chown -R ${1}:${1} /home/${1}/.config
-#mkdir -p /etc/skel/.config/xfce4/
-#cat > /etc/skel/.config/xfce4/helpers.rc<< EOF
-#WebBrowser=firefox-bin
-#EOF
-cp /usr/share/xfce4/helpers/firefox.desktop /usr/share/xfce4/helpers/firefox-bin.desktop
-sed -i 's/Icon=firefox/Icon=firefox-bin/g' /usr/share/xfce4/helpers/firefox-bin.desktop
-sed -i 's/Name=Mozilla Firefox/Name=Mozilla Firefox (bin)/g' /usr/share/xfce4/helpers/firefox-bin.desktop
-sed -i 's/X-XFCE-Binaries=firefox;firefox-gtk2;firefox-gtk;mozilla-firefox;/X-XFCE-Binaries=firefox-bin;/g' /usr/share/xfce4/helpers/firefox-bin.desktop
+sed -i 's/firefox/firefox-bin/g' /etc/xdg/xfce4/helpers.rc # This is where Xfce gets its directives
+cp /usr/share/xfce4/helpers/firefox.desktop /usr/share/xfce4/helpers/firefox-bin.desktop # XFCE need its own .desktop in a custom format
+sed -i 's/Icon=firefox/Icon=firefox-bin/g' /usr/share/xfce4/helpers/firefox-bin.desktop # The right icon
+sed -i '/^Name/ s/$/ (bin)/g' /usr/share/xfce4/helpers/firefox-bin.desktop # Add (bin) to all langages
+sed -i 's/X-XFCE-Binaries=firefox;firefox-gtk2;firefox-gtk;mozilla-firefox;/X-XFCE-Binaries=firefox-bin;/g' /usr/share/xfce4/helpers/firefox-bin.desktop # Get the right command to start Firefox
