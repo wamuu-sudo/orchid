@@ -113,7 +113,24 @@ cp -rf Script_files/* ~/Desktop/
 
 # Setup functions
 #===================================================================================
+installation ()
+{
+    echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+            if [ "${#packages[*]}" -ge 1 ]; then
+                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
+               fi
+                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
+                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
+                       for nom_de_paquet in "${!packages_flathub[@]}"; do
+                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+                       done
 
+                    fi
+                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && ${FUNCNAME[1]}
+             fi
+
+}
 #=== browser ======================================================================#
 # DESCRIPTION : Permet la sélection et l'installation D'un ou plusieurs navigateurs
 #               Web.
@@ -144,21 +161,7 @@ echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off
         "6")  packages+=([Mozilla Firefox]=www-client/firefox-bin)  && browser ;;
         "7")  packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && browser ;;
         "8") packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && browser ;;
-        "9")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-              if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && browser
-             fi
-                   ;;
+        "9")  installation ;;
         "10") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && browser ;;
@@ -206,22 +209,7 @@ multimedia ()
         "10") packages+=([Blender]=media-gfx/blender) && multimedia ;;
         "11") packages+=([Spotify]=media-sound/spotify) && multimedia ;;
         "12") packages+=([KdenLive]=kde-apps/kdenlive) && multimedia ;;
-        "13")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-               if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && multimedia
-             fi
-                   ;;
-
+        "13") installation ;;
         "14") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && multimedia ;;
@@ -271,22 +259,7 @@ utility ()
         "8") packages+=([PCMANFM]=x11-misc/pcmanfm) && utility ;;
         "9") packages+=([Thunar]=xfce-base/thunar) && utility ;;
         "10") packages+=([Nautilus]=gnome-base/nautilus) && utility ;;
-        "11") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-              if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && utility
-             fi
-                   ;;
-
+        "11") installation ;;
         "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && utility ;;
@@ -320,22 +293,7 @@ office ()
         "2") packages+=([Lyx]app-office/lyx) && office ;;
         "3") packages+=([Scribus]app-office/scribus) && office ;;
         "4") packages+=([Calligra]=app-office/calligra) && office ;;
-        "5")  echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-              if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && office
-             fi
-                   ;;
-
+        "5") installation ;;
         "6") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && office ;;
@@ -385,22 +343,7 @@ text_editors ()
         "8") packages+=([Bluefish]=app-editors/bluefish) && text_editors ;;
         "9") packages+=([Geany]=dev-util/geany) && text_editors ;;
         "10") packages+=([Vscodium]=app-editors/vscodium) && text_editors ;;
-        "11") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-              if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && text_editors
-             fi
-                   ;;
-
+        "11") installation ;;
         "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && text_editors ;;
@@ -454,21 +397,7 @@ system ()
         "11") packages+=([Baobab]=sys-apps/baobab) && system ;;
         "12") packages+=([Gparted]=sys-block/gparted) && system ;;
         "13") packages+=([OpenRGB]="app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
-        "14") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-            if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && system
-             fi
-                   ;;
+        "14") installation ;;
 
         "15") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
@@ -498,7 +427,7 @@ com ()
     echo -e ""
      echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
-    read -r -p "[Saisissez votre choix]: "  choix
+    read -r -p "[Saisissezvotre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
         "1") packages+=([Discord]=net-im/discord-bin) && com ;;
@@ -508,22 +437,7 @@ com ()
         "5") packages+=([Deluge]=net-p2p/deluge) && com ;;
         "6") packages+=([Qbittorrent]=net-p2p/qbittorrent) && com ;;
         "7") packages+=([Transmission]=net-p2p/transmission) && com ;;
-        "8") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-             if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                                              for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && com
-             fi
-                   ;;
-
+        "8") installation ;;
         "9") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && com ;;
@@ -639,22 +553,7 @@ games ()
         "39") packages+=([Warzone-2100]="games-strategy/warzone2100") && games ;;
         "40") packages+=([Wesnoth]="games-strategy/wesnoth") && games ;;
         "41") packages_flathub+=([athenaeum-flatpak]=com.gitlab.librebob.Athenaeum) && games ;;
-        "42") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-            if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                       for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && games
-             fi
-                   ;;
-
+        "42") installation ;;
         "43") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "Veuillez choisir une option valide :D!!" && games ;;
@@ -697,21 +596,7 @@ main_menu()
         "6") system ;;
         "7") com ;;
         "8") games ;;
-        "9") echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-             if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                       for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && main_menu
-             fi
-                   ;;
-
+        "9") installation ;;
         "10") exit 1 ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
         *) echo -e "${On_Red}Veuillez choisir une option valide :D!!${Color_Off}" && main_menu ;;
