@@ -141,9 +141,11 @@ git -C /usr/share/orchid/desktop/dwm/dwm-st-slstatus pull -q
 git -C /usr/share/orchid/wallpapers pull -q
 git -C /usr/share/orchid/orchid-bins pull -q 
 cp /usr/share/orchid/orchid-bins/bins/* /usr/bin/
+# Update eix cache
+#eix-update -q
+eix-sync -q
 if [ "$UPDATE_ORCHID" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-  eix-sync -q
   emerge -qvuDNU @world
   flatpak update --assumeyes --noninteractive 
   grub-mkconfig -o /boot/grub/grub.cfg
