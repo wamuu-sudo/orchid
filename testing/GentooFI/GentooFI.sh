@@ -131,6 +131,10 @@ installation ()
              fi
 
 }
+packets_list ()
+{
+    echo -e "Votre panier ($((${#packages[@]} + ${#packages_flathub[@]}))) : ${!packages[*]} ${!packages_flathub[*]}"
+}
 #=== browser ======================================================================#
 # DESCRIPTION : Permet la sélection et l'installation D'un ou plusieurs navigateurs
 #               Web.
@@ -138,29 +142,30 @@ installation ()
 browser ()
 {
 echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off}"
-    echo -e "${BRed}1. Chrome"
-    echo -e "2. Blue Chrome (chromium)"
-    echo -e "3. Orange Chrome (brave)"
-    echo -e "4. Red Chrome (vivaldi)"
-    echo -e "5. Microsoft Chrome (edge)"
-    echo -e "6. Firefox .__."
-    echo -e "7. Firefox mais blue (librewolf)"
-    echo -e "8. Un Onion (tor browser)${Color_Off}"
+echo -e "${Red}"
+[[ -v packages[Google-Chrome] ]] && echo -n "[+] " || echo -n "[] " && echo -e "1. Chrome"
+[[ -v packages[Google-Chromium] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "2. Blue Chrome (chromium)"
+[[ -v packages_flathub[brave-flatpak] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "3. Orange Chrome (brave)"
+[[ -v packages[Vivaldi] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "4. Red Chrome (vivaldi)"
+[[ -v packages["MS Edge"] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "5. Microsoft Chrome (edge)"
+[[ -v packages["Mozilla Firefox"] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "6. Firefox .__."
+[[ -v packages_flathub[librewolf-flatpak] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "7. Firefox mais blue (librewolf)"
+[[ -v packages[tor-flatpak] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "8. Un Onion (tor browser)${Color_Off}"
     echo -e "9. Appliquer"
     echo -e "10. Revenir en Arriére"
     echo -e ""
-    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  packages+=([Google-Chrome]=www-client/google-chrome)  && browser ;;
-        "2")  packages+=([Google-Chromium]=www-client/chromium)  && browser ;;
-        "3")  packages_flathub+=([brave-flatpak]=com.brave.Browser)  && browser ;;
-        "4")  packages+=([Vivaldi]=www-client/vivaldi)  && browser ;;
-        "5")  packages+=([MS Edge]=www-client/microsoft-edge)  && browser ;;
-        "6")  packages+=([Mozilla Firefox]=www-client/firefox-bin)  && browser ;;
-        "7")  packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && browser ;;
-        "8") packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && browser ;;
+        "1")  [[ -v packages[Google-Chrome] ]] && unset packages[Google-Chrome] || packages+=([Google-Chrome]=www-client/google-chrome)  && browser ;;
+        "2")  [[ -v packages[Google-Chromium] ]] && unset packages[Google-Chromium] || packages+=([Google-Chromium]=www-client/chromium)  && browser ;;
+        "3")  [[ -v packages_flathub[brave-flatpak] ]] && unset packages_flathub[brave-flatpak] || packages_flathub+=([brave-flatpak]=com.brave.Browser)  && browser ;;
+        "4")  [[ -v packages[Vivaldi] ]] && unset packages[Vivaldi] || packages+=([Vivaldi]=www-client/vivaldi)  && browser ;;
+        "5")  [[ -v packages["MS Edge"] ]] && unset packages["MS Edge"] || packages+=([MS Edge]=www-client/microsoft-edge)  && browser ;;
+        "6")  [[ -v packages["Mozilla Firefox"] ]] && unset packages["Mozilla Firefox"] || packages+=([Mozilla Firefox]=www-client/firefox-bin)  && browser ;;
+        "7")  [[ -v packages_flathub[librewolf_flatpak] ]] && unset packages_flathub[librewolf-flatpak] || packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && browser ;;
+        "8")  [[ -v packages_flathub[tor-flatpak] ]] && unset packages_flathub[tor-flatpak] || packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && browser ;;
         "9")  installation ;;
         "10") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
@@ -178,37 +183,37 @@ multimedia ()
 {
     # Affiche les choix possibles
     echo -e "Choisissez l'outil que vous voulez installer:"
-    echo -e "1. OBS Studio"
-    echo -e "2. MPD"
-    echo -e "3. Feh"
-    echo -e "4. GIMP"
-    echo -e "5. Krita"
-    echo -e "6. MPV"
-    echo -e "7. Celluloid(MPV GTK GUI)"
-    echo -e "8. youtube-dl(CLI)"
-    echo -e "9. VLC"
-    echo -e "10. Blender"
-    echo -e "11. Spotify"
-    echo -e "12. Kdenlive"
+ [[ -v packages[OBS-Studio] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "1. OBS Studio"
+ [[ -v packages[MPD] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "2. MPD"
+ [[ -v packages[Feh] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "3. Feh"
+ [[ -v packages[GIMP] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "4. GIMP"
+ [[ -v packages[Krita] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "5. Krita"
+ [[ -v packages[MPV] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "6. MPV"
+ [[ -v packages[Celluloid] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "7. Celluloid(MPV GTK GUI)"
+ [[ -v packages[Youtube-dl] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "8. youtube-dl(CLI)"
+ [[ -v packages[VLC] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "9. VLC"
+ [[ -v packages[Blender] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "10. Blender"
+ [[ -v packages[Spotify] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "11. Spotify"
+ [[ -v packages[Kdenlive] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "12. Kdenlive"
     echo -e "${On_Red}13. Appliquer"
     echo -e "14. Retourner en arrière${Color_Off}"
     echo -e ""
-     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([OBS-Studio]=media-video/obs-studio) && multimedia ;;
-        "2") packages+=([MPD]=media-sound/mpd) && multimedia ;;
-        "3") packages+=([Feh]=media-gfx/feh) && multimedia ;;
-        "4") packages+=([GIMP]=media-gfx/gimp) && multimedia ;;
-        "5") packages+=([Krita]=media-gfx/krita) && multimedia ;;
-        "6") packages+=([MPV]=media-video/mpv) && multimedia ;;
-        "7") packages+=([Celluloid]=media-video/celluloid) && multimedia ;;
-        "8") packages+=([Youtube-dl]=net-misc/youtube-dl) && multimedia ;;
-        "9") packages+=([VLC]=media-video/vlc) && multimedia ;;
-        "10") packages+=([Blender]=media-gfx/blender) && multimedia ;;
-        "11") packages+=([Spotify]=media-sound/spotify) && multimedia ;;
-        "12") packages+=([KdenLive]=kde-apps/kdenlive) && multimedia ;;
+        "1")  [[ -v packages[OBS-Studio] ]] && unset packages[OBS-Studio] || packages+=([OBS-Studio]=media-video/obs-studio) && multimedia ;;
+        "2")  [[ -v packages[MPD] ]] && unset packages[MPD] || packages+=([MPD]=media-sound/mpd) && multimedia ;;
+        "3")  [[ -v packages[Feh] ]] && unset packages[Feh] ||  packages+=([Feh]=media-gfx/feh) && multimedia ;;
+        "4")  [[ -v packages[GIMP] ]] && unset packages[GIMP] || packages+=([GIMP]=media-gfx/gimp) && multimedia ;;
+        "5")  [[ -v packages[Krita] ]] && unset packages[Krita] || packages+=([Krita]=media-gfx/krita) && multimedia ;;
+        "6")  [[ -v packages[MPV] ]] && unset packages[MPV] || packages+=([MPV]=media-video/mpv) && multimedia ;;
+        "7")  [[ -v packages[Celluloid] ]] && unset packages[Celluloid] || packages+=([Celluloid]=media-video/celluloid) && multimedia ;;
+        "8")  [[ -v packages[Youtube-dl] ]] && unset packages[Youtube-dl] || packages+=([Youtube-dl]=net-misc/youtube-dl) && multimedia ;;
+        "9")  [[ -v packages[VLC] ]] && unset packages[VLC] || packages+=([VLC]=media-video/vlc) && multimedia ;;
+        "10")  [[ -v packages[Blender] ]] && unset packages[Blender] || packages+=([Blender]=media-gfx/blender) && multimedia ;;
+        "11")  [[ -v packages[Spotify] ]] && unset packages[Spotify] || packages+=([Spotify]=media-sound/spotify) && multimedia ;;
+        "12")  [[ -v packages[Kdenlive] ]] && unset packages[Kdenlive] || packages+=([KdenLive]=kde-apps/kdenlive) && multimedia ;;
         "13") installation ;;
         "14") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
@@ -229,36 +234,36 @@ utility ()
     # Affiche les choix possibles
     echo -e "${On_Cyan}Choisissez l'outil que vous voulez installer:${Color_Off}"
     echo -e "${BCyan}===Document Readers:==="
-    echo -e "1. Calibre"
-    echo -e "2. Zathura"
+  [[ -v packages[Calibre] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "1. Calibre"
+  [[ -v packages[Zathura] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "2. Zathura"
     echo -e "===Archive management:==="
-    echo -e "3. Ark"
-    echo -e "4. File-roller"
-    echo -e "5. LXQT Archiver"
-    echo -e "6. Xarchiver"
+  [[ -v packages[Ark] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "3. Ark"
+  [[ -v packages[File-Roller] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "4. File-roller"
+  [[ -v packages[LXQT-archiver] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "5. LXQT Archiver"
+  [[ -v packages[XArchiver] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "6. Xarchiver"
     echo -e "===File management:==="
-    echo -e "7. Dolphin"
-    echo -e "8. PCMANFM"
-    echo -e "9. Thunar"
-    echo -e "10. Nautilus${Color_Off}"
+  [[ -v packages[Dolphin] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "7. Dolphin"
+  [[ -v packages[PCMANFM] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "8. PCMANFM"
+  [[ -v packages[Thunar] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "9. Thunar"
+  [[ -v packages[Nautilus] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "10. Nautilus${Color_Off}"
     echo -e "${On_Cyan}11. Appliquer"
     echo -e "12. Retourner en arrière${Color_Off}"
     echo -e ""
-    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
 
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([Calibre]=app-text/calibre) && utility ;;
-        "2") packages+=([Zathura]="app-text/zathura app-text/zathura-meta") && utility ;;
-        "3") packages+=([Ark]=kde-apps/ark) && utility ;;
-        "4") packages+=([File-Roller]=app-arch/file-roller) && utility ;;
-        "5") packages+=([LXQT-archiver]app-arch/lxqt-archiver) && utility ;;
-        "6") packages+=([XArchiver]=app-arch/xarchiver) && utility ;;
-        "7") packages+=([Dolphin]=kde-apps/dolphin) && utility ;;
-        "8") packages+=([PCMANFM]=x11-misc/pcmanfm) && utility ;;
-        "9") packages+=([Thunar]=xfce-base/thunar) && utility ;;
-        "10") packages+=([Nautilus]=gnome-base/nautilus) && utility ;;
+        "1")  [[ -v packages[Calibre] ]] && unset packages[Calibre] || packages+=([Calibre]=app-text/calibre) && utility ;;
+        "2") [[ -v packages[Zathura] ]] && unset packages[Zathura] ||  packages+=([Zathura]="app-text/zathura app-text/zathura-meta") && utility ;;
+        "3")  [[ -v packages[Ark] ]] && unset packages[Ark] || packages+=([Ark]=kde-apps/ark) && utility ;;
+        "4")  [[ -v packages[File-Roller] ]] && unset packages[File-Roller] || packages+=([File-Roller]=app-arch/file-roller) && utility ;;
+        "5") [[ -v packages[LXQT-archiver] ]] && unset packages[LXQT-archiver] ||  packages+=([LXQT-archiver]app-arch/lxqt-archiver) && utility ;;
+        "6") [[ -v packages[XArchiver] ]] && unset packages[XArchiver] ||  packages+=([XArchiver]=app-arch/xarchiver) && utility ;;
+        "7")  [[ -v packages[Dolphin] ]] && unset packages[Dolphin] || packages+=([Dolphin]=kde-apps/dolphin) && utility ;;
+        "8")  [[ -v packages[PCMANFM] ]] && unset packages[PCMANFM] || packages+=([PCMANFM]=x11-misc/pcmanfm) && utility ;;
+        "9") [[ -v packages[Thunar] ]] && unset packages[Thunar] ||  packages+=([Thunar]=xfce-base/thunar) && utility ;;
+        "10")  [[ -v packages[Nautilus] ]] && unset packages[Nautilus] || packages+=([Nautilus]=gnome-base/nautilus) && utility ;;
         "11") installation ;;
         "12") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
@@ -284,8 +289,7 @@ office ()
     echo -e "${On_Purple}5. Appliquer"
     echo -e "6. Retourner en arrière${Color_Off}"
     echo -e ""
-    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
-
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
@@ -328,8 +332,7 @@ text_editors ()
     echo -e "12. Retourner en arrière"
     echo -e "${On_Red}NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)${Color_Off}"
     echo -e ""
-     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
-
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
@@ -379,8 +382,7 @@ system ()
     echo -e "${On_Yellow}14. Appliquer"
     echo -e "15. Retourner en arrière${Color_Off}"
     echo -e ""
- echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
-
+    packets_list
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
@@ -425,8 +427,7 @@ com ()
     echo -e "8. Appliquer"
     echo -e "9. Retourner en arrière"
     echo -e ""
-     echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
-
+    packets_list
     read -r -p "[Saisissezvotre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
@@ -507,7 +508,7 @@ games ()
     echo -e "43. Retourner en arrière"
     echo -e ""
     echo -e "Pour plus d'options hésitez pas a check https://github.com/Chevek/Gaming-Flatpak"
-    echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
+    packets_list
 
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
@@ -522,7 +523,7 @@ games ()
         "8") packages+=([Supertux]="games-arcade/supertux") && games ;;
         "9") packages+=([TecnoBallz]"games-arcade/tecnoballz") && games ;;
         "10") packages+=([DesmuME]="games-emulation/desmume") && games ;;
-        "11") packages+=([Dolphin]="games-emulation/dolphin") && games ;;
+        "11") packages+=([Dolphin-Emu]="games-emulation/dolphin") && games ;;
         "12") packages+=([DosBox]="games-emulation/dosbox") && games ;;
         "13") packages+=([Higan]="games-emulation/higan") && games ;;
         "14") packages+=([Mednafen]="games-emulation/mednafen") && games ;;
@@ -563,6 +564,7 @@ games ()
 }
 
 #=== games ==========================================================================#
+
 #=== main_menu ==================================
 # DESCRIPTION : Affiche le menu sélectif trié par famille, pour installer des
 #               applications.
@@ -583,8 +585,7 @@ main_menu()
     echo -e "9. Appliquer tout"
     echo -e "${BRed}10. Quitter${Color_Off}"
     echo -e ""
-  echo -e "Packets selectionnés : ${!packages[*]} ${!packages_flathub[*]}"
-
+    packets_list
    read -r -p "[Saisissez votre choix]: "  choix
     clear
     case "$choix" in
