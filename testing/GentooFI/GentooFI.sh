@@ -282,10 +282,11 @@ office ()
 {
     # Affiche les choix possibles
     echo -e "${On_Purple}Choisissez l'outil que vous voulez installer:${Color_Off}"
-    echo -e "${BPurple}1. LibreOffice"
-    echo -e "2. Lyx"
-    echo -e "3. Scribus"
-    echo -e "4. Calligra${Color_Off}"
+    echo -e "${BPurple}"
+   [[ -v packages[LibreOffice] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "1. LibreOffice"
+   [[ -v packages[Lyx] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "2. Lyx"
+   [[ -v packages[Scribus] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "3. Scribus"
+   [[ -v packages[Calligra] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "4. Calligra${Color_Off}"
     echo -e "${On_Purple}5. Appliquer"
     echo -e "6. Retourner en arrière${Color_Off}"
     echo -e ""
@@ -293,10 +294,10 @@ office ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([LibreOffice]=app-office/libreoffice-bin) && office ;;
-        "2") packages+=([Lyx]app-office/lyx) && office ;;
-        "3") packages+=([Scribus]app-office/scribus) && office ;;
-        "4") packages+=([Calligra]=app-office/calligra) && office ;;
+        "1")  [[ -v packages[LibreOffice] ]] && unset packages[LibreOffice] || packages+=([LibreOffice]=app-office/libreoffice-bin) && office ;;
+        "2")  [[ -v packages[Lyx] ]] && unset packages[Lyx] || packages+=([Lyx]app-office/lyx) && office ;;
+        "3")  [[ -v packages[Scribus] ]] && unset packages[Scribus] || packages+=([Scribus]app-office/scribus) && office ;;
+        "4")  [[ -v packages[Calligra] ]] && unset packages[Calligra] || packages+=([Calligra]=app-office/calligra) && office ;;
         "5") installation ;;
         "6") main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
@@ -312,8 +313,7 @@ office ()
 # DESCRIPTION : Permet l'installation d'éditeurs de texte.
 
 text_editors ()
-{
-    # Affiche les choix possibles
+{    # Affiche les choix possibles
     echo -e "Choisissez l'outil que vous voulez installer:"
     echo -e "===CLI:==="
     echo -e "1. Neovim"
