@@ -116,20 +116,20 @@ cp -rf Script_files/* ~/Desktop/
 installation ()
 {
     echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
-            if [ "${#packages[*]}" -ge 1 ]; then
-                  echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
-               fi
-                   if [ "${#packages_flathub[*]}" -ge 1 ]; then
-                       echo "$MDP" | sudo flathub install ${packages_flathub[*]}
-                       for nom_de_paquet in "${!packages_flathub[@]}"; do
-                           echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
-                       done
-
-                    fi
-                   if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-                       echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && ${FUNCNAME[1]}
-             fi
-
+    if [ "${#packages[*]}" -ge 1 ]; then
+        echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
+    fi
+    
+    if [ "${#packages_flathub[*]}" -ge 1 ]; then
+        echo "$MDP" | sudo flatpak install --assumeyes --noninteractive flathub install ${packages_flathub[*]}
+        for nom_de_paquet in "${!packages_flathub[@]}"; do
+            echo "$MDP" | sudo ln -s /var/lib/flatpak/exports/bin/${packages_flathub[$nom_de_paquet]} /usr/bin/$nom_de_paquet
+        done
+    fi
+    
+    if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
+        echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && ${FUNCNAME[1]}
+    fi
 }
 #=== browser ======================================================================#
 # DESCRIPTION : Permet la sélection et l'installation D'un ou plusieurs navigateurs
