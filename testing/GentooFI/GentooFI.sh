@@ -158,18 +158,18 @@ echo -e "${Red}"
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  [[ -v packages[Google-Chrome] ]] && unset packages[Google-Chrome] || packages+=([Google-Chrome]=www-client/google-chrome)  && browser ;;
-        "2")  [[ -v packages[Google-Chromium] ]] && unset packages[Google-Chromium] || packages+=([Google-Chromium]=www-client/chromium)  && browser ;;
-        "3")  [[ -v packages_flathub[brave-flatpak] ]] && unset packages_flathub[brave-flatpak] || packages_flathub+=([brave-flatpak]=com.brave.Browser)  && browser ;;
-        "4")  [[ -v packages[Vivaldi] ]] && unset packages[Vivaldi] || packages+=([Vivaldi]=www-client/vivaldi)  && browser ;;
-        "5")  [[ -v packages["MS Edge"] ]] && unset packages["MS Edge"] || packages+=([MS Edge]=www-client/microsoft-edge)  && browser ;;
-        "6")  [[ -v packages["Mozilla Firefox"] ]] && unset packages["Mozilla Firefox"] || packages+=([Mozilla Firefox]=www-client/firefox-bin)  && browser ;;
-        "7")  [[ -v packages_flathub[librewolf_flatpak] ]] && unset packages_flathub[librewolf-flatpak] || packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && browser ;;
-        "8")  [[ -v packages_flathub[tor-flatpak] ]] && unset packages_flathub[tor-flatpak] || packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && browser ;;
+        "1")  [[ -v packages[Google-Chrome] ]] && unset packages[Google-Chrome] || packages+=([Google-Chrome]=www-client/google-chrome)  && clear && browser ;;
+        "2")  [[ -v packages[Google-Chromium] ]] && unset packages[Google-Chromium] || packages+=([Google-Chromium]=www-client/chromium)  && clear && browser ;;
+        "3")  [[ -v packages_flathub[brave-flatpak] ]] && unset packages_flathub[brave-flatpak] || packages_flathub+=([brave-flatpak]=com.brave.Browser)  && clear && browser ;;
+        "4")  [[ -v packages[Vivaldi] ]] && unset packages[Vivaldi] || packages+=([Vivaldi]=www-client/vivaldi)  && clear && browser ;;
+        "5")  [[ -v packages["MS Edge"] ]] && unset packages["MS Edge"] || packages+=([MS Edge]=www-client/microsoft-edge)  && clear && browser ;;
+        "6")  [[ -v packages["Mozilla Firefox"] ]] && unset packages["Mozilla Firefox"] || packages+=([Mozilla Firefox]=www-client/firefox-bin)  && clear && browser ;;
+        "7")  [[ -v packages_flathub[librewolf_flatpak] ]] && unset packages_flathub[librewolf-flatpak] || packages_flathub+=([librewolf-flatpak]=io.gitlab.librewolf-community) && clear && browser ;;
+        "8")  [[ -v packages_flathub[tor-flatpak] ]] && unset packages_flathub[tor-flatpak] || packages_flathub+=([tor-flatpak]=com.github.micahflee.torbrowser-launcher) && clear && browser ;;
         "9")  installation ;;
-        "10") main_menu ;;
+        "10") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && browser ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && browser ;;
     esac
     clear
 }
@@ -202,22 +202,22 @@ multimedia ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  [[ -v packages[OBS-Studio] ]] && unset packages[OBS-Studio] || packages+=([OBS-Studio]=media-video/obs-studio) && multimedia ;;
-        "2")  [[ -v packages[MPD] ]] && unset packages[MPD] || packages+=([MPD]=media-sound/mpd) && multimedia ;;
-        "3")  [[ -v packages[Feh] ]] && unset packages[Feh] ||  packages+=([Feh]=media-gfx/feh) && multimedia ;;
-        "4")  [[ -v packages[GIMP] ]] && unset packages[GIMP] || packages+=([GIMP]=media-gfx/gimp) && multimedia ;;
-        "5")  [[ -v packages[Krita] ]] && unset packages[Krita] || packages+=([Krita]=media-gfx/krita) && multimedia ;;
-        "6")  [[ -v packages[MPV] ]] && unset packages[MPV] || packages+=([MPV]=media-video/mpv) && multimedia ;;
-        "7")  [[ -v packages[Celluloid] ]] && unset packages[Celluloid] || packages+=([Celluloid]=media-video/celluloid) && multimedia ;;
-        "8")  [[ -v packages[Youtube-dl] ]] && unset packages[Youtube-dl] || packages+=([Youtube-dl]=net-misc/youtube-dl) && multimedia ;;
-        "9")  [[ -v packages[VLC] ]] && unset packages[VLC] || packages+=([VLC]=media-video/vlc) && multimedia ;;
-        "10")  [[ -v packages[Blender] ]] && unset packages[Blender] || packages+=([Blender]=media-gfx/blender) && multimedia ;;
-        "11")  [[ -v packages[Spotify] ]] && unset packages[Spotify] || packages+=([Spotify]=media-sound/spotify) && multimedia ;;
-        "12")  [[ -v packages[Kdenlive] ]] && unset packages[Kdenlive] || packages+=([KdenLive]=kde-apps/kdenlive) && multimedia ;;
+        "1")  [[ -v packages[OBS-Studio] ]] && unset packages[OBS-Studio] || packages+=([OBS-Studio]=media-video/obs-studio) && clear && multimedia ;;
+        "2")  [[ -v packages[MPD] ]] && unset packages[MPD] || packages+=([MPD]=media-sound/mpd) && clear && multimedia ;;
+        "3")  [[ -v packages[Feh] ]] && unset packages[Feh] ||  packages+=([Feh]=media-gfx/feh) && clear && multimedia ;;
+        "4")  [[ -v packages[GIMP] ]] && unset packages[GIMP] || packages+=([GIMP]=media-gfx/gimp) && clear && multimedia ;;
+        "5")  [[ -v packages[Krita] ]] && unset packages[Krita] || packages+=([Krita]=media-gfx/krita) && clear && multimedia ;;
+        "6")  [[ -v packages[MPV] ]] && unset packages[MPV] || packages+=([MPV]=media-video/mpv) && clear && multimedia ;;
+        "7")  [[ -v packages[Celluloid] ]] && unset packages[Celluloid] || packages+=([Celluloid]=media-video/celluloid) && clear && multimedia ;;
+        "8")  [[ -v packages[Youtube-dl] ]] && unset packages[Youtube-dl] || packages+=([Youtube-dl]=net-misc/youtube-dl) && clear && multimedia ;;
+        "9")  [[ -v packages[VLC] ]] && unset packages[VLC] || packages+=([VLC]=media-video/vlc) && clear && multimedia ;;
+        "10")  [[ -v packages[Blender] ]] && unset packages[Blender] || packages+=([Blender]=media-gfx/blender) && clear && multimedia ;;
+        "11")  [[ -v packages[Spotify] ]] && unset packages[Spotify] || packages+=([Spotify]=media-sound/spotify) && clear && multimedia ;;
+        "12")  [[ -v packages[Kdenlive] ]] && unset packages[Kdenlive] || packages+=([KdenLive]=kde-apps/kdenlive) && clear && multimedia ;;
         "13") installation ;;
-        "14") main_menu ;;
+        "14") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && multimedia ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && multimedia ;;
     esac
 
     clear
@@ -254,20 +254,20 @@ utility ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  [[ -v packages[Calibre] ]] && unset packages[Calibre] || packages+=([Calibre]=app-text/calibre) && utility ;;
-        "2") [[ -v packages[Zathura] ]] && unset packages[Zathura] ||  packages+=([Zathura]="app-text/zathura app-text/zathura-meta") && utility ;;
-        "3")  [[ -v packages[Ark] ]] && unset packages[Ark] || packages+=([Ark]=kde-apps/ark) && utility ;;
-        "4")  [[ -v packages[File-Roller] ]] && unset packages[File-Roller] || packages+=([File-Roller]=app-arch/file-roller) && utility ;;
-        "5") [[ -v packages[LXQT-archiver] ]] && unset packages[LXQT-archiver] ||  packages+=([LXQT-archiver]app-arch/lxqt-archiver) && utility ;;
-        "6") [[ -v packages[XArchiver] ]] && unset packages[XArchiver] ||  packages+=([XArchiver]=app-arch/xarchiver) && utility ;;
-        "7")  [[ -v packages[Dolphin] ]] && unset packages[Dolphin] || packages+=([Dolphin]=kde-apps/dolphin) && utility ;;
-        "8")  [[ -v packages[PCMANFM] ]] && unset packages[PCMANFM] || packages+=([PCMANFM]=x11-misc/pcmanfm) && utility ;;
-        "9") [[ -v packages[Thunar] ]] && unset packages[Thunar] ||  packages+=([Thunar]=xfce-base/thunar) && utility ;;
-        "10")  [[ -v packages[Nautilus] ]] && unset packages[Nautilus] || packages+=([Nautilus]=gnome-base/nautilus) && utility ;;
+        "1")  [[ -v packages[Calibre] ]] && unset packages[Calibre] || packages+=([Calibre]=app-text/calibre) && clear && utility ;;
+        "2") [[ -v packages[Zathura] ]] && unset packages[Zathura] ||  packages+=([Zathura]="app-text/zathura app-text/zathura-meta") && clear && utility ;;
+        "3")  [[ -v packages[Ark] ]] && unset packages[Ark] || packages+=([Ark]=kde-apps/ark) && clear && utility ;;
+        "4")  [[ -v packages[File-Roller] ]] && unset packages[File-Roller] || packages+=([File-Roller]=app-arch/file-roller) && clear && utility ;;
+        "5") [[ -v packages[LXQT-archiver] ]] && unset packages[LXQT-archiver] ||  packages+=([LXQT-archiver]app-arch/lxqt-archiver) && clear && utility ;;
+        "6") [[ -v packages[XArchiver] ]] && unset packages[XArchiver] ||  packages+=([XArchiver]=app-arch/xarchiver) && clear && utility ;;
+        "7")  [[ -v packages[Dolphin] ]] && unset packages[Dolphin] || packages+=([Dolphin]=kde-apps/dolphin) && clear && utility ;;
+        "8")  [[ -v packages[PCMANFM] ]] && unset packages[PCMANFM] || packages+=([PCMANFM]=x11-misc/pcmanfm) && clear && utility ;;
+        "9") [[ -v packages[Thunar] ]] && unset packages[Thunar] ||  packages+=([Thunar]=xfce-base/thunar) && clear && utility ;;
+        "10")  [[ -v packages[Nautilus] ]] && unset packages[Nautilus] || packages+=([Nautilus]=gnome-base/nautilus) && clear && utility ;;
         "11") installation ;;
-        "12") main_menu ;;
+        "12") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && utility ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && utility ;;
     esac
 
     clear
@@ -294,14 +294,14 @@ office ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1")  [[ -v packages[LibreOffice] ]] && unset packages[LibreOffice] || packages+=([LibreOffice]=app-office/libreoffice-bin) && office ;;
-        "2")  [[ -v packages[Lyx] ]] && unset packages[Lyx] || packages+=([Lyx]app-office/lyx) && office ;;
-        "3")  [[ -v packages[Scribus] ]] && unset packages[Scribus] || packages+=([Scribus]app-office/scribus) && office ;;
-        "4")  [[ -v packages[Calligra] ]] && unset packages[Calligra] || packages+=([Calligra]=app-office/calligra) && office ;;
+        "1")  [[ -v packages[LibreOffice] ]] && unset packages[LibreOffice] || packages+=([LibreOffice]=app-office/libreoffice-bin) && clear && office ;;
+        "2")  [[ -v packages[Lyx] ]] && unset packages[Lyx] || packages+=([Lyx]app-office/lyx) && clear && office ;;
+        "3")  [[ -v packages[Scribus] ]] && unset packages[Scribus] || packages+=([Scribus]app-office/scribus) && clear && office ;;
+        "4")  [[ -v packages[Calligra] ]] && unset packages[Calligra] || packages+=([Calligra]=app-office/calligra) && clear && office ;;
         "5") installation ;;
-        "6") main_menu ;;
+        "6") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && office ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && office ;;
     esac
 
     clear
@@ -316,18 +316,18 @@ text_editors ()
 {    # Affiche les choix possibles
     echo -e "Choisissez l'outil que vous voulez installer:"
     echo -e "===CLI:==="
-    echo -e "1. Neovim"
-    echo -e "2. Vim"
+  [[ -v packages[NVim] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "1. Neovim"
+  [[ -v packages[Vim] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "2. Vim"
     echo -e "===GUI:==="
-    echo -e "3. GVIM"
-    echo -e "4. Kate"
-    echo -e "5. Gedit"
-    echo -e "6. Emacs"
+  [[ -v packages[GVim] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "3. GVIM"
+  [[ -v packages[Kate] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "4. Kate"
+  [[ -v packages[Gedit] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "5. Gedit"
+  [[ -v packages[Emacs] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "6. Emacs"
     echo -e "===IDEs==="
-    echo -e "7. Vscode"
-    echo -e "8. Bluefish"
-    echo -e "9. Geany"
-    echo -e "10. Vscodium"
+  [[ -v packages[VSCode] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "7. Vscode"
+  [[ -v packages[Bluefish] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "8. Bluefish"
+  [[ -v packages[Geany] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "9. Geany"
+  [[ -v packages[Vscodium] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "10. Vscodium"
     echo -e "11. Appliquer"
     echo -e "12. Retourner en arrière"
     echo -e "${On_Red}NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim(CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)${Color_Off}"
@@ -336,20 +336,20 @@ text_editors ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([NVim]=app-editors/neovim) && text_editors ;;
-        "2") packages+=([Vim]=app-office/vim) && text_editors ;;
-        "3") packages+=([GVim]=app-editors/vim) && text_editors ;;
-        "4") packages+=([Kate]=kde-apps/kate) && text_editors ;;
-        "5") packages+=([Gedit]=app-editors/gedit) && text_editors ;;
-        "6") packages+=([Emacs]=app-editors/emacs) && text_editors ;;
-        "7") packages+=([VSCode]=app-editors/vscode) && text_editors ;;
-        "8") packages+=([Bluefish]=app-editors/bluefish) && text_editors ;;
-        "9") packages+=([Geany]=dev-util/geany) && text_editors ;;
-        "10") packages+=([Vscodium]=app-editors/vscodium) && text_editors ;;
+        "1")  [[ -v packages[NVim] ]] && unset packages[NVim] || packages+=([NVim]=app-editors/neovim) && clear && text_editors ;;
+        "2")  [[ -v packages[Vim] ]] && unset packages[Vim] || packages+=([Vim]=app-office/vim) && clear && text_editors ;;
+        "3")  [[ -v packages[GVim] ]] && unset packages[GVim] || packages+=([GVim]=app-editors/vim) && clear && text_editors ;;
+        "4")  [[ -v packages[Kate] ]] && unset packages[Kate] || packages+=([Kate]=kde-apps/kate) && clear && text_editors ;;
+        "5")  [[ -v packages[Gedit] ]] && unset packages[Gedit] || packages+=([Gedit]=app-editors/gedit) && clear && text_editors ;;
+        "6")  [[ -v packages[Emacs] ]] && unset packages[Emacs] || packages+=([Emacs]=app-editors/emacs) && clear && text_editors ;;
+        "7")  [[ -v packages[VSCode] ]] && unset packages[VSCode] || packages+=([VSCode]=app-editors/vscode) && clear && text_editors ;;
+        "8")  [[ -v packages[Bluefish] ]] && unset packages[Bluefish] || packages+=([Bluefish]=app-editors/bluefish) && clear && text_editors ;;
+        "9")  [[ -v packages[Geany] ]] && unset packages[Geany] || packages+=([Geany]=dev-util/geany) && clear && text_editors ;;
+        "10")  [[ -v packages[Vscodium] ]] && unset packages[Vscodium] || packages+=([Vscodium]=app-editors/vscodium) && clear && text_editors ;;
         "11") installation ;;
-        "12") main_menu ;;
+        "12") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && text_editors ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && text_editors ;;
     esac
 
     clear
@@ -386,24 +386,24 @@ system ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([Alacritty]=x11-terms/alacritty) && system ;;
-        "2") packages+=([Gnome-terminal]=x11-terms/gnome-terminal) && system ;;
-        "3") packages+=([Kitty]=x11-terms/kitty) && system ;;
-        "4") packages+=([Konsole]=kde-apps/konsole) && system ;;
-        "5") packages+=([LXterminal]=lxde-base/lxterminal) && system ;;
-        "6") packages+=([URXVT]=x11-terms/rxvt-unicode) && system ;;
-        "7") packages+=([Terminator]=x11-terms/terminator) && system ;;
-        "8") packages+=([Terminology]=x11-terms/terminology) && system ;;
-        "9") packages+=([XFCE-Term]=x11-terms/xfce4-terminal) && system ;;
-        "10") packages+=([Xterm]=x11-terms/xterm) && system ;;
-        "11") packages+=([Baobab]=sys-apps/baobab) && system ;;
-        "12") packages+=([Gparted]=sys-block/gparted) && system ;;
+        "1") packages+=([Alacritty]=x11-terms/alacritty) && clear && system ;;
+        "2") packages+=([Gnome-terminal]=x11-terms/gnome-terminal) && clear && system ;;
+        "3") packages+=([Kitty]=x11-terms/kitty) && clear && system ;;
+        "4") packages+=([Konsole]=kde-apps/konsole) && clear && system ;;
+        "5") packages+=([LXterminal]=lxde-base/lxterminal) && clear && system ;;
+        "6") packages+=([URXVT]=x11-terms/rxvt-unicode) && clear && system ;;
+        "7") packages+=([Terminator]=x11-terms/terminator) && clear && system ;;
+        "8") packages+=([Terminology]=x11-terms/terminology) && clear && system ;;
+        "9") packages+=([XFCE-Term]=x11-terms/xfce4-terminal) && clear && system ;;
+        "10") packages+=([Xterm]=x11-terms/xterm) && clear && system ;;
+        "11") packages+=([Baobab]=sys-apps/baobab) && clear && system ;;
+        "12") packages+=([Gparted]=sys-block/gparted) && clear && system ;;
         "13") packages+=([OpenRGB]="app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap") ;;
         "14") installation ;;
 
-        "15") main_menu ;;
+        "15") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && system ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && system ;;
     esac
 
     clear
@@ -431,17 +431,17 @@ com ()
     read -r -p "[Saisissezvotre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([Discord]=net-im/discord-bin) && com ;;
-        "2") packages+=([Hexchat]=net-irc/hexchat) && com ;;
-        "3") packages+=([Weechat]=net-irc/weechat) && com ;;
-        "4") packages_flathub+=([Matrix-flatpak]=im.riot.Riot) && com ;;
-        "5") packages+=([Deluge]=net-p2p/deluge) && com ;;
-        "6") packages+=([Qbittorrent]=net-p2p/qbittorrent) && com ;;
-        "7") packages+=([Transmission]=net-p2p/transmission) && com ;;
+        "1") packages+=([Discord]=net-im/discord-bin) && clear && com ;;
+        "2") packages+=([Hexchat]=net-irc/hexchat) && clear && com ;;
+        "3") packages+=([Weechat]=net-irc/weechat) && clear && com ;;
+        "4") packages_flathub+=([Matrix-flatpak]=im.riot.Riot) && clear && com ;;
+        "5") packages+=([Deluge]=net-p2p/deluge) && clear && com ;;
+        "6") packages+=([Qbittorrent]=net-p2p/qbittorrent) && clear && com ;;
+        "7") packages+=([Transmission]=net-p2p/transmission) && clear && com ;;
         "8") installation ;;
-        "9") main_menu ;;
+        "9") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && com ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && com ;;
     esac
 
     clear
@@ -513,51 +513,51 @@ games ()
     read -r -p "[Saisissez votre choix]: "  choix
     # Exécution de la commande appropriée.
     case "$choix" in
-        "1") packages+=([Chromium-BSU]="games-action/chromium-bsu") && games ;;
-        "2") packages+=([Minetest]="games-action/minetest") && games ;;
-        "3") packages+=([Supertuxkart]="games-action/supertuxkart") && games ;;
-        "4") packages+=([Forzen-bubble]="games-arcade/frozen-bubble") && games ;;
-        "5") packages+=([Kobo-deluxe]="games-arcade/kobodeluxe") && games ;;
-        "6") packages+=([Open-Sonic]="games-arcade/opensonic") && games ;;
-        "7") packages+=([Solor-wolf]"games-arcade/solarwolf") && games ;;
-        "8") packages+=([Supertux]="games-arcade/supertux") && games ;;
-        "9") packages+=([TecnoBallz]"games-arcade/tecnoballz") && games ;;
-        "10") packages+=([DesmuME]="games-emulation/desmume") && games ;;
-        "11") packages+=([Dolphin-Emu]="games-emulation/dolphin") && games ;;
-        "12") packages+=([DosBox]="games-emulation/dosbox") && games ;;
-        "13") packages+=([Higan]="games-emulation/higan") && games ;;
-        "14") packages+=([Mednafen]="games-emulation/mednafen") && games ;;
-        "15") packages+=([mGBA]="games-emulation/mgba") && games ;;
-        "16") packages+=([Mupen64Plus]="games-emulation/mupen64plus") && games ;;
-        "17") packages+=([PCSXR]="games-emulation/pcsxr") && games ;;
-        "18") packages+=([VBAm]="games-emulation/vbam") && games ;;
-        "19") packages+=([Yabause]="games-emulation/yabause") && games ;;
-        "20") packages+=([Znes]="games-emulation/zsnes") && games ;;
-        "21") packages+=([Alien-Arena]="games-fps/alienarena") && games ;;
-        "22") packages+=([Urban-terror]="games-fps/urbanterror") && games ;;
-        "23") packages+=([Xonotic]="games-fps/xonotic") && games ;;
-        "24") packages+=([Dungeon-CrawlStone-soup]="games-roguelike/stone-soup") && games ;;
-        "25") packages+=([TomeNET]="games-roguelike/tomenet") && games ;;
-        "26") packages+=([Daimonin]="games-rpg/daimonin-client") && games ;;
-        "27") packages+=([Freedroidrpg]="games-rpg/freedroidrpg") && games ;;
-        "28") packages+=([Summoning-Wars]="games-rpg/sumwars") && games ;;
-        "29") packages+=([The-Mana-World]="games-rpg/manaplus") && games ;;
-        "30") packages+=([Flight-Gear]="games-simulation/flightgear") && games ;;
-        "31") packages+=([OpenTTD]="games-simulation/openttd") && games ;;
-        "32") packages+=([0.AD]="games-strategy/0ad") && games ;;
-        "33") packages+=([Dune-Legacy]="games-strategy/dunelegacy") && games ;;
-        "34") packages+=([FreeCIV]="games-strategy/freeciv") && games ;;
-        "35") packages+=([HedgeWars]="games-strategy/hedgewars") && games ;;
-        "36") packages+=([Megaglest]="games-strategy/megaglest") && games ;;
-        "37") packages+=([OpenRA]="games-strategy/openra") && games ;;
-        "38") packages+=([UFO-Alien-Invasion]="games-strategy/ufoai") && games ;;
-        "39") packages+=([Warzone-2100]="games-strategy/warzone2100") && games ;;
-        "40") packages+=([Wesnoth]="games-strategy/wesnoth") && games ;;
-        "41") packages_flathub+=([athenaeum-flatpak]=com.gitlab.librebob.Athenaeum) && games ;;
+        "1") packages+=([Chromium-BSU]="games-action/chromium-bsu") && clear && games ;;
+        "2") packages+=([Minetest]="games-action/minetest") && clear && games ;;
+        "3") packages+=([Supertuxkart]="games-action/supertuxkart") && clear && games ;;
+        "4") packages+=([Forzen-bubble]="games-arcade/frozen-bubble") && clear && games ;;
+        "5") packages+=([Kobo-deluxe]="games-arcade/kobodeluxe") && clear && games ;;
+        "6") packages+=([Open-Sonic]="games-arcade/opensonic") && clear && games ;;
+        "7") packages+=([Solor-wolf]"games-arcade/solarwolf") && clear && games ;;
+        "8") packages+=([Supertux]="games-arcade/supertux") && clear && games ;;
+        "9") packages+=([TecnoBallz]"games-arcade/tecnoballz") && clear && games ;;
+        "10") packages+=([DesmuME]="games-emulation/desmume") && clear && games ;;
+        "11") packages+=([Dolphin-Emu]="games-emulation/dolphin") && clear && games ;;
+        "12") packages+=([DosBox]="games-emulation/dosbox") && clear && games ;;
+        "13") packages+=([Higan]="games-emulation/higan") && clear && games ;;
+        "14") packages+=([Mednafen]="games-emulation/mednafen") && clear && games ;;
+        "15") packages+=([mGBA]="games-emulation/mgba") && clear && games ;;
+        "16") packages+=([Mupen64Plus]="games-emulation/mupen64plus") && clear && games ;;
+        "17") packages+=([PCSXR]="games-emulation/pcsxr") && clear && games ;;
+        "18") packages+=([VBAm]="games-emulation/vbam") && clear && games ;;
+        "19") packages+=([Yabause]="games-emulation/yabause") && clear && games ;;
+        "20") packages+=([Znes]="games-emulation/zsnes") && clear && games ;;
+        "21") packages+=([Alien-Arena]="games-fps/alienarena") && clear && games ;;
+        "22") packages+=([Urban-terror]="games-fps/urbanterror") && clear && games ;;
+        "23") packages+=([Xonotic]="games-fps/xonotic") && clear && games ;;
+        "24") packages+=([Dungeon-CrawlStone-soup]="games-roguelike/stone-soup") && clear && games ;;
+        "25") packages+=([TomeNET]="games-roguelike/tomenet") && clear && games ;;
+        "26") packages+=([Daimonin]="games-rpg/daimonin-client") && clear && games ;;
+        "27") packages+=([Freedroidrpg]="games-rpg/freedroidrpg") && clear && games ;;
+        "28") packages+=([Summoning-Wars]="games-rpg/sumwars") && clear && games ;;
+        "29") packages+=([The-Mana-World]="games-rpg/manaplus") && clear && games ;;
+        "30") packages+=([Flight-Gear]="games-simulation/flightgear") && clear && games ;;
+        "31") packages+=([OpenTTD]="games-simulation/openttd") && clear && games ;;
+        "32") packages+=([0.AD]="games-strategy/0ad") && clear && games ;;
+        "33") packages+=([Dune-Legacy]="games-strategy/dunelegacy") && clear && games ;;
+        "34") packages+=([FreeCIV]="games-strategy/freeciv") && clear && games ;;
+        "35") packages+=([HedgeWars]="games-strategy/hedgewars") && clear && games ;;
+        "36") packages+=([Megaglest]="games-strategy/megaglest") && clear && games ;;
+        "37") packages+=([OpenRA]="games-strategy/openra") && clear && games ;;
+        "38") packages+=([UFO-Alien-Invasion]="games-strategy/ufoai") && clear && games ;;
+        "39") packages+=([Warzone-2100]="games-strategy/warzone2100") && clear && games ;;
+        "40") packages+=([Wesnoth]="games-strategy/wesnoth") && clear && games ;;
+        "41") packages_flathub+=([athenaeum-flatpak]=com.gitlab.librebob.Athenaeum) && clear && games ;;
         "42") installation ;;
-        "43") main_menu ;;
+        "43") clear && main_menu ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "Veuillez choisir une option valide :D!!" && games ;;
+        *) echo -e "Veuillez choisir une option valide :D!!" && clear && games ;;
     esac
 
     clear
@@ -565,7 +565,7 @@ games ()
 
 #=== games ==========================================================================#
 
-#=== main_menu ==================================
+#=== clear && main_menu ==================================
 # DESCRIPTION : Affiche le menu sélectif trié par famille, pour installer des
 #               applications.
 
@@ -600,11 +600,11 @@ main_menu()
         "9") installation ;;
         "10") exit 1 ;;
         # Si choix incorrect, avertissement de l'utilisateur et rééxécution.
-        *) echo -e "${On_Red}Veuillez choisir une option valide :D!!${Color_Off}" && main_menu ;;
+        *) echo -e "${On_Red}Veuillez choisir une option valide :D!!${Color_Off}" && clear && main_menu ;;
     esac
 }
 
-#==================================================================== main_menu ===#
+#==================================================================== clear && main_menu ===#
 
 #============================================================== PRECONFIGURATION ===
 
