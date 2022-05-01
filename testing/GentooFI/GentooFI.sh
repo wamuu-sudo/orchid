@@ -115,7 +115,7 @@ cp -rf Script_files/* ~/Desktop/
 #===================================================================================
 installation ()
 {
-    [[ -v packages[NVIM] ]] && echo -n "[*] " || echo -n "[] " && echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
+    echo -e "${On_Red}If the installation looks stuck...it isn't , go grab a coffee , a tea, a vodka, maybe even some wine and do NOT panic ${Color_Off}"
     if [ "${#packages[*]}" -ge 1 ]; then
         echo "$MDP" | sudo -S emerge -q --autounmask-write --autounmask=y  ${packages[*]}
     fi
@@ -128,7 +128,7 @@ installation ()
     fi
     
     if [ "${#packages[*]}" -lt 1 ] && [ "${#packages_flathub[*]}" -lt 1 ] ; then
-        [[ -v packages[NVIM] ]] && echo -n "[*] " || echo -n "[] " && echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && ${FUNCNAME[1]}
+    echo -e "${On_Red}Veuillez faire un choix et ressayer${Color_Off}" && ${FUNCNAME[1]}
     fi
 }
 packets_select ()
