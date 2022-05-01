@@ -1,0 +1,491 @@
+# Config file for GentooFI.sh
+# Version 1.0
+#
+# Syntax is TOML v1.0.0
+# https://toml.io
+# charset is UTF-8
+
+
+[softwares]
+description = "Bienvenue au script post-installation orchid !"
+description_color = "Blue"
+[softwares.page]
+description = "Veuillez choisir votre destination :"
+description_color = "Green"
+
+	[softwares.browsers]
+		description = "Navigateurs"
+		description_color = "Red"
+		color_items = "BRed"
+		[softwares.browsers.page]
+			description = "Choisissez le navigateur que vous voulez installer :"
+			description_color = "On_Red"
+
+		[softwares.browsers.Google-Chrome]
+			portage = "www-client/google-chrome"
+			flathub = "com.google.Chrome"
+			description = "Chrome"
+		[softwares.browsers.Google-Chromium]
+			portage = "www-client/chromium"
+			flathub = "org.chromium.Chromium"
+			description = "Blue Chrome (chromium)"
+		[softwares.browsers.brave-flatpak]
+			flathub = "com.brave.Browser"
+			description = "Orange Chrome (brave)"
+		[softwares.browsers.Vivaldi]
+			portage = "www-client/vivaldi"
+			description = "Red Chrome (vivaldi)"
+		[softwares.browsers.MS-Edge]
+			portage = "www-client/microsoft-edge"
+			flathub = "com.microsoft.Edge"
+			description = "Microsoft Chrome (edge)"
+		[softwares.browsers.Mozilla-Firefox]
+			portage = "www-client/firefox-bin"
+			flathub = "org.mozilla.firefox"
+			description = "Firefox .__. (bin)"
+		[softwares.browsers.librewolf-flatpak]
+			flathub = "io.gitlab.librewolf-community"
+			description = "Firefox mais blue (librewolf)"
+		[softwares.browsers.tor-flatpak]
+			flathub = "com.github.micahflee.torbrowser-launcher"
+			description = "Un Onion (tor browser)"
+
+	[softwares.multimedia]
+		description = "Multimedia"
+		[softwares.multimedia.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+
+		[softwares.multimedia.OBS-Studio]
+			portage = "media-video/obs-studio"
+			flathub = "com.obsproject.Studio"
+			description = "OBS Studio"
+		[softwares.multimedia.MPD]
+			portage = "media-sound/mpd"
+			description = "MPD"
+		[softwares.multimedia.Feh]
+			portage = "media-gfx/feh"
+			description = "Feh"
+		[softwares.multimedia.GIMP]
+			portage = "media-gfx/gimp"
+			flathub = "org.gimp.GIMP"
+			description = "GIMP"
+		[softwares.multimedia.Krita]
+			portage = "media-gfx/krita"
+			flathub = "org.kde.krita"
+			description = "Krita"
+		[softwares.multimedia.MPV]
+			portage = "media-video/mpv"
+			flathub = "io.mpv.Mpv"
+			description = "MPV"
+		[softwares.multimedia.Celluloid]
+			portage = "media-video/celluloid"
+			flathub = "io.github.celluloid_player.Celluloid"
+			description = "Celluloid (MPV GTK GUI)"
+		[softwares.multimedia.Youtube-dl]
+			portage = "net-misc/youtube-dl"
+			description = "youtube-dl (CLI)"
+		[softwares.multimedia.VLC]
+			portage = "media-video/vlc"
+			flathub = "org.videolan.VLC"
+			description = "VLC"
+		[softwares.multimedia.Blender]
+			portage = "media-gfx/blender"
+			flathub = "org.blender.Blender"
+			description = "Blender"
+		[softwares.multimedia.Spotify]
+			portage = "media-sound/spotify"
+			flathub = "com.spotify.Client"
+			description = "Spotify"
+		[softwares.multimedia.KdenLive]
+			portage = "kde-apps/kdenlive"
+			flathub = "org.kde.kdenlive"
+			description = "Kdenlive"
+
+	[softwares.utility]
+		description = "Utilitaires"
+		description_color = "Cyan"
+		color_items = "BCyan"
+		[softwares.utility.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+			description_color = "On_Cyan"
+
+		[softwares.utility.Document_Readers]
+			description = "=== Lecteurs de documents : ==="
+			[softwares.utility.Document_Readers.Calibre]
+				portage = "app-text/calibre"
+				flathub = "com.calibre_ebook.calibre"
+				description = "Calibre"
+			[softwares.utility.Document_Readers.Zathura]
+				portage = "app-text/zathura app-text/zathura-meta"
+				description = "Zathura"
+
+		[softwares.utility.Archive_management]
+			description = "=== Gestionnaires d'archives : ==="
+			[softwares.utility.Archive_management.Ark]
+				portage = "kde-apps/ark"
+				flathub = "org.kde.ark"
+				description = "Ark (KDE)"
+			[softwares.utility.Archive_management.File-Roller]
+				portage = "app-arch/file-roller"
+				flathub = "org.gnome.FileRoller"
+				description = "File-roller (GNOME)"
+			[softwares.utility.Archive_management.LXQT-archiver]
+				portage = "app-arch/lxqt-archiver"
+				description = "LXQT Archiver"
+			[softwares.utility.Archive_management.XArchiver]
+				portage = "app-arch/xarchiver"
+				description = "Xarchiver"
+
+		[softwares.utility.File_management]
+			description = "=== Gestionnaires de fichiers : ==="
+			[softwares.utility.File_management.Dolphin]
+				portage = "kde-apps/dolphin"
+				flathub = "org.kde.dolphin"
+				description = "Dolphin (KDE)"
+			[softwares.utility.File_management.PCMANFM]
+				portage = "x11-misc/pcmanfm"
+				description = "PCMANFM"
+			[softwares.utility.File_management.Thunar]
+				portage = "xfce-base/thunar"
+				description = "Thunar"
+			[softwares.utility.File_management.Nautilus]
+				portage = "gnome-base/nautilus"
+				description = "Nautilus (GNOME)"
+
+	[softwares.office]
+		description = "Bureautiques"
+		description_color = "Purple"
+		color_items = "BPurple"
+		[softwares.office.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+			description_color = "On_Purple"
+
+		[softwares.office.LibreOffice]
+			portage = "app-office/libreoffice-bin"
+			flathub = "org.libreoffice.LibreOffice"
+			description = "LibreOffice"
+		[softwares.office.Lyx]
+			portage = "app-office/lyx"
+			description = "Lyx"
+		[softwares.office.Scribus]
+			portage = "app-office/scribus"
+			flathub = "net.scribus.Scribus"
+			description = "Scribus"
+		[softwares.office.Calligra]
+			portage = "app-office/calligra"
+			description = "Calligra"
+
+	[softwares.text_editors]
+		description = "Editeurs de texte"
+		[softwares.text_editors.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+			foot_note = "NOTE: Some of these tools look and feel ugly out of the box, please install a rice for the following tools (Optional but highly recommended): neovim (CodeArt or Nvchad) , vim (spacevim) , Emacs (doom emacs)"
+			foot_note_color = "On_Red"
+		[softwares.text_editors.CLI]
+			description = "=== CLI : ==="
+			[softwares.text_editors.CLI.NVim]
+				portage = "app-editors/neovim"
+				flathub = "io.neovim.nvim"
+				description = "Neovim"
+			[softwares.text_editors.CLI.Vim]
+				portage = "app-editors/vim"
+				flathub = "org.vim.Vim"
+				description = "Vim"
+		[softwares.text_editors.GUI]
+			description = "=== GUI : ==="
+			[softwares.text_editors.GUI.GVim]
+				portage = "app-editors/gvim"
+				description = "GVim"
+			[softwares.text_editors.GUI.Kate]
+				portage = "kde-apps/kate"
+				description = "Kate (KDE)"
+			[softwares.text_editors.GUI.Gedit]
+				portage = "app-editors/gedit"
+				flathub = "org.gnome.gedit"
+				description = "Gedit (GNOME)"
+			[softwares.text_editors.GUI.Emacs]
+				portage = "app-editors/emacs"
+				flathub = "org.gnu.emacs"
+				description = "Emacs"
+		[softwares.text_editors.IDEs]
+			description = "=== IDEs : ==="
+			[softwares.text_editors.IDEs.VSCode]
+				portage = "app-editors/vscode"
+				flathub = "com.visualstudio.code"
+				description = "Visual Studio Code"
+			[softwares.text_editors.IDEs.Bluefish]
+				portage = "app-editors/bluefish"
+				flathub = "nl.openoffice.bluefish"
+				description = "Bluefish"
+			[softwares.text_editors.IDEs.Geany]
+				portage = "dev-util/geany"
+				flathub = "org.geany.Geany"
+				description = "Geany"
+			[softwares.text_editors.IDEs.Vscodium]
+				portage = "app-editors/vscodium"
+				flathub = "com.vscodium.codium"
+				description = "Vscodium"
+
+	[softwares.system]
+		description = "Système"
+		description_color = "Yellow"
+		color_items = "BYellow"
+		[softwares.system.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+			description_color = "On_Yellow"
+			[softwares.system.Terminals]
+				description = "=== Terminaux : ==="
+				[softwares.system.Terminals.Alacritty]
+					portage = "x11-terms/alacritty"
+					description = "alacritty"
+				[softwares.system.Terminals.Gnome-terminal]
+					portage = "x11-terms/gnome-terminal"
+					description = "GNOME terminal"
+				[softwares.system.Terminals.Kitty]
+					portage = "x11-terms/kitty"
+					description = "Kitty"
+				[softwares.system.Terminals.Konsole]
+					portage = "kde-apps/konsole"
+					description = "Konsole (KDE)"
+				[softwares.system.Terminals.LXterminal]
+					portage = "lxde-base/lxterminal"
+					description = "Lxterminal"
+				[softwares.system.Terminals.URXVT]
+					portage = "x11-terms/rxvt-unicode"
+					description = "rxvt unicode (urxvt)"
+				[softwares.system.Terminals.Terminator]
+					portage = "x11-terms/terminator"
+					description = "Terminator"
+				[softwares.system.Terminals.Terminology]
+					portage = "x11-terms/terminology"
+					description = "Terminology"
+				[softwares.system.Terminals.XFCE-Term]
+					portage = "x11-terms/xfce4-terminal"
+					description = "Xfce4-terminal"
+				[softwares.system.Terminals.Xterm]
+					portage = "x11-terms/xterm"
+					description = "Xterm"
+			[softwares.system.Utilities]
+				description = "=== Utilitaires : ==="
+				[softwares.system.Utilities.Baobab]
+					portage = "sys-apps/baobab"
+					flathub = "org.gnome.baobab"
+					description = "Baobab (disk usage analyzer)"
+				[softwares.system.Utilities.Gparted]
+					portage = "sys-block/gparted"
+					description = "GParted"
+				[softwares.system.Utilities.OpenRGB]
+					portage = "app-misc/openrgb app-misc/openrgb-plugin-effects app-misc/openrgb-plugin-skin app-misc/openrgb-plugin-visualmap"
+					flathub = "org.openrgb.OpenRGB"
+					description = "OpenRGB & Plugins"
+
+	[softwares.com]
+		description = "Communication & BitTorrent"
+		description_color = "Green"
+		color_items = "BGreen"
+		[softwares.com.page]
+			description = "Choisissez l'outil que vous voulez installer :"
+			description_color = "On_Green"
+			[softwares.com.communications]
+				description = "=== Communications : ==="
+				[softwares.com.communications.Discord]
+					portage = "net-im/discord-bin"
+					flathub = "com.discordapp.Discord"
+					description = "Discord"
+				[softwares.com.communications.Hexchat]
+					portage = "net-irc/hexchat"
+					flathub = "io.github.Hexchat"
+					description = "HexChat (IRC)"
+				[softwares.com.communications.Weechat]
+					portage = "net-irc/weechat"
+					description = "Weechat (IRC)"
+				[softwares.com.communications.Element]
+					portage = "www-apps/element"
+					flathub = "im.riot.Riot"
+					description = "element [matrix]"
+			[softwares.com.p2p]
+				description = "=== Échange de fichiers pair à pair (BitTorrent) : ==="
+				[softwares.com.p2p.Deluge]
+					portage = "net-p2p/deluge"
+					flathub = "org.deluge_torrent.deluge"
+					description = "Deluge (GTK)"
+				[softwares.com.p2p.Qbittorrent]
+					portage = "net-p2p/qbittorrent"
+					flathub = "org.qbittorrent.qBittorrent"
+					description = "Qbittorrent (Qt)"
+				[softwares.com.p2p.Transmission]
+					portage = "net-p2p/transmission"
+					flathub = "com.transmissionbt.Transmission"
+					description = "Transmission"
+
+	[softwares.games]
+		description = "Foss Games (WIP)"
+		description_color = "BRed BBlack BCyan BPurple BWhite BYellow BGreen BRed BCyan" # If multiple colors, then change color each printable char
+		color_items = "BGreen"
+		[softwares.games.page]
+			description = "Choisissez les jeux que vous voulez installer :"
+			description_color = "On_Green"
+			[softwares.games.action]
+				description = "=== Jeux d'action : ==="
+				[softwares.games.action.Chromium-BSU]
+					portage = "games-action/chromium-bsu"
+					flathub = "net.sourceforge.chromium-bsu"
+					description = "Chromium B.S.U."
+				[softwares.games.action.Minetest]
+					portage = "games-action/minetest"
+					flathub = "net.minetest.Minetest"
+					description = "Minetest"
+				[softwares.games.action.Supertuxkart]
+					portage = "games-action/supertuxkart"
+					flathub = "net.supertuxkart.SuperTuxKart"
+					description = "SuperTuxKart"
+			[softwares.games.arcade]
+				description = "=== Jeux d'arcade : ==="
+				[softwares.games.arcade.Frozen-bubble]
+					portage = "games-arcade/frozen-bubble"
+					flathub = "org.frozen_bubble.frozen-bubble"
+					description = "Frozen Bubble"
+				[softwares.games.arcade.Kobo-deluxe]
+					portage = "games-arcade/kobodeluxe"
+					flathub = "net.olofson.KoboDeluxe"
+					description = "Kobo Deluxe"
+				[softwares.games.arcade.Open-Sonic]
+					portage = "games-arcade/opensonic"
+					description = "Open Sonic"
+				[softwares.games.arcade.Solar-wolf]
+					portage = "games-arcade/solarwolf"
+					description = "SolarWolf"
+				[softwares.games.arcade.Supertux]
+					portage = "games-arcade/supertux"
+					flathub = "org.supertuxproject.SuperTux"
+					description = "SuperTux"
+				[softwares.games.arcade.TecnoBallz]
+					portage = "games-arcade/tecnoballz"
+					description = "TecnoballZ"
+			[softwares.games.emulators]
+				description = "=== Émulateurs de jeux : ==="
+				[softwares.games.emulators.DesmuME]
+					portage = "games-emulation/desmume"
+					flathub = "org.desmume.DeSmuME"
+					description = "DeSmuME"
+				[softwares.games.emulators.Dolphin]
+					portage = "games-emulation/dolphin"
+					flathub = "org.DolphinEmu.dolphin-emu"
+					description = "Dolphin"
+				[softwares.games.emulators.DosBox]
+					portage = "games-emulation/dosbox"
+					flathub = "com.dosbox.DOSBox"
+					description = "DOSBox"
+				[softwares.games.emulators.Higan]
+					portage = "games-emulation/higan"
+					description = "Higan"
+				[softwares.games.emulators.Mednafen]
+					portage = "games-emulation/mednafen"
+					flathub = "com.github.AmatCoder.mednaffe"
+					description = "Mednafen"
+				[softwares.games.emulators.mGBA]
+					portage = "games-emulation/mgba"
+					flathub = "io.mgba.mGBA"
+					description = "mGBA"
+				[softwares.games.emulators.Mupen64Plus]
+					portage = "games-emulation/mupen64plus"
+					flathub = "io.github.m64p.m64p"
+					description = "Mupen64Plus"
+				[softwares.games.emulators.PCSXR]
+					portage = "games-emulation/pcsxr"
+					description = "PCSX-Reloaded"
+				[softwares.games.emulators.VBAm]
+					portage = "games-emulation/vbam"
+					description = "VBA-M"
+				[softwares.games.emulators.Yabause]
+					portage = "games-emulation/yabause"
+					description = "Yabause"
+				[softwares.games.emulators.Znes]
+					portage = "games-emulation/zsnes"
+					description = "ZSNES"
+			[softwares.games.FPS]
+				description = "=== Jeux FPS : ==="
+				[softwares.games.FPS.Alien-Arena]
+					portage = "games-fps/alienarena"
+					description = "Alien Arena"
+				[softwares.games.FPS.Urban-terror]
+					portage = "games-fps/urbanterror"
+					description = "Urban Terror"
+				[softwares.games.FPS.Xonotic]
+					portage = "games-fps/xonotic"
+					flathub = "org.xonotic.Xonotic"
+					description = "Xonotic"
+			[softwares.games.RogueLike]
+				description = "=== Jeux RogueLike : ==="
+				[softwares.games.RogueLike.Dungeon-CrawlStone-soup]
+					portage = "games-roguelike/stone-soup"
+					flathub = "org.develz.Crawl"
+					description = "Dungeon Crawl Stone Soup"
+				[softwares.games.RogueLike.TomeNET]
+					portage = "games-roguelike/tomenet"
+					description = "TomeNET"
+			[softwares.games.RPG]
+				description = "=== Jeux RPG : ==="
+				[softwares.games.RPG.Daimonin]
+					portage = "games-rpg/daimonin-client"
+					description = "Daimonin"
+				[softwares.games.RPG.Freedroidrpg]
+					portage = "games-rpg/freedroidrpg"
+					description = "FreedroidRPG"
+				[softwares.games.RPG.Summoning-Wars]
+					portage = "games-rpg/sumwars"
+					description = "Summoning Wars"
+				[softwares.games.RPG.The-Mana-World]
+					portage = "games-rpg/manaplus"
+					flathub = "org.manaplus.ManaPlus"
+					description = "The Mana World"
+			[softwares.games.Simulation]
+				description = "=== Jeux de simulation : ==="
+				[softwares.games.Simulation.Flight-Gear]
+					portage = "games-simulation/flightgear"
+					flathub = "org.flightgear.FlightGear"
+					description = "FlightGear"
+				[softwares.games.Simulation.OpenTTD]
+					portage = "games-simulation/openttd"
+					flathub = "org.openttd.OpenTTD"
+					description = "OpenTTD"
+			[softwares.games.strategy]
+				description = "=== Jeux de stratégie : ==="
+				[softwares.games.strategy.0-AD]
+					portage = "games-strategy/0ad"
+					flathub = "com.play0ad.zeroad"
+					description = "0 A.D."
+				[softwares.games.strategy.Dune-Legacy]
+					portage = "games-strategy/dunelegacy"
+					description = "Dune Legacy"
+				[softwares.games.strategy.FreeCIV]
+					portage = "games-strategy/freeciv"
+					flathub = "org.freeciv.Freeciv"
+					description = "FreeCiv"
+				[softwares.games.strategy.HedgeWars]
+					portage = "games-strategy/hedgewars"
+					flathub = "org.hedgewars.Hedgewars"
+					description = "Hedgewars"
+				[softwares.games.strategy.Megaglest]
+					portage = "games-strategy/megaglest"
+					flathub = "org.megaglest.MegaGlest"
+					description = "MegaGlest"
+				[softwares.games.strategy.OpenRA]
+					portage = "games-strategy/openra"
+					description = "OpenRA"
+				[softwares.games.strategy.UFO-Alien-Invasion]
+					portage = "games-strategy/ufoai"
+					description = "UFO: Alien Invasion"
+				[softwares.games.strategy.Warzone-2100]
+					portage = "games-strategy/warzone2100"
+					flathub = "net.wz2100.wz2100"
+					description = "Warzone 2100"
+				[softwares.games.strategy.Wesnoth]
+					portage = "games-strategy/wesnoth"
+					flathub = "org.wesnoth.Wesnoth"
+					description = "Battle for Wesnoth"
+			[softwares.games.launcher]
+				description = "=== Lanceur de jeux : ==="
+				[softwares.games.launcher.athenaeum-flatpak]
+					flathub = "com.gitlab.librebob.Athenaeum"
+					description = "Athenaeum"
