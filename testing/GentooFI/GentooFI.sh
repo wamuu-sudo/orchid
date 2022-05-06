@@ -813,6 +813,8 @@ clear && main_menu()
 
 #=== MAIN ==========================================================================
 
+trap set_term_size WINCH	# We trap window changing size to adapt our interface
+
 clear && main_menu
 
 #========================================================================== MAIN ===
