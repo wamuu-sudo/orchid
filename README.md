@@ -34,14 +34,14 @@ Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
 - Nous visons malgré tout les utilisateurs avancés, même si l'installation est moins fastidieuse.
-- Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
+- C'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo), ou au travers d'un script interactif.
 - Tous les paquets de Gentoo sont disponibles.
 - Nous utilisons le noyau gentoo-kernel-bin, qui suit le canal stable LTS officiel de Linux. Un déblocage facilité est possible.
 - `eix` est installé par défaut.
-- Gnome, KDE Plasma, et DWM sont disponibles.
+- Gnome, KDE Plasma, XFCE et DWM sont disponibles.
 - L'environnement complet `orchid-dwm` est disponible au téléchargement, avec des customisations sympatiques et un look moderne
 - Firefox en binaire est aussi installé par défaut.
-- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. 
+- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. Un stage Gnome SystemD est en test.
 - Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
 
