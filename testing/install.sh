@@ -670,6 +670,12 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 #=== MAIN ==========================================================================
 
+if [ "$EUID" -ne 0 ]
+  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
+  exit
+fi
+
+
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
