@@ -28,6 +28,26 @@ Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'ou
 
 La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
 
+## Utilisation du script (testing) et ne nécessite pas la suite du guide :
+
+Il faut télécharger le script :
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install.sh
+```
+
+et appliquer les bons droits :
+
+```
+chmod +x ./install.sh
+```
+
+puis lancer le script interactif :
+
+```
+sudo ./install.sh
+```
+
 ## Préparer l'installation :
 
 Vous pouvez démarrer sur votre support.
