@@ -48,10 +48,10 @@ et appliquer les bons droits :
 chmod +x ./install.sh
 ```
 
-puis lancer le script interactif :
+puis lancer le script interactif avec les droits root (avec sudo ou après :
 
 ```
-sudo ./install.sh
+./install.sh
 ```
 
 ## Préparer l'installation :
