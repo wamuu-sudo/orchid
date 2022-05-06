@@ -31,7 +31,7 @@
 
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
-ORCHID_VERSION[0]="Version standard DWM [1.9Go]"
+ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
 ORCHID_URL[0]='https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.count"
 COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
@@ -39,7 +39,7 @@ ORCHID_ESYNC_SUPPORT[0]="ask"	# Ask for esync support
 ORCHID_LOGIN[0]="STANDARD"
 ORCHID_NAME[0]="DWM"	# Name to use inside this script for various tests
 
-ORCHID_VERSION[1]="Version DWM Gaming Edition [3.3Go]"
+ORCHID_VERSION[1]="Version DWM Gaming Edition [3.4Go]"
 ORCHID_URL[1]='https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
 ORCHID_COUNT[1]="https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.count"
 COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
@@ -55,7 +55,7 @@ ORCHID_ESYNC_SUPPORT[2]="ask"	# Ask for esync support
 ORCHID_LOGIN[2]="STANDARD"
 ORCHID_NAME[2]="GNOME"
 
-ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.5Go]"
+ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.6Go]"
 ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
 ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.count"
 #COUNTED_BY_TREE[3]=
