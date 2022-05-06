@@ -28,6 +28,12 @@ Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'ou
 
 La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
 
+CPU : au moins 4 coeurs
+
+RAM : au moins 4 Go
+
+Espace disque : 20Go
+
 ## Utilisation du script (testing) et ne nécessite pas la suite du guide :
 
 Il faut télécharger le script :
