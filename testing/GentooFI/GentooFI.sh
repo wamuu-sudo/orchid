@@ -108,6 +108,186 @@ On_IPurple='\033[0;105m'  # Purple
 On_ICyan='\033[0;106m'    # Cyan
 On_IWhite='\033[0;107m'   # White
 
+BG_BLACK="$(tput setab 0)"
+BG_GREEN="$(tput setab 2)"
+FG_GREEN="$(tput setaf 2)"
+FG_WHITE="$(tput setaf 7)"
+
+TEXT_BOLD="$(tput bold)"
+TEXT_DIM="$(tput dim)"
+TEXT_REV="$(tput rev)"
+TEXT_DEFAULT="$(tput sgr0)"
+
+INSTALLER_STEPS="Script de Post installation Orchid linux"
+
+# Default Gentoo Live CD:
+#TERM_COLS=128
+#TERM_LINES=48
+TERM_LINES=$(tput lines)
+TERM_COLS=$(tput cols)
+
+LOGO_COLS=30
+LOGO_LINES=15
+
+BANNER="  ___           _     _     _   _     _                  
+ / _ \ _ __ ___| |__ (_) __| | | |   (_)_ __  _   ___  __
+| | | | '__/ __| '_ \| |/ _\` | | |   | | '_ \| | | \ \/ /
+| |_| | | | (__| | | | | (_| | | |___| | | | | |_| |>  < 
+ \___/|_|  \___|_| |_|_|\__,_| |_____|_|_| |_|\__,_/_/\_\\"
+
+#-----------------------------------------------------------------------------------
+
+# Setup functions
+#-----------------------------------------------------------------------------------
+
+set_term_size() {
+        TERM_LINES=`tput lines`
+        TERM_COLS=`tput cols`
+				draw_installer_steps
+        return 0
+}
+
+clear_under_menu()
+{
+  # Clear area beneath menu
+  tput cup ${LOGO_LINES} 0 # Move cursor to position row col
+  echo -n ${TEXT_DEFAULT}
+  tput ed # Clear from the cursor to the end of the screen
+  tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
+}
+
+echo_center()
+{
+TEXT_SIZE=0
+TEXT_LINE_START=$(( $LOGO_LINES + 1 ))
+while IFS= read -r TEXT; do
+	for l in "${TEXT[@]}"; do
+		TEXT_ONLY=$(echo -e "$l" | sed 's/\x1B\[[0-9;]\{1,\}[A-Za-z]//g')
+		#echo "$TEXT_ONLY"
+		TEXT_STEPS_COL_CENTER=$(( ($TERM_COLS - ${#TEXT_ONLY}) / 2 ))
+		#echo "${#l}**$TEXT_STEPS_COL_CENTER"
+		tput cup $TEXT_LINE_START $TEXT_STEPS_COL_CENTER
+		echo "${l}"
+		((TEXT_LINE_START++))
+	done
+done <<< "${1}"
+}
+
+echo_banner()
+{
+TEXT_LINE_START=0	# the banner is at the top
+while IFS= read -r TEXT; do
+	for l in "${TEXT[@]}"; do
+		BANNER_COL_CENTER=$(( $LOGO_COLS + (($TERM_COLS - $LOGO_COLS - ${#l} ) / 2) ))
+		tput cup $TEXT_LINE_START $BANNER_COL_CENTER
+		echo "${l}"
+		((TEXT_LINE_START++))
+	done
+done <<< "${BANNER}"
+}
+
+echo_logo()
+{
+cat <<- _EOF_
+              ::              
+            :*@@*:            
+          :*@@@@@@*:          
+         *@@@%++%@@@*         
+      :=:-#@@+  +@@#-:=:      
+    :*@@@#--#@==@#--#@@@*:    
+  :*@@@%*%@*-=::=-#@%*%@@@*:  
+ =@@@%@:  =+*    *+=  :@%@@@= 
+  :*@@@%*%@*-=::=-#@%*%@@@*:  
+    :*@@@#--#@==@#--#@@@*:    
+      :=:-#@@+  +@@#-:=:      
+         *@@@%++%@@@*         
+          :*@@@@@@*:          
+            :*@@*:            
+              ::              
+_EOF_
+}
+
+draw_installer_steps()
+{
+echo -n ${BG_GREEN}${FG_WHITE}
+clear
+
+echo_logo
+
+echo_banner
+
+clear_under_menu
+
+TEXT_STEPS_RAW_START_MINIMUM=5
+
+i=1
+TEXT_SIZE=0
+TEXT_STEPS=""
+STEPS_SEPARATOR=" -> "
+MAX_COLS_BANNER_AREA=$(( $TERM_COLS - $LOGO_COLS - ${#STEPS_SEPARATOR} ))
+TEXT_STEPS_COL_WIDTH=$(( $TERM_COLS - $LOGO_COLS ))
+
+TEXT_STEPS_RAW_COUNT=0
+
+while IFS='|' read -ra STEPS; do	# We will count how many lines we need to print all the steps on the screen
+	for l in "${STEPS[@]}"; do
+		if [ $((${#l} + $TEXT_SIZE)) -gt $MAX_COLS_BANNER_AREA ]; then	# We will exceed our limit if we add a new step!
+			((TEXT_STEPS_RAW_COUNT++))
+			TEXT_SIZE=0 # reset text size
+		fi
+		TEXT_SIZE=$((${#l} + $TEXT_SIZE))
+		if [[ ! $i = ${#STEPS[*]} ]]; then # If not the last item, add a separator, e.g. " -> "
+			TEXT_SIZE=$(( $TEXT_SIZE + ${#STEPS_SEPARATOR} ))
+		fi
+		((i++))
+	done
+done <<< "${INSTALLER_STEPS}"
+
+TEXT_STEPS_RAW_START=$(( $TEXT_STEPS_RAW_START_MINIMUM + (($LOGO_LINES - $TEXT_STEPS_RAW_START_MINIMUM - $TEXT_STEPS_RAW_COUNT) / 2) ))
+# reset usefull variables
+i=1
+TEXT_SIZE=0
+TEXT_STEPS=""
+
+echo -n ${BG_GREEN}${FG_WHITE}
+while IFS='|' read -ra STEPS; do
+	for l in "${STEPS[@]}"; do
+
+		if [ $((${#l} + $TEXT_SIZE)) -gt $MAX_COLS_BANNER_AREA ]; then	# We will exceed our limit if we add a new step!
+			TEXT_STEPS_COL_CENTER=$(( $LOGO_COLS + (($TEXT_STEPS_COL_WIDTH - ${TEXT_SIZE}) / 2) ))
+			tput cup $TEXT_STEPS_RAW_START $TEXT_STEPS_COL_CENTER
+			((TEXT_STEPS_RAW_START++))
+			echo "$TEXT_STEPS"	# Print text
+			TEXT_STEPS="" # reset text to print on screen
+			TEXT_SIZE=0 # reset text size
+		fi
+
+		TEXT_SIZE=$((${#l} + $TEXT_SIZE))
+
+		if [[ $UI_PAGE = $(($i-1)) ]]; then	# We are at this step
+			TEXT_STEPS+="${TEXT_REV}${l}${TEXT_DEFAULT}${BG_GREEN}${FG_WHITE}"
+		elif [[ $UI_PAGE -gt $(($i-1)) ]]; then # We have already done those steps
+			TEXT_STEPS+="${TEXT_BOLD}${l}${TEXT_DEFAULT}${BG_GREEN}${FG_WHITE}"
+		else	# We have not done those yet
+			TEXT_STEPS+="${l}"
+		fi
+
+		if [[ ! $i = ${#STEPS[*]} ]]; then # If not the last item, add a separator, e.g. " -> "
+			TEXT_STEPS+=$STEPS_SEPARATOR
+			TEXT_SIZE=$(( $TEXT_SIZE + ${#STEPS_SEPARATOR} ))
+		else	# this is the end of installer STEPS
+			TEXT_STEPS_COL_CENTER=$(( $LOGO_COLS + (($TEXT_STEPS_COL_WIDTH - ${TEXT_SIZE}) / 2) ))
+			tput cup $TEXT_STEPS_RAW_START $TEXT_STEPS_COL_CENTER
+			echo "$TEXT_STEPS"	# Print text
+		fi
+
+		((i++))
+	done
+done <<< "${INSTALLER_STEPS}"
+echo ${TEXT_DEFAULT}
+tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
+}
+
 #-----------------------------------------------------------------------------------
 cp -rf Script_files/* ~/Desktop/
 
@@ -149,6 +329,7 @@ packets_list ()
 
 browser ()
 {
+    draw_installer_steps
     echo -e "${On_Red}Choisissez le navigateur que vous voulez installer:${Color_Off}"
     echo -e "${BRed}"
    [[ -v packages[Google-Chrome] ]] && echo -n "[+] " || echo -n "[] " && echo -e "1. Chrome"
@@ -189,6 +370,7 @@ browser ()
 
 multimedia ()
 {
+    draw_installer_steps
     # Affiche les choix possibles
     echo -e "Choisissez l'outil que vous voulez installer:"
  [[ -v packages[OBS-Studio] ]] && echo -n "[+] " || echo -n "[] " &&    echo -e "1. OBS Studio"
@@ -240,6 +422,7 @@ multimedia ()
 
 utility ()
 {
+    draw_installer_steps
     # Affiche les choix possibles
     echo -e "${On_Cyan}Choisissez l'outil que vous voulez installer:${Color_Off}"
     echo -e "${BCyan}===Document Readers:==="
@@ -289,6 +472,7 @@ utility ()
 
 office ()
 {
+    draw_installer_steps
     # Affiche les choix possibles
     echo -e "${On_Purple}Choisissez l'outil que vous voulez installer:${Color_Off}"
    [[ -v packages[LibreOffice] ]] && echo -n "[+] " || echo -n "[] " &&   echo -e "1. LibreOffice"
@@ -323,6 +507,7 @@ office ()
 
 text_editors ()
 {
+    draw_installer_steps
     # Affiche les choix possibles
     echo -e "Choisissez l'outil que vous voulez installer:"
     echo -e "===CLI:==="
@@ -373,6 +558,7 @@ text_editors ()
 
 system ()
 {
+  draw_installer_steps
     # Affiche les choix possibles
     echo -e "${On_Yellow}Choisissez l'outil que vous voulez installer:${Color_Off}"
     echo -e "${BYellow}===Terminals:==="
@@ -427,6 +613,7 @@ system ()
 # DESCRIPTION : Permet l'installation d'applications liés aux comunications.
 com ()
 {
+  draw_installer_steps 
     # Affiche les choix possibles
     echo -e "${On_Green}Choisissez l'outil que vous voulez installer:${Color_Off}"
     echo -e "${BGreen}"
@@ -465,7 +652,8 @@ com ()
 #=== games ==========================================================================#
 # DESCRIPTION : Permet l'installation d'applications liés aux jeux.
 games ()
-{
+{   
+    draw_installer_steps
     # Affiche les choix possibles
     echo -e "${On_Green}Choisissez les jeux que vous voulez installer:${Color_Off}"
     echo -e "===Jeux d'action:==="
@@ -583,7 +771,8 @@ games ()
 #               applications.
 
 clear && main_menu()
-{
+{   
+    draw_installer_steps
     echo -e "${Blue}Bienvenue au script post-installation orchid!${Color_Off}"
     echo -e "${Green}Veuillez choisir votre destination:${Color_Off}"
     echo -e ""
