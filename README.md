@@ -20,6 +20,7 @@ De nouvelles éditions sont disponibles :
 - DWM et DWM Gaming.
 - Gnome.
 - KDE Plasma (en test).
+- XFCE Gaming.
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
 
