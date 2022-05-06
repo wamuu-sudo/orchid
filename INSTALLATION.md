@@ -48,7 +48,7 @@ et appliquer les bons droits :
 chmod +x ./install.sh
 ```
 
-puis lancer le script interactif avec les droits root (avec sudo ou après :
+puis lancer le script interactif avec les droits root (avec `sudo` ou en root via `su root` après avoir mis à mot de passe à root) :
 
 ```
 ./install.sh
