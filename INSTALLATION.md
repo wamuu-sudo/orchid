@@ -78,10 +78,16 @@ Si vous n'avez pas d'ip, vous pouvez relancer une requête à votre serveur DHCP
 dhcpcd
 ```
 
-Si vous avez besoin du WiFi, l'ISO intègre un outil :
+Si vous avez besoin du WiFi, l'ISO intègre des outils :
 
 ```
 net-setup
+```
+
+ou sur l'iso graphique :
+
+```
+nmtui
 ```
 
 ## Partitionnement :
