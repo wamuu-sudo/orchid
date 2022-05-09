@@ -118,6 +118,16 @@ declare -a ORCHID_URL
 declare -a CHOICES_ORCHID
 ERROR_IN_ORCHID_SELECTOR=" "
 
+# Filesystem type radiobox selector
+declare -a CHOICES_FILESYSTEM
+declare -a FILESYSTEM_TYPE
+ERROR_IN_FILESYSTEM_SELECTOR=" "
+
+FILESYSTEM_TYPE[0]="Btrfs"
+FILESYSTEM_TYPE[1]="ext4"
+
+CHOICES_FILESYSTEM[0]="${COLOR_GREEN}*${COLOR_RESET}"
+
 # GPU drivers selector
 ERROR_IN_SELECTOR=" "
 declare -a CHOICES
@@ -167,7 +177,7 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
+INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -337,6 +347,56 @@ echo ${TEXT_DEFAULT}
 tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 }
 
+CLI_filesystem_selector()
+{
+	WHAT_IS_FILESYSTEM="Un système de fichier organise la manière dont les données sont stockées sur votre disque.
+
+Btrfs est récent. Il permet de prendre automatiquement des instantanés
+du système pour revenir en arrière si une mise à jour se passe mal.
+Toutes les données seront compressées de façon transparente.
+Il est possible de redimmensionner la taille du système à chaud.
+
+Ext4 est robuste grâce à la journalisation des opérations, 
+minimise la fragmentation des données et est largement éprouvé.
+"
+	echo_center "$WHAT_IS_FILESYSTEM"
+	echo "Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+		echo "(${CHOICES_FILESYSTEM[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${FILESYSTEM_TYPE[$i]}"
+	done
+
+	echo "$ERROR_IN_FILESYSTEM_SELECTOR"
+}
+
+
+select_filesystem_to_install()
+{
+	clear_under_menu
+	while CLI_filesystem_selector && read -rp "Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+		clear_under_menu
+		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#FILESYSTEM_TYPE[@]} ]]; then
+			((NUM--))
+			for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+				if [[ $NUM -eq $i ]]; then
+					CHOICES_FILESYSTEM[$i]="${COLOR_GREEN}*${COLOR_RESET}"
+				else
+					CHOICES_FILESYSTEM[$i]=""
+				fi
+			done
+
+			ERROR_IN_FILESYSTEM_SELECTOR=" "
+		else
+			ERROR_IN_FILESYSTEM_SELECTOR="Choix invalide : $NUM"
+		fi
+	done
+
+# Choice has been made by the user, now we need to populate FILESYSTEM
+	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+		if [[ "${CHOICES_FILESYSTEM[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
+			FILESYSTEM=${FILESYSTEM_TYPE[$i]}
+		fi
+	done
+}
 
 CLI_orchid_selector()
 {
@@ -670,10 +730,10 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 #=== MAIN ==========================================================================
 
-if [ "$EUID" -ne 0 ]
-  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
-  exit
-fi
+#if [ "$EUID" -ne 0 ]
+#  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
+#  exit
+#fi
 
 
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
@@ -778,6 +838,12 @@ Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 	UI_PAGE=4
 	;;
 	4)
+	# FileSystem
+	#-----------------------------------------------------------------------------------
+	select_filesystem_to_install
+	UI_PAGE=5
+	;;
+	5)
 	WHAT_IS_HIBERNATION="L'hibernation, c'est éteindre l'ordinateur en conservant son état.
 À l'allumage, on retrouvera son bureau exactement tel qu'il était avant l'arrêt.
 
@@ -799,13 +865,13 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 	fi
 	#-----------------------------------------------------------------------------------
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
-	UI_PAGE=5
-	;;
-	5)
-	select_GPU_drivers_to_install                                                           # Select GPU
 	UI_PAGE=6
 	;;
 	6)
+	select_GPU_drivers_to_install                                                           # Select GPU
+	UI_PAGE=7
+	;;
+	7)
 	#-----------------------------------------------------------------------------------
 
 	# choose your hostname
@@ -827,9 +893,9 @@ Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}
 			echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 		fi
 	done
-	UI_PAGE=7
+	UI_PAGE=8
 	;;
-	7)
+	8)
 	#-----------------------------------------------------------------------------------
 
 	# Option pour la configuration d'esync (limits)
@@ -856,9 +922,9 @@ Par défaut, nous vous proposons de l'activer : ${COLOR_GREEN}o${COLOR_RESET}.
 		echo "FATAL ERROR: what about esync ?"
 		exit 1
 	fi
-	UI_PAGE=8
+	UI_PAGE=9
 	;;
-	8)
+	9)
 	# Option pour la mise à jour d'Orchid Linux dans l'installateur
 	#-----------------------------------------------------------------------------------
 	WHAT_IS_UPDATE="La mise à jour de votre ordinateur est une opération qui consiste à vérifier
@@ -872,9 +938,9 @@ l'installation vous devrez attendre sans rien pouvoir faire d'autre.
 "
 	echo_center "$WHAT_IS_UPDATE"
 	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-	UI_PAGE=9
+	UI_PAGE=10
 	;;
-	9)
+	10)
 	WHAT_IS_USERNAME="Sur un système Linux, comme Orchid Linux, chaque utilisateur doit avoir
 son propre compte qui l'identifie et sépare ses fichiers des autres.
 
@@ -896,9 +962,9 @@ les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESE
 	echo ""
 	verify_password_concordance "${USERNAME}"
 	USER_PASS="${ATTEMPT1}"
-	UI_PAGE=10
+	UI_PAGE=11
 	;;
-	10)
+	11)
 	WHAT_IS_ROOT="Vous allez maintenant choisir le mot de passe pour le superutilisateur (root).
 
 Ce compte particulier a tous les droits sur l'ordinateur.
@@ -908,14 +974,15 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	create_passwd "root"
 	verify_password_concordance "root"
 	ROOT_PASS="${ATTEMPT1}"
-	UI_PAGE=11
+	UI_PAGE=12
 	;;
-	11)
+	12)
 	echo_center "${COLOR_WHITE}Résumé de l'installation${COLOR_RESET}"
 	echo "Test de la connection internet : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+	echo "Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
 		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : RAM de ${RAM_SIZE_GB} Go, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 	elif [ "$HIBERNATION" = n ]; then
@@ -941,13 +1008,14 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 		echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 		exit
 	fi
-	UI_PAGE=12
+	UI_PAGE=13
 	;;
-	12)	# Print Installation in the upper side of the UI.
+	13)	# Print Installation in the upper side of the UI.
 	break
 	;;
 	esac
 done
+exit
 # installation
 echo ""
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
