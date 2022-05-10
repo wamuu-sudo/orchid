@@ -17,8 +17,8 @@ Attention, même si le projet est déployable et utilisable couramment, des prob
 
 De nouvelles éditions sont disponibles :
 
-- DWM et DWM Gaming.
-- Gnome.
+- DWM et DWM Gaming (Utilisation avancée)
+- Gnome, Gnome Gaming et Gnome Gaming SystemD.
 - KDE Plasma (en test).
 - XFCE Gaming.
 
@@ -41,7 +41,6 @@ Caractéristiques principales d'Orchid :
 - Gnome, KDE Plasma, XFCE et DWM sont disponibles.
 - L'environnement complet `orchid-dwm` est disponible au téléchargement, avec des customisations sympatiques et un look moderne
 - Firefox en binaire est aussi installé par défaut.
-- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. Un stage Gnome SystemD est en test.
 - Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
 
