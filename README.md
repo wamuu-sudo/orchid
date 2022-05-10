@@ -17,7 +17,7 @@ Attention, même si le projet est déployable et utilisable couramment, des prob
 
 De nouvelles éditions sont disponibles :
 
-- DWM et DWM Gaming (Utilisation avancée)
+- DWM et DWM Gaming (Utilisation avancée).
 - Gnome, Gnome Gaming et Gnome Gaming SystemD.
 - KDE Plasma (en test).
 - XFCE Gaming.
