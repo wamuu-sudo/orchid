@@ -71,8 +71,8 @@ ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
 
-ORCHID_VERSION[5]="Version Gnome Gaming Edition [3.2Go]"
-ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
+ORCHID_VERSION[5]="Version Gnome Gaming Edition [3.1Go]"
+ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
 ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
@@ -997,7 +997,7 @@ elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
 elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "BASE-X11" ]]; then
