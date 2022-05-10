@@ -526,18 +526,18 @@ auto_partitionning_full_disk()
 	SFDISK_CONFIG+="device: ${CHOOSEN_DISK}
 	"
 	if [ "$ROM" = "UEFI" ]; then
-		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=512M,type=uefi
+		SFDISK_CONFIG+="${DISK_PARTITIONS}1: size=512M,type=uefi
 		"                                                                               # EFI System
-		SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
+		SFDISK_CONFIG+="${DISK_PARTITIONS}2: size=${SWAP_SIZE_GB}G,type=swap
 		"                                                                               # Linux SWAP
-		SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+		SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
 	elif [ "$ROM" = "BIOS" ]; then
-		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
+		SFDISK_CONFIG+="${DISK_PARTITIONS}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
 		"                                                                               # BIOS Boot partition
-	  	SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
+	  	SFDISK_CONFIG+="${DISK_PARTITIONS}2: size=${SWAP_SIZE_GB}G,type=swap
 		"                                                                               # Linux SWAP
-	 	 SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+	 	 SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
 	fi
 
@@ -545,13 +545,13 @@ auto_partitionning_full_disk()
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
-	  	mkfs.vfat -F32 "${CHOOSEN_DISK}1"
+	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
 	fi
 
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
-	mkswap "${CHOOSEN_DISK}2"
+	mkswap "${DISK_PARTITIONS}2"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-	mkfs.ext4 -F "${CHOOSEN_DISK}3"
+	mkfs.ext4 -F "${DISK_PARTITIONS}3"
 }
 
 ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
@@ -951,6 +951,12 @@ done
 # installation
 echo ""
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
+# Is this an NVME disk?
+if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
+	DISK_PARTITIONS="${CHOOSEN_DISK}p"
+else
+	DISK_PARTITIONS="${CHOOSEN_DISK}"
+fi
 auto_partitionning_full_disk
 
 # Montage des partitions
@@ -958,13 +964,13 @@ auto_partitionning_full_disk
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
+mkdir /mnt/orchid && mount "${DISK_PARTITIONS}3" /mnt/orchid
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
-swapon "${CHOOSEN_DISK}2"
+swapon "${DISK_PARTITIONS}2"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-	mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
+	mkdir -p /mnt/orchid/boot/EFI && mount "${DISK_PARTITIONS}1" /mnt/orchid/boot/EFI
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
