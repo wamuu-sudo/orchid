@@ -30,6 +30,8 @@ Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sud
 
 Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
+Un outil de migration est disponible afin de "convertir" une Gentoo existante en Orchid [ici](https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform).
+
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
