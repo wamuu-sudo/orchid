@@ -91,9 +91,9 @@ Une fois ceci fait, la suite est plus complexe et frustrante.
 En effet, vous pouvez désormais installer le bureau de votre choix, les logiciels que vous voulez ...
 
 La chose est surtout que vous ne pouvez appliquer des customisations graphiquement, étant donné que vous êtes root et en CLI.
-Un thème KDE est par exemple difficilement applicable à cette étape.
 
-Il est néanmoins possible de nous donner un script qui installe vos customisations lors de l'installation avec l'utilisateur non-root, si celle-ci sont faisables en CLI.
+Il faut savoir que les DE ont leurs propres procédures pour faire les customisations pour tous les utilisateurs avant qu'ils soient créés.
+N'hésitez pas à consulter les documentations sur ceux-ci afin d'avoir plus de détails sur comment faire.
 
 N'hésitez pas à nous notifier, sur Discord principalement, si vous compter créer un stage afin que l'on puisse vous aidez au besoin.
 Je rappelle que cette opération nécessite des connaissances avancées dans le monde Linux et Gentoo.
