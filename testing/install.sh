@@ -88,8 +88,8 @@ ORCHID_LOGIN[6]="STANDARD"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
-ORCHID_URL[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
-ORCHID_COUNT[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.count"
+ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
