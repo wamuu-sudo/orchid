@@ -63,10 +63,10 @@ ORCHID_ESYNC_SUPPORT[3]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
-ORCHID_VERSION[4]="Version KDE Plasma [3.3Go]"
-ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+ORCHID_VERSION[4]="Version KDE Plasma [3.2Go]"
+ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
-COUNTED_BY_TREE[4]=744068                                                               # Number of files in KDE stage
+COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
 ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
