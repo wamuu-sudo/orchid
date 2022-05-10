@@ -98,6 +98,31 @@ Il est néanmoins possible de nous donner un script qui installe vos customisati
 N'hésitez pas à nous notifier, sur Discord principalement, si vous compter créer un stage afin que l'on puisse vous aidez au besoin.
 Je rappelle que cette opération nécessite des connaissances avancées dans le monde Linux et Gentoo.
 
+## Créer l'archive :
+
+Une fois vos modifications faites, nous pouvons commencer la préparation du stage afin qu'il soit distribué.
+
+Faisons un peu de ménage avant tout :
+
+```
+rm -rf /var/cache/distfiles/* && rm -rf /tmp/*
+history -c
+```
+
+Nous pouvons sortir du chroot :
+
+```
+exit
+```
+Nous utilisons des archives au format tar.bz2, qui offre un bon rapport.
+Créons l'archive de votre version, en adaptant le nom mais en respectant la norme :
+
+```
+tar jcvpf ../stage4-orchid-nomdevotreversion-latest.tar.bz2 .
+```
+
+Votre stage sera disponible dans le fichier parent où vous vous trouver.
+
 ## Contributeurs
 
 - [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
