@@ -995,7 +995,7 @@ elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME" ]]; then
 elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
