@@ -50,6 +50,7 @@ HOSTNAME=$6
 ORCHID_LOGIN=$7
 ESYNC_SUPPORT=$8
 UPDATE_ORCHID=$9
+ORCHID_NAME=$10
 
 #-----------------------------------------------------------------------------------
 
@@ -117,10 +118,24 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
 if [ "$ORCHID_LOGIN" = "BASE" ]; then
 	rc-update add dbus default && rc-update add NetworkManager default
-else
+elif [ "$ORCHID_LOGIN" = "STANDARD" ]; then
 	rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+	systemctl enable lightdm && systemctl enable NetworkManager
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-BASE" ]; then
+	systemctl enable NetworkManager
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME" ]; then
+	systemctl enable NetworkManager && systemctl enable gdm
 fi
+
+if [ "${ORCHID_NAME}" = "KDE" -o "${ORCHID_NAME}" = "XFCE-GE" ]; then
+	# Lock session password
+	echo "${COLOR_GREEN}*${COLOR_RESET} Activation de pam :"
+	emerge -q pam
+fi
+
 # Change limits for esync support
+# This change the configuration file of pam (see above)
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
