@@ -18,9 +18,9 @@ Ces ISOs sont fournies par Gentoo, et nous n'en sommes pas responsable.
 
 Les fichiers nécessaires à la vérification de l'intégrité sont disponibles sur le [miroir](https://dl.orchid-linux.org).
 
-[Télécharger l'iso sans GUI](https://dl.orchid-linux.org/install-amd64-minimal-20220315T091810Z.iso) [~500Mo]
+[Télécharger l'iso sans GUI](https://dl.orchid-linux.org/install-amd64-minimal-20220508T170538Z.iso) [~500Mo]
 
-[Télécharger la version avec GUI](https://dl.orchid-linux.org/livegui-amd64-20220315T091810Z.iso) [~5Go]
+[Télécharger la version avec GUI](https://dl.orchid-linux.org/livegui-amd64-20220508T170538Z.iso) [~5Go]
 
 Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'outils comme BalenaEtcher ou encore Ventoy.
 
