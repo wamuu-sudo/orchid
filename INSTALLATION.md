@@ -169,6 +169,16 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 
 [Version Gnome complète](https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
 
+[Version XFCE Gaming](https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2) [2.6Go]
+
+[Version Base X.Org](https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2) [1.7Go]
+
+[Version KDE Plasma](https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2) [2.9Go]
+
+[Version Gnome Gaming](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2) [3.1Go]
+
+[Version Gnome Gaming SystemD](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2) [3.1Go]
+
 Exemple:
 
 ```
