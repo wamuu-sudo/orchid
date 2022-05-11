@@ -803,7 +803,9 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 
 	# Calcul de la mémoire SWAP idéale
 	#-----------------------------------------------------------------------------------
-
+	#-----------------------------------------------------------------------------------
+	# Count the number of CPU threads available on the system, for SWAP formula and to inject into /etc/portage/make.conf at a later stage
+	PROCESSORS=$(grep -c processor /proc/cpuinfo)
 	if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
 		swap_size_hibernation
 	elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
@@ -989,7 +991,7 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 cd /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
-PROCESSORS=$(grep -c processor /proc/cpuinfo)
+#PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
