@@ -5,7 +5,7 @@ Orchid est un installateur rapide de Gentoo, pour les ordinateurs de bureau et o
 
 [English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
 
-Version actuelle du projet : Pre-release 1.3.0
+Version actuelle du projet : Pre-release 1.3.2
 
 Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
 
@@ -17,8 +17,8 @@ Attention, même si le projet est déployable et utilisable couramment, des prob
 
 De nouvelles éditions sont disponibles :
 
-- DWM et DWM Gaming.
-- Gnome.
+- DWM et DWM Gaming (Utilisation avancée).
+- Gnome, Gnome Gaming et Gnome Gaming SystemD.
 - KDE Plasma (en test).
 - XFCE Gaming.
 
@@ -29,6 +29,8 @@ Nous proposons aussi l'installation du noyau TkG au travers de nos outils (https
 Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/INSTALLATION.md).
 
 Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
+
+Un outil de migration est disponible afin de "convertir" une Gentoo existante en Orchid est disponible [ici](https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform). Il installe la suite complète de nos outils, et est utilisé lors de la création des stages officiels et communautaires.
 
 Caractéristiques principales d'Orchid :
 
@@ -41,7 +43,6 @@ Caractéristiques principales d'Orchid :
 - Gnome, KDE Plasma, XFCE et DWM sont disponibles.
 - L'environnement complet `orchid-dwm` est disponible au téléchargement, avec des customisations sympatiques et un look moderne
 - Firefox en binaire est aussi installé par défaut.
-- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. Un stage Gnome SystemD est en test.
 - Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
 

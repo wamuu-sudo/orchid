@@ -63,16 +63,16 @@ ORCHID_ESYNC_SUPPORT[3]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
-ORCHID_VERSION[4]="Version KDE Plasma [3.3Go]"
-ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kde-20032022-r2.tar.gz' # KDE
+ORCHID_VERSION[4]="Version KDE Plasma [3.2Go]"
+ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
-COUNTED_BY_TREE[4]=744068                                                               # Number of files in KDE stage
+COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
 ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
 
-ORCHID_VERSION[5]="Version Gnome Gaming Edition [9.0Go]"
-ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnome-gamingedition-23032022-r2.tar.gz'  # Gnome GE
+ORCHID_VERSION[5]="Version Gnome Gaming Edition [3.1Go]"
+ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
 ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
@@ -88,8 +88,8 @@ ORCHID_LOGIN[6]="STANDARD"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
-ORCHID_URL[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
-ORCHID_COUNT[7]="https://dl.orchid-linux.org/testing/stage4-orchid-base-latest.count"
+ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
@@ -586,18 +586,18 @@ auto_partitionning_full_disk()
 	SFDISK_CONFIG+="device: ${CHOOSEN_DISK}
 	"
 	if [ "$ROM" = "UEFI" ]; then
-		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=512M,type=uefi
+		SFDISK_CONFIG+="${DISK_PARTITIONS}1: size=512M,type=uefi
 		"                                                                               # EFI System
-		SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
+		SFDISK_CONFIG+="${DISK_PARTITIONS}2: size=${SWAP_SIZE_GB}G,type=swap
 		"                                                                               # Linux SWAP
-		SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+		SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
 	elif [ "$ROM" = "BIOS" ]; then
-		SFDISK_CONFIG+="${CHOOSEN_DISK}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
+		SFDISK_CONFIG+="${DISK_PARTITIONS}1: size=8M,type=21686148-6449-6E6F-744E-656564454649
 		"                                                                               # BIOS Boot partition
-	  	SFDISK_CONFIG+="${CHOOSEN_DISK}2: size=${SWAP_SIZE_GB}G,type=swap
+	  	SFDISK_CONFIG+="${DISK_PARTITIONS}2: size=${SWAP_SIZE_GB}G,type=swap
 		"                                                                               # Linux SWAP
-	 	 SFDISK_CONFIG+="${CHOOSEN_DISK}3: type=linux
+	 	 SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
 	fi
 
@@ -605,13 +605,13 @@ auto_partitionning_full_disk()
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
-	  	mkfs.vfat -F32 "${CHOOSEN_DISK}1"
+	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
 	fi
 
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
-	mkswap "${CHOOSEN_DISK}2"
+	mkswap "${DISK_PARTITIONS}2"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-	mkfs.ext4 -F "${CHOOSEN_DISK}3"
+	mkfs.ext4 -F "${DISK_PARTITIONS}3"
 }
 
 ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
@@ -1019,6 +1019,12 @@ exit
 # installation
 echo ""
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
+# Is this an NVME disk?
+if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
+	DISK_PARTITIONS="${CHOOSEN_DISK}p"
+else
+	DISK_PARTITIONS="${CHOOSEN_DISK}"
+fi
 auto_partitionning_full_disk
 
 # Montage des partitions
@@ -1026,13 +1032,13 @@ auto_partitionning_full_disk
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
+mkdir /mnt/orchid && mount "${DISK_PARTITIONS}3" /mnt/orchid
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
-swapon "${CHOOSEN_DISK}2"
+swapon "${DISK_PARTITIONS}2"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-	mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
+	mkdir -p /mnt/orchid/boot/EFI && mount "${DISK_PARTITIONS}1" /mnt/orchid/boot/EFI
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
@@ -1063,9 +1069,9 @@ elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME" ]]; then
 elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xvz --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -xv --xattrs 2>&1 | decompress_with_progress_bar
+	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
 	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 elif [[ "${ORCHID_NAME[$no_archive]}" == "BASE-X11" ]]; then

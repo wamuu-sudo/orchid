@@ -65,11 +65,18 @@ env-update && source /etc/profile
 
 # Configuration de fstab
 #-----------------------------------------------------------------------------------
+# Is this an NVME disk?
+if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
+	DISK_PARTITIONS="${CHOOSEN_DISK}p"
+else
+	DISK_PARTITIONS="${CHOOSEN_DISK}"
+fi
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
+echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+echo "${DISK_PARTITIONS}2    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
-  echo "${CHOOSEN_DISK}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
+  echo "${DISK_PARTITIONS}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 
 #-----------------------------------------------------------------------------------
