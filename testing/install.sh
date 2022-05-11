@@ -88,12 +88,20 @@ ORCHID_LOGIN[6]="STANDARD"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
-ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Base
 ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
 ORCHID_NAME[7]="BASE-X11"
+
+ORCHID_VERSION[8]="Version base avec Systemd (X11 & Network Manager) [2.0Go]"
+ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
+ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
+#ORCHID_COUNT[7]=
+ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
+ORCHID_LOGIN[8]="BASE"
+ORCHID_NAME[8]="BASE-SYSTEMD-X11"
 
 #-----------------------------------------------------------------------------------
 
@@ -1006,23 +1014,7 @@ fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
-if [[ "${ORCHID_NAME[$no_archive]}" == "DWM" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "DWM-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "BASE-X11" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-fi
+wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 
 # Fail safe
 echo -ne "\r100%[${BAR:0:50}]"
