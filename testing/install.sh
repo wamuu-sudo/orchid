@@ -84,7 +84,7 @@ ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-sys
 ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
 ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
-ORCHID_LOGIN[6]="STANDARD"
+ORCHID_LOGIN[6]="SYSTEMD-GNOME"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
@@ -100,8 +100,17 @@ ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-lat
 ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
-ORCHID_LOGIN[8]="BASE"
+ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
+
+ORCHID_VERSION[9]="Version Budgie avec Systemd [2.3Go]"
+ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
+ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
+#ORCHID_COUNT[7]=
+ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
+ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
+ORCHID_NAME[9]="BUDGIE-SYSTEMD"
+
 
 #-----------------------------------------------------------------------------------
 
@@ -1053,7 +1062,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then
@@ -1093,7 +1102,7 @@ echo ""
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
-
+exit
 # Restore screen
 #tput rmcup # Restore screen contents
 
