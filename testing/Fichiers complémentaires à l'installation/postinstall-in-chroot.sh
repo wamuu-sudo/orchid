@@ -50,7 +50,7 @@ HOSTNAME=$6
 ORCHID_LOGIN=$7
 ESYNC_SUPPORT=$8
 UPDATE_ORCHID=$9
-ORCHID_NAME=$10
+ORCHID_NAME=${10}
 
 #-----------------------------------------------------------------------------------
 
