@@ -586,6 +586,14 @@ while true; do
 done
 }
 
+set_totalmemory_against_processors()
+{
+# For some packages (e.g. webkit-gtk) to compile succesfully, we MUST have at least: available RAM (including SWAP) > 2*CPU(threads)
+# see: https://wiki.gentoo.org/wiki/MAKEOPTS
+if ! (( ${RAM_SIZE_GB} + ${SWAP_SIZE_GB} >= (${PROCESSORS} * 2)  + 2 )); then # we add 2GB for margin
+	(( SWAP_SIZE_GB=(${PROCESSORS} * 2 ) - ${RAM_SIZE_GB} + 2 )) # we add 2GB for margin
+fi
+}
 
 swap_size_hibernation()
 {
@@ -597,6 +605,7 @@ swap_size_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
+		set_totalmemory_against_processors
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
@@ -606,6 +615,7 @@ swap_size_hibernation()
 			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 		fi
 	fi
+set_totalmemory_against_processors
 }
 
 
@@ -619,8 +629,10 @@ swap_size_no_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+		set_totalmemory_against_processors
 		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 	fi
+set_totalmemory_against_processors
 }
 
 
@@ -791,7 +803,9 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 
 	# Calcul de la mémoire SWAP idéale
 	#-----------------------------------------------------------------------------------
-
+	#-----------------------------------------------------------------------------------
+	# Count the number of CPU threads available on the system, for SWAP formula and to inject into /etc/portage/make.conf at a later stage
+	PROCESSORS=$(grep -c processor /proc/cpuinfo)
 	if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
 		swap_size_hibernation
 	elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
@@ -917,9 +931,9 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	echo "Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
-		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : RAM de ${RAM_SIZE_GB} Go, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
+		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 	elif [ "$HIBERNATION" = n ]; then
-		echo "Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+		echo "Votre mémoire a une taille de ${RAM_SIZE_GB} Go avec ${PROCESSORS} coeurs de processeur. Votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 	fi
 
 	echo "Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
@@ -977,7 +991,7 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 cd /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
-PROCESSORS=$(grep -c processor /proc/cpuinfo)
+#PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
