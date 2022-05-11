@@ -931,9 +931,9 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	echo "Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
-		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : RAM de ${RAM_SIZE_GB} Go, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
+		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} cœurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 	elif [ "$HIBERNATION" = n ]; then
-		echo "Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+		echo "Votre mémoire a une taille de ${RAM_SIZE_GB} Go avec ${PROCESSORS} cœurs de processeur. Votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 	fi
 
 	echo "Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
