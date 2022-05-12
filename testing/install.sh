@@ -84,16 +84,33 @@ ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-sys
 ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
 ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
-ORCHID_LOGIN[6]="STANDARD"
+ORCHID_LOGIN[6]="SYSTEMD-GNOME"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
 ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
-ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Base
 ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
 ORCHID_NAME[7]="BASE-X11"
+
+ORCHID_VERSION[8]="Version base avec Systemd (X11 & Network Manager) [2.0Go]"
+ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
+ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
+#ORCHID_COUNT[7]=
+ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
+ORCHID_LOGIN[8]="SYSTEMD-BASE"
+ORCHID_NAME[8]="BASE-SYSTEMD-X11"
+
+ORCHID_VERSION[9]="Version Budgie avec Systemd [2.3Go]"
+ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
+ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
+#ORCHID_COUNT[7]=
+ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
+ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
+ORCHID_NAME[9]="BUDGIE-SYSTEMD"
+
 
 #-----------------------------------------------------------------------------------
 
@@ -646,6 +663,14 @@ while true; do
 done
 }
 
+set_totalmemory_against_processors()
+{
+# For some packages (e.g. webkit-gtk) to compile succesfully, we MUST have at least: available RAM (including SWAP) > 2*CPU(threads)
+# see: https://wiki.gentoo.org/wiki/MAKEOPTS
+if ! (( ${RAM_SIZE_GB} + ${SWAP_SIZE_GB} >= (${PROCESSORS} * 2)  + 2 )); then # we add 2GB for margin
+	(( SWAP_SIZE_GB=(${PROCESSORS} * 2 ) - ${RAM_SIZE_GB} + 2 )) # we add 2GB for margin
+fi
+}
 
 swap_size_hibernation()
 {
@@ -657,6 +682,7 @@ swap_size_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
+		set_totalmemory_against_processors
 		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
@@ -666,6 +692,7 @@ swap_size_hibernation()
 			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 		fi
 	fi
+set_totalmemory_against_processors
 }
 
 
@@ -679,8 +706,10 @@ swap_size_no_hibernation()
 
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+		set_totalmemory_against_processors
 		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
 	fi
+set_totalmemory_against_processors
 }
 
 
@@ -857,7 +886,9 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 
 	# Calcul de la mémoire SWAP idéale
 	#-----------------------------------------------------------------------------------
-
+	#-----------------------------------------------------------------------------------
+	# Count the number of CPU threads available on the system, for SWAP formula and to inject into /etc/portage/make.conf at a later stage
+	PROCESSORS=$(grep -c processor /proc/cpuinfo)
 	if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
 		swap_size_hibernation
 	elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
@@ -984,9 +1015,9 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 	echo "Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
-		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : RAM de ${RAM_SIZE_GB} Go, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
+		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 	elif [ "$HIBERNATION" = n ]; then
-		echo "Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+		echo "Votre mémoire a une taille de ${RAM_SIZE_GB} Go avec ${PROCESSORS} coeurs de processeur. Votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
 	fi
 
 	echo "Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
@@ -1045,7 +1076,7 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
 cd /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
-PROCESSORS=$(grep -c processor /proc/cpuinfo)
+#PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
@@ -1060,23 +1091,7 @@ fi
 
 # tar options to extract: tar.bz2 -jxvp, tar.gz -xvz, tar -xv
 echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
-if [[ "${ORCHID_NAME[$no_archive]}" == "DWM" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "DWM-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "XFCE-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "KDE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "GNOME-GE-SYSTEMD" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-elif [[ "${ORCHID_NAME[$no_archive]}" == "BASE-X11" ]]; then
-	wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
-fi
+wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_with_progress_bar
 
 # Fail safe
 echo -ne "\r100%[${BAR:0:50}]"
@@ -1115,7 +1130,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then
@@ -1155,7 +1170,7 @@ echo ""
 read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
-
+exit
 # Restore screen
 #tput rmcup # Restore screen contents
 

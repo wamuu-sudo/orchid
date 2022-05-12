@@ -110,7 +110,27 @@ Elle s'utilise comme suit :
  ```
 sudo orchid-set-tkg
  ```
+ 
+### orchid-optimize
 
+Recompile l'ensemble des paquets avec les optimisations processeur.
+Permets de rejoindre l'élitisme suprême proposé par Gentoo et Orchid.
+
+Lancer la commande et l'opération se fait automatiquement :
+
+ ```
+ sudo orchid-optimize
+ ```
+
+### orchid-transform
+
+Transforme une Gentoo en Orchid avec la suite d'outils Orchid, ainsi que les wallpapers, logiciels partenaires et autres.
+
+Lancer la commande et l'opération se fait automatiquement :
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform && chmod +x ./orchid-transform && sudo ./orchid-transform
+```
 
 ## Contributeurs
 - [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
