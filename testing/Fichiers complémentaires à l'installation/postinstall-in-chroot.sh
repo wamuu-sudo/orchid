@@ -108,6 +108,11 @@ echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                         
 
 # Configuration de GRUB
 #-----------------------------------------------------------------------------------
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gentoo-kernel-bin pour Btrfs"
+	emerge --config gentoo-kernel-bin
+fi
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 if [ "$ROM" = "UEFI" ]; then
   # Installation de GRUB pour UEFI
@@ -185,6 +190,7 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Défragmentation et compression du système de fichiers Btrfs"
 	btrfs filesystem defragment -r -v -czstd /
 fi
+
 #-----------------------------------------------------------------------------------
 
 #========================================================================== MAIN ===

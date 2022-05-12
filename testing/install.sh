@@ -1052,7 +1052,7 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	;;
 	esac
 done
-exit
+
 # installation
 echo ""
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
