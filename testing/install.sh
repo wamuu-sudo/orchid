@@ -371,7 +371,7 @@ CLI_filesystem_selector()
 Btrfs est récent. Il permet de prendre automatiquement des instantanés
 du système pour revenir en arrière si une mise à jour se passe mal.
 Toutes les données seront compressées de façon transparente.
-Il est possible de redimmensionner la taille du système à chaud.
+Il est possible de redimensionner la taille du système à chaud.
 
 Ext4 est robuste grâce à la journalisation des opérations, 
 minimise la fragmentation des données et est largement éprouvé.
@@ -627,8 +627,14 @@ auto_partitionning_full_disk()
 
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 	mkswap "${DISK_PARTITIONS}2"
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-	mkfs.ext4 -F "${DISK_PARTITIONS}3"
+	
+	if [ "$FILESYSTEM" = "Btrfs" ]; then
+		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition Btrfs."
+		mkfs.btrfs -f "${DISK_PARTITIONS}3"
+	elif [ "$FILESYSTEM" = "ext4" ]; then
+		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
+		mkfs.ext4 -F "${DISK_PARTITIONS}3"
+	fi
 }
 
 ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
@@ -1130,7 +1136,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then

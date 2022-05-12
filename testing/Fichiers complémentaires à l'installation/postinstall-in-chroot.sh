@@ -51,6 +51,7 @@ ORCHID_LOGIN=$7
 ESYNC_SUPPORT=$8
 UPDATE_ORCHID=$9
 ORCHID_NAME=${10}
+FILESYSTEM=${11}
 
 #-----------------------------------------------------------------------------------
 
@@ -74,7 +75,15 @@ else
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
+	btrfs subvolume create root
+	snapper -c root create-config /
+	echo "${DISK_PARTITIONS}3    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
+elif [ "$FILESYSTEM" = "ext4" ]; then	
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
+	echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+fi
 echo "${DISK_PARTITIONS}2    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
   echo "${DISK_PARTITIONS}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
@@ -172,7 +181,10 @@ if [ "$UPDATE_ORCHID" = "o" ]; then
   emerge --depclean -q
 fi
 
-
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Défragmentation et compression du système de fichiers Btrfs"
+	btrfs filesystem defragment -r -v -czstd /
+fi
 #-----------------------------------------------------------------------------------
 
 #========================================================================== MAIN ===
