@@ -43,12 +43,15 @@ COLOR_RESET=$'\033[0m'
 #-----------------------------------------------------------------------------------
 CHOOSEN_DISK=$1
 ROM=$2
-USERNAME=$3
-ESYNC_SUPPORT=$4
-HOSTNAME=$5
-ROOT_PASS=$6
-USER_PASS=$7
-UPDATE_ORCHID=$8
+ROOT_PASS=$3
+USERNAME=$4
+USER_PASS=$5
+HOSTNAME=$6
+ORCHID_LOGIN=$7
+ESYNC_SUPPORT=$8
+UPDATE_ORCHID=$9
+ORCHID_NAME=${10}
+
 #-----------------------------------------------------------------------------------
 
 #============================================================== PRECONFIGURATION ===
@@ -63,11 +66,18 @@ env-update && source /etc/profile
 
 # Configuration de fstab
 #-----------------------------------------------------------------------------------
+# Is this an NVME disk?
+if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
+	DISK_PARTITIONS="${CHOOSEN_DISK}p"
+else
+	DISK_PARTITIONS="${CHOOSEN_DISK}"
+fi
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-echo "${CHOOSEN_DISK}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-echo "${CHOOSEN_DISK}2    none    swap    sw    0 0" >> /etc/fstab
+echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+echo "${DISK_PARTITIONS}2    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
-  echo "${CHOOSEN_DISK}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
+  echo "${DISK_PARTITIONS}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 
 #-----------------------------------------------------------------------------------
@@ -106,8 +116,26 @@ fi
 #-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Activation de services :"
 # Activation des services rc
-rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+if [ "$ORCHID_LOGIN" = "BASE" ]; then
+	rc-update add dbus default && rc-update add NetworkManager default
+elif [ "$ORCHID_LOGIN" = "STANDARD" ]; then
+	rc-update add display-manager default && rc-update add dbus default && rc-update add NetworkManager default && rc-update add elogind boot
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+	systemctl enable lightdm && systemctl enable NetworkManager
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-BASE" ]; then
+	systemctl enable NetworkManager
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME" ]; then
+	systemctl enable NetworkManager && systemctl enable gdm
+fi
+
+if [ "${ORCHID_NAME}" = "KDE" -o "${ORCHID_NAME}" = "XFCE-GE" ]; then
+	# Lock session password
+	echo "${COLOR_GREEN}*${COLOR_RESET} Activation de pam :"
+	emerge -q pam
+fi
+
 # Change limits for esync support
+# This change the configuration file of pam (see above)
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf

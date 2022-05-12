@@ -5,7 +5,7 @@ Orchid est un installateur rapide de Gentoo, pour les ordinateurs de bureau et o
 
 [English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
 
-Version actuelle du projet : Beta 1.1.0
+Version actuelle du projet : Pre-release 1.3.2
 
 Il est fortement recommandé de rejoindre le Discord afin d'être tenu informé des mises à jour, et d'une documentation plus poussée qu'ici : [Orchid Linux](https://discord.gg/Wegk7a6TQ8)
 
@@ -17,9 +17,10 @@ Attention, même si le projet est déployable et utilisable couramment, des prob
 
 De nouvelles éditions sont disponibles :
 
-- DWM et DWM Gaming.
-- Gnome.
+- DWM et DWM Gaming (Utilisation avancée).
+- Gnome, Gnome Gaming et Gnome Gaming SystemD.
 - KDE Plasma (en test).
+- XFCE Gaming.
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
 
@@ -29,18 +30,19 @@ Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sud
 
 Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
+Un outil de migration est disponible afin de "convertir" une Gentoo existante en Orchid est disponible [ici](https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform). Il installe la suite complète de nos outils, et est utilisé lors de la création des stages officiels et communautaires.
+
 Caractéristiques principales d'Orchid :
 
 - Nous ne nous définissons pas comme un système d'exploitation à part entière, mais comme un "enrobage" de Gentoo. 
 - Nous visons malgré tout les utilisateurs avancés, même si l'installation est moins fastidieuse.
-- Il n'y a pour l'instant aucun script ou installateur graphique, c'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo).
+- C'est une installation en CLI (qui reste plus rapide et simple que celle de Gentoo), ou au travers d'un script interactif.
 - Tous les paquets de Gentoo sont disponibles.
 - Nous utilisons le noyau gentoo-kernel-bin, qui suit le canal stable LTS officiel de Linux. Un déblocage facilité est possible.
 - `eix` est installé par défaut.
-- Gnome, KDE Plasma, et DWM sont disponibles.
+- Gnome, KDE Plasma, XFCE et DWM sont disponibles.
 - L'environnement complet `orchid-dwm` est disponible au téléchargement, avec des customisations sympatiques et un look moderne
 - Firefox en binaire est aussi installé par défaut.
-- Seulement des installations intégrant OpenRC sont disponibles, bien que SystemD soit utilisable sur Gentoo. 
 - Nous avons fait le choix d'intégrer Flatpak par défaut pour des raisons de praticité. Il est également utilisé pour les outils Gaming dans les éditions respectives.
 
 

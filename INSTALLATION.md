@@ -18,15 +18,41 @@ Ces ISOs sont fournies par Gentoo, et nous n'en sommes pas responsable.
 
 Les fichiers nécessaires à la vérification de l'intégrité sont disponibles sur le [miroir](https://dl.orchid-linux.org).
 
-[Télécharger l'iso sans GUI](https://dl.orchid-linux.org/install-amd64-minimal-20220315T091810Z.iso) [~500Mo]
+[Télécharger l'iso sans GUI](https://dl.orchid-linux.org/install-amd64-minimal-20220508T170538Z.iso) [~500Mo]
 
-[Télécharger la version avec GUI](https://dl.orchid-linux.org/livegui-amd64-20220315T091810Z.iso) [~5Go]
+[Télécharger la version avec GUI](https://dl.orchid-linux.org/livegui-amd64-20220508T170538Z.iso) [~5Go]
 
 Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'outils comme BalenaEtcher ou encore Ventoy.
 
 ## Prérequis :
 
 La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
+
+CPU : au moins 4 coeurs
+
+RAM : au moins 4 Go
+
+Espace disque : 20Go
+
+## Utilisation du script (testing) et ne nécessite pas la suite du guide :
+
+Il faut télécharger le script :
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install.sh
+```
+
+et appliquer les bons droits :
+
+```
+chmod +x ./install.sh
+```
+
+puis lancer le script interactif avec les droits root (avec `sudo` ou en root via `su root` après avoir mis un mot de passe à root) :
+
+```
+./install.sh
+```
 
 ## Préparer l'installation :
 
@@ -52,10 +78,16 @@ Si vous n'avez pas d'ip, vous pouvez relancer une requête à votre serveur DHCP
 dhcpcd
 ```
 
-Si vous avez besoin du WiFi, l'ISO intègre un outil :
+Si vous avez besoin du WiFi, l'ISO intègre des outils :
 
 ```
 net-setup
+```
+
+ou sur l'iso graphique :
+
+```
+nmtui
 ```
 
 ## Partitionnement :
@@ -136,6 +168,16 @@ Il faut ensuite télécharger l'archive qui convient pour un système Orchid com
 [Version DWM Gaming Edition](https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
 
 [Version Gnome complète](https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
+
+[Version XFCE Gaming](https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2) [2.6Go]
+
+[Version Base X.Org](https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2) [1.7Go]
+
+[Version KDE Plasma](https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2) [2.9Go]
+
+[Version Gnome Gaming](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2) [3.1Go]
+
+[Version Gnome Gaming SystemD](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2) [3.1Go]
 
 Exemple:
 

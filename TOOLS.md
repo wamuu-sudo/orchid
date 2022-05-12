@@ -22,7 +22,6 @@ Cette commande s'utilise simplement en lançant `orchid-sync`.
 ### orchid-install
 
 Cette commande permets l'installation de logiciel.
-Basiquement, elle effectue un `emerge -av --autounmask=y --autounmask-write`.
 Cela permets l'acceptation de paquets masqués.
 
 Elle s'utilise comme suit :
@@ -33,7 +32,6 @@ sudo orchid-install monpaquet
 ### orchid-delete
 
 Cette commande permets la suppression et le nettoyage d'un logiciel.
-Basiquement, elle effectue un `emerge -C && emerge --depclean`.
 Elle nettoie donc les dépendances et paquets inutiles après la suppression.
 
 Elle s'utilise comme suit :
@@ -43,8 +41,7 @@ sudo orchid-delete monpaquet
 
 ### orchid-update
 
-Cette commande permets la mise à jour du système.
-Basiquement, elle effectue un `eix-sync && emerge -avuDN @world`.
+Cette commande permets la mise à jour du système. Elle effectue également un `orchid-sync`.
 
 Elle s'utilise comme suit :
  ```
@@ -53,17 +50,23 @@ sudo orchid-update
 ### orchid-update-sleep
 
 Cette commande permets la mise à jour du système et l'extinction du système à la fin, utile avant d'aller dormir.
-Basiquement, elle effectue un `eix-sync && emerge -avuDN @world && shutdown -h now`.
 
 Elle s'utilise comme suit :
  ```
 sudo orchid-update-sleep
  ```
+### orchid-update-reboot
+
+Cette commande permets la mise à jour du système et de le redémarrer à la fin.
+
+Elle s'utilise comme suit :
+ ```
+sudo orchid-update-reboot
+ ```
 
 ### orchid-boot-update
 
 Cette commande permets la mise à jour de grub, utile en cas de changement ou de majs du noyau.
-Basiquement, elle effectue un `grub-mkconfig -o /boot/grub/grub.cfg`.
 
 Elle s'utilise comme suit :
  ```
@@ -73,7 +76,7 @@ sudo orchid-boot-update
 
 ### orchid-kernel-up
 
-Cette commande autorise l'installation des noyaux masqués, par exemple le 5.16.17 actuellement.
+Cette commande autorise l'installation des noyaux masqués, par exemple le 5.16.17.
 La commande à elle seule n'installe rien, il faut lancer une mise à jour du système après.
 
 Elle s'utilise comme suit :
@@ -83,8 +86,7 @@ sudo orchid-kernel-up
 
 ### orchid-nvidia
 
-Cette commande autorise l'installation des pilotes nvidia en dernière version disponible.
-La commande à elle seule n'installe rien, il faut lancer une mise à jour du système après.
+Cette commande autorise l'installation des pilotes nvidia en dernière version disponible, ainsi que les paquets nécessaires à CUDA/NVENC selon la documentation Gentoo.
 
 Elle s'utilise comme suit :
  ```
@@ -108,7 +110,27 @@ Elle s'utilise comme suit :
  ```
 sudo orchid-set-tkg
  ```
+ 
+### orchid-optimize
 
+Recompile l'ensemble des paquets avec les optimisations processeur.
+Permets de rejoindre l'élitisme suprême proposé par Gentoo et Orchid.
+
+Lancer la commande et l'opération se fait automatiquement :
+
+ ```
+ sudo orchid-optimize
+ ```
+
+### orchid-transform
+
+Transforme une Gentoo en Orchid avec la suite d'outils Orchid, ainsi que les wallpapers, logiciels partenaires et autres.
+
+Lancer la commande et l'opération se fait automatiquement :
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform && chmod +x ./orchid-transform && sudo ./orchid-transform
+```
 
 ## Contributeurs
 - [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
