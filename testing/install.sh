@@ -942,40 +942,6 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	UI_PAGE=11
 	;;
 	11)
-<<<<<<< HEAD
-echo "${COLOR_WHITE}Résumé de l'installation :${COLOR_RESET}"
-echo ""
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Test de la connection internet."
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET}."
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux va s'installer sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-
-if [ "$HIBERNATION" = o ]; then
-	echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} (votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
-elif [ "$HIBERNATION" = n ]; then
-	echo "[  ${COLOR_GREEN}OK${COLOR_RESET}] Votre RAM a une taille de ${RAM_SIZE_GB} Go, votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
-fi
-
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] En plus de l'administrateur root, l'utilisateur suivant va être créé : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
-echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Sur le réseau, ce système aura pour nom ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
-if [ "$ESYNC_SUPPORT" = o ]; then
-	echo "  [${COLOR_GREEN}OK${COLOR_RESET}] La configuration ${COLOR_GREEN}esync${COLOR_RESET} qui améliore les performances de certains jeux sera faite sur votre Orchid Linux pour ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
-fi
-
-if [ "$UPDATE_ORCHID" = o ]; then
-	echo "  [${COLOR_GREEN}OK${COLOR_RESET}] Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. Cela peut être très long."
-fi
-
-echo ""
-echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
-read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
-if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-	echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
-	exit
-fi
-	PAGER=12
-=======
 	echo_center "${COLOR_WHITE}Résumé de l'installation${COLOR_RESET}"
 	echo "Test de la connection internet : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
@@ -1007,7 +973,6 @@ fi
 		exit
 	fi
 	UI_PAGE=12
->>>>>>> main
 	;;
 	12)	# Print Installation in the upper side of the UI.
 	break
@@ -1029,7 +994,6 @@ auto_partitionning_full_disk
 #-----------------------------------------------------------------------------------
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
-<<<<<<< HEAD
 echo "  [${COLOR_GREEN}  OK  ${COLOR_RESET}]  Partition racine."
 mkdir /mnt/orchid && mount "${CHOOSEN_DISK}3" /mnt/orchid
 echo "  [${COLOR_GREEN}  OK  ${COLOR_RESET}]  Activation du SWAP."
@@ -1038,16 +1002,6 @@ swapon "${CHOOSEN_DISK}2"
 if [ "$ROM" = "UEFI" ]; then
 	mkdir -p /mnt/orchid/boot/EFI && mount "${CHOOSEN_DISK}1" /mnt/orchid/boot/EFI
 	echo "  $[${COLOR_GREEN}  OK  ${COLOR_RESET}]  Partition EFI."
-=======
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount "${DISK_PARTITIONS}3" /mnt/orchid
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
-swapon "${DISK_PARTITIONS}2"
-# Pour l'EFI
-if [ "$ROM" = "UEFI" ]; then
-	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-	mkdir -p /mnt/orchid/boot/EFI && mount "${DISK_PARTITIONS}1" /mnt/orchid/boot/EFI
->>>>>>> main
 fi
 
 echo "[${COLOR_GREEN}  OK  ${COLOR_RESET}]  Partitionnement"
@@ -1107,12 +1061,8 @@ wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/install-chroot.tar.x
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 echo "[${COLOR_GREEN}  OK  ${COLOR_RESET}]  Téléchargement des scrips pour le chroot"
 # On rend les scripts exécutables
-<<<<<<< HEAD
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh
 echo "[${COLOR_GREEN}  OK  ${COLOR_RESET}]  Scripts exécutables"
-=======
-chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh
->>>>>>> main
 
 
 # Lancement des scripts en fonction du système
