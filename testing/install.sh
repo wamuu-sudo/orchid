@@ -1069,7 +1069,12 @@ auto_partitionning_full_disk
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount "${DISK_PARTITIONS}3" /mnt/orchid
+mkdir /mnt/orchid 
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	mount -o compress=zstd:1 "${DISK_PARTITIONS}3" /mnt/orchid
+elif [ "$FILESYSTEM" = "ext4" ]; then
+	mount "${DISK_PARTITIONS}3" /mnt/orchid
+fi
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
 swapon "${DISK_PARTITIONS}2"
 # Pour l'EFI

@@ -140,19 +140,18 @@ echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                         
 #-----------------------------------------------------------------------------------
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gentoo-kernel-bin pour Btrfs"
-	emerge --config gentoo-kernel-bin
+	emerge --quiet --config gentoo-kernel-bin
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 if [ "$ROM" = "UEFI" ]; then
   # Installation de GRUB pour UEFI
   grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
-  grub-mkconfig -o /boot/grub/grub.cfg
 elif [ "$ROM" = "BIOS" ]; then
   # Installation de GRUB pour BIOS
   grub-install "${CHOOSEN_DISK}"
-  grub-mkconfig -o /boot/grub/grub.cfg
 fi
+grub-mkconfig -o /boot/grub/grub.cfg
 
 #-----------------------------------------------------------------------------------
 
@@ -183,6 +182,13 @@ fi
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
+fi
+
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Passage des outils orchid-* en version Btrfs."
+	cd /usr/share/orchid/orchid-bins
+	git checkout btrfs
+	cd /
 fi
 
 # Add CPU_FLAGS_X86 to make.conf
