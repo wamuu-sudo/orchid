@@ -231,7 +231,7 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo -ne "\r100%[${BAR:0:50}]"
 	# New line
 	echo -ne "\r\v"
-	echo "${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
 
 fi
 
