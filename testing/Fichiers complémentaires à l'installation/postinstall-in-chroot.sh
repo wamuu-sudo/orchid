@@ -64,8 +64,8 @@ BAR='=================================================='                        
 progress_bar()
 {
 	while read line; do
-		pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE[$no_archive]} ))
-		pct_num=$(( $processed * 100 / ${COUNTED_BY_TREE[$no_archive]} ))
+		pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE} ))
+		pct_num=$(( $processed * 100 / ${COUNTED_BY_TREE} ))
 		# Fail safe
 		if [ $pct_num -ge 100 ]; then
 		  	pct_num=99
@@ -218,6 +218,7 @@ fi
 
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Défragmentation et compression du système de fichiers Btrfs"
+	processed=0
 	echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
 	btrfs filesystem defragment -r -v -czstd / 2>&1 | progress_bar
 	# Fail safe
