@@ -52,6 +52,36 @@ ESYNC_SUPPORT=$8
 UPDATE_ORCHID=$9
 ORCHID_NAME=${10}
 FILESYSTEM=${11}
+COUNTED_BY_TREE=${12}
+
+BAR='=================================================='                                # This is full bar, i.e. 50 chars
+
+#-----------------------------------------------------------------------------------
+
+# Functions
+#-----------------------------------------------------------------------------------
+
+progress_bar()
+{
+	while read line; do
+		pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE[$no_archive]} ))
+		pct_num=$(( $processed * 100 / ${COUNTED_BY_TREE[$no_archive]} ))
+		# Fail safe
+		if [ $pct_num -ge 100 ]; then
+		  	pct_num=99
+		fi
+
+		pct_num_pad="   $pct_num%"
+		pct_num_lengh=${#pct_num_pad}
+		position_to_trim=$(($pct_num_lengh - 4))
+		echo -ne "\r${pct_num_pad:$position_to_trim}[${BAR:0:$pct_dash}>"
+		processed=$((processed+1))
+		# Fail safe
+		if [ $processed -ge ${COUNTED_BY_TREE} ]; then
+		  	processed=$((${COUNTED_BY_TREE} -1))
+		fi
+	done
+}
 
 #-----------------------------------------------------------------------------------
 
@@ -77,7 +107,7 @@ fi
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
-	btrfs subvolume create root
+	btrfs subvolume create /
 	snapper -c root create-config /
 	echo "${DISK_PARTITIONS}3    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
 elif [ "$FILESYSTEM" = "ext4" ]; then	
@@ -188,7 +218,14 @@ fi
 
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Défragmentation et compression du système de fichiers Btrfs"
-	btrfs filesystem defragment -r -v -czstd /
+	echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
+	btrfs filesystem defragment -r -v -czstd / 2>&1 | progress_bar
+	# Fail safe
+	echo -ne "\r100%[${BAR:0:50}]"
+	# New line
+	echo -ne "\r\v"
+	echo "${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
+
 fi
 
 #-----------------------------------------------------------------------------------
