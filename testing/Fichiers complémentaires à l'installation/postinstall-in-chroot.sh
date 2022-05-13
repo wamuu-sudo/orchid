@@ -187,6 +187,7 @@ fi
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Passage des outils orchid-* en version Btrfs."
 	cd /usr/share/orchid/orchid-bins
+	git fetch
 	git checkout btrfs
 	cd /
 fi
