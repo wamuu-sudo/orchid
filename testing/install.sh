@@ -784,8 +784,9 @@ draw_installer_steps		# we draw the upper part of the menu
 	#-----------------------------------------------------------------------------------
 
 	WELCOME="${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable
-de tous les problèmes possibles et inimaginables qui
-pourraient arriver en installant Orchid Linux.
+d'éventuels problèmes qui pourraient arriver lors de
+l'installation ou l'utilisation d'Orchid Linux.
+(Licence GPL 3.0 ou supérieure)
 
 Lisez très attentivement les instructions.
 Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
@@ -1070,17 +1071,21 @@ auto_partitionning_full_disk
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
 mkdir /mnt/orchid 
+UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
-	mount -o compress=zstd:1 "${DISK_PARTITIONS}3" /mnt/orchid
+	mount -o compress=zstd:1 UUID="${UUID}" /mnt/orchid
 elif [ "$FILESYSTEM" = "ext4" ]; then
-	mount "${DISK_PARTITIONS}3" /mnt/orchid
+	mount UUID="${UUID}" /mnt/orchid
 fi
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
-swapon "${DISK_PARTITIONS}2"
+UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+swapon -U "${UUID}"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-	mkdir -p /mnt/orchid/boot/EFI && mount "${DISK_PARTITIONS}1" /mnt/orchid/boot/EFI
+	mkdir -p /mnt/orchid/boot/EFI
+	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+	mount UUID="${UUID}" /mnt/orchid/boot/EFI
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
