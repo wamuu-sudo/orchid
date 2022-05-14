@@ -105,18 +105,21 @@ else
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
+UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
 	btrfs subvolume create /
 	snapper -c root create-config /
-	echo "${DISK_PARTITIONS}3    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
+	echo "UUID=${UUID}    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
 elif [ "$FILESYSTEM" = "ext4" ]; then	
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
-	echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+	echo "UUID=${UUID}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
 fi
-echo "${DISK_PARTITIONS}2    none    swap    sw    0 0" >> /etc/fstab
+UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+echo "UUID=${UUID}    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
-  echo "${DISK_PARTITIONS}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
+	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+  echo "UUID=${UUID}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 
 #-----------------------------------------------------------------------------------
