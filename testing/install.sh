@@ -31,7 +31,7 @@
 
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
-ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
+ORCHID_VERSION[0]="DWM standard [2.2Go]"
 ORCHID_URL[0]='https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.count"
 COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
@@ -39,7 +39,7 @@ ORCHID_ESYNC_SUPPORT[0]="ask"	# Ask for esync support
 ORCHID_LOGIN[0]="STANDARD"
 ORCHID_NAME[0]="DWM"	# Name to use inside this script for various tests
 
-ORCHID_VERSION[1]="Version DWM Gaming Edition [3.4Go]"
+ORCHID_VERSION[1]="DWM Gaming Edition [3.4Go]"
 ORCHID_URL[1]='https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
 ORCHID_COUNT[1]="https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.count"
 COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
@@ -47,7 +47,7 @@ ORCHID_ESYNC_SUPPORT[1]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[1]="STANDARD"
 ORCHID_NAME[1]="DWM-GE"
 
-ORCHID_VERSION[2]="Version Gnome [2.4Go]"
+ORCHID_VERSION[2]="GNOME [2.4Go]"
 ORCHID_URL[2]='https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2'       # Gnome
 ORCHID_COUNT[2]="https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.count.txt"
 COUNTED_BY_TREE[2]=424438                                                               # Number of files in Gnome stage
@@ -55,7 +55,7 @@ ORCHID_ESYNC_SUPPORT[2]="ask"	# Ask for esync support
 ORCHID_LOGIN[2]="STANDARD"
 ORCHID_NAME[2]="GNOME"
 
-ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.6Go]"
+ORCHID_VERSION[3]="Xfce Gaming Edition [2.6Go]"
 ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
 ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.count"
 #COUNTED_BY_TREE[3]=
@@ -63,7 +63,7 @@ ORCHID_ESYNC_SUPPORT[3]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
-ORCHID_VERSION[4]="Version KDE Plasma [3.2Go]"
+ORCHID_VERSION[4]="KDE Plasma [3.2Go]"
 ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
 COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
@@ -71,7 +71,7 @@ ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
 
-ORCHID_VERSION[5]="Version Gnome Gaming Edition [3.1Go]"
+ORCHID_VERSION[5]="GNOME Gaming Edition [3.1Go]"
 ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
@@ -79,7 +79,7 @@ ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[5]="STANDARD"
 ORCHID_NAME[5]="GNOME-GE"
 
-ORCHID_VERSION[6]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
+ORCHID_VERSION[6]="GNOME Gaming Edition avec Systemd [3.3Go]"
 ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
 ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
@@ -87,7 +87,7 @@ ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[6]="SYSTEMD-GNOME"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
-ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
+ORCHID_VERSION[7]="Base (X11 & Network Manager) [1.7Go]"
 ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Base
 ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
@@ -95,7 +95,7 @@ ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
 ORCHID_NAME[7]="BASE-X11"
 
-ORCHID_VERSION[8]="Version base avec Systemd (X11 & Network Manager) [2.0Go]"
+ORCHID_VERSION[8]="Base avec Systemd (X11 & Network Manager) [2.0Go]"
 ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
 ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
 #ORCHID_COUNT[7]=
@@ -103,7 +103,7 @@ ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
 
-ORCHID_VERSION[9]="Version Budgie avec Systemd [2.3Go]"
+ORCHID_VERSION[9]="Budgie avec Systemd [2.3Go]"
 ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
 ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
 #ORCHID_COUNT[7]=
