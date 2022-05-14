@@ -236,6 +236,7 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo -ne "\r\v"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
 	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration initiale de Snapper"
+	/etc/init.d/dbus start
 	snapper -c root create-config /
 fi
 
