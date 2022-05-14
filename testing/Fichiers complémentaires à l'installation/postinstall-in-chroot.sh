@@ -109,7 +109,6 @@ UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
 	btrfs subvolume create /
-	snapper -c root create-config /
 	echo "UUID=${UUID}    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
 elif [ "$FILESYSTEM" = "ext4" ]; then	
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
@@ -236,7 +235,8 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	# New line
 	echo -ne "\r\v"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
-
+	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration initiale de Snapper"
+	snapper -c root create-config /
 fi
 
 #-----------------------------------------------------------------------------------
