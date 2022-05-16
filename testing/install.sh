@@ -31,7 +31,7 @@
 
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
-ORCHID_VERSION[0]="Version standard DWM [2.2Go]"
+ORCHID_VERSION[0]="DWM standard [2.2Go]"
 ORCHID_URL[0]='https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2' 	# DWM
 ORCHID_COUNT[0]="https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.count"
 COUNTED_BY_TREE[0]=326062 	                                                            # Number of files in DWM stage
@@ -39,7 +39,7 @@ ORCHID_ESYNC_SUPPORT[0]="ask"	# Ask for esync support
 ORCHID_LOGIN[0]="STANDARD"
 ORCHID_NAME[0]="DWM"	# Name to use inside this script for various tests
 
-ORCHID_VERSION[1]="Version DWM Gaming Edition [3.4Go]"
+ORCHID_VERSION[1]="DWM Gaming Edition [3.4Go]"
 ORCHID_URL[1]='https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2' 	    # DWM GE
 ORCHID_COUNT[1]="https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.count"
 COUNTED_BY_TREE[1]=358613 	                                                            # Number of files in DWM GE stage
@@ -47,7 +47,7 @@ ORCHID_ESYNC_SUPPORT[1]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[1]="STANDARD"
 ORCHID_NAME[1]="DWM-GE"
 
-ORCHID_VERSION[2]="Version Gnome [2.4Go]"
+ORCHID_VERSION[2]="GNOME [2.4Go]"
 ORCHID_URL[2]='https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2'       # Gnome
 ORCHID_COUNT[2]="https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.count.txt"
 COUNTED_BY_TREE[2]=424438                                                               # Number of files in Gnome stage
@@ -55,7 +55,7 @@ ORCHID_ESYNC_SUPPORT[2]="ask"	# Ask for esync support
 ORCHID_LOGIN[2]="STANDARD"
 ORCHID_NAME[2]="GNOME"
 
-ORCHID_VERSION[3]="Version Xfce Gaming Edition [2.6Go]"
+ORCHID_VERSION[3]="Xfce Gaming Edition [2.6Go]"
 ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
 ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.count"
 #COUNTED_BY_TREE[3]=
@@ -63,7 +63,7 @@ ORCHID_ESYNC_SUPPORT[3]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
-ORCHID_VERSION[4]="Version KDE Plasma [3.2Go]"
+ORCHID_VERSION[4]="KDE Plasma [3.2Go]"
 ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
 COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
@@ -71,7 +71,7 @@ ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
 ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
 
-ORCHID_VERSION[5]="Version Gnome Gaming Edition [3.1Go]"
+ORCHID_VERSION[5]="GNOME Gaming Edition [3.1Go]"
 ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
@@ -79,7 +79,7 @@ ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[5]="STANDARD"
 ORCHID_NAME[5]="GNOME-GE"
 
-ORCHID_VERSION[6]="Version Gnome Gaming Edition avec Systemd [3.3Go]"
+ORCHID_VERSION[6]="GNOME Gaming Edition avec Systemd [3.3Go]"
 ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
 ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
@@ -87,7 +87,7 @@ ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[6]="SYSTEMD-GNOME"
 ORCHID_NAME[6]="GNOME-GE-SYSTEMD"
 
-ORCHID_VERSION[7]="Version base (X11 & Network Manager) [1.7Go]"
+ORCHID_VERSION[7]="Base (X11 & Network Manager) [1.7Go]"
 ORCHID_URL[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"  # Base
 ORCHID_COUNT[7]="https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
 #ORCHID_COUNT[7]=
@@ -95,7 +95,7 @@ ORCHID_ESYNC_SUPPORT[7]="ask"	# Ask for esync support
 ORCHID_LOGIN[7]="BASE"
 ORCHID_NAME[7]="BASE-X11"
 
-ORCHID_VERSION[8]="Version base avec Systemd (X11 & Network Manager) [2.0Go]"
+ORCHID_VERSION[8]="Base avec Systemd (X11 & Network Manager) [2.0Go]"
 ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
 ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
 #ORCHID_COUNT[7]=
@@ -103,7 +103,7 @@ ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
 
-ORCHID_VERSION[9]="Version Budgie avec Systemd [2.3Go]"
+ORCHID_VERSION[9]="Budgie avec Systemd [2.3Go]"
 ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
 ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
 #ORCHID_COUNT[7]=
@@ -134,6 +134,16 @@ declare -a ORCHID_VERSION
 declare -a ORCHID_URL
 declare -a CHOICES_ORCHID
 ERROR_IN_ORCHID_SELECTOR=" "
+
+# Filesystem type radiobox selector
+declare -a CHOICES_FILESYSTEM
+declare -a FILESYSTEM_TYPE
+ERROR_IN_FILESYSTEM_SELECTOR=" "
+
+FILESYSTEM_TYPE[0]="Btrfs"
+FILESYSTEM_TYPE[1]="ext4"
+
+CHOICES_FILESYSTEM[0]="${COLOR_GREEN}*${COLOR_RESET}"
 
 # GPU drivers selector
 ERROR_IN_SELECTOR=" "
@@ -184,7 +194,7 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
+INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -354,6 +364,56 @@ echo ${TEXT_DEFAULT}
 tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 }
 
+CLI_filesystem_selector()
+{
+	WHAT_IS_FILESYSTEM="Un système de fichier organise la manière dont les données sont stockées sur votre disque.
+
+Btrfs est récent. Il permet de prendre automatiquement des instantanés
+du système pour revenir en arrière si une mise à jour se passe mal.
+Toutes les données seront compressées de façon transparente.
+Il est possible de redimensionner la taille du système à chaud.
+
+Ext4 est robuste grâce à la journalisation des opérations, 
+minimise la fragmentation des données et est largement éprouvé.
+"
+	echo_center "$WHAT_IS_FILESYSTEM"
+	echo "Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+		echo "(${CHOICES_FILESYSTEM[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${FILESYSTEM_TYPE[$i]}"
+	done
+
+	echo "$ERROR_IN_FILESYSTEM_SELECTOR"
+}
+
+
+select_filesystem_to_install()
+{
+	clear_under_menu
+	while CLI_filesystem_selector && read -rp "Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+		clear_under_menu
+		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#FILESYSTEM_TYPE[@]} ]]; then
+			((NUM--))
+			for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+				if [[ $NUM -eq $i ]]; then
+					CHOICES_FILESYSTEM[$i]="${COLOR_GREEN}*${COLOR_RESET}"
+				else
+					CHOICES_FILESYSTEM[$i]=""
+				fi
+			done
+
+			ERROR_IN_FILESYSTEM_SELECTOR=" "
+		else
+			ERROR_IN_FILESYSTEM_SELECTOR="Choix invalide : $NUM"
+		fi
+	done
+
+# Choice has been made by the user, now we need to populate FILESYSTEM
+	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
+		if [[ "${CHOICES_FILESYSTEM[$i]}" == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
+			FILESYSTEM=${FILESYSTEM_TYPE[$i]}
+		fi
+	done
+}
 
 CLI_orchid_selector()
 {
@@ -567,8 +627,14 @@ auto_partitionning_full_disk()
 
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
 	mkswap "${DISK_PARTITIONS}2"
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
-	mkfs.ext4 -F "${DISK_PARTITIONS}3"
+	
+	if [ "$FILESYSTEM" = "Btrfs" ]; then
+		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition Btrfs."
+		mkfs.btrfs -f "${DISK_PARTITIONS}3"
+	elif [ "$FILESYSTEM" = "ext4" ]; then
+		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
+		mkfs.ext4 -F "${DISK_PARTITIONS}3"
+	fi
 }
 
 ask_yes_or_no_and_validate() # question en $1 (string), réponse par défaut en $2 ( o | n ),
@@ -699,10 +765,10 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 
 #=== MAIN ==========================================================================
 
-if [ "$EUID" -ne 0 ]
-  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
-  exit
-fi
+#if [ "$EUID" -ne 0 ]
+#  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
+#  exit
+#fi
 
 
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
@@ -718,8 +784,9 @@ draw_installer_steps		# we draw the upper part of the menu
 	#-----------------------------------------------------------------------------------
 
 	WELCOME="${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable
-de tous les problèmes possibles et inimaginables qui
-pourraient arriver en installant Orchid Linux.
+d'éventuels problèmes qui pourraient arriver lors de
+l'installation ou l'utilisation d'Orchid Linux.
+(Licence GPL 3.0 ou supérieure)
 
 Lisez très attentivement les instructions.
 Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
@@ -807,6 +874,12 @@ Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 	UI_PAGE=4
 	;;
 	4)
+	# FileSystem
+	#-----------------------------------------------------------------------------------
+	select_filesystem_to_install
+	UI_PAGE=5
+	;;
+	5)
 	WHAT_IS_HIBERNATION="L'hibernation, c'est éteindre l'ordinateur en conservant son état.
 À l'allumage, on retrouvera son bureau exactement tel qu'il était avant l'arrêt.
 
@@ -830,13 +903,13 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 	fi
 	#-----------------------------------------------------------------------------------
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
-	UI_PAGE=5
-	;;
-	5)
-	select_GPU_drivers_to_install                                                           # Select GPU
 	UI_PAGE=6
 	;;
 	6)
+	select_GPU_drivers_to_install                                                           # Select GPU
+	UI_PAGE=7
+	;;
+	7)
 	#-----------------------------------------------------------------------------------
 
 	# choose your hostname
@@ -858,9 +931,9 @@ Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}
 			echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 		fi
 	done
-	UI_PAGE=7
+	UI_PAGE=8
 	;;
-	7)
+	8)
 	#-----------------------------------------------------------------------------------
 
 	# Option pour la configuration d'esync (limits)
@@ -887,9 +960,9 @@ Par défaut, nous vous proposons de l'activer : ${COLOR_GREEN}o${COLOR_RESET}.
 		echo "FATAL ERROR: what about esync ?"
 		exit 1
 	fi
-	UI_PAGE=8
+	UI_PAGE=9
 	;;
-	8)
+	9)
 	# Option pour la mise à jour d'Orchid Linux dans l'installateur
 	#-----------------------------------------------------------------------------------
 	WHAT_IS_UPDATE="La mise à jour de votre ordinateur est une opération qui consiste à vérifier
@@ -903,9 +976,9 @@ l'installation vous devrez attendre sans rien pouvoir faire d'autre.
 "
 	echo_center "$WHAT_IS_UPDATE"
 	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
-	UI_PAGE=9
+	UI_PAGE=10
 	;;
-	9)
+	10)
 	WHAT_IS_USERNAME="Sur un système Linux, comme Orchid Linux, chaque utilisateur doit avoir
 son propre compte qui l'identifie et sépare ses fichiers des autres.
 
@@ -927,9 +1000,9 @@ les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESE
 	echo ""
 	verify_password_concordance "${USERNAME}"
 	USER_PASS="${ATTEMPT1}"
-	UI_PAGE=10
+	UI_PAGE=11
 	;;
-	10)
+	11)
 	WHAT_IS_ROOT="Vous allez maintenant choisir le mot de passe pour le superutilisateur (root).
 
 Ce compte particulier a tous les droits sur l'ordinateur.
@@ -939,14 +1012,15 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	create_passwd "root"
 	verify_password_concordance "root"
 	ROOT_PASS="${ATTEMPT1}"
-	UI_PAGE=11
+	UI_PAGE=12
 	;;
-	11)
+	12)
 	echo_center "${COLOR_WHITE}Résumé de l'installation${COLOR_RESET}"
 	echo "Test de la connection internet : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
 	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+	echo "Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
 		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
 	elif [ "$HIBERNATION" = n ]; then
@@ -972,13 +1046,14 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 		echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 		exit
 	fi
-	UI_PAGE=12
+	UI_PAGE=13
 	;;
-	12)	# Print Installation in the upper side of the UI.
+	13)	# Print Installation in the upper side of the UI.
 	break
 	;;
 	esac
 done
+
 # installation
 echo ""
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
@@ -995,13 +1070,22 @@ auto_partitionning_full_disk
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
-mkdir /mnt/orchid && mount "${DISK_PARTITIONS}3" /mnt/orchid
+mkdir /mnt/orchid 
+UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	mount -o compress=zstd:1 UUID="${UUID}" /mnt/orchid
+elif [ "$FILESYSTEM" = "ext4" ]; then
+	mount UUID="${UUID}" /mnt/orchid
+fi
 echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
-swapon "${DISK_PARTITIONS}2"
+UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+swapon -U "${UUID}"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
-	mkdir -p /mnt/orchid/boot/EFI && mount "${DISK_PARTITIONS}1" /mnt/orchid/boot/EFI
+	mkdir -p /mnt/orchid/boot/EFI
+	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+	mount UUID="${UUID}" /mnt/orchid/boot/EFI
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
@@ -1052,7 +1136,8 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
+# FIXME: btrfs -> main
+wget "https://github.com/wamuu-sudo/orchid/raw/btrfs/testing/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh
@@ -1062,7 +1147,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]}
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then

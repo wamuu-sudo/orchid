@@ -51,6 +51,37 @@ ORCHID_LOGIN=$7
 ESYNC_SUPPORT=$8
 UPDATE_ORCHID=$9
 ORCHID_NAME=${10}
+FILESYSTEM=${11}
+COUNTED_BY_TREE=${12}
+
+BAR='=================================================='                                # This is full bar, i.e. 50 chars
+
+#-----------------------------------------------------------------------------------
+
+# Functions
+#-----------------------------------------------------------------------------------
+
+progress_bar()
+{
+	while read line; do
+		pct_dash=$(( $processed * 50 / ${COUNTED_BY_TREE} ))
+		pct_num=$(( $processed * 100 / ${COUNTED_BY_TREE} ))
+		# Fail safe
+		if [ $pct_num -ge 100 ]; then
+		  	pct_num=99
+		fi
+
+		pct_num_pad="   $pct_num%"
+		pct_num_lengh=${#pct_num_pad}
+		position_to_trim=$(($pct_num_lengh - 4))
+		echo -ne "\r${pct_num_pad:$position_to_trim}[${BAR:0:$pct_dash}>"
+		processed=$((processed+1))
+		# Fail safe
+		if [ $processed -ge ${COUNTED_BY_TREE} ]; then
+		  	processed=$((${COUNTED_BY_TREE} -1))
+		fi
+	done
+}
 
 #-----------------------------------------------------------------------------------
 
@@ -74,10 +105,20 @@ else
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-echo "${DISK_PARTITIONS}3    /    ext4    defaults,noatime           0 1" >> /etc/fstab
-echo "${DISK_PARTITIONS}2    none    swap    sw    0 0" >> /etc/fstab
+UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
+	btrfs subvolume create /
+	echo "UUID=${UUID}    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
+elif [ "$FILESYSTEM" = "ext4" ]; then	
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
+	echo "UUID=${UUID}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
+fi
+UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+echo "UUID=${UUID}    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
-  echo "${DISK_PARTITIONS}1    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
+	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+  echo "UUID=${UUID}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 
 #-----------------------------------------------------------------------------------
@@ -99,16 +140,20 @@ echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                         
 
 # Configuration de GRUB
 #-----------------------------------------------------------------------------------
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gentoo-kernel-bin pour Btrfs"
+	emerge --quiet --config gentoo-kernel-bin
+fi
+
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de GRUB :"
 if [ "$ROM" = "UEFI" ]; then
   # Installation de GRUB pour UEFI
   grub-install --target=x86_64-efi --efi-directory=/boot/EFI --recheck
-  grub-mkconfig -o /boot/grub/grub.cfg
 elif [ "$ROM" = "BIOS" ]; then
   # Installation de GRUB pour BIOS
   grub-install "${CHOOSEN_DISK}"
-  grub-mkconfig -o /boot/grub/grub.cfg
 fi
+grub-mkconfig -o /boot/grub/grub.cfg
 
 #-----------------------------------------------------------------------------------
 
@@ -139,6 +184,14 @@ fi
 if [ "$ESYNC_SUPPORT" = "o" ]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
+fi
+
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Passage des outils orchid-* en version Btrfs."
+	cd /usr/share/orchid/orchid-bins
+	git fetch
+	git checkout btrfs
+	cd /
 fi
 
 # Add CPU_FLAGS_X86 to make.conf
@@ -172,6 +225,33 @@ if [ "$UPDATE_ORCHID" = "o" ]; then
   emerge --depclean -q
 fi
 
+if [ "$FILESYSTEM" = "Btrfs" ]; then
+	echo "${COLOR_GREEN}*${COLOR_RESET} Défragmentation et compression du système de fichiers Btrfs"
+	processed=0
+	echo -ne "\r    [                                                  ]"	                # This is an empty bar, i.e. 50 empty chars
+	btrfs filesystem defragment -r -v -czstd / 2>&1 | progress_bar
+	# Fail safe
+	echo -ne "\r100%[${BAR:0:50}]"
+	# New line
+	echo -ne "\r\v"
+	echo " ${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
+	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration initiale de Snapper"
+	mkdir -p /lib64/rc/init.d
+	ln -s /lib64/rc/init.d /run/openrc
+	touch /run/openrc/softlevel
+	# save default OpenRC setup, and configure for chroot
+	mv /etc/rc.conf /etc/rc.conf.SAVE
+	echo 'rc_sys="prefix"' >> /etc/rc.conf
+	echo 'rc_controller_cgroups="NO"' >> /etc/rc.conf
+	echo 'rc_depend_strict="NO"' >> /etc/rc.conf
+	echo 'rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"' >> /etc/rc.conf
+	rc-update --update
+	/etc/init.d/dbus start
+	snapper -c root create-config /
+	/etc/init.d/dbus stop
+	rm -f /etc/rc.conf
+	mv /etc/rc.conf.SAVE /etc/rc.conf
+fi
 
 #-----------------------------------------------------------------------------------
 
