@@ -208,8 +208,9 @@ sed -i /LINGUAS=/d /etc/portage/make.conf
 
 # Remove nvidia driver if not requested by user:
 if  [[ ! $(grep "nvidia" /etc/portage/make.conf) ]]; then
+	#emerge --update --newuse --deep --with-bdeps=y @world
 	emerge -Cq x11-drivers/nvidia-drivers
-	emerge -q --depclean
+	#emerge -q --depclean
 fi
 
 #-----------------------------------------------------------------------------------
