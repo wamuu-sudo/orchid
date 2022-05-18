@@ -206,6 +206,12 @@ echo "$(cpuid2cpuflags | sed 's/: /="/')\"" >> /etc/portage/make.conf
 # Remove LINGUAS if any to make.conf
 sed -i /LINGUAS=/d /etc/portage/make.conf
 
+# Remove nvidia driver if not requested by user:
+if  [[ ! $(grep "nvidia" /etc/portage/make.conf) ]]; then
+	emerge -Cq x11-drivers/nvidia-drivers
+	emerge -q --depclean
+fi
+
 #-----------------------------------------------------------------------------------
 
 # Mise à jour du système
