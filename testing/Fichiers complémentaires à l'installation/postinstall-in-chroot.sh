@@ -110,6 +110,7 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
 	btrfs subvolume create /
 	echo "UUID=${UUID}    /    btrfs    subvol=root,compress=zstd:1,defaults           0 0" >> /etc/fstab
+	echo "UUID=${UUID}    /.snapshots    btrfs    subvol=.snapshots,compress=zstd:1           0 0" >> /etc/fstab
 elif [ "$FILESYSTEM" = "ext4" ]; then	
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
 	echo "UUID=${UUID}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
@@ -133,9 +134,9 @@ sed -i "s/orchid/${HOSTNAME}/" /etc/conf.d/hostname
 #-----------------------------------------------------------------------------------
 echo "${COLOR_GREEN}*${COLOR_RESET} Utilisateurs :"
 echo ""
-echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd                                           # Création du mot de passe root
+echo -e "${ROOT_PASS}\n${ROOT_PASS}" | passwd -q                                        # Création du mot de passe root
 useradd -m -G users,wheel,audio,cdrom,video,portage,lp,lpadmin,plugdev,usb -s /bin/bash $USERNAME # Création d'un utilisateur non privilégié
-echo -e "${USER_PASS}\n${USER_PASS}" | passwd $USERNAME                                 # Création du mot de passe utilisateur
+echo -e "${USER_PASS}\n${USER_PASS}" | passwd -q $USERNAME                               # Création du mot de passe utilisateur
 #-----------------------------------------------------------------------------------
 
 # Configuration de GRUB
@@ -197,8 +198,7 @@ fi
 # Add CPU_FLAGS_X86 to make.conf
 if ! test -x "$(command -v cpuid2cpuflags 2>/dev/null)"; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Installation de cpuid2cpuflags."
-	orchid-sync
-	orchid-install app-portage/cpuid2cpuflags
+	emerge -q --autounmask-write --autounmask=y app-portage/cpuid2cpuflags
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au make.conf."
