@@ -9,20 +9,18 @@ as root:
 mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 ```
 
-we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.
+~~we define the locale here: KEYMAP=${KEYMAP:-fr} , fr=french layout, us=us layout etc.~~
 
-as root:
+~~as root:~~
 
-```
-source /etc/conf.d/keymaps &&
+~~source /etc/conf.d/keymaps &&
 KEYMAP=${KEYMAP:-fr}          &&
-
 gdbus call --system                                             \
            --dest org.freedesktop.locale1                       \
            --object-path /org/freedesktop/locale1               \
            --method org.freedesktop.locale1.SetVConsoleKeyboard \
-           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
-```
+           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true~~
+
 
 Now, gdm is using fr layout.
 
