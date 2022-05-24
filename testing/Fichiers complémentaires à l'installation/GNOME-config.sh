@@ -42,15 +42,15 @@ if [ -r /etc/env.d/02locale ]; then source /etc/env.d/02locale; fi
 LANG_SYSTEM="${LANG:0:2}"
 #read -p "Nom de l'utilisateur précédemment créé : " username
 mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
-source /etc/conf.d/keymaps
-KEYMAP=${LANG_SYSTEM}
+#source /etc/conf.d/keymaps
+#KEYMAP=${LANG_SYSTEM}
 /etc/init.d/dbus start
 
-gdbus call --system                                             \
-           --dest org.freedesktop.locale1                       \
-           --object-path /org/freedesktop/locale1               \
-           --method org.freedesktop.locale1.SetVConsoleKeyboard \
-           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
+#gdbus call --system                                             \
+#           --dest org.freedesktop.locale1                       \
+#           --object-path /org/freedesktop/locale1               \
+#           --method org.freedesktop.locale1.SetVConsoleKeyboard \
+#           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
 # On lance dbus en shell
 dbus-run-session -- su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" $1 2>&1
 # Set Wallpapers available to all users:
