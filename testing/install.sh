@@ -121,7 +121,9 @@ COLOR_GREEN=$'\033[0;32m'
 COLOR_RED=$'\033[0;31m'
 COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
+COLOR_LIGHTGREY=$'\e[37m'
 COLOR_RESET=$'\033[0m'
+C_RESET=$'\e[0m'
 #-----------------------------------------------------------------------------------
 CHOICES_ORCHID[0]="${COLOR_GREEN}*${COLOR_RESET}"
 
@@ -251,6 +253,7 @@ done <<< "${1}"
 
 echo_banner()
 {
+echo "${COLOR_WHITE}"
 TEXT_LINE_START=0	# the banner is at the top
 while IFS= read -r TEXT; do
 	for l in "${TEXT[@]}"; do
@@ -260,25 +263,26 @@ while IFS= read -r TEXT; do
 		((TEXT_LINE_START++))
 	done
 done <<< "${BANNER}"
+echo "${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}"
 }
 
 echo_logo()
 {
 cat <<- _EOF_
               ::              
-            :*@@*:            
-          :*@@@@@@*:          
-         *@@@%++%@@@*         
-      :=:-#@@+  +@@#-:=:      
-    :*@@@#--#@==@#--#@@@*:    
-  :*@@@%*%@*-=::=-#@%*%@@@*:  
- =@@@%@:  =+*    *+=  :@%@@@= 
-  :*@@@%*%@*-=::=-#@%*%@@@*:  
-    :*@@@#--#@==@#--#@@@*:    
-      :=:-#@@+  +@@#-:=:      
-         *@@@%++%@@@*         
-          :*@@@@@@*:          
-            :*@@*:            
+            :*${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:            
+          :*${COLOR_WHITE}@@@@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:          
+         *${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%++%${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*         
+      :=:-#${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}+  +${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#-:=:      
+    :*${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#--#${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}==${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#--#${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:    
+  :*${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%*%${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*-=::=-#${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%*%${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:  
+ =${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}:  =+*    *+=  :${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}= 
+  :*${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%*%${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*-=::=-#${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%*%${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:  
+    :*${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#--#${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}==${COLOR_WHITE}@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#--#${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:    
+      :=:-#${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}+  +${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}#-:=:      
+         *${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}%++%${COLOR_WHITE}@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*         
+          :*${COLOR_WHITE}@@@@@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:          
+            :*${COLOR_WHITE}@@${COLOR_RESET}${BG_GREEN}${COLOR_LIGHTGREY}*:            
               ::              
 _EOF_
 }
