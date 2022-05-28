@@ -3,13 +3,13 @@
 ## LIVE CD ISO :
 * Création de sa propre ISO Gentoo Mini CD Live avec :
   * Une font unicode pour la console (avec les symboles)
-  * Autodémarrage du script
+  * ~~Autodémarrage du script~~
   * pv installé (pour de vraies barres de progression avec ETA)
   * une meilleure résolution graphique de la console ? Avec le noyau bin, voire support pour les VM ?
 
 ## INSTALLATEUR, PHASE I :
 * Les entrées utilisateur ~~+ VALIDATION de ces données~~ :
-  * ~~Test automatisé de la connection à internet~~ + essai de réaliser la connection au besoin. Sans connection, échec de l'installation = STOP, EXIT
+  * ~~Test automatisé de la connection à internet~~ + essai de réaliser la connection au besoin. ~~Sans connection, échec de l'installation = STOP, EXIT~~
   * Ecran d'acceuil avec Support i18n (fr, en, etc. : présentation en liste, choix unique)
     * Mettre l'interface dans la langue choisie
   * Choix du clavier (azerty, qwerty, etc. : présentation en liste, choix unique) (+ RETOUR)
@@ -18,7 +18,7 @@
     * Manuel = quel logiciel ? Candidats : cfdisk, gdisk
   * ~~Le choix de la version d'Orchid (présentation en liste, choix unique)~~ (+ RETOUR)
   * ~~Création de l'utilisateur avec les droits d'administration + son mot de passe + mot de passe pour root (validation du nom choisi~~ + évaluation de la résistance du mot de passe ?) (+ RETOUR)
-  * ~~Choix des cartes graphiques~~ (à automatiser plus tard, au moins au niveau du choix proposé) (+ RETOUR)
+  * ~~Choix des cartes graphiques~~ ~~(à automatiser plus tard, au moins au niveau du choix proposé)~~ (+ RETOUR)
     * ~~Désélectionner les pilotes par défaut~~
   * ~~Choix du hostname~~ (+ RETOUR)
   * ~~Choix de faire une maj complète à la fin de l'installation~~
@@ -48,6 +48,6 @@
     * ~~Ajout des CPU_FLAGS au /etc/portage/make.conf~~
     * ~~Mise à jour du système si demandé par l'utilisateur (orchid-sync && orchid-update)~~
   * ~~Hors chroot : on efface les scripts et l'archive stage 4~~
-  * umount tout (+ fermer les services openrc, systemd ?)
-  * Ecran final "installation terminée, enlever le support et reboot [Entrée]"
+  * ~~umount tout (+ fermer les services openrc, systemd ?)~~ impossibilité de démonter le support d'instalaltion ?
+  * ~~Ecran final "installation terminée, enlever le support et reboot [Entrée]"~~
   * ~~reboot~~
