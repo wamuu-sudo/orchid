@@ -244,21 +244,29 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo -ne "\r\v"
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Opération sur Btrfs terminée."
 	echo "${COLOR_GREEN}*${COLOR_RESET} Configuration initiale de Snapper"
-	mkdir -p /lib64/rc/init.d
-	ln -s /lib64/rc/init.d /run/openrc
-	touch /run/openrc/softlevel
-	# save default OpenRC setup, and configure for chroot
-	mv /etc/rc.conf /etc/rc.conf.SAVE
-	echo 'rc_sys="prefix"' >> /etc/rc.conf
-	echo 'rc_controller_cgroups="NO"' >> /etc/rc.conf
-	echo 'rc_depend_strict="NO"' >> /etc/rc.conf
-	echo 'rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"' >> /etc/rc.conf
-	rc-update --update
-	/etc/init.d/dbus start
+	if [ "$ORCHID_LOGIN" = "BASE"  -o "$ORCHID_LOGIN" = "STANDARD" ]; then
+		mkdir -p /lib64/rc/init.d
+		ln -s /lib64/rc/init.d /run/openrc
+		touch /run/openrc/softlevel
+		# save default OpenRC setup, and configure for chroot
+		mv /etc/rc.conf /etc/rc.conf.SAVE
+		echo 'rc_sys="prefix"' >> /etc/rc.conf
+		echo 'rc_controller_cgroups="NO"' >> /etc/rc.conf
+		echo 'rc_depend_strict="NO"' >> /etc/rc.conf
+		echo 'rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"' >> /etc/rc.conf
+		rc-update --update
+		/etc/init.d/dbus start		
+	elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME"  -o "$ORCHID_LOGIN" = "SYSTEMD-BASE" -o "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+		systemctl start dbus.service
+	fi
 	snapper -c root create-config /
-	/etc/init.d/dbus stop
-	rm -f /etc/rc.conf
-	mv /etc/rc.conf.SAVE /etc/rc.conf
+	if [ "$ORCHID_LOGIN" = "BASE"  -o "$ORCHID_LOGIN" = "STANDARD" ]; then
+		/etc/init.d/dbus stop
+		rm -f /etc/rc.conf
+		mv /etc/rc.conf.SAVE /etc/rc.conf
+	elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME"  -o "$ORCHID_LOGIN" = "SYSTEMD-BASE" -o "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+		systemctl stop dbus.service
+	fi
 fi
 
 #-----------------------------------------------------------------------------------

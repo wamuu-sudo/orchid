@@ -24,19 +24,31 @@ COLOR_RED=$'\033[0;31m'
 COLOR_LIGHTBLUE=$'\033[1;34m'
 COLOR_WHITE=$'\033[1;37m'
 COLOR_RESET=$'\033[0m'
+#-----------------------------------------------------------------------------------
+
+# Importation des variables du script principal
+#-----------------------------------------------------------------------------------
+USERNAME=$1
+ORCHID_LOGIN=$2
+
 # On prépare le chroot pour openrc-gsettingsd -> dbus
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de gdm et GNOME pour un clavier fr, l'ajout des wallappers et le logo gdm greeter."
-mkdir -p /lib64/rc/init.d
-ln -s /lib64/rc/init.d /run/openrc
-touch /run/openrc/softlevel
-# save default OpenRC setup, and configure for chroot
-mv /etc/rc.conf /etc/rc.conf.SAVE
-echo 'rc_sys="prefix"' >> /etc/rc.conf
-echo 'rc_controller_cgroups="NO"' >> /etc/rc.conf
-echo 'rc_depend_strict="NO"' >> /etc/rc.conf
-echo 'rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"' >> /etc/rc.conf
-rc-update --update
-rc-service openrc-settingsd start
+if [ "$ORCHID_LOGIN" = "BASE"  -o "$ORCHID_LOGIN" = "STANDARD" ]; then
+	mkdir -p /lib64/rc/init.d
+	ln -s /lib64/rc/init.d /run/openrc
+	touch /run/openrc/softlevel
+	# save default OpenRC setup, and configure for chroot
+	mv /etc/rc.conf /etc/rc.conf.SAVE
+	echo 'rc_sys="prefix"' >> /etc/rc.conf
+	echo 'rc_controller_cgroups="NO"' >> /etc/rc.conf
+	echo 'rc_depend_strict="NO"' >> /etc/rc.conf
+	echo 'rc_need="!net !dev !udev-mount !sysfs !checkfs !fsck !netmount !logger !clock !modules"' >> /etc/rc.conf
+	rc-update --update
+	rc-service openrc-settingsd start
+	/etc/init.d/dbus start		
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME"  -o "$ORCHID_LOGIN" = "SYSTEMD-BASE" -o "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+	systemctl start dbus.service
+fi
 # On récupère la langue du système
 if [ -r /etc/env.d/02locale ]; then source /etc/env.d/02locale; fi
 LANG_SYSTEM="${LANG:0:2}"
@@ -44,7 +56,7 @@ LANG_SYSTEM="${LANG:0:2}"
 mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 #source /etc/conf.d/keymaps
 #KEYMAP=${LANG_SYSTEM}
-/etc/init.d/dbus start
+#/etc/init.d/dbus start
 
 #gdbus call --system                                             \
 #           --dest org.freedesktop.locale1                       \
@@ -52,7 +64,7 @@ mv /etc/X11/xorg.conf.d/10-keyboard.conf /etc/X11/xorg.conf.d/30-keyboard.conf
 #           --method org.freedesktop.locale1.SetVConsoleKeyboard \
 #           "$KEYMAP" "$KEYMAP_CORRECTIONS" true true
 # On lance dbus en shell
-dbus-run-session -- su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" $1 2>&1
+dbus-run-session -- su -c "gsettings set org.gnome.desktop.input-sources sources \"[('xkb', '${LAND_SYSTEM}')]\"" ${USERNAME} 2>&1
 # Set Wallpapers available to all users:
 # https://help.gnome.org/admin/system-admin-guide/stable/backgrounds-extra.html.en
 mv /orchid-backgrounds.xml /usr/share/gnome-background-properties/
@@ -103,9 +115,14 @@ EOF
 
 # Update the system databases:
 dconf update
-# clear stuff:
-/etc/init.d/dbus stop
-rc-service openrc-settingsd stop
-# restaure default setup
-rm -f /etc/rc.conf
-mv /etc/rc.conf.SAVE /etc/rc.conf
+
+if [ "$ORCHID_LOGIN" = "BASE"  -o "$ORCHID_LOGIN" = "STANDARD" ]; then
+	# clear stuff:
+	/etc/init.d/dbus stop
+	rc-service openrc-settingsd stop
+	# restaure default setup
+	rm -f /etc/rc.conf
+	mv /etc/rc.conf.SAVE /etc/rc.conf
+elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME"  -o "$ORCHID_LOGIN" = "SYSTEMD-BASE" -o "$ORCHID_LOGIN" = "SYSTEMD-BUDGIE" ]; then
+	systemctl stop dbus.service
+fi
