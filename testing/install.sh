@@ -1159,7 +1159,7 @@ fi
 
 # Configuration clavier pour GNOME
 if [ "${ORCHID_NAME[$no_archive]}" = "GNOME" -o "${ORCHID_NAME[$no_archive]}" = "GNOME-GE" -o "${ORCHID_NAME[$no_archive]}" = "GNOME-GE-SYSTEMD" ]; then
-	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME}
+	chroot /mnt/orchid ./GNOME-config.sh ${USERNAME} ${ORCHID_LOGIN[$no_archive]}
 fi
 
 # Configuration pour Xfce (Firefox-bin as default Web Browser)
