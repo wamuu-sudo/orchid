@@ -803,7 +803,7 @@ Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 	# Questions de configuration
 	#===================================================================================
 
-	RAM_SIZE_GB=$(($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")/1000000))   # Total Memory in GB
+	RAM_SIZE_GB=$(( ($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")+1000000/2)/1000000 ))   # Total Memory in GB, round half-up
 	if (( $RAM_SIZE_GB < 2 )); then
 		echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
 		exit
