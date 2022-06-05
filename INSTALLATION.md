@@ -28,7 +28,7 @@ Il est nécessaire de rendre cette ISO bootable sur votre support à l'aide d'ou
 
 La machine doit avoir accès à Internet, afin de pouvoir télécharger les archives.
 
-CPU : au moins 4 coeurs
+CPU : au moins 8 coeurs
 
 RAM : au moins 4 Go
 
