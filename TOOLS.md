@@ -111,7 +111,7 @@ Elle s'utilise comme suit :
 sudo orchid-set-tkg
  ```
  
-### orchid-optimize
+### orchid-optimizer
 
 Recompile l'ensemble des paquets avec les optimisations processeur.
 Permets de rejoindre l'élitisme suprême proposé par Gentoo et Orchid.
@@ -119,7 +119,7 @@ Permets de rejoindre l'élitisme suprême proposé par Gentoo et Orchid.
 Lancer la commande et l'opération se fait automatiquement :
 
  ```
- sudo orchid-optimize
+ sudo orchid-optimizer
  ```
 
 ### orchid-transform
