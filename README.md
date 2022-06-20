@@ -24,7 +24,7 @@ De nouvelles éditions sont disponibles :
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
 
-Nous proposons aussi l'installation du noyau TkG au travers de nos outils (https://github.com/Frogging-Family/linux-tkg).
+Nous proposons aussi l'installation du noyau [TkG](https://github.com/Frogging-Family/linux-tkg) au travers de nos outils.
 
 Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/INSTALLATION.md).
 
