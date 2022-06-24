@@ -28,6 +28,32 @@ You will need to make an USB stick bootable using Rufus, Ventoy or Etcher, the c
 
 The device NEEDS to have access to Internet to download the archives.
 
+CPU: At LEAST 4 cores 
+RAM: At LEAST 4GB
+Storage: 20GB or more
+
+## Usage of the installation script (testing), you can skip the rest of the guide
+
+First download the script
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install.sh
+```
+
+Give execution rights to the script :
+
+```
+chmod +x ./install.sh
+```
+
+puis lancer le script interactif avec les droits root (avec `sudo` ou en root via `su root` après avoir mis un mot de passe à root) :
+Run the interactive script with root privileges (either using `sudo` or `su root`) :
+
+```
+./install.sh
+```
+
+
 ## Prepare the installation
 
 Depending on the ISO you choose, you will either have a CLI environnement, or a GUI one.
@@ -130,12 +156,22 @@ cd /mnt/orchid
 
 Now we need to download the archive we want for our Orchid system using wget (the archives are quite big):
 
-[Standard DWM version](https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
 
-[Gaming DWM version](https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
+[Standard DWM](https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest.tar.bz2) [1.9Go]
 
-[Complete gnome version](https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
+[DWM Gaming Edition](https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar.bz2) [2.9Go]
 
+[Gnome Full](https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar.bz2) [2.4Go]
+
+[XFCE Gaming](https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2) [2.6Go]
+
+[Base X.Org](https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2) [1.7Go]
+
+[KDE Plasma](https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2) [2.9Go]
+
+[Gnome Gaming](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2) [3.1Go]
+
+[Gnome Gaming SystemD](https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2) [3.1Go]
 Example:
 
 ```
@@ -356,7 +392,7 @@ Join our discord server: [Join the server](https://discord.gg/DeRhvP7M).
 - Vinceff: Documentation & projet management, communication director.
 - [Chevek](https://github.com/chevek): Gaming tools and Optimisation.
 - [Babilinx](https://github.com/babilinx): Project Optimisation.
-- [Crystal](https://crystal-td.github.io): English translation.
+- [Crystal](https://crystal-trd.github.io): English translation.
 - Piaf_Jaune: Graphist & Look'n Feel.
 - Kirik: Documentation verification.
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
