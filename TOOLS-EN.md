@@ -108,6 +108,25 @@ This tool is to be used like this:
 ```
 sudo orchid-set-tkg
 ```
+### orchid-optimizer
+
+Recompiles all packages using CPU optimisations
+
+Just run this command and let everything work automatically :
+
+ ```
+ sudo orchid-optimizer
+ ```
+
+### orchid-transform
+
+Transform a Gentoo install into an Orchid one with the Orchid tools suite, including wallpapers and partner software...
+
+Just run this command and let everything work automatically :
+
+```
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform && chmod +x ./orchid-transform && sudo ./orchid-transform
+```
 
 ## Contributors
 
@@ -115,7 +134,7 @@ sudo orchid-set-tkg
 - Vinceff : Documentation & projet management , communication director.
 - [Chevek](https://github.com/chevek) : Gaming tools and Optimisation.
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
-- [Crystal](https://crystal-td.github.io) : English translation
+- [Crystal](https://crystal-trd.github.io) : English translation
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification..
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
