@@ -43,14 +43,14 @@ wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install-en
 Give execution rights to the script :
 
 ```
-chmod +x ./install.sh
+chmod +x ./install-en.sh
 ```
 
 puis lancer le script interactif avec les droits root (avec `sudo` ou en root via `su root` après avoir mis un mot de passe à root) :
 Run the interactive script with root privileges (either using `sudo` or `su root`) :
 
 ```
-./install.sh
+./install-en.sh
 ```
 
 
