@@ -945,7 +945,7 @@ if you use your computer for gaming.
 It requires a small modification of a security parameter
 (the significant increase of the number of file descriptors per process).
 
-By default, we suggest you to activate it: ${COLOR_GREEN}o${COLOR_RESET}.
+By default, we suggest you to activate it: ${COLOR_GREEN}y${COLOR_RESET}.
 "
 	echo_center "$WHAT_IS_ESYNC"
 
