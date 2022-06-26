@@ -747,7 +747,7 @@ if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
-    echo "${COLOR_WHITE}Enter the user password ${1} : ${COLOR_YELLOW}(the password won't get displayed)${COLOR_RESET}"
+	echo "${COLOR_WHITE}Set a password for this user (${1}) : ${COLOR_YELLOW}(the password won't get displayed)${COLOR_RESET}"
     read -s ATTEMPT1
     echo "${COLOR_WHITE}Confirm the password :${COLOR_RESET}"
     read -s ATTEMPT2
