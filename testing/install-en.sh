@@ -965,17 +965,18 @@ By default, we suggest you to activate it: ${COLOR_GREEN}y${COLOR_RESET}.
 	9)
 	# Option pour la mise à jour d'Orchid Linux dans l'installateur
 	#-----------------------------------------------------------------------------------
-	WHAT_IS_UPDATE="La mise à jour de votre ordinateur est une opération qui consiste à vérifier
-que les logiciels de votre ordinateur utilisent bien la dernière version disponible.
-Ceci est particulièrement important pour la sécurité du système,
-sa cohérence et fourni aussi parfois de nouvelles fonctionnalités.
+	WHAT_IS_UPDATE="Updating your computer is an operation that consists of verifying
+that the software on your computer is using the latest version available.
+This is particularly important for the security of the system,
+its consistency and sometimes provides new features.
 
-Par défaut, nous conseillons de faire la mise à jour juste après l'installation,
-car cette opération peut être longue et si vous choisissez de la faire pendant
-l'installation vous devrez attendre sans rien pouvoir faire d'autre.
+By default, we advise to do the update right after the installation,
+because this operation can be time consuming and if you choose to do it during the installation
+installation you will have to wait without being able to do anything else.
+
 "
 	echo_center "$WHAT_IS_UPDATE"
-	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation ? ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Do you want to update orchid linux now  ? ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
 	UI_PAGE=10
 	;;
 	10)
