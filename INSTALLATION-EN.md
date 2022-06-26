@@ -37,7 +37,7 @@ Storage: 20GB or more
 First download the script
 
 ```
-wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install.sh
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/testing/install-en.sh
 ```
 
 Give execution rights to the script :
