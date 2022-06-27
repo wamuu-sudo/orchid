@@ -1,10 +1,14 @@
 #!/usr/bin/env bash
 
-#alias GETTEXT
+#alias GETTEXT='gettext "test"'
+
+. gettext.sh
 
 export TEXTDOMAIN=test
 export TEXTDOMAINDIR=$PWD/locale
 
-echo $(gettext "test" "Hello World!")
+pwd=$PWD
 
-echo $(gettext "test" "End of the script")
+echo $(gettext "Hello World!")
+echo $(eval_gettext "Current dir: \$pwd")
+echo $(gettext "End of the script")

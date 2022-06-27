@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-27 11:25+0200\n"
+"POT-Creation-Date: 2022-06-27 15:11+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,10 +17,15 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: test.sh:8
+#: test.sh:12
 msgid "Hello World!"
 msgstr ""
 
-#: test.sh:10
+#: test.sh:13
+#, sh-format
+msgid "Current dir: $pwd"
+msgstr ""
+
+#: test.sh:14
 msgid "End of the script"
 msgstr ""
