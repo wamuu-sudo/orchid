@@ -29,6 +29,17 @@
 
 #=== PRECONFIGURATION ==============================================================
 
+# Setup gettext
+#-----------------------------------------------------------------------------------
+. gettext.sh
+
+export TEXTDOMAIN=install
+export TEXTDOMAINDIR=$PWD/locale
+
+# alias GETTEXT='gettext "install"'
+
+#-----------------------------------------------------------------------------------
+
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
 ORCHID_VERSION[0]="DWM standard [2.2Go]"
@@ -196,7 +207,7 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS="Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation"
+INSTALLER_STEPS=$(gettext "Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation")
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -370,7 +381,7 @@ tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 
 CLI_filesystem_selector()
 {
-	WHAT_IS_FILESYSTEM="A file system organizes the way data is stored on your disk.
+	WHAT_IS_FILESYSTEM=$(gettext "A file system organizes the way data is stored on your disk.
 
 Btrfs is new. It allows you to take automatic snapshots of the system
 of the system to revert if an update goes wrong.
@@ -379,9 +390,9 @@ It is possible to resize the system on the fly.
 
 Ext4 is robust thanks to operation logging,
 minimizes data fragmentation and is widely tested.
-"
+")
 	echo_center "$WHAT_IS_FILESYSTEM"
-	echo "Select the file system you want to use : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+	echo $(evel_gettext "Select the file system you want to use : [\${COLOR_GREEN}Btrfs\${COLOR_RESET}]")
 	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
 		echo "(${CHOICES_FILESYSTEM[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${FILESYSTEM_TYPE[$i]}"
 	done
@@ -393,7 +404,7 @@ minimizes data fragmentation and is widely tested.
 select_filesystem_to_install()
 {
 	clear_under_menu
-	while CLI_filesystem_selector && read -rp "Select the file system you want to use with it corresponding number , hit ${COLOR_WHITE}[Enter]${COLOR_RESET}  : to continue" NUM && [[ "$NUM" ]]; do
+	while CLI_filesystem_selector && read -rp $(gettext "Select the file system you want to use with it corresponding number , hit \${COLOR_WHITE}[Enter]\${COLOR_RESET}  : to continue") NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#FILESYSTEM_TYPE[@]} ]]; then
 			((NUM--))
@@ -407,7 +418,7 @@ select_filesystem_to_install()
 
 			ERROR_IN_FILESYSTEM_SELECTOR=" "
 		else
-			ERROR_IN_FILESYSTEM_SELECTOR="Invalid choice : $NUM"
+			ERROR_IN_FILESYSTEM_SELECTOR=$(gettext "Invalid choice : \$NUM")
 		fi
 	done
 
@@ -421,7 +432,7 @@ select_filesystem_to_install()
 
 CLI_orchid_selector()
 {
-	echo "Choose the Orchid Linux Edition you want to install :"
+	echo $(gettext "Choose the Orchid Linux Edition you want to install :")
 	for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ )); do
 		if [[ "${ORCHID_URL[$i]}" == *"testing"* ]]; then
 			echo "(${CHOICES_ORCHID[$i]:- }) Testing : ${COLOR_YELLOW}$(($i+1))${COLOR_RESET}) ${ORCHID_VERSION[$i]}"
@@ -437,7 +448,7 @@ CLI_orchid_selector()
 select_orchid_version_to_install()
 {
 	clear_under_menu
-	while CLI_orchid_selector && read -rp "Select the Orchid version with it number, and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : " NUM && [[ "$NUM" ]]; do
+	while CLI_orchid_selector && read -rp $(gettext "Select the Orchid version with it number, and hit \${COLOR_WHITE}[Enter]\${COLOR_RESET} to validate : ") NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
 			((NUM--))
@@ -451,7 +462,7 @@ select_orchid_version_to_install()
 
 			ERROR_IN_ORCHID_SELECTOR=" "
 		else
-			ERROR_IN_ORCHID_SELECTOR="Invalid Choice : $NUM"
+			ERROR_IN_ORCHID_SELECTOR=$(gettext "Invalid Choice : \$NUM")
 		fi
 	done
 
@@ -466,9 +477,9 @@ select_orchid_version_to_install()
 
 CLI_selector()
 {
-	echo "${COLOR_GREEN}*${COLOR_RESET} Your GPU : ${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
+	echo $(gettext "\${COLOR_GREEN}*\${COLOR_RESET} Your GPU : \${COLOR_GREEN}\${GPU_TYPE}\${COLOR_RESET}")
 	echo ""
-	echo "Choose the GPU drivers you want to use :"
+	echo $(gettext "Choose the GPU drivers you want to use :")
 	for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ )); do
 		echo "[${CHOICES[$i]:-${COLOR_RED}-${COLOR_RESET}}]" $(($i+1))") ${GPU_DRIVERS[$i]}"
 	done
@@ -494,7 +505,7 @@ select_GPU_drivers_to_install()
   fi
 
 	clear_under_menu
-	while CLI_selector && read -rp "Select your GPU drivers with their number, and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : " NUM && [[ "$NUM" ]]; do
+	while CLI_selector && read -rp $(gettext "Select your GPU drivers with their number, and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : ") NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
 			((NUM--))
@@ -506,7 +517,7 @@ select_GPU_drivers_to_install()
 
 			ERROR_IN_SELECTOR=" "
 		else
-			ERROR_IN_SELECTOR="Invalid Choice : $NUM"
+			ERROR_IN_SELECTOR=$(gettext "Invalid Choice : \$NUM")
 		fi
 	done
 	# Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
@@ -556,8 +567,8 @@ test_internet_access()
 
 CLI_disk_selector()
 {
-	echo "Choose the disk where you want to install Orchid Linux :"
-	echo "${COLOR_YELLOW}! WARNING ! All data on this disk will be deleted, proceed with caution !${COLOR_RESET}"
+	echo $(gettext "Choose the disk where you want to install Orchid Linux :")
+	echo $(gettext "\${COLOR_YELLOW}! WARNING ! All data on this disk will be deleted, proceed with caution !\${COLOR_RESET}")
 	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
 	  	if [[ ${CHOICES_DISK[$i]} == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
 			echo "(${CHOICES_DISK[$i]:- }) ${COLOR_GREEN}$(($i+1))) ${DISKS[$i]}${COLOR_RESET}"
@@ -573,7 +584,7 @@ CLI_disk_selector()
 select_disk_to_install()
 {
 	clear_under_menu
-	while CLI_disk_selector && read -rp "Select the disk where you want to install Orchid to with it number, and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : " NUM && [[ "$NUM" ]]; do
+	while CLI_disk_selector && read -rp $(gettext "Select the disk where you want to install Orchid to with it number, and hit \${COLOR_WHITE}[Enter]\${COLOR_RESET} to validate : ") NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#DISKS[@]} ]]; then
 			((NUM--))
@@ -587,7 +598,7 @@ select_disk_to_install()
 
 		  	ERROR_IN_DISK_SELECTOR=" "
 		else
-		  	ERROR_IN_DISK_SELECTOR="Invalid Choice : $NUM"
+		  	ERROR_IN_DISK_SELECTOR=$(gettext "Invalid Choice : $NUM")
 	  	fi
 	done
 	# Choice has been made by the user, now we need to populate $CHOOSEN_DISK and $CHOOSEN_DISK_LABEL (human readable)
@@ -622,18 +633,18 @@ auto_partitionning_full_disk()
 		"                                                                               # Linux filesystem data
 	fi
 
-	echo "${COLOR_GREEN}*${COLOR_RESET} Disk partitioning ."
+	echo $(gettext "\${COLOR_GREEN}*\${COLOR_RESET} Disk partitioning .")
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
 	if [ "$ROM" = "UEFI" ]; then
-	  	echo " ${COLOR_GREEN}*${COLOR_RESET} EFI partition wiping ."
+	  	echo $(gettext " \${COLOR_GREEN}*\${COLOR_RESET} EFI partition wiping .")
 	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
 	fi
 
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Swap partition wiping."
+	echo $(gettext " \${COLOR_GREEN}*\${COLOR_RESET} Swap partition wiping.")
 	mkswap "${DISK_PARTITIONS}2"
-	
+
 	if [ "$FILESYSTEM" = "Btrfs" ]; then
-		echo " ${COLOR_GREEN}*${COLOR_RESET} BTRFS partition wiping."
+		echo $(gettext " \${COLOR_GREEN}*\${COLOR_RESET} BTRFS partition wiping.")
 		mkfs.btrfs -f "${DISK_PARTITIONS}3"
 	elif [ "$FILESYSTEM" = "ext4" ]; then
 		echo " ${COLOR_GREEN}*${COLOR_RESET} EXT4 partition wiping."
@@ -693,13 +704,13 @@ swap_size_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		set_totalmemory_against_processors
-		echo "We do not recommend using hibernation with your ${RAM_SIZE_GB} Go of RAM, because it would need a swap partition of ${SWAP_SIZE_GB} Go on the disk."
-		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Would you want to create a swap partition of ${SWAP_SIZE_GB} Go to make hibernation usable ? (If no, the swap partition will be a lot smaller and hibernation wont work) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+		echo $(gettext "We do not recommend using hibernation with your \${RAM_SIZE_GB} Go of RAM, because it would need a swap partition of \${SWAP_SIZE_GB} Go on the disk.")
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate $(gettext "Would you want to create a swap partition of \${SWAP_SIZE_GB} Go to make hibernation usable ? (If no, the swap partition will be a lot smaller and hibernation wont work) \${COLOR_WHITE}[y/\${COLOR_GREEN}n\${COLOR_WHITE}]\${COLOR_RESET} ") n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
 		elif [ "$HIBERNATION_HIGH" = "y" ]; then
-			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Enter the size of the swap partition you want to create (in Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
+			SWAP_SIZE_GB=$(ask_for_numeric_and_validate $(gettext "Enter the size of the swap partition you want to create (in Go) \${COLOR_WHITE}[\${COLOR_GREEN}\${SWAP_SIZE_GB} Go\${COLOR_WHITE}]\${COLOR_RESET} : ") $SWAP_SIZE_GB)
 		fi
 	fi
 set_totalmemory_against_processors
@@ -717,7 +728,7 @@ swap_size_no_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
 		set_totalmemory_against_processors
-		SWAP_SIZE_GB=$(ask_for_numeric_and_validate  "Enter the size of the swap partition you want to create (in Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
+		SWAP_SIZE_GB=$(ask_for_numeric_and_validate  $(gettext "Enter the size of the swap partition you want to create (in Go) \${COLOR_WHITE}[\${COLOR_GREEN}\${SWAP_SIZE_GB} Go\${COLOR_WHITE}]\${COLOR_RESET} : ") $SWAP_SIZE_GB)
 	fi
 set_totalmemory_against_processors
 }
