@@ -1098,7 +1098,7 @@ cd /mnt/orchid
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Downloading and extracting of the desired Orchid Linux Edition."
+echo "${COLOR_GREEN}*${COLOR_RESET} Downloading and extracting the desired Orchid Linux Edition."
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	                                        # Just keep the file from the URL
