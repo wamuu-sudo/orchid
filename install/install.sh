@@ -781,7 +781,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 #=== MAIN ==========================================================================
 
 if [ "$EUID" -ne 0 ]
-  then echo "Please launch the script with root rights. (su,sudo or doas)"
+  then echo $(gettext "Please launch the script with root rights. (su,sudo or doas)")
   exit
 fi
 
@@ -798,13 +798,13 @@ draw_installer_steps		# we draw the upper part of the menu
 	# Disclaimer
 	#-----------------------------------------------------------------------------------
 
-	WELCOME="${COLOR_YELLOW}The Orchid Linux team is in no way responsible for
+	WELCOME=$(eval_gettext "\$COLOR_YELLOW The Orchid Linux team is in no way responsible for
 for any problems that may occur during the installation or
 installation or use of Orchid Linux.
 (License GPL 3.0 or higher)
 
 Please read the instructions very carefully.
-Thank you for choosing Orchid Linux !${COLOR_RESET}"
+Thank you for choosing Orchid Linux !\$COLOR_RESET")
 	echo_center "$WELCOME"
 	echo ""
 	read -p "Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to start the installation."
@@ -816,7 +816,7 @@ Thank you for choosing Orchid Linux !${COLOR_RESET}"
 
 	RAM_SIZE_GB=$(( ($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")+1000000/2)/1000000 ))   # Total Memory in GB, round half-up
 	if (( $RAM_SIZE_GB < 2 )); then
-		echo "${COLOR_YELLOW}Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of installation.${COLOR_RESET}"
+		echo "${COLOR_YELLOW}$(gettext "Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of installation.")${COLOR_RESET}"
 		exit
 	fi
 
@@ -833,7 +833,7 @@ Thank you for choosing Orchid Linux !${COLOR_RESET}"
 		dhcpcd                                                                              # Génération d'une addresse IP
 		test_internet_access
 	done
-	echo "${COLOR_GREEN}*${COLOR_RESET} Connexion test succeeded."
+	echo "${COLOR_GREEN}*${COLOR_RESET} $(gettext "Connexion test succeeded.")"
 	echo ""
 	read -p "Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue"
 	UI_PAGE=2
