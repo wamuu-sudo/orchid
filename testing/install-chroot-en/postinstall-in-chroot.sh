@@ -208,6 +208,7 @@ sed -i /LINGUAS=/d /etc/portage/make.conf
 sed -i /L10N=/d /etc/portage/make.conf
 echo "L10N=\"en\"" >> /etc/portage/make.conf
 echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+locale-gen
 eselect locale set "en_US.UTF-8"
 emerge vDN @world
 sed -i /keymap=/d /etc/conf.d/keymaps
