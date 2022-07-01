@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+# Common used strings
+
+INVALID_CHOICE="Choix invalide : "
+
+INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
+
+# Function CLI_filesystem_selector
+
 WHAT_IS_FILESYSTEM="Un système de fichier organise la manière dont les données sont stockées sur votre disque.
 
 Btrfs est récent. Il permet de prendre automatiquement des instantanés
@@ -13,21 +21,35 @@ minimise la fragmentation des données et est largement éprouvé.
 
 CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
+# Function select_filesystem_to_install
+
 SELECT_FS="Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider :"
 
-INVALID_CHOICE="Choix invalide : "
+# Function CLI_orchid_selector
 
 CLI_ORCHID_SELECTOR_TEXT="Choisissez la version d'Orchid Linux que vous souhaitez installer :"
 
+# Function select_orchid_version_to_install
+
 CLI_ORCHID_VER_SEL_TEXT="Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : "
+
+# Function CLI_selector
+
+YOUR_GPU="${COLOR_GREEN}*${COLOR_RESET} Votre GPU : ${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}" # To modify : $GPU_TYPE doesn't exist here
 
 GPU_DRIVERS_SEL="Choisissez les pilotes pour votre GPU à installer :"
 
 GPU_DRIVERS_CHOICE="Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : "
 
+# Function CLI_disk_selector
+
 DISK_SEL="Choisissez le disque sur lequel vous souhaitez installer Orchid Linux :\n ${COLOR_YELLOW}! ATTENTION ! Toutes les données sur le disque choisi seront effacées !${COLOR_RESET}"
 
+# Function select_disk_to_install
+
 DISK_CHOICE="Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider :"
+
+# Function auto_partitionning_full_disk
 
 DISK_PART="${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
 
@@ -39,17 +61,25 @@ BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition Btrfs."
 
 EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EXT4."
 
+# Function swap_size_hibernation
+
 HIBERNATION_DANGER="Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 
 HIBERNATION_CONFIRM="Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
-SWAP_SIZE_QUESTION="Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} :"
+SWAP_SIZE_QUESTION="Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} :" # Also in function swap_size_no_hibernation
+
+# Function create_password
 
 CREATE_PASSWORD="${COLOR_WHITE}Saisissez le mot de passe pour l'utilisateur ${1} : ${COLOR_YELLOW}(le mot de passe n'apparaîtra pas)${COLOR_RESET}"
 
 CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Ressaisissez le mot de passe pour le confirmer :${COLOR_RESET}"
 
+# Function verify_password_concordance
+
 CREATE_PASSWORD_FAIL="i${COLOR_YELLOW}Les mots de passe ne concordent pas, réessayez.${COLOR_RESET}"
+
+# Main part of the install script below
 
 USE_THE_GODDAMN_SUDO="Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
 
@@ -75,7 +105,6 @@ CONTINUE="Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
 
 CHANGE_KEYMAP="${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 
-
 DISK_WARNING_INST="${COLOR_GREEN}*${COLOR_RESET} Orchid Linux s'installera sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET} \n ${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
 
 DISK_ROM="${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}. \n \n Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
@@ -98,7 +127,7 @@ afin de l'identifier lors des communications.
 
 Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}.
 "
-CHOOSE_HOSTNAME"Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_GREEN}orchid${COLOR_RESET}] : "
+CHOOSE_HOSTNAME="Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_GREEN}orchid${COLOR_RESET}] : "
 
 INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
 
