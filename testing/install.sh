@@ -765,8 +765,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-#wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
-#tar -xvf "Strings.tar.xz"
+wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
+tar -xvf "Strings.tar.xz"
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
