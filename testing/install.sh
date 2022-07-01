@@ -738,9 +738,9 @@ if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
-    echo "${COLOR_WHITE}Saisissez le mot de passe pour l'utilisateur ${1} : ${COLOR_YELLOW}(le mot de passe n'apparaîtra pas)${COLOR_RESET}"
+	echo "$STR_CREATE_PASSWORD"
     read -s ATTEMPT1
-    echo "${COLOR_WHITE}Ressaisissez le mot de passe pour le confirmer :${COLOR_RESET}"
+	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
 }
 
@@ -748,8 +748,8 @@ create_passwd() # Spécifier le nom de l'utilisateur en $1
 verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 {
     while [[ "${ATTEMPT1}" != "${ATTEMPT2}" ]]; do
-    	echo "${COLOR_YELLOW}Les mots de passe ne concordent pas, réessayez.${COLOR_RESET}"
-    	create_passwd "${1}"
+		echo "$STR_CREATE_PASSWORD_FAIL"
+		create_passwd "${1}"
 	done
 }
 
@@ -761,12 +761,12 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 #=== MAIN ==========================================================================
 
 if [ "$EUID" -ne 0 ]
-  then echo "Veuillez relancer avec les droits du superutilisateur root. (su ou sudo)"
+  then echo "$STR_USE_THE_GODDAMN_SUDO"
   exit
 fi
 
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
-tar -xvf "Strings.tar.xz"
+#wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
+#tar -xvf "Strings.tar.xz"
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
@@ -778,13 +778,7 @@ draw_installer_steps		# we draw the upper part of the menu
 	0)  # Bienvenue
 	# Disclaimer
 	#-----------------------------------------------------------------------------------
-	WELCOME="${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable
-d'éventuels problèmes qui pourraient arriver lors de
-l'installation ou l'utilisation d'Orchid Linux.
-(Licence GPL 3.0 ou supérieure)
-
-Lisez très attentivement les instructions.
-Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
+	WELCOME="$STR_WELCOME"
 	echo_center "$WELCOME"
 	echo ""
 lang-sel() {
@@ -796,14 +790,16 @@ lang-sel() {
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 if [ "$language" = "1" ]; then
  source Strings/fr.sh
+ loadkeys fr
 elif [ "$language" = "2" ]; then
  source Strings/us.sh
+ loadkeys us
 else
  lang-sel
 fi
 }
 lang-sel
-read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+read -p "$STR_WELCOME_START"
 INSTALLER_STEPS=$STR_INSTALLER_STEPS
 
 	#-----------------------------------------------------------------------------------
@@ -812,7 +808,7 @@ INSTALLER_STEPS=$STR_INSTALLER_STEPS
 	#===================================================================================
 	RAM_SIZE_GB=$(( ($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")+1000000/2)/1000000 ))   # Total Memory in GB, round half-up
 	if (( $RAM_SIZE_GB < 2 )); then
-		echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
+		echo "$STR_RAM_ISSUE"
 		exit
 	fi
 
@@ -824,14 +820,14 @@ INSTALLER_STEPS=$STR_INSTALLER_STEPS
 
 	test_internet_access
 	while [ $test_ip = 0 ]; do
-		echo "${COLOR_RED}*${COLOR_RESET} Test de la connection internet KO. Soit vous n'avez pas de conenction à l'internet, soit notre serveur est à l'arrêt."
-		read -p "Nous allons tenter de vous trouver une connection à l'internet ; pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+		echo "$STR_INTERNET_FAIL"
+		read -p "$STR_INTERNET_FAIL_CONTINUE"
 		dhcpcd                                                                              # Génération d'une addresse IP
 		test_internet_access
 	done
-	echo "${COLOR_GREEN}*${COLOR_RESET} La connection à Internet est fonctionnelle."
+	echo "$STR_INTERNET_SUCCESS"
 	echo ""
-	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+	read -p "$STR_CONTINUE"
 	UI_PAGE=2
 	;;
 	2)
@@ -862,20 +858,20 @@ INSTALLER_STEPS=$STR_INSTALLER_STEPS
     select_disk_to_install
 	fi
 
-	echo "${COLOR_GREEN}*${COLOR_RESET} Orchid Linux s'installera sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-	echo "${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
+	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
+	echo "$STR_DISK_WARNING_INST_2"
 	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
 		ROM="UEFI"
 	else
 		ROM="BIOS"
 	fi
 
-	echo "${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}."
+	echo "$STR_DISK_ROM ${ROM}"
 	echo ""
-	echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
+	echo "$STR_DISK_ROM_2"
 	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
 	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
+		echo "$STR_ORCHID_CANCEL"
 		exit
 	fi
 
@@ -888,15 +884,10 @@ INSTALLER_STEPS=$STR_INSTALLER_STEPS
 	UI_PAGE=5
 	;;
 	5)
-	WHAT_IS_HIBERNATION="L'hibernation, c'est éteindre l'ordinateur en conservant son état.
-À l'allumage, on retrouvera son bureau exactement tel qu'il était avant l'arrêt.
+	WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 
-Pour ce faire, il est nécessaire de copier toute la mémoire vive sur un disque (SWAP).
-
-Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
-"
 	echo_center "$WHAT_IS_HIBERNATION"
-	HIBERNATION=$(ask_yes_or_no_and_validate "Voulez-vous pouvoir utiliser l'hibernation ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+	HIBERNATION=$(ask_yes_or_no_and_validate "$STR_USE_HIBERNATION_QUESTION" n)
 	#-----------------------------------------------------------------------------------
 
 	# Calcul de la mémoire SWAP idéale
@@ -924,21 +915,17 @@ Par défaut, nous vous proposons de ne pas utiliser l'hibernation.
 	#-----------------------------------------------------------------------------------
 
 	IS_HOSTNAME_VALID=0
-	WHAT_IS_HOSTNAME="Le hostname est le nom donné à votre ordinateur sur le réseau,
-afin de l'identifier lors des communications.
-
-Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}.
-"
+	WHAT_IS_HOSTNAME=""
 	echo_center "$WHAT_IS_HOSTNAME"
 
 	while  [ $IS_HOSTNAME_VALID = 0 ]; do
-		read -e -p "Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_GREEN}orchid${COLOR_RESET}] : " HOSTNAME
+		read -e -p "$STR_CHOOSE_HOSTNAME" HOSTNAME
 		HOSTNAME=${HOSTNAME:-orchid}
 		test_if_hostname_is_valid
 		if [ $IS_HOSTNAME_VALID = 0 ]; then
-			echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+			echo "$STR_INCORRECT_HOSTNAME ${HOSTNAME} $STR_INCORRECT_HOSTNAME_2"
 		fi
-	done
+		done
 	UI_PAGE=8
 	;;
 	8)
@@ -946,24 +933,16 @@ Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}
 
 	# Option pour la configuration d'esync (limits)
 	#-----------------------------------------------------------------------------------
-	WHAT_IS_ESYNC="Esync est une technologie créée pour améliorer les performances de jeux
-qui utilisent fortement le parallélisme. Elle est particulièrement utile
-si vous utilisez votre ordinateur pour jouer.
-
-Elle nécessite une petite modification d'un paramètre de sécurité
-(l'augmentation significative du nombre de 'file descriptors' par processus).
-
-Par défaut, nous vous proposons de l'activer : ${COLOR_GREEN}o${COLOR_RESET}.
-"
+	WHAT_IS_ESYNC="$STR_WHAT_IS_ESYNC"
 	echo_center "$WHAT_IS_ESYNC"
 
 	if [ "${ORCHID_ESYNC_SUPPORT[$no_archive]}" = "yes" ]; then	# Do not ask for esync support because this is a Gaming Edition
 		ESYNC_SUPPORT="o"
-		echo "Pour les éditions Gaming, Orchid Linux active automatiquement esync."
+		echo "$STR_ESYNC_GAMING"
 		echo ""
-		read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
+		read -p "$STR_CONTINUE"
 	elif [ "${ORCHID_ESYNC_SUPPORT[$no_archive]}" = "ask" ]; then	# This is not a Gaming Edition, ask for esync support
-		ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "Voulez-vous configurer votre installation avec esync ? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET} " o)
+		ESYNC_SUPPORT=$(ask_yes_or_no_and_validate "$STR_ESYNC_CONFIGURE" o)
 	else
 		echo "FATAL ERROR: what about esync ?"
 		exit 1
@@ -973,33 +952,20 @@ Par défaut, nous vous proposons de l'activer : ${COLOR_GREEN}o${COLOR_RESET}.
 	9)
 	# Option pour la mise à jour d'Orchid Linux dans l'installateur
 	#-----------------------------------------------------------------------------------
-	WHAT_IS_UPDATE="La mise à jour de votre ordinateur est une opération qui consiste à vérifier
-que les logiciels de votre ordinateur utilisent bien la dernière version disponible.
-Ceci est particulièrement important pour la sécurité du système,
-sa cohérence et fourni aussi parfois de nouvelles fonctionnalités.
-
-Par défaut, nous conseillons de faire la mise à jour juste après l'installation,
-car cette opération peut être longue et si vous choisissez de la faire pendant
-l'installation vous devrez attendre sans rien pouvoir faire d'autre.
-"
+	WHAT_IS_UPDATE="$STR_WHAT_IS_UPDATE"
 	echo_center "$WHAT_IS_UPDATE"
-	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "Voulez-vous mettre à jour votre Orchid Linux durant cette installation ? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+	UPDATE_ORCHID=$(ask_yes_or_no_and_validate "$STR_UPDATE_QUESTION" n)
 	UI_PAGE=10
 	;;
 	10)
-	WHAT_IS_USERNAME="Sur un système Linux, comme Orchid Linux, chaque utilisateur doit avoir
-son propre compte qui l'identifie et sépare ses fichiers des autres.
-
-Par defaut, le premier utilisateur que vous allez créer aura
-les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESET}.
-"
+	WHAT_IS_USERNAME="$STR_WHAT_IS_USERNAME"
 	echo_center "$WHAT_IS_USERNAME"
 	IS_USERNAME_VALID=0
 	while  [ $IS_USERNAME_VALID = 0 ]; do
-		read -p "${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Nom du compte que vous voulez créer : ${COLOR_RESET}" USERNAME
+		read -p "$STR_USERNAME_SELECT" USERNAME
 		test_if_username_is_valid
 		if [ $IS_USERNAME_VALID = 0 ]; then
-			echo "${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${USERNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+			echo "$STR_INCORRECT_USERNAME ${USERNAME} $STR_INCORRECT_USERNAME_2"
 		fi
 	done
 
@@ -1011,10 +977,7 @@ les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESE
 	UI_PAGE=11
 	;;
 	11)
-	WHAT_IS_ROOT="Vous allez maintenant choisir le mot de passe pour le superutilisateur (root).
-
-Ce compte particulier a tous les droits sur l'ordinateur.
-"
+	WHAT_IS_ROOT="$STR_WHAT_IS_ROOT"
 	echo_center "$WHAT_IS_ROOT"
 	echo ""
 	create_passwd "root"
@@ -1023,35 +986,34 @@ Ce compte particulier a tous les droits sur l'ordinateur.
 	UI_PAGE=12
 	;;
 	12)
-	echo_center "${COLOR_WHITE}Résumé de l'installation${COLOR_RESET}"
-	echo "Test de la connection internet : [${COLOR_GREEN}OK${COLOR_RESET}]"
-	echo "Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
-	echo "Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
-	echo "Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-	echo "Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
+	echo_center "$STR_RESUME_INST"
+	echo "$STR_RESUME_CONNEXION_TEST"
+	echo "$STR_RESUME_EDITION ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
+	echo "$STR_RESUME_KEYBOARD"
+	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+	echo "$STR_RESUME_FS ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [ "$HIBERNATION" = o ]; then
-		echo "Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
+		echo "$STR_RESUME_HIBERNATION ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATION_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
 	elif [ "$HIBERNATION" = n ]; then
-		echo "Votre mémoire a une taille de ${RAM_SIZE_GB} Go avec ${PROCESSORS} coeurs de processeur. Votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
+		echo "$STR_RESUME_HIBERNATIONNOT ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATIONNOT_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
 	fi
 
-	echo "Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
-	echo "Sur le réseau, ce système aura pour nom : ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
+	echo "$STR_RESUME_GPU ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
+	echo "$STR_RESUME_HOSTNAME ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
 	if [ "$ESYNC_SUPPORT" = o ]; then
-		echo "La configuration ${COLOR_GREEN}esync${COLOR_RESET} sera faite pour le compte : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
+		echo "$STR_RESUME_ESYNC ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
 	fi
 
 	if [ "$UPDATE_ORCHID" = o ]; then
-		echo "Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation."
-		echo "                                ^^ ${COLOR_YELLOW}Cela peut être très long.${COLOR_RESET}"
+		echo "$STR_RESUME_UPDATE"
 	fi
 
-	echo "En plus du superutilisateur root, le compte pour l'utilisateur suivant va être créé : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
+	echo "$STR_RESUME_USERNAME ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
 	echo ""
-	echo "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
+	echo "$STR_INSTALL_BEGIN"
 	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
 	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
+		echo "$STR_INSTALL_CANCEL"
 		exit
 	fi
 	UI_PAGE=13
@@ -1076,8 +1038,8 @@ auto_partitionning_full_disk
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
+echo "$STR_INSTALL_MOUNTING"
+echo "$STR_INSTALL_MOUNTING_ROOT"
 mkdir /mnt/orchid 
 UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
@@ -1085,18 +1047,18 @@ if [ "$FILESYSTEM" = "Btrfs" ]; then
 elif [ "$FILESYSTEM" = "ext4" ]; then
 	mount UUID="${UUID}" /mnt/orchid
 fi
-echo "  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."
+echo "$STR_INSTALL_MOUNTING_SWAP"
 UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
 swapon -U "${UUID}"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
-	echo "  ${COLOR_GREEN}*${COLOR_RESET} Partition EFI."
+	echo "  $STR_INSTALL_MOUNTING_EFI"
 	mkdir -p /mnt/orchid/boot/EFI
 	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
 	mount UUID="${UUID}" /mnt/orchid/boot/EFI
 fi
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement terminé !"
+echo "$STR_INSTALL_MOUNTING_PART_STOP"
 cd /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Count the number of CPU threads available on the system, to inject into /etc/portage/make.conf at a later stage
@@ -1105,7 +1067,7 @@ cd /mnt/orchid
 # Download & extraction of the stage4
 #-----------------------------------------------------------------------------------
 
-echo "${COLOR_GREEN}*${COLOR_RESET} Téléchargement et extraction de la version d'Orchid Linux choisie."
+echo "$STR_INSTALL_EXTRACT"
 processed=0
 FILE_TO_DECOMPRESS=${ORCHID_URL[$no_archive]}
 FILE_TO_DECOMPRESS=${FILE_TO_DECOMPRESS##*/}	                                        # Just keep the file from the URL
@@ -1121,7 +1083,7 @@ wget -q -O- ${ORCHID_URL[$no_archive]} | tar -jxvp --xattrs 2>&1 | decompress_wi
 echo -ne "\r100%[${BAR:0:50}]"
 # New line
 echo -ne "\r\v"
-echo "${COLOR_GREEN}*${COLOR_RESET} Extraction terminée."
+echo "$STR_INSTALL_EXTRACT_FINISH"
 #-----------------------------------------------------------------------------------
 
 # Configuration de make.conf
@@ -1138,7 +1100,7 @@ rm -f tmp1.conf && rm -f tmp2.conf
 # Montage et chroot
 #===================================================================================
 
-echo "${COLOR_GREEN}*${COLOR_RESET} On monte les dossiers proc, dev, sys et run pour le chroot."
+echo "$STR_INSTALL_SYS_MOUNT"
 mount -t proc /proc /mnt/orchid/proc
 mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
@@ -1191,7 +1153,7 @@ umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish
 echo ""
-read -p "Installation terminée ! ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour redémarrer. Pensez bien à enlever le support d'installation. Merci de nous avoir choisi !"
+read -p "$STR_ENDING"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
 exit

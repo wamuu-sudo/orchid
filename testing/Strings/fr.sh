@@ -102,9 +102,12 @@ STR_CONTINUE="Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer"
 
 STR_CHANGE_KEYMAP="${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
 
-STR_DISK_WARNING_INST="${COLOR_GREEN}*${COLOR_RESET} Orchid Linux s'installera sur ${COLOR_GREEN}${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL}${COLOR_RESET} \n ${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
+STR_DISK_WARNING_INST="${COLOR_GREEN}*${COLOR_RESET} Orchid Linux s'installera sur ${COLOR_GREEN}"
+STR_DISK_WARNING_INST_2="${COLOR_YELLOW}                                  ^^ ! ATTENTION ! Toutes les données sur ce disque seront effacées !${COLOR_RESET}"
 
-STR_DISK_ROM="${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type ${ROM}. \n \n Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
+STR_DISK_ROM="${COLOR_GREEN}*${COLOR_RESET} Le démarrage du système d'exploitation est de type:"
+
+STR_DISK_ROM_2="Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
 
 STR_ORCHID_CANCEL="${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 
@@ -123,7 +126,9 @@ Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}
 "
 STR_CHOOSE_HOSTNAME="Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_GREEN}orchid${COLOR_RESET}] : "
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}"
+# Here there will be the hostname of the user
+STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}\" est invalide. Veuillez recommencer."
 
 STR_WHAT_IS_ESYNC="Esync est une technologie créée pour améliorer les performances de jeux
 qui utilisent fortement le parallélisme. Elle est particulièrement utile
@@ -157,22 +162,31 @@ les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESE
 
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Nom du compte que vous voulez créer : ${COLOR_RESET}"
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}${USERNAME}${COLOR_RESET}\" est invalide. Veuillez recommencer."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}"
+# Here there will be the Username of the users
+STR_INCORRECT_USERNAME_2="${COLOR_RESET}\" est invalide. Veuillez recommencer."
 
 STR_WHAT_IS_ROOT="Vous allez maintenant choisir le mot de passe pour le superutilisateur (root).
 Ce compte particulier a tous les droits sur l'ordinateur."
 STR_RESUME_INST="${COLOR_WHITE}Résumé de l'installation${COLOR_RESET}"
 STR_RESUME_CONNEXION_TEST="Test de la connection internet : [${COLOR_GREEN}OK${COLOR_RESET}]"
-STR_RESUME_EDITION="Version d'Orchid Linux choisie : ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
+STR_RESUME_EDITION="Version d'Orchid Linux choisie :"
 STR_RESUME_KEYBOARD="Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
-STR_RESUME_DISK="Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-STR_RESUME_FS="Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
-STR_RESUME_HIBERNATION="Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
-STR_RESUME_GPU="Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
-STR_RESUME_HOSTNAME="Sur le réseau, ce système aura pour nom : ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
-STR_RESUME_ESYNC="La configuration ${COLOR_GREEN}esync${COLOR_RESET} sera faite pour le compte : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
-STR_RESUME_UPDATE="Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. \n                                ^^ ${COLOR_YELLOW}Cela peut être très long.${COLOR_RESET}"
-STR_RESUME_USERNAME="En plus du superutilisateur root, le compte pour l'utilisateur suivant va être créé : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
+STR_RESUME_DISK="Orchid Linux s'installera sur :"
+STR_RESUME_FS="Le système de fichiers choisi est :"
+STR_RESUME_HIBERNATION="Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de"
+# Here we show the user his RAM + His CPU cores
+STR_RESUME_HIBERNATION_2="coeurs de processeur, SWAP de ${COLOR_GREEN}"
+STR_RESUME_HIBERNATIONNOT="Votre mémoire a une taille de"
+# Here we show the user his RAM + His CPU cores
+STR_RESUME_HIBERNATIONNOT_2="coeurs de processeur, SWAP de ${COLOR_GREEN}"
+
+STR_RESUME_GPU="Les pilotes graphiques suivants vont être installés :"
+STR_RESUME_HOSTNAME="Sur le réseau, ce système aura pour nom :"
+STR_RESUME_ESYNC="La configuration ${COLOR_GREEN}esync${COLOR_RESET} sera faite pour le compte :"
+STR_RESUME_UPDATE="Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation.
+                                ^^ ${COLOR_YELLOW}Cela peut être très long.${COLOR_RESET}"
+STR_RESUME_USERNAME="En plus du superutilisateur root, le compte pour l'utilisateur suivant va être créé : "
 STR_INSTALL_BEGIN="Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
 STR_INSTALL_CANCEL="${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
 STR_INSTALL_MOUNTING="${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
