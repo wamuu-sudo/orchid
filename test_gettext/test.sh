@@ -9,6 +9,6 @@ export TEXTDOMAINDIR=$PWD/locale
 
 pwd=$PWD
 
-gettext "Hello World!"
-eval_gettext "Current dir: \$pwd"
-gettext "End of the script"
+echo $(gettext "Hello World!")
+echo $(eval_gettext "Current dir: \$pwd")
+echo $(gettext "End of the script")

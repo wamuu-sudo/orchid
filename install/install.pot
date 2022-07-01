@@ -3,28 +3,828 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#: install.sh:482 install.sh:810 install.sh:838 install.sh:846 install.sh:879
+#: install.sh:882 install.sh:967 install.sh:1010 install.sh:1012 install.sh:1023
+#: install.sh:1054 install.sh:1057 install.sh:1070 install.sh:1197
 #, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 17:47+0200\n"
+"POT-Creation-Date: 2022-06-29 12:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: install.sh:210
+#: install.sh:34 install.sh:290 install.sh:292
+msgid "."
+msgstr ""
+
+#: install.sh:34
+msgid "gettext.sh"
+msgstr ""
+
+#: install.sh:36 install.sh:37
+msgid "export"
+msgstr ""
+
+#: install.sh:42
+msgid "--------------------------------------------------------------"
+msgstr ""
+
+#: install.sh:46
+msgid "ORCHID_VERSION[0]=DWM standard [2.2Go]"
+msgstr ""
+
+#: install.sh:47
+msgid ""
+"ORCHID_URL[0]=https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest."
+"tar.bz2"
+msgstr ""
+
+#: install.sh:48
+msgid ""
+"ORCHID_COUNT[0]=https://dl.orchid-linux.org/stage4-orchid-dwmstandard-latest."
+"count"
+msgstr ""
+
+#: install.sh:49
+msgid "COUNTED_BY_TREE[0]=326062"
+msgstr ""
+
+#: install.sh:50
+msgid "ORCHID_ESYNC_SUPPORT[0]=ask"
+msgstr ""
+
+#: install.sh:51
+msgid "ORCHID_LOGIN[0]=STANDARD"
+msgstr ""
+
+#: install.sh:52
+msgid "ORCHID_NAME[0]=DWM"
+msgstr ""
+
+#: install.sh:54
+msgid "ORCHID_VERSION[1]=DWM Gaming Edition [3.4Go]"
+msgstr ""
+
+#: install.sh:55
+msgid ""
+"ORCHID_URL[1]=https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest.tar."
+"bz2"
+msgstr ""
+
+#: install.sh:56
+msgid ""
+"ORCHID_COUNT[1]=https://dl.orchid-linux.org/stage4-orchid-dwmgaming-latest."
+"count"
+msgstr ""
+
+#: install.sh:57
+msgid "COUNTED_BY_TREE[1]=358613"
+msgstr ""
+
+#: install.sh:58
+msgid "ORCHID_ESYNC_SUPPORT[1]=yes"
+msgstr ""
+
+#: install.sh:59
+msgid "ORCHID_LOGIN[1]=STANDARD"
+msgstr ""
+
+#: install.sh:60
+msgid "ORCHID_NAME[1]=DWM-GE"
+msgstr ""
+
+#: install.sh:62
+msgid "ORCHID_VERSION[2]=GNOME [2.4Go]"
+msgstr ""
+
+#: install.sh:63
+msgid ""
+"ORCHID_URL[2]=https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest.tar."
+"bz2"
+msgstr ""
+
+#: install.sh:64
+msgid ""
+"ORCHID_COUNT[2]=https://dl.orchid-linux.org/stage4-orchid-gnomefull-latest."
+"count.txt"
+msgstr ""
+
+#: install.sh:65
+msgid "COUNTED_BY_TREE[2]=424438"
+msgstr ""
+
+#: install.sh:66
+msgid "ORCHID_ESYNC_SUPPORT[2]=ask"
+msgstr ""
+
+#: install.sh:67
+msgid "ORCHID_LOGIN[2]=STANDARD"
+msgstr ""
+
+#: install.sh:68
+msgid "ORCHID_NAME[2]=GNOME"
+msgstr ""
+
+#: install.sh:70
+msgid "ORCHID_VERSION[3]=Xfce Gaming Edition [2.6Go]"
+msgstr ""
+
+#: install.sh:71
+msgid ""
+"ORCHID_URL[3]=https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar."
+"bz2"
+msgstr ""
+
+#: install.sh:72
+msgid ""
+"ORCHID_COUNT[3]=https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest."
+"count"
+msgstr ""
+
+#: install.sh:74
+msgid "ORCHID_ESYNC_SUPPORT[3]=yes"
+msgstr ""
+
+#: install.sh:75
+msgid "ORCHID_LOGIN[3]=STANDARD"
+msgstr ""
+
+#: install.sh:76
+msgid "ORCHID_NAME[3]=XFCE-GE"
+msgstr ""
+
+#: install.sh:78
+msgid "ORCHID_VERSION[4]=KDE Plasma [3.2Go]"
+msgstr ""
+
+#: install.sh:79
+msgid ""
+"ORCHID_URL[4]=https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-"
+"latest.tar.bz2"
+msgstr ""
+
+#: install.sh:81
+msgid "COUNTED_BY_TREE[4]=568451"
+msgstr ""
+
+#: install.sh:82
+msgid "ORCHID_ESYNC_SUPPORT[4]=ask"
+msgstr ""
+
+#: install.sh:83
+msgid "ORCHID_LOGIN[4]=STANDARD"
+msgstr ""
+
+#: install.sh:84
+msgid "ORCHID_NAME[4]=KDE"
+msgstr ""
+
+#: install.sh:86
+msgid "ORCHID_VERSION[5]=GNOME Gaming Edition [3.1Go]"
+msgstr ""
+
+#: install.sh:87
+msgid ""
+"ORCHID_URL[5]=https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-"
+"latest.tar.bz2"
+msgstr ""
+
+#: install.sh:89
+msgid "COUNTED_BY_TREE[5]=436089"
+msgstr ""
+
+#: install.sh:90
+msgid "ORCHID_ESYNC_SUPPORT[5]=yes"
+msgstr ""
+
+#: install.sh:91
+msgid "ORCHID_LOGIN[5]=STANDARD"
+msgstr ""
+
+#: install.sh:92
+msgid "ORCHID_NAME[5]=GNOME-GE"
+msgstr ""
+
+#: install.sh:94
+msgid "ORCHID_VERSION[6]=GNOME Gaming Edition avec Systemd [3.3Go]"
+msgstr ""
+
+#: install.sh:95
+msgid ""
+"ORCHID_URL[6]=https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-"
+"systemd-latest.tar.bz2"
+msgstr ""
+
+#: install.sh:96
+msgid ""
+"ORCHID_COUNT[6]=https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-"
+"systemd-latest.count.txt"
+msgstr ""
+
+#: install.sh:97
+msgid "COUNTED_BY_TREE[6]=452794"
+msgstr ""
+
+#: install.sh:98
+msgid "ORCHID_ESYNC_SUPPORT[6]=yes"
+msgstr ""
+
+#: install.sh:99
+msgid "ORCHID_LOGIN[6]=SYSTEMD-GNOME"
+msgstr ""
+
+#: install.sh:100
+msgid "ORCHID_NAME[6]=GNOME-GE-SYSTEMD"
+msgstr ""
+
+#: install.sh:102
+msgid "ORCHID_VERSION[7]=Base (X11 & Network Manager) [1.7Go]"
+msgstr ""
+
+#: install.sh:103
+msgid ""
+"ORCHID_URL[7]=https://dl.orchid-linux.org/stage4-orchid-base-latest.tar.bz2"
+msgstr ""
+
+#: install.sh:104
+msgid ""
+"ORCHID_COUNT[7]=https://dl.orchid-linux.org/stage4-orchid-base-latest.count"
+msgstr ""
+
+#: install.sh:106
+msgid "ORCHID_ESYNC_SUPPORT[7]=ask"
+msgstr ""
+
+#: install.sh:107
+msgid "ORCHID_LOGIN[7]=BASE"
+msgstr ""
+
+#: install.sh:108
+msgid "ORCHID_NAME[7]=BASE-X11"
+msgstr ""
+
+#: install.sh:110
+msgid "ORCHID_VERSION[8]=Base avec Systemd (X11 & Network Manager) [2.0Go]"
+msgstr ""
+
+#: install.sh:111
+msgid ""
+"ORCHID_URL[8]=https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-"
+"latest.tar.bz2"
+msgstr ""
+
+#: install.sh:112
+msgid ""
+"ORCHID_COUNT[8]=https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-"
+"latest.count"
+msgstr ""
+
+#: install.sh:114
+msgid "ORCHID_ESYNC_SUPPORT[8]=ask"
+msgstr ""
+
+#: install.sh:115
+msgid "ORCHID_LOGIN[8]=SYSTEMD-BASE"
+msgstr ""
+
+#: install.sh:116
+msgid "ORCHID_NAME[8]=BASE-SYSTEMD-X11"
+msgstr ""
+
+#: install.sh:118
+msgid "ORCHID_VERSION[9]=Budgie avec Systemd [2.3Go]"
+msgstr ""
+
+#: install.sh:119
+msgid ""
+"ORCHID_URL[9]=https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest."
+"tar.bz2"
+msgstr ""
+
+#: install.sh:120
+msgid ""
+"ORCHID_COUNT[9]=https://dl.orchid-linux.org/testing/stage4-orchid-budgie-"
+"latest.count"
+msgstr ""
+
+#: install.sh:122
+msgid "ORCHID_ESYNC_SUPPORT[9]=ask"
+msgstr ""
+
+#: install.sh:123
+msgid "ORCHID_LOGIN[9]=SYSTEMD-BUDGIE"
+msgstr ""
+
+#: install.sh:124
+msgid "ORCHID_NAME[9]=BUDGIE-SYSTEMD"
+msgstr ""
+
+#: install.sh:147 install.sh:148 install.sh:149 install.sh:153 install.sh:154
+#: install.sh:164 install.sh:165 install.sh:181
+msgid "declare"
+msgstr ""
+
+#: install.sh:147 install.sh:148 install.sh:149 install.sh:153 install.sh:154
+#: install.sh:164 install.sh:165 install.sh:181
+msgid "-a"
+msgstr ""
+
+#: install.sh:147
+msgid "ORCHID_VERSION"
+msgstr ""
+
+#: install.sh:148
+msgid "ORCHID_URL"
+msgstr ""
+
+#: install.sh:149
+msgid "CHOICES_ORCHID"
+msgstr ""
+
+#: install.sh:153
+msgid "CHOICES_FILESYSTEM"
+msgstr ""
+
+#: install.sh:154
+msgid "FILESYSTEM_TYPE"
+msgstr ""
+
+#: install.sh:157
+msgid "FILESYSTEM_TYPE[0]=Btrfs"
+msgstr ""
+
+#: install.sh:158
+msgid "FILESYSTEM_TYPE[1]=ext4"
+msgstr ""
+
+#: install.sh:164
+msgid "CHOICES"
+msgstr ""
+
+#: install.sh:165
+msgid "GPU_DRIVERS"
+msgstr ""
+
+#: install.sh:170
+msgid "GPU_DRIVERS[0]=intel"
+msgstr ""
+
+#: install.sh:171
+msgid "GPU_DRIVERS[1]=i915"
+msgstr ""
+
+#: install.sh:172
+msgid "GPU_DRIVERS[2]=nvidia"
+msgstr ""
+
+#: install.sh:173
+msgid "GPU_DRIVERS[3]=radeon"
+msgstr ""
+
+#: install.sh:174
+msgid "GPU_DRIVERS[4]=amdgpu"
+msgstr ""
+
+#: install.sh:175
+msgid "GPU_DRIVERS[5]=radeonsi"
+msgstr ""
+
+#: install.sh:176
+msgid "GPU_DRIVERS[6]=virtualbox"
+msgstr ""
+
+#: install.sh:177
+msgid "GPU_DRIVERS[7]=vmware"
+msgstr ""
+
+#: install.sh:181
+msgid "CHOICES_DISK"
+msgstr ""
+
+#: install.sh:200 install.sh:201 install.sh:202 install.sh:203 install.sh:204
+#: install.sh:206 install.sh:207 install.sh:208 install.sh:209 install.sh:216
+#: install.sh:217 install.sh:234 install.sh:235 install.sh:243 install.sh:245
+#: install.sh:246 install.sh:259 install.sh:273 install.sh:350 install.sh:372
+#: install.sh:380 install.sh:791
+msgid "tput"
+msgstr ""
+
+#: install.sh:200 install.sh:201 install.sh:202
+msgid "setab"
+msgstr ""
+
+#: install.sh:200 install.sh:889
+msgid "4"
+msgstr ""
+
+#: install.sh:201 install.sh:237 install.sh:243 install.sh:246 install.sh:380
+#: install.sh:397 install.sh:412 install.sh:427 install.sh:437 install.sh:456
+#: install.sh:471 install.sh:484 install.sh:528 install.sh:573 install.sh:592
+#: install.sh:606 install.sh:784 install.sh:798 install.sh:831 install.sh:859
+#: install.sh:938 install.sh:942 install.sh:1002 install.sh:1005
+msgid "0"
+msgstr ""
+
+#: install.sh:202 install.sh:203 install.sh:692 install.sh:693 install.sh:699
+#: install.sh:723 install.sh:819 install.sh:842
+msgid "2"
+msgstr ""
+
+#: install.sh:203 install.sh:204
+msgid "setaf"
+msgstr ""
+
+#: install.sh:204 install.sh:925
+msgid "7"
+msgstr ""
+
+#: install.sh:206
+msgid "bold"
+msgstr ""
+
+#: install.sh:207
+msgid "dim"
+msgstr ""
+
+#: install.sh:208
+msgid "rev"
+msgstr ""
+
+#: install.sh:209
+msgid "sgr0"
+msgstr ""
+
+#: install.sh:211 install.sh:385 install.sh:408 install.sh:422 install.sh:436
+#: install.sh:452 install.sh:466 install.sh:481 install.sh:483 install.sh:509
+#: install.sh:521 install.sh:571 install.sh:572 install.sh:588 install.sh:602
+#: install.sh:637 install.sh:640 install.sh:644 install.sh:648 install.sh:708
+#: install.sh:709 install.sh:714 install.sh:732 install.sh:785 install.sh:820
+#: install.sh:837 install.sh:1198
+msgid "gettext"
+msgstr ""
+
+#: install.sh:211 install.sh:802 install.sh:837 install.sh:1055 install.sh:1058
+#: install.sh:1198
+#, sh-format
+msgid "install"
+msgstr ""
+
+#: install.sh:211
 msgid ""
 "Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk "
 "selection|File system selection|Hibernation|Graphics card selection|System "
 "name|esync|Updates|User creation|Root password|Resume|Installation"
 msgstr ""
 
-#: install.sh:384
+#: install.sh:216 install.sh:234
+msgid "lines"
+msgstr ""
+
+#: install.sh:217 install.sh:235
+msgid "cols"
+msgstr ""
+
+#: install.sh:233 install.sh:790
+msgid "set_term_size"
+msgstr ""
+
+#: install.sh:233 install.sh:241 install.sh:250 install.sh:267 install.sh:282
+#: install.sh:303 install.sh:384 install.sh:406 install.sh:435 install.sh:450
+#: install.sh:480 install.sh:493 install.sh:537 install.sh:560 install.sh:570
+#: install.sh:586 install.sh:616 install.sh:657 install.sh:673 install.sh:689
+#: install.sh:698 install.sh:722 install.sh:739 install.sh:752 install.sh:761
+#: install.sh:770
+msgid "{"
+msgstr ""
+
+#: install.sh:236 install.sh:302 install.sh:796
+msgid "draw_installer_steps"
+msgstr ""
+
+#: install.sh:237
+msgid "return"
+msgstr ""
+
+#: install.sh:238 install.sh:247 install.sh:264 install.sh:279 install.sh:300
+#: install.sh:381 install.sh:402 install.sh:432 install.sh:446 install.sh:476
+#: install.sh:489 install.sh:533 install.sh:556 install.sh:566 install.sh:582
+#: install.sh:612 install.sh:654 install.sh:670 install.sh:686 install.sh:695
+#: install.sh:718 install.sh:735 install.sh:749 install.sh:758 install.sh:766
+#: install.sh:775
+msgid "}"
+msgstr ""
+
+#: install.sh:240 install.sh:311 install.sh:407 install.sh:409 install.sh:451
+#: install.sh:453 install.sh:508 install.sh:510 install.sh:587 install.sh:589
+msgid "clear_under_menu"
+msgstr ""
+
+#: install.sh:243 install.sh:246 install.sh:259 install.sh:273 install.sh:350
+#: install.sh:372 install.sh:380
+msgid "cup"
+msgstr ""
+
+#: install.sh:244 install.sh:255 install.sh:260 install.sh:268 install.sh:274
+#: install.sh:278 install.sh:304 install.sh:344 install.sh:352 install.sh:373
+#: install.sh:379 install.sh:396 install.sh:398 install.sh:401 install.sh:436
+#: install.sh:439 install.sh:441 install.sh:445 install.sh:481 install.sh:482
+#: install.sh:483 install.sh:485 install.sh:488 install.sh:549 install.sh:571
+#: install.sh:572 install.sh:575 install.sh:577 install.sh:581 install.sh:637
+#: install.sh:638 install.sh:640 install.sh:644 install.sh:648 install.sh:651
+#: install.sh:666 install.sh:682 install.sh:708 install.sh:762 install.sh:764
+#: install.sh:772 install.sh:785 install.sh:810 install.sh:820 install.sh:832
+#: install.sh:837 install.sh:838 install.sh:846 install.sh:860 install.sh:870
+#: install.sh:871 install.sh:878 install.sh:879 install.sh:880 install.sh:883
+#: install.sh:918 install.sh:943 install.sh:966 install.sh:967 install.sh:972
+#: install.sh:1006 install.sh:1010 install.sh:1012 install.sh:1023
+#: install.sh:1031 install.sh:1032 install.sh:1033 install.sh:1034
+#: install.sh:1035 install.sh:1037 install.sh:1039 install.sh:1042
+#: install.sh:1043 install.sh:1045 install.sh:1049 install.sh:1050
+#: install.sh:1053 install.sh:1054 install.sh:1055 install.sh:1058
+#: install.sh:1070 install.sh:1071 install.sh:1083 install.sh:1084
+#: install.sh:1092 install.sh:1097 install.sh:1103 install.sh:1112
+#: install.sh:1121 install.sh:1125 install.sh:1127 install.sh:1128
+#: install.sh:1145 install.sh:1197
+msgid "echo"
+msgstr ""
+
+#: install.sh:244 install.sh:304 install.sh:344 install.sh:856 install.sh:881
+#: install.sh:1056 install.sh:1116
+msgid "-n"
+msgstr ""
+
+#: install.sh:245
+msgid "ed"
+msgstr ""
+
+#: install.sh:249 install.sh:395 install.sh:809 install.sh:903 install.sh:936
+#: install.sh:962 install.sh:989 install.sh:1000 install.sh:1022 install.sh:1030
+msgid "echo_center"
+msgstr ""
+
+#: install.sh:253 install.sh:270 install.sh:324 install.sh:345 install.sh:408
+#: install.sh:452 install.sh:509 install.sh:538 install.sh:588 install.sh:658
+#: install.sh:674 install.sh:771 install.sh:795 install.sh:831 install.sh:938
+#: install.sh:1002
+msgid "while"
+msgstr ""
+
+#: install.sh:253 install.sh:270 install.sh:324 install.sh:345 install.sh:408
+#: install.sh:452 install.sh:509 install.sh:538 install.sh:588 install.sh:660
+#: install.sh:676 install.sh:763 install.sh:765 install.sh:811 install.sh:833
+#: install.sh:839 install.sh:881 install.sh:939 install.sh:968 install.sh:1003
+#: install.sh:1056 install.sh:1198
+msgid "read"
+msgstr ""
+
+#: install.sh:253 install.sh:270
+msgid "-r"
+msgstr ""
+
+#: install.sh:253 install.sh:270
+msgid "TEXT"
+msgstr ""
+
+#: install.sh:253 install.sh:254 install.sh:270 install.sh:271 install.sh:324
+#: install.sh:325 install.sh:345 install.sh:346 install.sh:397 install.sh:408
+#: install.sh:412 install.sh:427 install.sh:437 install.sh:452 install.sh:456
+#: install.sh:471 install.sh:484 install.sh:509 install.sh:528 install.sh:538
+#: install.sh:573 install.sh:588 install.sh:592 install.sh:606 install.sh:658
+#: install.sh:674 install.sh:771 install.sh:795 install.sh:831 install.sh:859
+#: install.sh:938 install.sh:1002
+msgid "do"
+msgstr ""
+
+#: install.sh:254 install.sh:271 install.sh:325 install.sh:346 install.sh:397
+#: install.sh:412 install.sh:427 install.sh:437 install.sh:456 install.sh:471
+#: install.sh:484 install.sh:528 install.sh:573 install.sh:592 install.sh:606
+#: install.sh:859
+msgid "for"
+msgstr ""
+
+#: install.sh:254 install.sh:271 install.sh:325 install.sh:346
+msgid "l"
+msgstr ""
+
+#: install.sh:254 install.sh:271 install.sh:325 install.sh:346 install.sh:665
+#: install.sh:681 install.sh:797
+msgid "in"
+msgstr ""
+
+#: install.sh:255 install.sh:856 install.sh:939
+msgid "-e"
+msgstr ""
+
+#: install.sh:255 install.sh:1134 install.sh:1135
+msgid "sed"
+msgstr ""
+
+#: install.sh:255
+msgid "s/\\x1B\\[[0-9;]\\{1,\\}[A-Za-z]//g"
+msgstr ""
+
+#: install.sh:261 install.sh:275
+msgid "TEXT_LINE_START++"
+msgstr ""
+
+#: install.sh:262 install.sh:263 install.sh:276 install.sh:277 install.sh:335
+#: install.sh:336 install.sh:377 install.sh:378 install.sh:399 install.sh:418
+#: install.sh:424 install.sh:431 install.sh:443 install.sh:462 install.sh:468
+#: install.sh:475 install.sh:486 install.sh:523 install.sh:532 install.sh:555
+#: install.sh:579 install.sh:598 install.sh:604 install.sh:611 install.sh:669
+#: install.sh:685 install.sh:774 install.sh:836 install.sh:861 install.sh:945
+#: install.sh:1008 install.sh:1067
+msgid "done"
+msgstr ""
+
+#: install.sh:266 install.sh:309
+msgid "echo_banner"
+msgstr ""
+
+#: install.sh:281 install.sh:307
+msgid "echo_logo"
+msgstr ""
+
+#: install.sh:283
+msgid "cat"
+msgstr ""
+
+#: install.sh:283 install.sh:299
+msgid "_EOF_"
+msgstr ""
+
+#: install.sh:291
+msgid ":-."
+msgstr ""
+
+#: install.sh:291
+msgid ".-:"
+msgstr ""
+
+#: install.sh:305
+msgid "clear"
+msgstr ""
+
+#: install.sh:324 install.sh:345
+msgid "-ra"
+msgstr ""
+
+#: install.sh:324 install.sh:345
+msgid "STEPS"
+msgstr ""
+
+#: install.sh:326 install.sh:331 install.sh:348 install.sh:359 install.sh:367
+#: install.sh:410 install.sh:413 install.sh:428 install.sh:438 install.sh:454
+#: install.sh:457 install.sh:472 install.sh:495 install.sh:511 install.sh:513
+#: install.sh:529 install.sh:542 install.sh:552 install.sh:561 install.sh:574
+#: install.sh:590 install.sh:593 install.sh:607 install.sh:621 install.sh:639
+#: install.sh:647 install.sh:661 install.sh:677 install.sh:692 install.sh:699
+#: install.sh:710 install.sh:723 install.sh:740 install.sh:741 install.sh:753
+#: install.sh:784 install.sh:819 install.sh:863 install.sh:872 install.sh:882
+#: install.sh:912 install.sh:942 install.sh:964 install.sh:1005 install.sh:1036
+#: install.sh:1044 install.sh:1048 install.sh:1057 install.sh:1073
+#: install.sh:1087 install.sh:1096 install.sh:1116 install.sh:1164
+#: install.sh:1169 install.sh:1174
+msgid "if"
+msgstr ""
+
+#: install.sh:326 install.sh:348 install.sh:542 install.sh:552 install.sh:621
+#: install.sh:628 install.sh:639 install.sh:647 install.sh:650 install.sh:661
+#: install.sh:677 install.sh:710 install.sh:713 install.sh:740 install.sh:784
+#: install.sh:831 install.sh:872 install.sh:912 install.sh:914 install.sh:938
+#: install.sh:942 install.sh:964 install.sh:969 install.sh:1002 install.sh:1005
+#: install.sh:1036 install.sh:1038 install.sh:1044 install.sh:1048
+#: install.sh:1087 install.sh:1089 install.sh:1096 install.sh:1116
+#: install.sh:1164 install.sh:1169 install.sh:1174
+msgid "["
+msgstr ""
+
+#: install.sh:326 install.sh:348 install.sh:361
+msgid "-gt"
+msgstr ""
+
+#: install.sh:326 install.sh:348 install.sh:542 install.sh:552 install.sh:621
+#: install.sh:628 install.sh:639 install.sh:647 install.sh:650 install.sh:661
+#: install.sh:677 install.sh:710 install.sh:713 install.sh:740 install.sh:784
+#: install.sh:831 install.sh:872 install.sh:912 install.sh:914 install.sh:938
+#: install.sh:942 install.sh:964 install.sh:969 install.sh:1002 install.sh:1005
+#: install.sh:1036 install.sh:1038 install.sh:1044 install.sh:1048
+#: install.sh:1087 install.sh:1089 install.sh:1096 install.sh:1116
+#: install.sh:1164 install.sh:1169 install.sh:1174
+msgid "]"
+msgstr ""
+
+#: install.sh:326 install.sh:331 install.sh:348 install.sh:359 install.sh:361
+#: install.sh:367 install.sh:410 install.sh:413 install.sh:428 install.sh:438
+#: install.sh:454 install.sh:457 install.sh:472 install.sh:495 install.sh:497
+#: install.sh:500 install.sh:503 install.sh:511 install.sh:513 install.sh:529
+#: install.sh:542 install.sh:552 install.sh:561 install.sh:574 install.sh:590
+#: install.sh:593 install.sh:607 install.sh:621 install.sh:628 install.sh:639
+#: install.sh:647 install.sh:650 install.sh:661 install.sh:677 install.sh:692
+#: install.sh:699 install.sh:702 install.sh:705 install.sh:710 install.sh:713
+#: install.sh:723 install.sh:726 install.sh:729 install.sh:740 install.sh:741
+#: install.sh:753 install.sh:785 install.sh:819 install.sh:863 install.sh:872
+#: install.sh:882 install.sh:912 install.sh:914 install.sh:942 install.sh:964
+#: install.sh:969 install.sh:1005 install.sh:1036 install.sh:1038
+#: install.sh:1044 install.sh:1048 install.sh:1057 install.sh:1073
+#: install.sh:1087 install.sh:1089 install.sh:1096 install.sh:1116
+#: install.sh:1164 install.sh:1169 install.sh:1174
+msgid "then"
+msgstr ""
+
+#: install.sh:327
+msgid "TEXT_STEPS_RAW_COUNT++"
+msgstr ""
+
+#: install.sh:329 install.sh:333 install.sh:355 install.sh:365 install.sh:374
+#: install.sh:417 install.sh:423 install.sh:430 install.sh:442 install.sh:461
+#: install.sh:467 install.sh:474 install.sh:506 install.sh:517 install.sh:522
+#: install.sh:531 install.sh:544 install.sh:554 install.sh:565 install.sh:578
+#: install.sh:597 install.sh:603 install.sh:610 install.sh:635 install.sh:642
+#: install.sh:653 install.sh:663 install.sh:679 install.sh:694 install.sh:715
+#: install.sh:716 install.sh:733 install.sh:745 install.sh:748 install.sh:757
+#: install.sh:787 install.sh:822 install.sh:868 install.sh:876 install.sh:885
+#: install.sh:916 install.sh:944 install.sh:974 install.sh:1007 install.sh:1040
+#: install.sh:1046 install.sh:1051 install.sh:1060 install.sh:1077
+#: install.sh:1091 install.sh:1101 install.sh:1118 install.sh:1166
+#: install.sh:1171 install.sh:1176
+msgid "fi"
+msgstr ""
+
+#: install.sh:331 install.sh:359 install.sh:361 install.sh:367 install.sh:408
+#: install.sh:410 install.sh:413 install.sh:428 install.sh:438 install.sh:452
+#: install.sh:454 install.sh:457 install.sh:472 install.sh:495 install.sh:497
+#: install.sh:500 install.sh:503 install.sh:509 install.sh:511 install.sh:513
+#: install.sh:529 install.sh:574 install.sh:588 install.sh:590 install.sh:593
+#: install.sh:607 install.sh:741 install.sh:753 install.sh:771 install.sh:863
+#: install.sh:882 install.sh:1057 install.sh:1073
+msgid "[["
+msgstr ""
+
+#: install.sh:331 install.sh:367 install.sh:692 install.sh:882 install.sh:1057
+msgid "!"
+msgstr ""
+
+#: install.sh:331 install.sh:359 install.sh:367 install.sh:397 install.sh:412
+#: install.sh:427 install.sh:437 install.sh:456 install.sh:471 install.sh:484
+#: install.sh:528 install.sh:573 install.sh:592 install.sh:606 install.sh:621
+#: install.sh:628 install.sh:639 install.sh:647 install.sh:650 install.sh:692
+#: install.sh:699 install.sh:700 install.sh:702 install.sh:703 install.sh:705
+#: install.sh:706 install.sh:710 install.sh:713 install.sh:723 install.sh:724
+#: install.sh:726 install.sh:727 install.sh:729 install.sh:730 install.sh:831
+#: install.sh:859 install.sh:882 install.sh:912 install.sh:914 install.sh:938
+#: install.sh:942 install.sh:964 install.sh:969 install.sh:1002 install.sh:1005
+#: install.sh:1036 install.sh:1038 install.sh:1044 install.sh:1048
+#: install.sh:1057 install.sh:1087 install.sh:1089 install.sh:1096
+#: install.sh:1164 install.sh:1169 install.sh:1174
+msgid "="
+msgstr ""
+
+#: install.sh:331 install.sh:359 install.sh:361 install.sh:367 install.sh:408
+#: install.sh:410 install.sh:413 install.sh:428 install.sh:438 install.sh:452
+#: install.sh:454 install.sh:457 install.sh:472 install.sh:495 install.sh:497
+#: install.sh:500 install.sh:503 install.sh:509 install.sh:511 install.sh:513
+#: install.sh:529 install.sh:574 install.sh:588 install.sh:590 install.sh:593
+#: install.sh:607 install.sh:741 install.sh:753 install.sh:771 install.sh:863
+#: install.sh:882 install.sh:1057 install.sh:1073
+msgid "]]"
+msgstr ""
+
+#: install.sh:334 install.sh:376 install.sh:397 install.sh:412 install.sh:427
+#: install.sh:437 install.sh:456 install.sh:471 install.sh:484 install.sh:528
+#: install.sh:573 install.sh:592 install.sh:606 install.sh:859
+msgid "i++"
+msgstr ""
+
+#: install.sh:351
+msgid "TEXT_STEPS_RAW_START++"
+msgstr ""
+
+#: install.sh:361 install.sh:497 install.sh:500 install.sh:503 install.sh:628
+#: install.sh:650 install.sh:702 install.sh:705 install.sh:713 install.sh:726
+#: install.sh:729 install.sh:914 install.sh:969 install.sh:1038 install.sh:1089
+msgid "elif"
+msgstr ""
+
+#: install.sh:363 install.sh:370 install.sh:415 install.sh:421 install.sh:440
+#: install.sh:459 install.sh:465 install.sh:515 install.sh:520 install.sh:563
+#: install.sh:576 install.sh:595 install.sh:601 install.sh:743 install.sh:746
+#: install.sh:755 install.sh:866 install.sh:874 install.sh:971 install.sh:1075
+msgid "else"
+msgstr ""
+
+#: install.sh:383 install.sh:408
+msgid "CLI_filesystem_selector"
+msgstr ""
+
+#: install.sh:385
 msgid ""
 "A file system organizes the way data is stored on your disk.\n"
 "\n"
@@ -37,91 +837,415 @@ msgid ""
 "minimizes data fragmentation and is widely tested.\n"
 msgstr ""
 
-#: install.sh:407
+#: install.sh:396
+msgid "evel_gettext"
+msgstr ""
+
+#: install.sh:396
+#, sh-format
+msgid ""
+"Select the file system you want to use : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+msgstr ""
+
+#: install.sh:397 install.sh:412 install.sh:427 install.sh:437 install.sh:456
+#: install.sh:471 install.sh:484 install.sh:528 install.sh:573 install.sh:592
+#: install.sh:606 install.sh:859
+msgid "i"
+msgstr ""
+
+#: install.sh:405 install.sh:892
+msgid "select_filesystem_to_install"
+msgstr ""
+
+#: install.sh:408 install.sh:452 install.sh:509 install.sh:588
+msgid "-rp"
+msgstr ""
+
+#: install.sh:408
 #, sh-format
 msgid ""
 "Select the file system you want to use with it corresponding number , hit "
 "${COLOR_WHITE}[Enter]${COLOR_RESET}  : to continue"
 msgstr ""
 
-#: install.sh:421
+#: install.sh:408 install.sh:452 install.sh:509 install.sh:588
+msgid "NUM"
+msgstr ""
+
+#: install.sh:410 install.sh:428 install.sh:438 install.sh:454 install.sh:472
+#: install.sh:511 install.sh:513 install.sh:529 install.sh:574 install.sh:590
+#: install.sh:607 install.sh:863 install.sh:1073
+msgid "=="
+msgstr ""
+
+#: install.sh:410 install.sh:454 install.sh:511 install.sh:590
+msgid "*[[:digit:]]*"
+msgstr ""
+
+#: install.sh:410 install.sh:454 install.sh:511 install.sh:542 install.sh:552
+#: install.sh:590
+msgid "-ge"
+msgstr ""
+
+#: install.sh:410 install.sh:454 install.sh:511 install.sh:561 install.sh:590
+#: install.sh:826 install.sh:863 install.sh:881 install.sh:973 install.sh:1056
+#: install.sh:1122
+msgid "1"
+msgstr ""
+
+#: install.sh:410 install.sh:454 install.sh:511 install.sh:590 install.sh:740
+msgid "-le"
+msgstr ""
+
+#: install.sh:411 install.sh:455 install.sh:512 install.sh:591
+msgid "NUM--"
+msgstr ""
+
+#: install.sh:413 install.sh:457 install.sh:593
+msgid "-eq"
+msgstr ""
+
+#: install.sh:422
 #, sh-format
 msgid "Invalid choice : $NUM"
 msgstr ""
 
-#: install.sh:435
+#: install.sh:434 install.sh:452
+msgid "CLI_orchid_selector"
+msgstr ""
+
+#: install.sh:436
 msgid "Choose the Orchid Linux Edition you want to install :"
 msgstr ""
 
-#: install.sh:451
+#: install.sh:438
+msgid "*testing*"
+msgstr ""
+
+#: install.sh:449 install.sh:845
+msgid "select_orchid_version_to_install"
+msgstr ""
+
+#: install.sh:452
 #, sh-format
 msgid ""
 "Select the Orchid version with it number, and hit ${COLOR_WHITE}"
 "[Enter]${COLOR_RESET} to validate : "
 msgstr ""
 
-#: install.sh:465 install.sh:520
+#: install.sh:466 install.sh:521
 #, sh-format
 msgid "Invalid Choice : $NUM"
 msgstr ""
 
-#: install.sh:480
+#: install.sh:479 install.sh:509
+msgid "CLI_selector"
+msgstr ""
+
+#: install.sh:481
 #, sh-format
 msgid ""
 "${COLOR_GREEN}*${COLOR_RESET} Your GPU : "
 "${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
 msgstr ""
 
-#: install.sh:482
+#: install.sh:483
 msgid "Choose the GPU drivers you want to use :"
 msgstr ""
 
-#: install.sh:570
-msgid "Choose the disk where you want to install Orchid Linux :"
+#: install.sh:492 install.sh:922
+msgid "select_GPU_drivers_to_install"
+msgstr ""
+
+#: install.sh:494
+msgid "lspci"
+msgstr ""
+
+#: install.sh:494 install.sh:911
+msgid "grep"
+msgstr ""
+
+#: install.sh:494
+msgid "-E"
+msgstr ""
+
+#: install.sh:494
+msgid "VGA|3D"
+msgstr ""
+
+#: install.sh:494
+msgid "cut"
+msgstr ""
+
+#: install.sh:494 install.sh:856 install.sh:872
+msgid "-d"
+msgstr ""
+
+#: install.sh:494 install.sh:795
+msgid ":"
+msgstr ""
+
+#: install.sh:494
+msgid "-f3"
+msgstr ""
+
+#: install.sh:495 install.sh:497 install.sh:500 install.sh:503 install.sh:741
+#: install.sh:753
+msgid "=~"
+msgstr ""
+
+#: install.sh:495
+msgid "NVIDIA"
+msgstr ""
+
+#: install.sh:497
+msgid "AMD"
+msgstr ""
+
+#: install.sh:500
+msgid "INTEL"
+msgstr ""
+
+#: install.sh:503
+msgid "VMware"
+msgstr ""
+
+#: install.sh:503
+msgid "QXL"
+msgstr ""
+
+#: install.sh:536 install.sh:1122
+msgid "decompress_with_progress_bar"
+msgstr ""
+
+#: install.sh:538
+msgid "line"
+msgstr ""
+
+#: install.sh:542
+msgid "100"
+msgstr ""
+
+#: install.sh:549 install.sh:784 install.sh:1121 install.sh:1125 install.sh:1127
+msgid "-ne"
+msgstr ""
+
+#: install.sh:559 install.sh:830 install.sh:835
+msgid "test_internet_access"
+msgstr ""
+
+#: install.sh:561
+msgid "ping"
+msgstr ""
+
+#: install.sh:561 install.sh:911
+msgid "-c"
+msgstr ""
+
+#: install.sh:561
+msgid "82.65.199.131"
+msgstr ""
+
+#: install.sh:561
+msgid "/dev/null"
+msgstr ""
+
+#: install.sh:569 install.sh:588
+msgid "CLI_disk_selector"
 msgstr ""
 
 #: install.sh:571
+msgid "Choose the disk where you want to install Orchid Linux :"
+msgstr ""
+
+#: install.sh:572
 #, sh-format
 msgid ""
 "${COLOR_YELLOW}! WARNING ! All data on this disk will be deleted, proceed "
 "with caution !${COLOR_RESET}"
 msgstr ""
 
-#: install.sh:587
+#: install.sh:585 install.sh:867
+msgid "select_disk_to_install"
+msgstr ""
+
+#: install.sh:588
 #, sh-format
 msgid ""
 "Select the disk where you want to install Orchid to with it number, and hit "
 "${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : "
 msgstr ""
 
-#: install.sh:636
+#: install.sh:615 install.sh:1078
+msgid "auto_partitionning_full_disk"
+msgstr ""
+
+#: install.sh:621 install.sh:639 install.sh:1096
+msgid "UEFI"
+msgstr ""
+
+#: install.sh:628
+msgid "BIOS"
+msgstr ""
+
+#: install.sh:637
 #, sh-format
 msgid "${COLOR_GREEN}*${COLOR_RESET} Disk partitioning ."
 msgstr ""
 
-#: install.sh:639
+#: install.sh:638
+msgid "sfdisk"
+msgstr ""
+
+#: install.sh:640
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} EFI partition wiping ."
 msgstr ""
 
-#: install.sh:643
+#: install.sh:641
+msgid "mkfs.vfat"
+msgstr ""
+
+#: install.sh:641
+msgid "-F32"
+msgstr ""
+
+#: install.sh:644
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} Swap partition wiping."
 msgstr ""
 
-#: install.sh:647
+#: install.sh:645
+msgid "mkswap"
+msgstr ""
+
+#: install.sh:647 install.sh:1087
+msgid "Btrfs"
+msgstr ""
+
+#: install.sh:648
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} BTRFS partition wiping."
 msgstr ""
 
-#: install.sh:707
+#: install.sh:649
+msgid "mkfs.btrfs"
+msgstr ""
+
+#: install.sh:649 install.sh:1137 install.sh:1189 install.sh:1190
+#: install.sh:1191
+msgid "-f"
+msgstr ""
+
+#: install.sh:650 install.sh:1089
+msgid "ext4"
+msgstr ""
+
+#: install.sh:652
+msgid "mkfs.ext4"
+msgstr ""
+
+#: install.sh:652
+msgid "-F"
+msgstr ""
+
+#: install.sh:656 install.sh:709 install.sh:904 install.sh:970 install.sh:990
+msgid "ask_yes_or_no_and_validate"
+msgstr ""
+
+#: install.sh:658 install.sh:674
+msgid "true"
+msgstr ""
+
+#: install.sh:659 install.sh:675
+msgid "local"
+msgstr ""
+
+#: install.sh:659 install.sh:660 install.sh:675 install.sh:676
+msgid "__ANSWER"
+msgstr ""
+
+#: install.sh:660 install.sh:676 install.sh:811 install.sh:833 install.sh:839
+#: install.sh:856 install.sh:939 install.sh:968 install.sh:1003 install.sh:1098
+#: install.sh:1198
+msgid "-p"
+msgstr ""
+
+#: install.sh:661 install.sh:677
+msgid "-z"
+msgstr ""
+
+#: install.sh:665 install.sh:681 install.sh:797
+msgid "case"
+msgstr ""
+
+#: install.sh:666 install.sh:713 install.sh:912 install.sh:1036 install.sh:1044
+#: install.sh:1048
+msgid "y"
+msgstr ""
+
+#: install.sh:666 install.sh:709 install.sh:710 install.sh:904 install.sh:914
+#: install.sh:990 install.sh:1038
+msgid "n"
+msgstr ""
+
+#: install.sh:666 install.sh:682 install.sh:1064
+msgid "break"
+msgstr ""
+
+#: install.sh:667 install.sh:683 install.sh:692 install.sh:693
+msgid "*"
+msgstr ""
+
+#: install.sh:668 install.sh:684 install.sh:1066
+msgid "esac"
+msgstr ""
+
+#: install.sh:672 install.sh:714 install.sh:732
+msgid "ask_for_numeric_and_validate"
+msgstr ""
+
+#: install.sh:682
+msgid "[[:digit:]]*"
+msgstr ""
+
+#: install.sh:688 install.sh:707 install.sh:717 install.sh:731 install.sh:734
+msgid "set_totalmemory_against_processors"
+msgstr ""
+
+#: install.sh:692 install.sh:693
+msgid "+"
+msgstr ""
+
+#: install.sh:693
+msgid "-"
+msgstr ""
+
+#: install.sh:697 install.sh:913
+msgid "swap_size_hibernation"
+msgstr ""
+
+#: install.sh:699 install.sh:702 install.sh:723 install.sh:726 install.sh:948
+msgid "8"
+msgstr ""
+
+#: install.sh:700 install.sh:703 install.sh:706 install.sh:724 install.sh:727
+#: install.sh:730
+msgid "SWAP_SIZE_GB"
+msgstr ""
+
+#: install.sh:702 install.sh:705 install.sh:726 install.sh:729
+msgid "64"
+msgstr ""
+
+#: install.sh:708
 #, sh-format
 msgid ""
 "We do not recommend using hibernation with your ${RAM_SIZE_GB} Go of RAM, "
 "because it would need a swap partition of ${SWAP_SIZE_GB} Go on the disk."
 msgstr ""
 
-#: install.sh:708
+#: install.sh:709
 #, sh-format
 msgid ""
 "Would you want to create a swap partition of ${SWAP_SIZE_GB} Go to make "
@@ -130,22 +1254,80 @@ msgid ""
 "n${COLOR_WHITE}]${COLOR_RESET} "
 msgstr ""
 
-#: install.sh:713 install.sh:731
-#, sh-format
-msgid ""
-"Enter the size of the swap partition you want to create (in Go) "
-"${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} "
-"Go${COLOR_WHITE}]${COLOR_RESET} : "
+#: install.sh:711 install.sh:721 install.sh:915
+msgid "swap_size_no_hibernation"
 msgstr ""
 
-#: install.sh:784
+#: install.sh:714 install.sh:732
+#, sh-format
+msgid ""
+"Enter the size of the swap partition you want to create (in Go) ${COLOR_WHITE}"
+"[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : "
+msgstr ""
+
+#: install.sh:738 install.sh:941
+msgid "test_if_hostname_is_valid"
+msgstr ""
+
+#: install.sh:740
+msgid "255"
+msgstr ""
+
+#: install.sh:751 install.sh:1004
+msgid "test_if_username_is_valid"
+msgstr ""
+
+#: install.sh:760 install.sh:773 install.sh:1011 install.sh:1024
+msgid "create_passwd"
+msgstr ""
+
+#: install.sh:763 install.sh:765 install.sh:881 install.sh:1056 install.sh:1086
+#: install.sh:1093 install.sh:1099
+msgid "-s"
+msgstr ""
+
+#: install.sh:763
+msgid "ATTEMPT1"
+msgstr ""
+
+#: install.sh:765
+msgid "ATTEMPT2"
+msgstr ""
+
+#: install.sh:769 install.sh:1013 install.sh:1025
+msgid "verify_password_concordance"
+msgstr ""
+
+#: install.sh:771
+msgid "!="
+msgstr ""
+
+#: install.sh:785
 msgid "Please launch the script with root rights. (su,sudo or doas)"
 msgstr ""
 
-#. Bienvenue
-#. Disclaimer
-#. -----------------------------------------------------------------------------------
-#: install.sh:801
+#: install.sh:786 install.sh:821 install.sh:884 install.sh:973 install.sh:1059
+#: install.sh:1201
+msgid "exit"
+msgstr ""
+
+#: install.sh:790
+msgid "trap"
+msgstr ""
+
+#: install.sh:790
+msgid "WINCH"
+msgstr ""
+
+#: install.sh:791
+msgid "smcup"
+msgstr ""
+
+#: install.sh:802 install.sh:1055 install.sh:1058
+msgid "eval_gettext"
+msgstr ""
+
+#: install.sh:802
 #, sh-format
 msgid ""
 "$COLOR_YELLOW The Orchid Linux team is in no way responsible for\n"
@@ -157,12 +1339,407 @@ msgid ""
 "Thank you for choosing Orchid Linux !$COLOR_RESET"
 msgstr ""
 
-#: install.sh:819
+#: install.sh:820
 msgid ""
-"Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of "
-"installation."
+"Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of installation."
 msgstr ""
 
-#: install.sh:836
+#: install.sh:834
+msgid "dhcpcd"
+msgstr ""
+
+#: install.sh:837
 msgid "Connexion test succeeded."
+msgstr ""
+
+#: install.sh:849
+msgid "3"
+msgstr ""
+
+#: install.sh:856
+msgid "lsblk"
+msgstr ""
+
+#: install.sh:856 install.sh:1086 install.sh:1088 install.sh:1093
+#: install.sh:1099 install.sh:1164 install.sh:1169
+msgid "-o"
+msgstr ""
+
+#: install.sh:856
+msgid "MODEL,SIZE,NAME"
+msgstr ""
+
+#: install.sh:856
+msgid "1,3,7,11,252"
+msgstr ""
+
+#: install.sh:860
+msgid "awk"
+msgstr ""
+
+#: install.sh:860
+#, sh-format
+msgid "{printf $NF}"
+msgstr ""
+
+#: install.sh:872
+msgid "/sys/firmware/efi"
+msgstr ""
+
+#: install.sh:881 install.sh:1056
+msgid "key"
+msgstr ""
+
+#: install.sh:895
+msgid "5"
+msgstr ""
+
+#: install.sh:911
+msgid "processor"
+msgstr ""
+
+#: install.sh:911
+msgid "/proc/cpuinfo"
+msgstr ""
+
+#: install.sh:921
+msgid "6"
+msgstr ""
+
+#: install.sh:939
+msgid "HOSTNAME"
+msgstr ""
+
+#: install.sh:964
+msgid "yes"
+msgstr ""
+
+#: install.sh:966
+msgid "For the gaming editions, Orchid Linux enables esync by default."
+msgstr ""
+
+#: install.sh:969
+msgid "ask"
+msgstr ""
+
+#: install.sh:970
+msgid "o"
+msgstr ""
+
+#: install.sh:972
+msgid "FATAL ERROR: what about esync ?"
+msgstr ""
+
+#: install.sh:977
+msgid "9"
+msgstr ""
+
+#: install.sh:993
+msgid "10"
+msgstr ""
+
+#: install.sh:1003
+msgid "USERNAME"
+msgstr ""
+
+#: install.sh:1017
+msgid "11"
+msgstr ""
+
+#: install.sh:1024 install.sh:1025
+msgid "root"
+msgstr ""
+
+#: install.sh:1029
+msgid "12"
+msgstr ""
+
+#: install.sh:1055
+#, sh-format
+msgid ""
+"Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to start the installation, "
+"${COLOR_WHITE}or any other key${COLOR_RESET} to quit the installation."
+msgstr ""
+
+#: install.sh:1058
+#, sh-format
+msgid ""
+"${COLOR_YELLOW}Orchid linux installation cancelled, nothing has been written "
+"to your disk. Hope to see you soon !${COLOR_RESET}"
+msgstr ""
+
+#: install.sh:1063
+msgid "13"
+msgstr ""
+
+#: install.sh:1073
+msgid "*nvme*"
+msgstr ""
+
+#: install.sh:1085 install.sh:1098
+msgid "mkdir"
+msgstr ""
+
+#: install.sh:1085 install.sh:1088 install.sh:1090 install.sh:1104
+#: install.sh:1152 install.sh:1161 install.sh:1165 install.sh:1170
+#: install.sh:1175 install.sh:1194
+msgid "/mnt/orchid"
+msgstr ""
+
+#: install.sh:1086 install.sh:1093 install.sh:1099
+msgid "blkid"
+msgstr ""
+
+#: install.sh:1086 install.sh:1093 install.sh:1099
+msgid "value"
+msgstr ""
+
+#: install.sh:1086 install.sh:1093 install.sh:1099
+msgid "UUID"
+msgstr ""
+
+#: install.sh:1088 install.sh:1090 install.sh:1100 install.sh:1146
+#: install.sh:1147 install.sh:1148 install.sh:1149
+msgid "mount"
+msgstr ""
+
+#: install.sh:1094
+msgid "swapon"
+msgstr ""
+
+#: install.sh:1094
+msgid "-U"
+msgstr ""
+
+#: install.sh:1098 install.sh:1100
+msgid "/mnt/orchid/boot/EFI"
+msgstr ""
+
+#: install.sh:1104 install.sh:1192
+msgid "cd"
+msgstr ""
+
+#: install.sh:1117 install.sh:1122 install.sh:1151
+msgid "wget"
+msgstr ""
+
+#: install.sh:1117 install.sh:1122
+msgid "-q"
+msgstr ""
+
+#: install.sh:1117 install.sh:1122
+msgid "-O-"
+msgstr ""
+
+#: install.sh:1121
+msgid "\\r    [                                                  ]"
+msgstr ""
+
+#: install.sh:1122 install.sh:1152
+msgid "tar"
+msgstr ""
+
+#: install.sh:1122
+msgid "-jxvp"
+msgstr ""
+
+#: install.sh:1122
+msgid "--xattrs"
+msgstr ""
+
+#: install.sh:1127
+msgid "\\r\\v"
+msgstr ""
+
+#: install.sh:1134 install.sh:1136
+msgid "/mnt/orchid/etc/portage/make.conf"
+msgstr ""
+
+#: install.sh:1134 install.sh:1135 install.sh:1137
+msgid "tmp1.conf"
+msgstr ""
+
+#: install.sh:1135 install.sh:1136 install.sh:1137
+msgid "tmp2.conf"
+msgstr ""
+
+#: install.sh:1136
+msgid "cp"
+msgstr ""
+
+#: install.sh:1137 install.sh:1189 install.sh:1190 install.sh:1191
+msgid "rm"
+msgstr ""
+
+#: install.sh:1146
+msgid "-t"
+msgstr ""
+
+#: install.sh:1146
+msgid "proc"
+msgstr ""
+
+#: install.sh:1146
+msgid "/proc"
+msgstr ""
+
+#: install.sh:1146
+msgid "/mnt/orchid/proc"
+msgstr ""
+
+#: install.sh:1147 install.sh:1148
+msgid "--rbind"
+msgstr ""
+
+#: install.sh:1147
+msgid "/dev"
+msgstr ""
+
+#: install.sh:1147
+msgid "/mnt/orchid/dev"
+msgstr ""
+
+#: install.sh:1148
+msgid "/sys"
+msgstr ""
+
+#: install.sh:1148
+msgid "/mnt/orchid/sys"
+msgstr ""
+
+#: install.sh:1149
+msgid "--bind"
+msgstr ""
+
+#: install.sh:1149
+msgid "/run"
+msgstr ""
+
+#: install.sh:1149
+msgid "/mnt/orchid/run"
+msgstr ""
+
+#: install.sh:1151
+msgid ""
+"https://github.com/wamuu-sudo/orchid/raw/main/testing/install-chroot-en.tar.xz"
+msgstr ""
+
+#: install.sh:1151
+msgid "--output-document=install-chroot.tar.xz"
+msgstr ""
+
+#: install.sh:1152
+msgid "-xvf"
+msgstr ""
+
+#: install.sh:1152
+msgid "install-chroot.tar.xz"
+msgstr ""
+
+#: install.sh:1152
+msgid "-C"
+msgstr ""
+
+#: install.sh:1154
+msgid "chmod"
+msgstr ""
+
+#: install.sh:1154
+msgid "+x"
+msgstr ""
+
+#: install.sh:1154 install.sh:1189
+msgid "/mnt/orchid/postinstall-in-chroot.sh"
+msgstr ""
+
+#: install.sh:1154 install.sh:1190
+msgid "/mnt/orchid/DWM-config.sh"
+msgstr ""
+
+#: install.sh:1154 install.sh:1190
+msgid "/mnt/orchid/GNOME-config.sh"
+msgstr ""
+
+#: install.sh:1154 install.sh:1190
+msgid "/mnt/orchid/XFCE-config.sh"
+msgstr ""
+
+#: install.sh:1161 install.sh:1165 install.sh:1170 install.sh:1175
+msgid "chroot"
+msgstr ""
+
+#: install.sh:1161
+msgid "./postinstall-in-chroot.sh"
+msgstr ""
+
+#: install.sh:1164
+msgid "DWM"
+msgstr ""
+
+#: install.sh:1164
+msgid "DWM-GE"
+msgstr ""
+
+#: install.sh:1165
+msgid "./DWM-config.sh"
+msgstr ""
+
+#: install.sh:1169
+msgid "GNOME"
+msgstr ""
+
+#: install.sh:1169
+msgid "GNOME-GE"
+msgstr ""
+
+#: install.sh:1169
+msgid "GNOME-GE-SYSTEMD"
+msgstr ""
+
+#: install.sh:1170
+msgid "./GNOME-config.sh"
+msgstr ""
+
+#: install.sh:1174
+msgid "XFCE-GE"
+msgstr ""
+
+#: install.sh:1175
+msgid "./XFCE-config.sh"
+msgstr ""
+
+#: install.sh:1189
+msgid "/mnt/orchid/*.tar.bz2"
+msgstr ""
+
+#: install.sh:1189
+msgid "/mnt/orchid/*.tar.xz"
+msgstr ""
+
+#: install.sh:1191
+msgid "/mnt/orchid/orchid-backgrounds.xml"
+msgstr ""
+
+#: install.sh:1191
+msgid "/mnt/orchid/orchid-logo.png"
+msgstr ""
+
+#: install.sh:1191
+msgid "/mnt/orchid/xfce4-desktop.xml"
+msgstr ""
+
+#: install.sh:1192
+msgid "/"
+msgstr ""
+
+#: install.sh:1194
+msgid "umount"
+msgstr ""
+
+#: install.sh:1194
+msgid "-R"
+msgstr ""
+
+#: install.sh:1200
+msgid "reboot"
 msgstr ""

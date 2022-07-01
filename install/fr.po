@@ -7,24 +7,28 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-06-28 17:47+0200\n"
-"PO-Revision-Date: 2022-06-28 17:48+0200\n"
+"POT-Creation-Date: 2022-06-29 10:42+0200\n"
+"PO-Revision-Date: 2022-06-29 12:00+0200\n"
 "Last-Translator:  <bastien@desktop-8sopes5.localdomain>\n"
 "Language-Team: French <traduc@traduc.org>\n"
 "Language: fr\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
-#: install.sh:210
-msgid ""
-"Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk "
-"selection|File system selection|Hibernation|Graphics card selection|System "
-"name|esync|Updates|User creation|Root password|Resume|Installation"
-msgstr "Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
+#. Bienvenue
+#. Disclaimer
+#. -----------------------------------------------------------------------------------
+#. -s: do not echo input character. -n 1: read only 1 character (separate with space)
+#. Input is not the [Enter] key, aborting installation!
+#: install.sh:211 install.sh:802 install.sh:837 install.sh:1055 install.sh:1058
+#: install.sh:1198
+#, sh-format
+msgid "install"
+msgstr ""
 
-#: install.sh:384
+#: install.sh:385
 msgid ""
 "A file system organizes the way data is stored on your disk.\n"
 "\n"
@@ -34,100 +38,94 @@ msgid ""
 "It is possible to resize the system on the fly.\n"
 "\n"
 "Ext4 is robust thanks to operation logging,\n"
-"minimizes data fragmentation and is widely tested."
-msgstr "Un système de fichier organise la manière dont les données sont stockées sur votre disque."
-"Btrfs est récent. Il permet de prendre automatiquement des instantanés"
-"du système pour revenir en arrière si une mise à jour se passe mal."
-"Toutes les données seront compressées de façon transparente."
-"Il est possible de redimensionner la taille du système à chaud."
-"Ext4 est robuste grâce à la journalisation des opérations,"
-"minimise la fragmentation des données et est largement éprouvé."
+"minimizes data fragmentation and is widely tested.\n"
+msgstr ""
 
-#: install.sh:407
+#: install.sh:408
 #, sh-format
 msgid ""
 "Select the file system you want to use with it corresponding number , hit "
 "${COLOR_WHITE}[Enter]${COLOR_RESET}  : to continue"
-msgstr "Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider :"
+msgstr ""
 
-#: install.sh:421
+#: install.sh:422
 #, sh-format
 msgid "Invalid choice : $NUM"
-msgstr "Choix invalide : $NUM"
+msgstr ""
 
-#: install.sh:435
+#: install.sh:436
 msgid "Choose the Orchid Linux Edition you want to install :"
-msgstr "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
+msgstr ""
 
-#: install.sh:451
+#: install.sh:452
 #, sh-format
 msgid ""
 "Select the Orchid version with it number, and hit ${COLOR_WHITE}"
 "[Enter]${COLOR_RESET} to validate : "
-msgstr "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider :"
+msgstr ""
 
-#: install.sh:465 install.sh:520
+#: install.sh:466 install.sh:521
 #, sh-format
 msgid "Invalid Choice : $NUM"
-msgstr "Choix invalide : $NUM"
+msgstr ""
 
-#: install.sh:480
+#: install.sh:481
 #, sh-format
 msgid ""
 "${COLOR_GREEN}*${COLOR_RESET} Your GPU : "
 "${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
-msgstr "${COLOR_GREEN}*${COLOR_RESET} Votre GPU : ${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
+msgstr ""
 
-#: install.sh:482
+#: install.sh:483
 msgid "Choose the GPU drivers you want to use :"
-msgstr "Choisissez les drivers GPU que vous voulez utiliser :"
-
-#: install.sh:570
-msgid "Choose the disk where you want to install Orchid Linux :"
-msgstr "Choisissez le disque sur lequel vous souhaitez installer Orchid Linux :"
+msgstr ""
 
 #: install.sh:571
+msgid "Choose the disk where you want to install Orchid Linux :"
+msgstr ""
+
+#: install.sh:572
 #, sh-format
 msgid ""
 "${COLOR_YELLOW}! WARNING ! All data on this disk will be deleted, proceed "
 "with caution !${COLOR_RESET}"
 msgstr ""
 
-#: install.sh:587
+#: install.sh:588
 #, sh-format
 msgid ""
 "Select the disk where you want to install Orchid to with it number, and hit "
 "${COLOR_WHITE}[Enter]${COLOR_RESET} to validate : "
 msgstr ""
 
-#: install.sh:636
+#: install.sh:637
 #, sh-format
 msgid "${COLOR_GREEN}*${COLOR_RESET} Disk partitioning ."
 msgstr ""
 
-#: install.sh:639
+#: install.sh:640
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} EFI partition wiping ."
 msgstr ""
 
-#: install.sh:643
+#: install.sh:644
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} Swap partition wiping."
 msgstr ""
 
-#: install.sh:647
+#: install.sh:648
 #, sh-format
 msgid " ${COLOR_GREEN}*${COLOR_RESET} BTRFS partition wiping."
 msgstr ""
 
-#: install.sh:707
+#: install.sh:708
 #, sh-format
 msgid ""
 "We do not recommend using hibernation with your ${RAM_SIZE_GB} Go of RAM, "
 "because it would need a swap partition of ${SWAP_SIZE_GB} Go on the disk."
 msgstr ""
 
-#: install.sh:708
+#: install.sh:709
 #, sh-format
 msgid ""
 "Would you want to create a swap partition of ${SWAP_SIZE_GB} Go to make "
@@ -136,39 +134,18 @@ msgid ""
 "n${COLOR_WHITE}]${COLOR_RESET} "
 msgstr ""
 
-#: install.sh:713 install.sh:731
+#: install.sh:714 install.sh:732
 #, sh-format
 msgid ""
-"Enter the size of the swap partition you want to create (in Go) "
-"${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} "
-"Go${COLOR_WHITE}]${COLOR_RESET} : "
+"Enter the size of the swap partition you want to create (in Go) ${COLOR_WHITE}"
+"[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : "
 msgstr ""
 
-#: install.sh:784
+#: install.sh:785
 msgid "Please launch the script with root rights. (su,sudo or doas)"
-msgstr "Lancez s'il vous plaît le script avec les accès root. (su, sudo ou doas)"
-
-#. Bienvenue
-#. Disclaimer
-#. -----------------------------------------------------------------------------------
-#: install.sh:801
-#, sh-format
-msgid ""
-"$COLOR_YELLOW The Orchid Linux team is in no way responsible for\n"
-"for any problems that may occur during the installation or\n"
-"installation or use of Orchid Linux.\n"
-"(License GPL 3.0 or higher)\n"
-"\n"
-"Please read the instructions very carefully.\n"
-"Thank you for choosing Orchid Linux !$COLOR_RESET"
 msgstr ""
 
-#: install.sh:819
+#: install.sh:820
 msgid ""
-"Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of "
-"installation."
-msgstr ""
-
-#: install.sh:836
-msgid "Connexion test succeeded."
+"Sorry, you need at least 2 Go of RAM to use Orchid Linux. End of installation."
 msgstr ""

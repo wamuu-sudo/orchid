@@ -33,12 +33,13 @@
 #-----------------------------------------------------------------------------------
 . gettext.sh
 
-export TEXTDOMAIN=install
-export TEXTDOMAINDIR=$PWD/locale
+export TEXTDOMAIN="install"
+export TEXTDOMAINDIR="$PWD/locale"
 
 # alias GETTEXT='gettext "install"'
 
-#-----------------------------------------------------------------------------------
+#---------------------
+--------------------------------------------------------------
 
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
@@ -207,7 +208,7 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS=$(gettext "Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation")
+INSTALLER_STEPS="$(gettext "install" "Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation")"
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -781,7 +782,7 @@ verify_password_concordance() # Spécifier le nom de l'utilisateur en $1
 #=== MAIN ==========================================================================
 
 if [ "$EUID" -ne 0 ]
-  then echo $(gettext "Please launch the script with root rights. (su,sudo or doas)")
+  then echo "$(gettext "Please launch the script with root rights. (su,sudo or doas)")"
   exit
 fi
 
@@ -798,13 +799,13 @@ draw_installer_steps		# we draw the upper part of the menu
 	# Disclaimer
 	#-----------------------------------------------------------------------------------
 
-	WELCOME=$(eval_gettext "\$COLOR_YELLOW The Orchid Linux team is in no way responsible for
+	WELCOME="$(eval_gettext "install" "\$COLOR_YELLOW The Orchid Linux team is in no way responsible for
 for any problems that may occur during the installation or
 installation or use of Orchid Linux.
 (License GPL 3.0 or higher)
 
 Please read the instructions very carefully.
-Thank you for choosing Orchid Linux !\$COLOR_RESET")
+Thank you for choosing Orchid Linux !\$COLOR_RESET")"
 	echo_center "$WELCOME"
 	echo ""
 	read -p "Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to start the installation."
@@ -833,7 +834,7 @@ Thank you for choosing Orchid Linux !\$COLOR_RESET")
 		dhcpcd                                                                              # Génération d'une addresse IP
 		test_internet_access
 	done
-	echo "${COLOR_GREEN}*${COLOR_RESET} $(gettext "Connexion test succeeded.")"
+	echo "${COLOR_GREEN}*${COLOR_RESET} $(gettext "install" "Connexion test succeeded.")"
 	echo ""
 	read -p "Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue"
 	UI_PAGE=2
@@ -1051,10 +1052,10 @@ This account will have full rights to your system, so choose a strong and compli
 
 	echo "This user account will get created : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
 	echo ""
-	echo "Hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to start the installation, ${COLOR_WHITE}or any other key${COLOR_RESET} to quit the installation."
+	echo "$(eval_gettext "install" "Hit \${COLOR_WHITE}[Enter]\${COLOR_RESET} to start the installation, \${COLOR_WHITE}or any other key\${COLOR_RESET} to quit the installation.")"
 	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
 	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "${COLOR_YELLOW}Orchid linux installation cancelled, nothing has been written to your disk. Hope to see you soon !${COLOR_RESET}"
+		echo "$(eval_gettext "install" "\${COLOR_YELLOW}Orchid linux installation cancelled, nothing has been written to your disk. Hope to see you soon !\${COLOR_RESET}")"
 		exit
 	fi
 	UI_PAGE=13
@@ -1194,7 +1195,7 @@ umount -R /mnt/orchid
 #-----------------------------------------------------------------------------------
 # Finish
 echo ""
-read -p "Installation completed ! ${COLOR_WHITE}[Enter]${COLOR_RESET} to reboot . Don't forget to plug out the installation medium. Thanks for choosing us !"
+read -p "$(gettext "install" "Installation completed ! ${COLOR_WHITE}[Enter]${COLOR_RESET} to reboot . Don't forget to plug out the installation medium. Thanks for choosing us !")"
 # On redémarre pour démarrer sur le système fraichement installé
 reboot
 exit
