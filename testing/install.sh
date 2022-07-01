@@ -786,7 +786,6 @@ draw_installer_steps		# we draw the upper part of the menu
 	0)  # Bienvenue
 	# Disclaimer
 	#-----------------------------------------------------------------------------------
-
 	WELCOME="${COLOR_YELLOW}L'équipe d'Orchid Linux n'est en aucun cas responsable
 d'éventuels problèmes qui pourraient arriver lors de
 l'installation ou l'utilisation d'Orchid Linux.
@@ -796,13 +795,28 @@ Lisez très attentivement les instructions.
 Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 	echo_center "$WELCOME"
 	echo ""
-	read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+lang-sel() {
+	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
+	echo ""
+	echo "1) Français/French(Originale)"
+	echo "2) Anglais/English(By Crystal)"
+	echo ""
+	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :" language
+if [ "$language" = "1" ]; then
+ source Strings/fr.sh
+elif [ "$language" = "2" ]; then
+ source Strings/us.sh
+else
+ lang-sel
+fi
+}
+lang-sel
+read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
 
 	#-----------------------------------------------------------------------------------
 
 	# Questions de configuration
 	#===================================================================================
-
 	RAM_SIZE_GB=$(( ($(cat /proc/meminfo|grep MemTotal|sed "s/[^[[:digit:]]*//g")+1000000/2)/1000000 ))   # Total Memory in GB, round half-up
 	if (( $RAM_SIZE_GB < 2 )); then
 		echo "${COLOR_YELLOW}Désolé, il faut au minimum 2 Go de RAM pour utiliser Orchid Linux. Fin de l'installation.${COLOR_RESET}"
@@ -831,10 +845,7 @@ Merci d'avoir choisi Orchid Linux !${COLOR_RESET}"
 
 	# Choix du système
 	select_orchid_version_to_install
-	echo ""
-	# Passage du clavier en AZERTY
-	echo "${COLOR_GREEN}*${COLOR_RESET} Passage du clavier en (fr)."
-	loadkeys fr
+
 	UI_PAGE=3
 	;;
 	3)
