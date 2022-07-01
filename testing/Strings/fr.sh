@@ -2,7 +2,7 @@
 
 # Common used strings
 
-STR_INVALID_CHOICE="Choix invalide : "
+STR_INVALID_CHOICE="Choix invalide :"
 
 STR_INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
 
@@ -17,7 +17,7 @@ Ext4 est robuste grâce à la journalisation des opérations,
 minimise la fragmentation des données et est largement éprouvé.
 "
 
-STRL_CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+STR_CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
 # Function select_filesystem_to_install
 
@@ -33,8 +33,8 @@ STR_CLI_ORCHID_VER_SEL_TEXT="Sélectionnez la version d'Orchid Linux avec son nu
 
 # Function CLI_selector
 
-STR_YOUR_GPU="${COLOR_GREEN}*${COLOR_RESET} Votre GPU : ${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}" # To modify : $GPU_TYPE doesn't exist here
-
+STR_YOUR_GPU="${COLOR_GREEN}*${COLOR_RESET} Votre GPU :"
+# Non juuuuure :O
 STR_GPU_DRIVERS_SEL="Choisissez les pilotes pour votre GPU à installer :"
 
 STR_GPU_DRIVERS_CHOICE="Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : "
@@ -168,18 +168,13 @@ STR_RESUME_KEYBOARD="Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [$
 STR_RESUME_DISK="Orchid Linux s'installera sur : ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 STR_RESUME_FS="Le système de fichiers choisi est : ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 STR_RESUME_HIBERNATION="Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} Go, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET})."
-STR_RESUME_HIBERNATIONNT="Votre mémoire a une taille de ${RAM_SIZE_GB} Go avec ${PROCESSORS} coeurs de processeur. Votre SWAP sera de ${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_RESET}."
-STR_
 STR_RESUME_GPU="Les pilotes graphiques suivants vont être installés : ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
 STR_RESUME_HOSTNAME="Sur le réseau, ce système aura pour nom : ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
 STR_RESUME_ESYNC="La configuration ${COLOR_GREEN}esync${COLOR_RESET} sera faite pour le compte : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
 STR_RESUME_UPDATE="Orchid Linux sera ${COLOR_GREEN}mise à jour${COLOR_RESET} durant cette installation. \n                                ^^ ${COLOR_YELLOW}Cela peut être très long.${COLOR_RESET}"
 STR_RESUME_USERNAME="En plus du superutilisateur root, le compte pour l'utilisateur suivant va être créé : ${COLOR_GREEN}${USERNAME}${COLOR_RESET}"
-STR_
 STR_INSTALL_BEGIN="Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation sur le disque, ${COLOR_WHITE}ou toute autre touche${COLOR_RESET} pour quitter l'installateur."
-STR_
 STR_INSTALL_CANCEL="${COLOR_YELLOW}Installation d'Orchid Linux annulée. Vos disques n'ont pas été écrits. Nous espérons vous revoir bientôt !${COLOR_RESET}"
-STR_
 STR_INSTALL_MOUNTING="${COLOR_GREEN}*${COLOR_RESET} Montage des partitions :"
 STR_INSTALL_MOUNTING_ROOT="  ${COLOR_GREEN}*${COLOR_RESET} Partition racine."
 STR_INSTALL_MOUNTING_SWAP="  ${COLOR_GREEN}*${COLOR_RESET} Activation du SWAP."

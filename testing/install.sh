@@ -196,7 +196,7 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS="Bienvenue|Connection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
+INSTALLER_STEPS="nnection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -370,18 +370,9 @@ tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 
 CLI_filesystem_selector()
 {
-	WHAT_IS_FILESYSTEM="Un système de fichier organise la manière dont les données sont stockées sur votre disque.
-
-Btrfs est récent. Il permet de prendre automatiquement des instantanés
-du système pour revenir en arrière si une mise à jour se passe mal.
-Toutes les données seront compressées de façon transparente.
-Il est possible de redimensionner la taille du système à chaud.
-
-Ext4 est robuste grâce à la journalisation des opérations, 
-minimise la fragmentation des données et est largement éprouvé.
-"
+	WHAT_IS_FILESYSTEM=$STR_WHAT_IS_FILESYSTEM
 	echo_center "$WHAT_IS_FILESYSTEM"
-	echo "Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
+	echo $STR_CHOOSE_FILESYSTEM
 	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
 		echo "(${CHOICES_FILESYSTEM[$i]:- }) ${COLOR_WHITE}$(($i+1))${COLOR_RESET}) ${FILESYSTEM_TYPE[$i]}"
 	done
@@ -393,7 +384,7 @@ minimise la fragmentation des données et est largement éprouvé.
 select_filesystem_to_install()
 {
 	clear_under_menu
-	while CLI_filesystem_selector && read -rp "Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_filesystem_selector && read -rp "$STR_SELECT_FS" NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#FILESYSTEM_TYPE[@]} ]]; then
 			((NUM--))
@@ -407,7 +398,7 @@ select_filesystem_to_install()
 
 			ERROR_IN_FILESYSTEM_SELECTOR=" "
 		else
-			ERROR_IN_FILESYSTEM_SELECTOR="Choix invalide : $NUM"
+			ERROR_IN_FILESYSTEM_SELECTOR="$STR_INVALID_CHOICE $NUM"
 		fi
 	done
 
@@ -421,7 +412,7 @@ select_filesystem_to_install()
 
 CLI_orchid_selector()
 {
-	echo "Choisissez la version d'Orchid Linux que vous souhaitez installer :"
+	echo $STR_CLI_ORCHID_SELECTOR_TEXT
 	for (( i = 0; i < ${#ORCHID_VERSION[@]}; i++ )); do
 		if [[ "${ORCHID_URL[$i]}" == *"testing"* ]]; then
 			echo "(${CHOICES_ORCHID[$i]:- }) Testing : ${COLOR_YELLOW}$(($i+1))${COLOR_RESET}) ${ORCHID_VERSION[$i]}"
@@ -437,7 +428,7 @@ CLI_orchid_selector()
 select_orchid_version_to_install()
 {
 	clear_under_menu
-	while CLI_orchid_selector && read -rp "Sélectionnez la version d'Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_orchid_selector && read -rp "$STR_CLI_ORCHID_VER_SEL_TEXT" NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#ORCHID_VERSION[@]} ]]; then
 			((NUM--))
@@ -451,7 +442,7 @@ select_orchid_version_to_install()
 
 			ERROR_IN_ORCHID_SELECTOR=" "
 		else
-			ERROR_IN_ORCHID_SELECTOR="Choix invalide : $NUM"
+			ERROR_IN_ORCHID_SELECTOR="$STR_INVALID_CHOICE $NUM"
 		fi
 	done
 
@@ -466,9 +457,10 @@ select_orchid_version_to_install()
 
 CLI_selector()
 {
-	echo "${COLOR_GREEN}*${COLOR_RESET} Votre GPU : ${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
+	echo $STR_YOUR_GPU
+	echo "${COLOR_GREEN}${GPU_TYPE}${COLOR_RESET}"
 	echo ""
-	echo "Choisissez les pilotes pour votre GPU à installer :"
+	echo $STR_GPU_DRIVERS_SEL
 	for (( i = 0; i < ${#GPU_DRIVERS[@]}; i++ )); do
 		echo "[${CHOICES[$i]:-${COLOR_RED}-${COLOR_RESET}}]" $(($i+1))") ${GPU_DRIVERS[$i]}"
 	done
@@ -494,7 +486,7 @@ select_GPU_drivers_to_install()
   fi
 
 	clear_under_menu
-	while CLI_selector && read -rp "Sélectionnez les pilotes pour votre GPU avec leur numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_selector && read -rp "$STR_GPU_DRIVERS_SEL" NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#GPU_DRIVERS[@]} ]]; then
 			((NUM--))
@@ -506,7 +498,7 @@ select_GPU_drivers_to_install()
 
 			ERROR_IN_SELECTOR=" "
 		else
-			ERROR_IN_SELECTOR="Choix invalide : $NUM"
+			ERROR_IN_SELECTOR="$STR_INVALID_CHOICE $NUM"
 		fi
 	done
 	# Choice has been made by the user, now we need to populate SELECTED_GPU_DRIVERS_TO_INSTALL
@@ -556,8 +548,7 @@ test_internet_access()
 
 CLI_disk_selector()
 {
-	echo "Choisissez le disque sur lequel vous souhaitez installer Orchid Linux :"
-	echo "${COLOR_YELLOW}! ATTENTION ! Toutes les données sur le disque choisi seront effacées !${COLOR_RESET}"
+	echo "$STR_DISK_SEL"
 	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
 	  	if [[ ${CHOICES_DISK[$i]} == "${COLOR_GREEN}*${COLOR_RESET}" ]]; then
 			echo "(${CHOICES_DISK[$i]:- }) ${COLOR_GREEN}$(($i+1))) ${DISKS[$i]}${COLOR_RESET}"
@@ -573,7 +564,7 @@ CLI_disk_selector()
 select_disk_to_install()
 {
 	clear_under_menu
-	while CLI_disk_selector && read -rp "Sélectionnez le disque pour installer Orchid Linux avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider : " NUM && [[ "$NUM" ]]; do
+	while CLI_disk_selector && read -rp "$STR_DISK_CHOICE" NUM && [[ "$NUM" ]]; do
 		clear_under_menu
 		if [[ "$NUM" == *[[:digit:]]* && $NUM -ge 1 && $NUM -le ${#DISKS[@]} ]]; then
 			((NUM--))
@@ -587,7 +578,7 @@ select_disk_to_install()
 
 		  	ERROR_IN_DISK_SELECTOR=" "
 		else
-		  	ERROR_IN_DISK_SELECTOR="Choix invalide : $NUM"
+		  	ERROR_IN_DISK_SELECTOR="$STR_INVALID_CHOICE $NUM"
 	  	fi
 	done
 	# Choice has been made by the user, now we need to populate $CHOOSEN_DISK and $CHOOSEN_DISK_LABEL (human readable)
@@ -622,21 +613,21 @@ auto_partitionning_full_disk()
 		"                                                                               # Linux filesystem data
 	fi
 
-	echo "${COLOR_GREEN}*${COLOR_RESET} Partitionnement du disque."
+	echo "$STR_DISK_PART"
 	echo "$SFDISK_CONFIG" | sfdisk ${CHOOSEN_DISK}
 	if [ "$ROM" = "UEFI" ]; then
-	  	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EFI."
+	  	echo "$STR_EFI_ERASE"
 	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
 	fi
 
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition swap."
+	echo " $STR_SWAP_ERASE"
 	mkswap "${DISK_PARTITIONS}2"
 	
 	if [ "$FILESYSTEM" = "Btrfs" ]; then
-		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition Btrfs."
+		echo "$STR_BTRFS_ERASE"
 		mkfs.btrfs -f "${DISK_PARTITIONS}3"
 	elif [ "$FILESYSTEM" = "ext4" ]; then
-		echo " ${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition ext4."
+		echo "$STR_EXT4_ERASE"
 		mkfs.ext4 -F "${DISK_PARTITIONS}3"
 	fi
 }
@@ -693,13 +684,13 @@ swap_size_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		set_totalmemory_against_processors
-		echo "Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
-		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} " n)
+		echo "$STR_HIBERNATION_DANGER"
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATIOM_CONFIRM" n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
 		elif [ "$HIBERNATION_HIGH" = "o" ]; then
-			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
+			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION" $SWAP_SIZE_GB)
 		fi
 	fi
 set_totalmemory_against_processors
@@ -717,7 +708,7 @@ swap_size_no_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
 		set_totalmemory_against_processors
-		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} : " $SWAP_SIZE_GB)
+		SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION" $SWAP_SIZE_GB)
 	fi
 set_totalmemory_against_processors
 }
@@ -774,7 +765,8 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-
+wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
+tar -xvf "Strings.tar.xz"
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
@@ -801,7 +793,7 @@ lang-sel() {
 	echo "1) Français/French(Originale)"
 	echo "2) Anglais/English(By Crystal)"
 	echo ""
-	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :" language
+	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 if [ "$language" = "1" ]; then
  source Strings/fr.sh
 elif [ "$language" = "2" ]; then
@@ -812,6 +804,7 @@ fi
 }
 lang-sel
 read -p "Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour commencer l'installation."
+INSTALLER_STEPS=$STR_INSTALLER_STEPS
 
 	#-----------------------------------------------------------------------------------
 
