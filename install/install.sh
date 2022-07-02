@@ -32,6 +32,7 @@
 # Ask for the language and download the correct lang package
 #-----------------------------------------------------------------------------------
 lang-selection() {
+	mkdir -p locale/install
 	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
 	echo ""
 	echo "1) Français/French(Originale)"
@@ -47,10 +48,9 @@ lang-selection() {
 		#source locale/install/en.sh
 		loadkeys us
 	else
-		lang-sel
+		lang-selection
 	fi
 }
-lang-selection
 
 #-----------------------------------------------------------------------------------
 
@@ -220,7 +220,6 @@ TEXT_DIM="$(tput dim)"
 TEXT_REV="$(tput rev)"
 TEXT_DEFAULT="$(tput sgr0)"
 
-INSTALLER_STEPS="nnection à Internet|Sélection de l'édition d'Orchid Linux|Sélection du disque pour l'installation|Système de fichiers|Hibernation|Sélection de la carte graphique|Nom du système|esync|Mise à jour|Création de l'utilisateur|Mot de passe root|Résumé|Installation"
 
 # Default Gentoo Live CD:
 #TERM_COLS=128
@@ -789,11 +788,6 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-<<<<<<< HEAD
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz"
-tar -xvf "Strings.tar.xz"
-=======
->>>>>>> d1853c1b981d125ba126124e0d01f9bf331ed74b
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
@@ -801,38 +795,20 @@ UI_PAGE=0		# This variable point us to the current step
 
 while :; do	# infinite loop
 draw_installer_steps		# we draw the upper part of the menu
-  case $UI_PAGE in
+case $UI_PAGE in
 	0)  # Bienvenue
+	UI_PAGE=0
 	# Disclaimer
 	#-----------------------------------------------------------------------------------
+lang-selection
 	WELCOME="$STR_WELCOME"
 	echo_center "$WELCOME"
 	echo ""
-<<<<<<< HEAD
-lang-sel() {
-	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
-	echo ""
-	echo "1) Français/French(Original)"
-	echo "2) Anglais/English(By Crystal)"
-	echo ""
-	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
-if [ "$language" = "1" ]; then
- source Strings/fr.sh
- loadkeys fr
-elif [ "$language" = "2" ]; then
- source Strings/us.sh
- loadkeys us
-else
- lang-sel
-fi
-}
-lang-sel
-=======
->>>>>>> d1853c1b981d125ba126124e0d01f9bf331ed74b
-read -p "$STR_WELCOME_START"
-INSTALLER_STEPS=$STR_INSTALLER_STEPS
 
-	#-----------------------------------------------------------------------------------
+read -p "$STR_WELCOME_START"
+INSTALLER_STEPS="$STR_INSTALLER_STEPS"
+
+#-----------------------------------------------------------------------------------
 
 	# Questions de configuration
 	#===================================================================================
