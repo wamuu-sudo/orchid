@@ -3,7 +3,7 @@
 ![Orchid Logo](img/Orchid-Think_3.3_-_N.png)
 Orchid est un installateur rapide de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
-[English Version](https://github.com/wamuu-sudo/orchid/blob/main/README-EN.md)
+[English Version](https://github.com/wamuu-sudo/orchid/blob/main/readme/README-EN.md)
 
 Version actuelle du projet : Pre-release 1.3.2
 
