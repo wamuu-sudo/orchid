@@ -61,22 +61,15 @@ STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EXT4."
 
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="Nous ne recommandons pas l'utilisation de l'hibernation avec votre"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="Go de RAM, car cela nécessiterait une partition SWAP de "
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="Go sur le disque".
+STR_HIBERNATION_DANGER="Nous ne recommandons pas d'utiliser l'hibernation avec vos ${RAM_SIZE_GB} Go de RAM, car il faudrait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque."
 
-STR_HIBERNATION_CONFIRM="Voulez-vous créer une partition SWAP de"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(Sinon, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} Go pour permettre l'hibernation ? (Si non, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
-STR_SWAP_SIZE_QUESTION="Entrez la taille de la partition SWAP que vous voulez créer (en Go)". # Egalement dans la fonction swap_size_no_hibernation
+STR_SWAP_SIZE_QUESTION="Entrez la taille de la partition SWAP que vous souhaitez créer (en Go) ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} Go${COLOR_WHITE}]${COLOR_RESET} :" # Also in function swap_size_no_hibernation
+
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Entrez le mot de passe pour :"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(le mot de passe vas pas s'afficher)${COLOR_RESET}"
+STR_CREATE_PASSWORD="${COLOR_WHITE}Saisissez le mot de passe pour l'utilisateur ${1} : ${COLOR_YELLOW}(le mot de passe n'apparaîtra pas)${COLOR_RESET}"
 
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Ressaisissez le mot de passe pour le confirmer :${COLOR_RESET}"
 
