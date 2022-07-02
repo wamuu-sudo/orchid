@@ -48,6 +48,7 @@ lang-selection() {
 		#source locale/install/en.sh
 		loadkeys us
 	else
+		clear_under_menu
 		lang-selection
 	fi
 }
