@@ -39,11 +39,11 @@ lang-selection() {
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/new-repo-organization/install/locale/fr.sh" -O locale/install/fr.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/fr.sh" -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
 	elif [ "$language" = "2" ]; then
-		#wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/new-repo-organization/install/locale/en.sh" -O locale/install/en.sh
+		#wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/en.sh" -O locale/install/en.sh
 		#source locale/install/en.sh
 		loadkeys us
 	else
@@ -1136,7 +1136,7 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
+wget "https://github.com/wamuu-sudo/orchid/raw/main/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh
