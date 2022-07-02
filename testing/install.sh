@@ -765,7 +765,7 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
+wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz"
 tar -xvf "Strings.tar.xz"
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
@@ -784,7 +784,7 @@ draw_installer_steps		# we draw the upper part of the menu
 lang-sel() {
 	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
 	echo ""
-	echo "1) Français/French(Originale)"
+	echo "1) Français/French(Original)"
 	echo "2) Anglais/English(By Crystal)"
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
