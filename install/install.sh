@@ -43,10 +43,12 @@ lang-selection() {
 		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/fr.sh" -q -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
+		clear_under_menu
 	elif [ "$language" = "2" ]; then
 		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/en.sh" -q -O locale/install/en.sh
 		source locale/install/en.sh
 		loadkeys us
+		clear_under_menu
 	else
 		clear_under_menu
 		lang-selection
