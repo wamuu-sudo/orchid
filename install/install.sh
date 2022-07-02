@@ -40,12 +40,12 @@ lang-selection() {
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/fr.sh" -O locale/install/fr.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/fr.sh" -q -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
 	elif [ "$language" = "2" ]; then
-		#wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/en.sh" -O locale/install/en.sh
-		#source locale/install/en.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/en.sh" -q -O locale/install/en.sh
+		source locale/install/en.sh
 		loadkeys us
 	else
 		clear_under_menu
@@ -708,13 +708,13 @@ swap_size_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		set_totalmemory_against_processors
-		echo "$STR_HIBERNATION_DANGER"
-		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATIOM_CONFIRM" n)
+		echo "$STR_HIBERNATION_DANGER ${RAM_SIZE_GB} $STR_HIBERNATION_DANGER_2 ${SWAP_SIZE_GB} $STR_HIBERNATION_DANGER_3"
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM ${SWAP_SIZE_GB} $STR_HIBERNATION_CONFIRM_2" n)
 		if [ "$HIBERNATION_HIGH" = "n" ]; then
 			swap_size_no_hibernation
 
 		elif [ "$HIBERNATION_HIGH" = "o" ]; then
-			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION" $SWAP_SIZE_GB)
+			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} GB${COLOR_WHITE}]${COLOR_RESET}:" $SWAP_SIZE_GB)
 		fi
 	fi
 set_totalmemory_against_processors
@@ -762,7 +762,7 @@ if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
-	echo "$STR_CREATE_PASSWORD"
+	echo "$STR_CREATE_PASSWORD ($USERNAME) $STR_CREATE_PASSWORD_2"
     read -s ATTEMPT1
 	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
