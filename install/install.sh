@@ -12,7 +12,7 @@
 # NOTES : ---
 # CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu
 # CREATED : mars 2022
-# REVISION: 28 juin 2022
+# REVISION: 2 juillet 2022
 #
 # LICENCE :
 # Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal
@@ -28,6 +28,31 @@
 #===================================================================================
 
 #=== PRECONFIGURATION ==============================================================
+
+# Ask for the language and download the correct lang package
+#-----------------------------------------------------------------------------------
+lang-selection() {
+	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
+	echo ""
+	echo "1) Français/French(Originale)"
+	echo "2) Anglais/English(By Crystal)"
+	echo ""
+	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
+	if [ "$language" = "1" ]; then
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/new-repo-organization/install/locale/fr.sh" -O locale/install/fr.sh
+		source locale/install/fr.sh
+		loadkeys fr
+	elif [ "$language" = "2" ]; then
+		#wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/new-repo-organization/install/locale/en.sh" -O locale/install/en.sh
+		#source locale/install/en.sh
+		loadkeys us
+	else
+		lang-sel
+	fi
+}
+lang-selection
+
+#-----------------------------------------------------------------------------------
 
 # Setup all informations from stages
 #-----------------------------------------------------------------------------------
@@ -110,7 +135,6 @@ ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest
 ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
 ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
 ORCHID_NAME[9]="BUDGIE-SYSTEMD"
-
 
 #-----------------------------------------------------------------------------------
 
@@ -765,8 +789,6 @@ if [ "$EUID" -ne 0 ]
   exit
 fi
 
-wget "https://github.com/wamuu-sudo/orchid/raw/main/testing/Strings.tar.xz" --output-document=Strings
-tar -xvf "Strings.tar.xz"
 trap set_term_size WINCH	# We trap window changing size to adapt our interface
 tput smcup	# save the screen
 
@@ -781,24 +803,6 @@ draw_installer_steps		# we draw the upper part of the menu
 	WELCOME="$STR_WELCOME"
 	echo_center "$WELCOME"
 	echo ""
-lang-sel() {
-	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
-	echo ""
-	echo "1) Français/French(Originale)"
-	echo "2) Anglais/English(By Crystal)"
-	echo ""
-	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
-if [ "$language" = "1" ]; then
- source Strings/fr.sh
- loadkeys fr
-elif [ "$language" = "2" ]; then
- source Strings/us.sh
- loadkeys us
-else
- lang-sel
-fi
-}
-lang-sel
 read -p "$STR_WELCOME_START"
 INSTALLER_STEPS=$STR_INSTALLER_STEPS
 
