@@ -1,6 +1,6 @@
 # Orchid Linux 
 
-![Orchid Logo](img/Orchid-Think.png)
+![Orchid Logo](img/Orchid-Think_3.3_-_N.png)
 
 Orchid is a modern and well designed distro of Gentoo for PC and Laptop users.
 
