@@ -51,7 +51,7 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 ## Contributeurs
 
 - [Hydaelyn](https://github.com/wamuu-sudo) : Créateur du projet.
-- Vinceff : Documentation et mise en projet, directeur de la communication.
+- Vinceff : Documentation et mise en projet.
 - [Chevek](https://github.com/chevek) : Outils Gaming et optimisation, développeur du projet.
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet et développeur du projet.
 - [Crystal](https://crystal-trd.github.io) : Développeuse du projet.
