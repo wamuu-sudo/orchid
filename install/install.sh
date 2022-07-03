@@ -668,7 +668,7 @@ while true; do
 	fi
 
   case $__ANSWER in
-      "o" | "n" ) echo $__ANSWER; break;;
+      "o" | "y" | "oui" | "yes" | "n" | "non" | "no" ) echo $__ANSWER; break;;
       * ) ;;
   esac
 done
@@ -712,10 +712,10 @@ swap_size_hibernation()
 		set_totalmemory_against_processors
 		echo "$STR_HIBERNATION_DANGER ${RAM_SIZE_GB} $STR_HIBERNATION_DANGER_2 ${SWAP_SIZE_GB} $STR_HIBERNATION_DANGER_3"
 		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM ${SWAP_SIZE_GB} $STR_HIBERNATION_CONFIRM_2" n)
-		if [ "$HIBERNATION_HIGH" = "n" ]; then
+		if [ "$HIBERNATION_HIGH" = "n" || "$HIBERNATION_HIGH" = "no" || "$HIBERNATION_HIGH" = "non" ]; then
 			swap_size_no_hibernation
 
-		elif [ "$HIBERNATION_HIGH" = "o" ]; then
+		elif [ "$HIBERNATION_HIGH" = "o" || "$HIBERNATION_HIGH" = "y" || "$HIBERNATION_HIGH" = "yes" || "$HIBERNATION_HIGH" = "oui"]; then
 			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} GB${COLOR_WHITE}]${COLOR_RESET}:" $SWAP_SIZE_GB)
 		fi
 	fi
@@ -904,9 +904,9 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	#-----------------------------------------------------------------------------------
 	# Count the number of CPU threads available on the system, for SWAP formula and to inject into /etc/portage/make.conf at a later stage
 	PROCESSORS=$(grep -c processor /proc/cpuinfo)
-	if [ "$HIBERNATION" = "o" ]; then	                                                    # Si hibernation
+	if [ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]; then	                                                    # Si hibernation
 		swap_size_hibernation
-	elif [ "$HIBERNATION" = "n" ]; then		                                                # Si pas d'hibernation
+	elif [ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]; then		                                                # Si pas d'hibernation
 		swap_size_no_hibernation
 	fi
 	#-----------------------------------------------------------------------------------
