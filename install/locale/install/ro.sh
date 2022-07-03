@@ -97,7 +97,7 @@ instalarea sau utilizarea Orchid Linux.
 Vă rugăm să citiți instrucțiunile cu mare atenție.
 Vă mulțumim că ați ales Orchid Linux!${COLOR_RESET}"
 
-STR_WELCOME_START="Apasă ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a începe instalarea."
+STR_WELCOME_START="apasă ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a începe instalarea."
 
 STR_RAM_ISSUE="${COLOR_YELLOW}Ne pare rău, aveți nevoie de cel puțin 2 GB de RAM pentru a utiliza Orchid Linux. Sfârșitul instalării.${COLOR_RESET}"
 
