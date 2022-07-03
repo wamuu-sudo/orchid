@@ -15,7 +15,7 @@ It is possible to resize the system on the fly.
 Ext4 is robust thanks to operation logging,
 minimizes data fragmentation and is widely tested.
 "
-
+STR_LANGUAGE="English"
 STR_CHOOSE_FILESYSTEM="Choose the type of file system you want to install:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
 # Function select_filesystem_to_install

@@ -16,7 +16,7 @@ Il est possible de redimensionner la taille du système à chaud.
 Ext4 est robuste grâce à la journalisation des opérations,
 minimise la fragmentation des données et est largement éprouvé.
 "
-
+STR_LANGUAGE="French"
 STR_CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
 # Function select_filesystem_to_install
