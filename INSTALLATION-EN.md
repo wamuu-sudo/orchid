@@ -389,7 +389,7 @@ Join our discord server: [Join the server](https://discord.gg/DeRhvP7M).
 ## Contributors
 
 - [Hydaelyn](https://github.com/wamuu-sudo): Founder of the project.
-- Vinceff: Documentation & projet management, communication director.
+- Vinceff: Documentation & projet management.
 - [Chevek](https://github.com/chevek): Gaming tools and Optimisation.
 - [Babilinx](https://github.com/babilinx): Project Optimisation.
 - [Crystal](https://crystal-trd.github.io): English translation.
