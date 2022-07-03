@@ -55,6 +55,7 @@ Different archives are availible in the links provided in the installation guide
 - [Chevek](https://github.com/chevek) : Gaming tools and Optimisation.
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
 - [Crystal](https://crystal-trd.github.io) : English translation.
+- [MaxyMax](https://github.com/maxgmstudios) : Romain translation.
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification.
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
