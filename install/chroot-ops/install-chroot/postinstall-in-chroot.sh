@@ -182,19 +182,7 @@ fi
 
 # Change limits for esync support
 # This change the configuration file of pam (see above)
-if [ "${ESYNC_SUPPORT}" = "o" ]; then
-	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
-	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
-fi
-if	[ "${ESYNC_SUPPORT}" = "y" ]; then
-	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
-	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
-fi
-if	[ "${ESYNC_SUPPORT}" = "yes"]; then
-echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
-	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
-fi
-if	["${ESYNC_SUPPORT}" = "oui" ]; then
+if [[ "$ESYNC_SUPPORT" = "o" || "$ESYNC_SUPPORT" = "y" || "$ESYNC_SUPPORT" = "yes" || "$ESYNC_SUPPORT" = "no" ]]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
 fi
@@ -254,31 +242,7 @@ git -C /usr/share/orchid/desktop/dwm/dwm-st-slstatus pull -q
 git -C /usr/share/orchid/wallpapers pull -q
 git -C /usr/share/orchid/orchid-bins pull -q 
 cp /usr/share/orchid/orchid-bins/bins/* /usr/bin/
-if [ "$UPDATE_ORCHID" = "o" ]; then
-		echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-  eix-sync -q
-  emerge -qvuDNU @world
-  flatpak update --assumeyes --noninteractive
-  grub-mkconfig -o /boot/grub/grub.cfg
-  emerge --depclean -q
-fi
-if	 [ "$UPDATE_ORCHID" = "y" ]; then
-	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-  eix-sync -q
-  emerge -qvuDNU @world
-  flatpak update --assumeyes --noninteractive
-  grub-mkconfig -o /boot/grub/grub.cfg
-  emerge --depclean -q
-fi
-	if	 [ "$UPDATE_ORCHID" = "yes" ]; then
-	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
-  eix-sync -q
-  emerge -qvuDNU @world
-  flatpak update --assumeyes --noninteractive
-  grub-mkconfig -o /boot/grub/grub.cfg
-  emerge --depclean -q
-	fi
-	if	[ "$UPDATE_ORCHID" = "oui" ]; then
+if [[ "$UPDATE_ORCHID" = "o" || "$UPDATE_ORCHID" = "y" || "$UPDATE_ORCHID" = "yes" || "$UPDATE_ORCHID" = "no" ]]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Mise à jour de votre Orchid Linux. Veuillez être patient."
   eix-sync -q
   emerge -qvuDNU @world
