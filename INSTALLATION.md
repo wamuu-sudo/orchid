@@ -2,7 +2,7 @@
 
 Orchid est un installateur rapide de Gentoo, pour les ordinateurs de bureau et ordinateurs portables.
 
-![Orchid Logo](img/Orchid-Think.png)
+![Orchid Logo](img/Orchid-Think_3.3_-_N.png))
 
 ## Télécharger et lancer le LiveCD :
 
