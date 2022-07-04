@@ -39,7 +39,7 @@ Espace disque : 20Go
 Il faut télécharger le script :
 
 ```
-wget https://github.com/wamuu-sudo/orchid/blame/main/install/install.sh
+wget https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/install.sh
 ```
 
 et appliquer les bons droits :
