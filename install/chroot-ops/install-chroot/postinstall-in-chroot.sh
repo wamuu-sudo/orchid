@@ -182,7 +182,7 @@ fi
 
 # Change limits for esync support
 # This change the configuration file of pam (see above)
-if [[ "$ESYNC_SUPPORT" = "o" || "$ESYNC_SUPPORT" = "y" || "$ESYNC_SUPPORT" = "yes" || "$ESYNC_SUPPORT" = "no"]]; then
+if [[ "$ESYNC_SUPPORT" = "o" || "$ESYNC_SUPPORT" = "y" || "$ESYNC_SUPPORT" = "yes" || "$ESYNC_SUPPORT" = "no" ]]; then
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation du support esync pour les jeux pour ${USERNAME}."
 	echo "${USERNAME} hard nofile 524288" >> /etc/security/limits.conf
 fi
