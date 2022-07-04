@@ -3,7 +3,7 @@
 Ce document présente les modalités de création pour construire un stage Orchid.
 Il est utilisable pour créer vos propres éditions et nous les soumettre.
 
-![Orchid Logo](img/Orchid-Think.png)
+![Orchid Logo](img/Orchid-Think_3.3_-_N.png)
 
 ## Préparer l'environnement :
 

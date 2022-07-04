@@ -1,7 +1,7 @@
 # Orchid Linux tools
 
 
-![Orchid Logo](img/Orchid-Think.png)
+![Orchid Logo](img/Orchid-Think_3.3_-_N.png)
 
 ## Our tools :
 
