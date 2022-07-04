@@ -996,7 +996,10 @@ read
 	WHAT_IS_ROOT="$STR_WHAT_IS_ROOT"
 	echo_center "$WHAT_IS_ROOT"
 	echo ""
-	create_passwd "root"
+	echo "$STR_CREATE_PASSWORD (Root) $STR_CREATE_PASSWORD_2"
+    read -s ATTEMPT1
+	echo "$STR_CREATE_PASSWORD_REPEAT"
+    read -s ATTEMPT2
 	verify_password_concordance "root"
 	ROOT_PASS="${ATTEMPT1}"
 	UI_PAGE=12
