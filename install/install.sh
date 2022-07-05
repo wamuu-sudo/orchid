@@ -1050,11 +1050,6 @@ else
 	DISK_PARTITIONS="${CHOOSEN_DISK}"
 fi
 auto_partitionning_full_disk
-echo $ROOT_PARTITION
-echo $BOOT_PARTITION_UEFI
-echo $BOOT_PARTITION_BIOS
-echo $SWAP_PARTITION
-read
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
