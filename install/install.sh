@@ -907,6 +907,7 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 
 	echo_center "$WHAT_IS_HIBERNATION"
 	HIBERNATION=$(ask_yes_or_no_and_validate "$STR_USE_HIBERNATION_QUESTION" n)
+
 	#-----------------------------------------------------------------------------------
 
 	# Calcul de la mémoire SWAP idéale
@@ -919,6 +920,8 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then		                                                # Si pas d'hibernation
 		swap_size_no_hibernation
 	fi
+	echo " ${COLOR_GREEN}*${COLOR_RESET} $STR_HIBERNATION_SWAP ${SWAP_SIZE_GB} GB."
+	read -p "$STR_CONTINUE"
 	#-----------------------------------------------------------------------------------
 	UI_PAGE=6
 	;;
@@ -1131,7 +1134,7 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/raw/emproved/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
+wget "https://github.com/wamuu-sudo/orchid/raw/main/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh

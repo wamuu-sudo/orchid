@@ -8,7 +8,7 @@ STR_INVALID_CHOICE="Alegere nevalidă:"
 
 STR_INSTALLER_STEPS="Bine ati venit|Conectarea la internet|Selectia versiuni de Orchid Linux |selectarea diskului|selectarea fisierului de system|hibernarea|selectarea placii de grafica|nume system|esync|Updates|crearea userului |parola pentru root(admin)|relua|Installare"
 # Function CLI_filesystem_selector
-
+SWAP_HIBERNATION_SWAP="SWAP-ul tău va avea o dimensiune de"
 STR_WHAT_IS_FILESYSTEM="Un sistem de fișiere organizează modul în care datele sunt stocate pe disc.
 Btrfs este now. Vă permite să faceți instantanee automate ale sistemului
 in caz daca un update nu merge cum trebuie.
