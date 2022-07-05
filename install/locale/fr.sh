@@ -18,7 +18,7 @@ minimise la fragmentation des données et est largement éprouvé.
 "
 STR_LANGUAGE="French"
 STR_CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
-
+STR_HIBERNATION_SWAP="Votre SWAP aura une taille de "
 # Function select_filesystem_to_install
 
 STR_SELECT_FS="Sélectionnez le système de fichiers avec son numéro, ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour valider :"

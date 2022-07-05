@@ -3,7 +3,7 @@
 # Common used strings
 
 STR_INVALID_CHOICE="Invalid choice :"
-
+STR_HIBERNATION_SWAP="Your SWAP will have a size of"
 STR_INSTALLER_STEPS="Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation"
 # Function CLI_filesystem_selector
 
