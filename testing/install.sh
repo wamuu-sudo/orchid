@@ -718,10 +718,10 @@ swap_size_hibernation()
 		set_totalmemory_against_processors
 		echo "$STR_HIBERNATION_DANGER ${RAM_SIZE_GB} $STR_HIBERNATION_DANGER_2 ${SWAP_SIZE_GB} $STR_HIBERNATION_DANGER_3"
 		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM ${SWAP_SIZE_GB} $STR_HIBERNATION_CONFIRM_2" n)
-		if [ "$HIBERNATION_HIGH" = "n" || "$HIBERNATION_HIGH" = "no" || "$HIBERNATION_HIGH" = "non" ]; then
+		if [[ "$HIBERNATION_HIGH" = "n" || "$HIBERNATION_HIGH" = "no" || "$HIBERNATION_HIGH" = "non" ]]; then
 			swap_size_no_hibernation
 
-		elif [ "$HIBERNATION_HIGH" = "o" || "$HIBERNATION_HIGH" = "y" || "$HIBERNATION_HIGH" = "yes" || "$HIBERNATION_HIGH" = "oui"]; then
+		elif [[ "$HIBERNATION_HIGH" = "o" || "$HIBERNATION_HIGH" = "y" || "$HIBERNATION_HIGH" = "yes" || "$HIBERNATION_HIGH" = "oui" ]]; then
 			SWAP_SIZE_GB=$(ask_for_numeric_and_validate "$STR_SWAP_SIZE_QUESTION ${COLOR_WHITE}[${COLOR_GREEN}${SWAP_SIZE_GB} GB${COLOR_WHITE}]${COLOR_RESET}:" $SWAP_SIZE_GB)
 		fi
 	fi
@@ -910,13 +910,14 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	#-----------------------------------------------------------------------------------
 	# Count the number of CPU threads available on the system, for SWAP formula and to inject into /etc/portage/make.conf at a later stage
 	PROCESSORS=$(grep -c processor /proc/cpuinfo)
-	if [ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]; then	                                                    # Si hibernation
+	if [[ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]]; then	                                                    # Si hibernation
 		swap_size_hibernation
-	elif [ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]; then		                                                # Si pas d'hibernation
+	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then		                                                # Si pas d'hibernation
 		swap_size_no_hibernation
 	fi
 	#-----------------------------------------------------------------------------------
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
+read
 	UI_PAGE=6
 	;;
 	6)
@@ -995,7 +996,10 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	WHAT_IS_ROOT="$STR_WHAT_IS_ROOT"
 	echo_center "$WHAT_IS_ROOT"
 	echo ""
-	create_passwd "root"
+	echo "$STR_CREATE_PASSWORD (Root) $STR_CREATE_PASSWORD_2"
+    read -s ATTEMPT1
+	echo "$STR_CREATE_PASSWORD_REPEAT"
+    read -s ATTEMPT2
 	verify_password_concordance "root"
 	ROOT_PASS="${ATTEMPT1}"
 	UI_PAGE=12
@@ -1007,19 +1011,19 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	echo "$STR_RESUME_KEYBOARD"
 	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
 	echo "$STR_RESUME_FS ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
-	if [ "$HIBERNATION" = o ]; then
+	if [[ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]]; then
 		echo "$STR_RESUME_HIBERNATION ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATION_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
-	elif [ "$HIBERNATION" = n ]; then
+	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then
 		echo "$STR_RESUME_HIBERNATIONNOT ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATIONNOT_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
 	fi
 
 	echo "$STR_RESUME_GPU ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"
 	echo "$STR_RESUME_HOSTNAME ${COLOR_GREEN}${HOSTNAME}${COLOR_RESET}."
-	if [ "$ESYNC_SUPPORT" = o ]; then
+	if [[ "$ESYNC_SUPPORT" = "o" || "$ESYNC_SUPPORT" = "y" || "$ESYNC_SUPPORT" = "yes" || "$ESYNC_SUPPORT" = "oui" ]]; then
 		echo "$STR_RESUME_ESYNC ${COLOR_GREEN}${USERNAME}${COLOR_RESET}."
 	fi
 
-	if [ "$UPDATE_ORCHID" = o ]; then
+	if [[ "$UPDATE_ORCHID" = "o" || "$UPDATE_ORCHID" = "y" || "$UPDATE_ORCHID" = "yes" || "$UPDATE_ORCHID" = "oui" ]]; then
 		echo "$STR_RESUME_UPDATE"
 	fi
 
