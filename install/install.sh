@@ -60,6 +60,15 @@ lang-selection() {
 		lang-selection
 	fi
 }
+disk_mode_selection() {
+	echo "Veuillez choisir votre mode de partitionnement preferee ${COLOR_WHITE}[Entrée]${COLOR_RESET}"
+	echo ""
+	echo "1) Automatic"
+	echo "2) Manuel"
+	echo ""
+	read -p "Choisir et entrer" disk_mode
+}
+
 
 #-----------------------------------------------------------------------------------
 
@@ -184,6 +193,8 @@ CHOICES_FILESYSTEM[0]="${COLOR_GREEN}*${COLOR_RESET}"
 ERROR_IN_SELECTOR=" "
 declare -a CHOICES
 declare -a GPU_DRIVERS
+declare -a PARTITIONS
+declare -a SIZES
 # Menu GPU_DRIVERS
 # Available drivers: fbdev vesa intel i915 nvidia nouveau radeon amdgpu radeonsi
 # virtualbox vmware
@@ -412,7 +423,54 @@ CLI_filesystem_selector()
 	echo "$ERROR_IN_FILESYSTEM_SELECTOR"
 }
 
+manual_disk_selection()
+{
+	PARTITIONS=($(lsblk -p -l -n -o NAME))
+	SIZES=($(lsblk -p -l -n -o SIZE))
+	for disk_index in "${!PARTITIONS[@]}"; do
+		echo "$disk_index) ${PARTITIONS[$disk_index]} (${SIZES[$disk_index]})"
 
+	done
+	read
+
+}
+automatic_disk_selection()
+{
+	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
+	IFS=$'\n'	# New line
+	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
+	IFS=$SAVEIFS	                                                                        # Restore original IFS
+
+	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
+		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
+	done
+
+	if [[ ${#DISKS[@]} == 1 ]]; then
+		CHOOSEN_DISK=${DISKS_LABEL[0]}
+		CHOOSEN_DISK_LABEL=${DISKS[0]}
+	else
+    select_disk_to_install
+	fi
+
+	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
+	echo "$STR_DISK_WARNING_INST_2"
+	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+	else
+		ROM="BIOS"
+	fi
+
+	echo "$STR_DISK_ROM ${ROM}"
+	echo ""
+	echo "$STR_DISK_ROM_2"
+	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
+	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
+		echo "$STR_ORCHID_CANCEL"
+		exit
+	fi
+
+
+}
 select_filesystem_to_install()
 {
 	clear_under_menu
@@ -857,37 +915,16 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	#-----------------------------------------------------------------------------------
 
 	# Split an output on new lines:
-	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
-	IFS=$'\n'	# New line
-	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
-	IFS=$SAVEIFS	                                                                        # Restore original IFS
-
-	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
-	done
-
-	if [[ ${#DISKS[@]} == 1 ]]; then
-		CHOOSEN_DISK=${DISKS_LABEL[0]}
-		CHOOSEN_DISK_LABEL=${DISKS[0]}
-	else
-    select_disk_to_install
-	fi
-
-	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
-	echo "$STR_DISK_WARNING_INST_2"
-	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
-		ROM="UEFI"
-	else
-		ROM="BIOS"
-	fi
-
-	echo "$STR_DISK_ROM ${ROM}"
-	echo ""
-	echo "$STR_DISK_ROM_2"
-	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
-	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "$STR_ORCHID_CANCEL"
-		exit
+disk_mode_selection
+   if [ "$disk_mode" = "1" ]; then
+		clear_under_menu
+		automatic_disk_selection
+   elif [ "$disk_mode" = "2" ]; then
+		clear_under_menu
+		manual_disk_selection
+   else
+		clear_under_menu
+		disk_mode_selection
 	fi
 
 	UI_PAGE=4
