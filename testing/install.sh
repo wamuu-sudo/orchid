@@ -106,7 +106,7 @@ ORCHID_LOGIN[4]="STANDARD"
 ORCHID_NAME[4]="KDE"
 
 ORCHID_VERSION[5]="GNOME Gaming Edition [3.1Go]"
-ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
+ORCHID_URL[5]='https://dl.orchid-linux.org/stage4-orchid-gnomegaming-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[5]=436089                                                               # Number of files in Gnome GE stage
 ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
@@ -130,8 +130,8 @@ ORCHID_LOGIN[7]="BASE"
 ORCHID_NAME[7]="BASE-X11"
 
 ORCHID_VERSION[8]="Base avec Systemd (X11 & Network Manager) [2.0Go]"
-ORCHID_URL[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
-ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-latest.count"
+ORCHID_URL[8]="https://dl.orchid-linux.org/stage4-orchid-basesystemd-latest.tar.bz2"  # Base Systemd
+ORCHID_COUNT[8]="https://dl.orchid-linux.org/stage4-orchid-basesystemd-latest.count"
 #ORCHID_COUNT[7]=
 ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
