@@ -54,6 +54,9 @@ ORCHID_NAME=${10}
 FILESYSTEM=${11}
 COUNTED_BY_TREE=${12}
 LANGUAGE=${13}
+BOOT_PARTITION_UEFI=${14}
+ROOT_PARTITION=${15}
+SWAP_PARTITION=${16}
 BAR='=================================================='                                # This is full bar, i.e. 50 chars
 
 #-----------------------------------------------------------------------------------
@@ -105,7 +108,7 @@ else
 fi
 
 echo "${COLOR_GREEN}*${COLOR_RESET} Configuration du fichier fstab"
-UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
+UUID="$(blkid $ROOT_PARTITION -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour Btrfs"
 	btrfs subvolume create /
@@ -115,10 +118,10 @@ elif [ "$FILESYSTEM" = "ext4" ]; then
 	echo " ${COLOR_GREEN}*${COLOR_RESET} Configuration pour ext4"
 	echo "UUID=${UUID}    /    ext4    defaults,noatime           0 1" >> /etc/fstab
 fi
-UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+UUID="$(blkid $SWAP_PARTITION -o value -s UUID)"
 echo "UUID=${UUID}    none    swap    sw    0 0" >> /etc/fstab
 if [ "$ROM" = "UEFI" ]; then
-	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+	UUID="$(blkid $BOOT_PARTITION_UEFI -o value -s UUID)"
   echo "UUID=${UUID}    /boot/EFI    vfat    defaults    0 0" >> /etc/fstab
 fi
 

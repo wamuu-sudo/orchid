@@ -650,17 +650,20 @@ auto_partitionning_full_disk()
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo "$STR_EFI_ERASE"
 	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
+		BOOT_PARTITION_UEFI="${DISK_PARTITIONS}1"
 	fi
 
 	echo " $STR_SWAP_ERASE"
 	mkswap "${DISK_PARTITIONS}2"
-	
+	SWAP_PARTITION="${DISK_PARTITIONS}2"
 	if [ "$FILESYSTEM" = "Btrfs" ]; then
 		echo "$STR_BTRFS_ERASE"
 		mkfs.btrfs -f "${DISK_PARTITIONS}3"
+		ROOT_PARTITION="${DISK_PARTITIONS}3"
 	elif [ "$FILESYSTEM" = "ext4" ]; then
 		echo "$STR_EXT4_ERASE"
 		mkfs.ext4 -F "${DISK_PARTITIONS}3"
+		ROOT_PARTITION="${DISK_PARTITIONS}3"
 	fi
 }
 
@@ -1060,20 +1063,20 @@ auto_partitionning_full_disk
 echo "$STR_INSTALL_MOUNTING"
 echo "$STR_INSTALL_MOUNTING_ROOT"
 mkdir /mnt/orchid 
-UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
+UUID="$(blkid $ROOT_PARTITION -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	mount -o compress=zstd:1 UUID="${UUID}" /mnt/orchid
 elif [ "$FILESYSTEM" = "ext4" ]; then
 	mount UUID="${UUID}" /mnt/orchid
 fi
 echo "$STR_INSTALL_MOUNTING_SWAP"
-UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+UUID="$(blkid $SWAP_PARTITION -o value -s UUID)"
 swapon -U "${UUID}"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  $STR_INSTALL_MOUNTING_EFI"
 	mkdir -p /mnt/orchid/boot/EFI
-	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+	UUID="$(blkid $BOOT_PARTITION_UEFI -o value -s UUID)"
 	mount UUID="${UUID}" /mnt/orchid/boot/EFI
 fi
 
@@ -1135,7 +1138,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE} $BOOT_PARTITION_UEFI $ROOT_PARTITION $SWAP_PARTITION
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then
