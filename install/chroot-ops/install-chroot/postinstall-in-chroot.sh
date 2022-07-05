@@ -54,9 +54,9 @@ ORCHID_NAME=${10}
 FILESYSTEM=${11}
 COUNTED_BY_TREE=${12}
 LANGUAGE=${13}
-BOOT_PARTITION_UEFI=${14}
-ROOT_PARTITION=${15}
-SWAP_PARTITION=${16}
+ROOT_PARTITION=${14}
+SWAP_PARTITION=${15}
+BOOT_PARTITION_UEFI=${16}
 BAR='=================================================='                                # This is full bar, i.e. 50 chars
 
 #-----------------------------------------------------------------------------------

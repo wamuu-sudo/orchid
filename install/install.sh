@@ -643,6 +643,7 @@ auto_partitionning_full_disk()
 		"                                                                               # Linux SWAP
 	 	 SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
+		 BOOT_PARTITION_BIOS="${DISK_PARTITIONS}1"
 	fi
 
 	echo "$STR_DISK_PART"
@@ -1056,6 +1057,7 @@ fi
 auto_partitionning_full_disk
 echo $ROOT_PARTITION
 echo $BOOT_PARTITION_UEFI
+echo $BOOT_PARTITION_BIOS
 echo $SWAP_PARTITION
 read
 # Montage des partitions
@@ -1139,7 +1141,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE} $BOOT_PARTITION_UEFI $ROOT_PARTITION $SWAP_PARTITION
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE} $ROOT_PARTITION $SWAP_PARTITION $BOOT_PARTITION_UEFI
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then
