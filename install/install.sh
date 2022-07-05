@@ -919,8 +919,6 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 		swap_size_no_hibernation
 	fi
 	#-----------------------------------------------------------------------------------
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
-read
 	UI_PAGE=6
 	;;
 	6)
