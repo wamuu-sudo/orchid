@@ -58,4 +58,6 @@ Different archives are availible in the links provided in the installation guide
 - [MaxyMax](https://github.com/maxgmstudios) : Romanian translation.
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification.
+- [LoboTommy](https://github.com/s7relok) : Communication and CM
+- [cAptive](https://github.com/cAptive5976) : Communication and CM
 - All the users of  [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
