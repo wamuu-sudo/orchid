@@ -114,8 +114,8 @@ ORCHID_LOGIN[5]="STANDARD"
 ORCHID_NAME[5]="GNOME-GE"
 
 ORCHID_VERSION[6]="GNOME Gaming Edition avec Systemd [3.3Go]"
-ORCHID_URL[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
-ORCHID_COUNT[6]="https://dl.orchid-linux.org/testing/stage4-orchid-gnomegaming-systemd-latest.count.txt"
+ORCHID_URL[6]="https://dl.orchid-linux.org/stage4-orchid-gnomegaming-systemd-latest.tar.bz2"  # Gnome GE Systemd
+ORCHID_COUNT[6]="https://dl.orchid-linux.org/stage4-orchid-gnomegaming-systemd-latest.count.txt"
 COUNTED_BY_TREE[6]=452794                                                               # Number of files in Gnome GE SystemD stage
 ORCHID_ESYNC_SUPPORT[6]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[6]="SYSTEMD-GNOME"
@@ -136,14 +136,6 @@ ORCHID_COUNT[8]="https://dl.orchid-linux.org/testing/stage4-orchid-basesystemd-l
 ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
-
-ORCHID_VERSION[9]="Budgie avec Systemd [2.3Go]"
-ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
-ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
-#ORCHID_COUNT[7]=
-ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
-ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
-ORCHID_NAME[9]="BUDGIE-SYSTEMD"
 
 #-----------------------------------------------------------------------------------
 
