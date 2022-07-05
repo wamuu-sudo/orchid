@@ -59,5 +59,5 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 - Piaf_Jaune : Responsable look et graphiste.
 - Kirik : Vérification de la documentation.
 - [LoboTommy](https://github.com/s7relok) : Communication et CM
-- cAptive : Communication et CM
+- [cAptive](https://github.com/cAptive5976) : Communication et CM
 - L'ensemble des membres du serveur [Discord Gaming Linux FR](https://discord.gg/KAzznM4Fnb).
