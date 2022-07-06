@@ -38,6 +38,7 @@ lang-selection() {
 	echo "1) Français/French(Originale)"
 	echo "2) Anglais/English(By Crystal)"
 	echo "3) Roumain/Romana(By Maxymax)"
+	echo "4) Allemand/German(By Selphy)"
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
@@ -54,6 +55,11 @@ lang-selection() {
 		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/ro.sh" -q -O locale/install/ro.sh
 		source locale/install/ro.sh
 		loadkeys ro
+		clear_under_menu
+	elif [ "$language" = "4" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/de.sh" -q -O locale/install/de.sh
+		source locale/install/de.sh
+		loadkeys de
 		clear_under_menu
 	else
 		clear_under_menu
