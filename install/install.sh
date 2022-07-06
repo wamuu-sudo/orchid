@@ -663,7 +663,7 @@ automatic_partitionning()
 manual_partitionning()
 {
 if [ "$ROM" = "BIOS" ]; then
-	echo "Please select the disk you want to use (BIOS Only)"
+	echo "Please select the ${COLOR_GREEN}disk ${COLOR_RESET}you want to use (BIOS Only)"
 	list_all_partitions
 	read -p "Select the disk with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" disk_index
 	if [[ $disk_index =~ ^[0-9]+$ ]]; then
@@ -682,7 +682,7 @@ if [ "$ROM" = "BIOS" ]; then
 		manual_partitionning
 	fi
 elif [ "$ROM" = "UEFI" ]; then
-		echo "Please select the boot you want to use (UEFI Only)"
+		echo "Please select the ${COLOR_RED}boot${COLOR_RESET} you want to use (UEFI Only)"
 		list_all_partitions
 		read -p "Select the boot partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" boot_index
 		if [[ $boot_index =~ ^[0-9]+$ ]]; then
@@ -703,7 +703,7 @@ elif [ "$ROM" = "UEFI" ]; then
 		fi
 
 fi
-		echo "Please select the root partition you want to use"
+		echo "Please select the ${COLOR_LIGHTBLUE}root${COLOR_RESET} partition you want to use"
 		list_all_partitions
 		read -p "Select the root partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" root_index
 		if [[ $root_index =~ ^[0-9]+$ ]]; then
@@ -723,7 +723,7 @@ fi
 			manual_partitionning
 		fi
 
-		echo "Please select the swap partition you want to use"
+		echo "Please select the ${COLOR_GREEN}swap${COLOR_RESET} partition you want to use"
 		list_all_partitions
 		read -p "Select the swap partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" swap_index
 		if [[ $swap_index =~ ^[0-9]+$ ]]; then
