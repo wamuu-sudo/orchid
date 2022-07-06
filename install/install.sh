@@ -680,7 +680,7 @@ if [ "$ROM" = "BIOS" ]; then
 	read -p "Select the disk with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" disk_index
 	if [[ $disk_index =~ ^[0-9]+$ ]]; then
 		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
-			ROOT_PARTITION="${PARTITIONS[$disk_index]}"
+			CHOOSEN_DISK="${PARTITIONS[$disk_index]}"
 			clear_under_menu
 		else
 
