@@ -995,7 +995,7 @@ elif [ $partitionning_mode = "2" ]; then
 	automatic_partitionning
 else
 	clear_under_menu
-echo "$STR_INVALID_CHOICE"
+echo "$STR_INVALID_CHOICE ($partitionning_mode)"
 	ask_partitionning_mode
 fi
 }
