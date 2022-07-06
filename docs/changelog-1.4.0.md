@@ -12,6 +12,7 @@ Ajouts :
 - Orchid-swap-suite pour changer le mode de syncro des dépots Gentoo, git ou rsync.
 - Mise à jour de orchid-help avec les nouveaux outils. 
 - get est une commande égale à orchid-install.
+- orchid-edit permets l'édition du make.conf rapidement.
 
 Organisationel : 
 
