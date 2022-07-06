@@ -614,7 +614,126 @@ select_disk_to_install()
 	done
 }
 
+list_all_partitions()
+{
+	PARTITIONS=($(lsblk -p -l -n -o NAME))
+	SIZES=($(lsblk -p -l -n -o SIZE))
+	for partition_index in "${!PARTITIONS[@]}"; do
+		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]})";
+	done
 
+}
+automatic_partitionning()
+{
+	# Split an output on new lines:
+	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
+	IFS=$'\n'	# New line
+	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
+	IFS=$SAVEIFS	                                                                        # Restore original IFS
+
+	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
+		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
+	done
+
+	if [[ ${#DISKS[@]} == 1 ]]; then
+		CHOOSEN_DISK=${DISKS_LABEL[0]}
+		CHOOSEN_DISK_LABEL=${DISKS[0]}
+	else
+    select_disk_to_install
+	fi
+
+	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
+	echo "$STR_DISK_WARNING_INST_2"
+	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+	else
+		ROM="BIOS"
+	fi
+
+	echo "$STR_DISK_ROM ${ROM}"
+	echo ""
+	echo "$STR_DISK_ROM_2"
+	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
+	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
+		echo "$STR_ORCHID_CANCEL"
+		exit
+	fi
+}
+
+manual_partitionning()
+{
+	echo "Place holder bruh momento"
+if [ "$ROM" = "BIOS" ]; then
+	echo "Selectionne le disk(BIOS seulement)"
+	list_all_partitions
+	read disk_index
+	if [[ $disk_index =~ ^[0-9]+$ ]]; then
+		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
+			ROOT_PARTITION="${PARTITIONS[$disk_index]}"
+			echo "$ROOT_PARTITION"
+			read
+			clear_under_menu
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+	else
+		clear_under_menu
+		echo "Please select a valid option"
+		manual_partitionning
+	fi
+elif [ "$ROM" = "UEFI" ]; then
+		echo "Selectionne la partition boot(UEFI seulement)"
+		list_all_partitions
+		read boot_index
+		if [[ $boot_index =~ ^[0-9]+$ ]]; then
+			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
+				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
+				echo "$BOOT_PARTITION_UEFI"
+				read
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+fi
+		echo "Selectionne la partition root"
+		list_all_partitions
+		read root_index
+		if [[ $root_index =~ ^[0-9]+$ ]]; then
+			if (( $root_index < $((${#PARTITIONS[@]})) )); then
+				ROOT_PARTITION="${PARTITIONS[$boot_index]}"
+				echo "$ROOT_PARTITION"
+				read
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+		echo "Selectionne la partition swap"
+		list_all_partitions
+		read root_index
+}
 auto_partitionning_full_disk()
 {
 	SFDISK_CONFIG="label: gpt
@@ -851,41 +970,23 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	3)
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
+ask_partitionning_mode(){
+	echo_center "Bloubadoub manuel ou automatic ?"
+echo "1) Manuel"
+echo "2) jai la flem"
+read partitionning_mode
 
-	# Split an output on new lines:
-	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
-	IFS=$'\n'	# New line
-	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
-	IFS=$SAVEIFS	                                                                        # Restore original IFS
-
-	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
-	done
-
-	if [[ ${#DISKS[@]} == 1 ]]; then
-		CHOOSEN_DISK=${DISKS_LABEL[0]}
-		CHOOSEN_DISK_LABEL=${DISKS[0]}
-	else
-    select_disk_to_install
-	fi
-
-	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
-	echo "$STR_DISK_WARNING_INST_2"
-	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
-		ROM="UEFI"
-	else
-		ROM="BIOS"
-	fi
-
-	echo "$STR_DISK_ROM ${ROM}"
-	echo ""
-	echo "$STR_DISK_ROM_2"
-	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
-	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "$STR_ORCHID_CANCEL"
-		exit
-	fi
-
+if [ $partitionning_mode = "1" ]; then
+	manual_partitionning
+elif [ $partitionning_mode = "2" ]; then
+	automatic_partitionning
+else
+	clear_under_menu
+echo "really nigger ?..."
+	ask_partitionning_mode
+fi
+}
+ask_partitionning_mode
 	UI_PAGE=4
 	;;
 	4)
