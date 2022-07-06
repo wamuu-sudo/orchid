@@ -11,6 +11,7 @@ Ajouts :
 - Orchid est installable en Anglais et en Roumain désormais, choix possible dans le script.
 - Orchid-swap-suite pour changer le mode de syncro des dépots Gentoo, git ou rsync.
 - Mise à jour de orchid-help avec les nouveaux outils. 
+- get est une commande égale à orchid-install.
 
 Organisationel : 
 
