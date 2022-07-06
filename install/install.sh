@@ -1150,12 +1150,9 @@ if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
 else
 	DISK_PARTITIONS="${CHOOSEN_DISK}"
 fi
-auto_partitionning_full_disk
-echo $ROOT_PARTITION
-echo $BOOT_PARTITION_UEFI
-echo $BOOT_PARTITION_BIOS
-echo $SWAP_PARTITION
-read
+if [ $partitionning_mode = "2" ]; then
+	auto_partitionning_full_disk
+fi
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
