@@ -1001,6 +1001,8 @@ read -p "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${C
 
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
+	echo "Please make sure you have made the partitions in either gparted, cfdisk, or any other partitionning tool and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue"
+	read
 	manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
 	clear_under_menu
