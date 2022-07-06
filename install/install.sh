@@ -662,6 +662,12 @@ automatic_partitionning()
 
 manual_partitionning()
 {
+	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+	else
+		ROM="BIOS"
+	fi
+
 if [ "$ROM" = "BIOS" ]; then
 	echo "Please select the ${COLOR_GREEN}disk ${COLOR_RESET}you want to use (BIOS Only)"
 	list_all_partitions
