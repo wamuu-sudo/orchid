@@ -662,16 +662,13 @@ automatic_partitionning()
 
 manual_partitionning()
 {
-	echo "Place holder bruh momento"
 if [ "$ROM" = "BIOS" ]; then
-	echo "Selectionne le disk(BIOS seulement)"
+	echo "Please select the disk you want to use (BIOS Only)"
 	list_all_partitions
-	read disk_index
+	read -p "Select the disk with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" disk_index
 	if [[ $disk_index =~ ^[0-9]+$ ]]; then
 		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
 			ROOT_PARTITION="${PARTITIONS[$disk_index]}"
-			echo "$ROOT_PARTITION"
-			read
 			clear_under_menu
 		else
 
@@ -685,14 +682,12 @@ if [ "$ROM" = "BIOS" ]; then
 		manual_partitionning
 	fi
 elif [ "$ROM" = "UEFI" ]; then
-		echo "Selectionne la partition boot(UEFI seulement)"
+		echo "Please select the boot you want to use (UEFI Only)"
 		list_all_partitions
-		read boot_index
+		read -p "Select the boot partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" boot_index
 		if [[ $boot_index =~ ^[0-9]+$ ]]; then
 			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
 				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
-				echo "$BOOT_PARTITION_UEFI"
-				read
 				clear_under_menu
 			else
 
@@ -708,14 +703,12 @@ elif [ "$ROM" = "UEFI" ]; then
 		fi
 
 fi
-		echo "Selectionne la partition root"
+		echo "Please select the root partition you want to use"
 		list_all_partitions
-		read root_index
+		read -p "Select the root partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" root_index
 		if [[ $root_index =~ ^[0-9]+$ ]]; then
 			if (( $root_index < $((${#PARTITIONS[@]})) )); then
-				ROOT_PARTITION="${PARTITIONS[$boot_index]}"
-				echo "$ROOT_PARTITION"
-				read
+				ROOT_PARTITION="${PARTITIONS[$root_index]}"
 				clear_under_menu
 			else
 
@@ -730,9 +723,27 @@ fi
 			manual_partitionning
 		fi
 
-		echo "Selectionne la partition swap"
+		echo "Please select the swap partition you want to use"
 		list_all_partitions
-		read root_index
+		read -p "Select the swap partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" swap_index
+		if [[ $swap_index =~ ^[0-9]+$ ]]; then
+			if (( $swap_index < $((${#PARTITIONS[@]})) )); then
+				SWAP_PARTITION="${PARTITIONS[$swap_index]}"
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+
 }
 auto_partitionning_full_disk()
 {
@@ -971,18 +982,20 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
 ask_partitionning_mode(){
-	echo_center "Bloubadoub manuel ou automatic ?"
-echo "1) Manuel"
-echo "2) jai la flem"
-read partitionning_mode
+	echo_center "Please select the partitionning mode you want to use"
+echo "1) Manual"
+echo "2) Automatic"
+read "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm: " partitionning_mode
 
 if [ $partitionning_mode = "1" ]; then
+clear_under_menu
 	manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
+clear_under_menu
 	automatic_partitionning
 else
 	clear_under_menu
-echo "really nigger ?..."
+echo "$STR_INVALID_CHOICE"
 	ask_partitionning_mode
 fi
 }
