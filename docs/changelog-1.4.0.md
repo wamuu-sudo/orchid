@@ -13,6 +13,7 @@ Ajouts :
 - Mise à jour de orchid-help avec les nouveaux outils. 
 - get est une commande égale à orchid-install.
 - orchid-edit permets l'édition du make.conf rapidement.
+- Notre ISO officiel est désormais pleinement utilisable, dans un format ultra réduit (- de 300mo). Elle lance le script d'installation en auto.
 
 Organisationel : 
 
