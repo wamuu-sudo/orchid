@@ -28,7 +28,7 @@ Nous proposons aussi l'installation du noyau [TkG](https://github.com/Frogging-F
 
 Le guide d'installation est déjà disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/INSTALLATION.md).
 
-Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
+[Remplacé par la commande orchid-help] Le guide de nos outils est disponible [ici](https://github.com/wamuu-sudo/orchid/blob/main/TOOLS.md).
 
 Un outil de migration est disponible afin de "convertir" une Gentoo existante en Orchid est disponible [ici](https://raw.githubusercontent.com/wamuu-sudo/orchid-bins/main/bins/orchid-transform). Il installe la suite complète de nos outils, et est utilisé lors de la création des stages officiels et communautaires.
 
