@@ -21,6 +21,7 @@ De nouvelles éditions sont disponibles :
 - Gnome, Gnome Gaming et Gnome Gaming SystemD.
 - KDE Plasma (en test).
 - XFCE Gaming.
+- Base et Base systemD.
 
 Les éditions gaming embarquent directement l'ensemble des librairies 32bits, le support de vulkan, Wine, et bien d'autres.
 
