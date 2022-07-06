@@ -985,13 +985,13 @@ ask_partitionning_mode(){
 	echo_center "Please select the partitionning mode you want to use"
 echo "1) Manual"
 echo "2) Automatic"
-read "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm: " partitionning_mode
+read -p "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm: " partitionning_mode
 
 if [ $partitionning_mode = "1" ]; then
-clear_under_menu
+	clear_under_menu
 	manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
-clear_under_menu
+	clear_under_menu
 	automatic_partitionning
 else
 	clear_under_menu
