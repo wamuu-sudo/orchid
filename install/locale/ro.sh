@@ -124,7 +124,7 @@ Când îl porniți, desktopul va fi exact ca înainte să îl închideți.
 Pentru a face acest lucru, este necesar să copiați toată memoria RAM pe un disc (SWAP).
 În mod implicit, vă sugerăm să nu utilizați hibernation.
 "
-STR_USE_HIBERNATION_QUESTION="Doriți să puteți utiliza hibernarea ${COLOR_WHITE}[d/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_USE_HIBERNATION_QUESTION="Doriți să puteți utiliza hibernarea ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_YOUR_SWAP_SIZE=" ${COLOR_GREEN}*${COLOR_RESET} SWAP-ul tău va avea dimensiunea de ${SWAP_SIZE_GB} GB."
 
@@ -161,7 +161,7 @@ deoarece această operațiune poate fi consumatoare de timp și dacă alegeți s
 instalarea va trebui să așteptați fără a putea face nimic altceva.
 "
 
-STR_UPDATE_QUESTION="Doriți să vă actualizați Orchid Linux în timpul acestei instalări? ${COLOR_WHITE}[d/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_UPDATE_QUESTION="Doriți să vă actualizați Orchid Linux în timpul acestei instalări? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_WHAT_IS_USERNAME="Pe un sistem Linux, precum Orchid Linux, fiecare utilizator trebuie să aibă
 cont care îi identifică și le separă fișierele de altele.
