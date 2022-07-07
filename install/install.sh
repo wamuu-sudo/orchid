@@ -1179,6 +1179,17 @@ else
 fi
 if [ $partitionning_mode = "2" ]; then
 	auto_partitionning_full_disk
+else
+	echo " $STR_SWAP_ERASE"
+	mkswap "$SWAP_PARTITION"
+	if [ "$FILESYSTEM" = "Btrfs" ]; then
+		echo "$STR_BTRFS_ERASE"
+		mkfs.btrfs -f "$ROOT_PARTITION"
+	elif [ "$FILESYSTEM" = "ext4" ]; then
+		echo "$STR_EXT4_ERASE"
+		mkfs.ext4 -F "$ROOT_PARTITION"
+	fi
+
 fi
 # Montage des partitions
 #-----------------------------------------------------------------------------------
