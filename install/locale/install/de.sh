@@ -8,7 +8,8 @@ STR_INSTALLER_STEPS="Wilkommen|Verbinde mit Internet|Auswahl der Orchid Linux Ed
 # Function CLI_filesystem_selector
 
 STR_WHAT_IS_FILESYSTEM="Ein datei system organisiert wie daten auf deinem speichermedium verwaltet werden.
-Btrfs ist neu. Es erlaubt das automatische anfertigen von snapshots vom System um es wiederherzustellen falls ein Update schief läuft.
+Btrfs ist neu. Es erlaubt das automatische anfertigen
+von snapshots vom System um es wiederherzustellen falls ein Update schief läuft.
 Alle Daten werden transparent komprimiert.
 Es ist möglich die Größe des Systems während es läuft zu ändern.
 Ext4 ist robust dank operations logging,

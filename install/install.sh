@@ -400,7 +400,7 @@ tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 
 CLI_filesystem_selector()
 {
-	WHAT_IS_FILESYSTEM=$STR_WHAT_IS_FILESYSTEM
+	WHAT_IS_FILESYSTEM="$STR_WHAT_IS_FILESYSTEM"
 	echo_center "$WHAT_IS_FILESYSTEM"
 	echo $STR_CHOOSE_FILESYSTEM
 	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
