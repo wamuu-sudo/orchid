@@ -55,14 +55,6 @@ ORCHID_ESYNC_SUPPORT[2]="ask"	# Ask for esync support
 ORCHID_LOGIN[2]="STANDARD"
 ORCHID_NAME[2]="GNOME"
 
-ORCHID_VERSION[5]="Mate [2.4Go]"
-ORCHID_URL[5]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Gnome GE
-#ORCHID_COUNT[4]=
-COUNTED_BY_TREE[5]=531753                                                              # Number of files in Mate
-ORCHID_ESYNC_SUPPORT[5]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
-ORCHID_LOGIN[5]="STANDARD"
-ORCHID_NAME[5]="MATE"
-
 ORCHID_VERSION[3]="Xfce Gaming Edition [2.6Go]"
 ORCHID_URL[3]='https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.tar.bz2'       # Xfce gaming
 ORCHID_COUNT[3]="https://dl.orchid-linux.org/stage4-orchid-xfcegaming-latest.count"
@@ -119,6 +111,13 @@ ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
 ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
 ORCHID_NAME[9]="BUDGIE-SYSTEMD"
 
+ORCHID_VERSION[10]="Mate [2.4Go]"
+ORCHID_URL[10]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Gnome GE
+#ORCHID_COUNT[4]=
+COUNTED_BY_TREE[10]=531753                                                              # Number of files in Mate
+ORCHID_ESYNC_SUPPORT[10]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
+ORCHID_LOGIN[10]="STANDARD"
+ORCHID_NAME[10]="MATE"
 
 #-----------------------------------------------------------------------------------
 
