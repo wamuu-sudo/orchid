@@ -673,7 +673,13 @@ manual_partitionning()
 	else
 		ROM="BIOS"
 	fi
+CFDISK_MAN=$(ask_yes_or_no_and_validate "Would you want to open Cfdisk to partition your disk now ?" o)
 
+if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
+
+cfdisk 
+
+fi
 if [ "$ROM" = "BIOS" ]; then
 	echo "Please select the ${COLOR_GREEN}disk ${COLOR_RESET}you want to use (BIOS Only)"
 	list_all_partitions
