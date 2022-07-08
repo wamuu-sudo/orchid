@@ -635,6 +635,7 @@ auto_partitionning_full_disk()
 		"                                                                               # Linux SWAP
 	 	 SFDISK_CONFIG+="${DISK_PARTITIONS}3: type=linux
 		"                                                                               # Linux filesystem data
+		 BOOT_PARTITION_BIOS="${DISK_PARTITIONS}1"
 	fi
 
 	echo "$STR_DISK_PART"
@@ -642,17 +643,20 @@ auto_partitionning_full_disk()
 	if [ "$ROM" = "UEFI" ]; then
 	  	echo "$STR_EFI_ERASE"
 	  	mkfs.vfat -F32 "${DISK_PARTITIONS}1"
+		BOOT_PARTITION_UEFI="${DISK_PARTITIONS}1"
 	fi
 
 	echo " $STR_SWAP_ERASE"
 	mkswap "${DISK_PARTITIONS}2"
-	
+	SWAP_PARTITION="${DISK_PARTITIONS}2"
 	if [ "$FILESYSTEM" = "Btrfs" ]; then
 		echo "$STR_BTRFS_ERASE"
 		mkfs.btrfs -f "${DISK_PARTITIONS}3"
+		ROOT_PARTITION="${DISK_PARTITIONS}3"
 	elif [ "$FILESYSTEM" = "ext4" ]; then
 		echo "$STR_EXT4_ERASE"
 		mkfs.ext4 -F "${DISK_PARTITIONS}3"
+		ROOT_PARTITION="${DISK_PARTITIONS}3"
 	fi
 }
 
@@ -895,6 +899,7 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 
 	echo_center "$WHAT_IS_HIBERNATION"
 	HIBERNATION=$(ask_yes_or_no_and_validate "$STR_USE_HIBERNATION_QUESTION" n)
+
 	#-----------------------------------------------------------------------------------
 
 	# Calcul de la mémoire SWAP idéale
@@ -907,9 +912,9 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then		                                                # Si pas d'hibernation
 		swap_size_no_hibernation
 	fi
+	echo " ${COLOR_GREEN}*${COLOR_RESET} $STR_HIBERNATION_SWAP ${SWAP_SIZE_GB} GB."
+	read -p "$STR_CONTINUE"
 	#-----------------------------------------------------------------------------------
-	echo " ${COLOR_GREEN}*${COLOR_RESET} Votre SWAP aura une taille de ${SWAP_SIZE_GB} Go."
-read
 	UI_PAGE=6
 	;;
 	6)
@@ -1045,27 +1050,31 @@ else
 	DISK_PARTITIONS="${CHOOSEN_DISK}"
 fi
 auto_partitionning_full_disk
-
+echo $ROOT_PARTITION
+echo $BOOT_PARTITION_UEFI
+echo $BOOT_PARTITION_BIOS
+echo $SWAP_PARTITION
+read
 # Montage des partitions
 #-----------------------------------------------------------------------------------
 
 echo "$STR_INSTALL_MOUNTING"
 echo "$STR_INSTALL_MOUNTING_ROOT"
 mkdir /mnt/orchid 
-UUID="$(blkid ${DISK_PARTITIONS}3 -o value -s UUID)"
+UUID="$(blkid $ROOT_PARTITION -o value -s UUID)"
 if [ "$FILESYSTEM" = "Btrfs" ]; then
 	mount -o compress=zstd:1 UUID="${UUID}" /mnt/orchid
 elif [ "$FILESYSTEM" = "ext4" ]; then
 	mount UUID="${UUID}" /mnt/orchid
 fi
 echo "$STR_INSTALL_MOUNTING_SWAP"
-UUID="$(blkid ${DISK_PARTITIONS}2 -o value -s UUID)"
+UUID="$(blkid $SWAP_PARTITION -o value -s UUID)"
 swapon -U "${UUID}"
 # Pour l'EFI
 if [ "$ROM" = "UEFI" ]; then
 	echo "  $STR_INSTALL_MOUNTING_EFI"
 	mkdir -p /mnt/orchid/boot/EFI
-	UUID="$(blkid ${DISK_PARTITIONS}1 -o value -s UUID)"
+	UUID="$(blkid $BOOT_PARTITION_UEFI -o value -s UUID)"
 	mount UUID="${UUID}" /mnt/orchid/boot/EFI
 fi
 
@@ -1127,7 +1136,7 @@ chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config
 #-----------------------------------------------------------------------------------
 
 # Postinstall: UEFI or BIOS, /etc/fstab, hostname, create user, assign groups, grub, activate services
-chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE}
+chroot /mnt/orchid ./postinstall-in-chroot.sh ${CHOOSEN_DISK} ${ROM} ${ROOT_PASS} ${USERNAME} ${USER_PASS} ${HOSTNAME} ${ORCHID_LOGIN[$no_archive]} ${ESYNC_SUPPORT} ${UPDATE_ORCHID} ${ORCHID_NAME[$no_archive]} ${FILESYSTEM} ${COUNTED_BY_TREE[$no_archive]} ${STR_LANGUAGE} $ROOT_PARTITION $SWAP_PARTITION $BOOT_PARTITION_UEFI
 # Configuration pour DWM
 # no_archive use computer convention: start at 0
 if [ "${ORCHID_NAME[$no_archive]}" = "DWM" -o "${ORCHID_NAME[$no_archive]}" = "DWM-GE" ]; then

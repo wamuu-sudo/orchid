@@ -104,7 +104,7 @@ ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
 ORCHID_VERSION[4]="KDE Plasma [3.2Go]"
-ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
+ORCHID_URL[4]='https://dl.orchid-linux.org/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
 COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
 ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
@@ -1177,8 +1177,9 @@ if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
 else
 	DISK_PARTITIONS="${CHOOSEN_DISK}"
 fi
+
 if [ $partitionning_mode = "2" ]; then
-	auto_partitionning_full_disk
+	auto_partitionnig_full_disk
 else
 	echo " $STR_SWAP_ERASE"
 	mkswap "$SWAP_PARTITION"
@@ -1191,7 +1192,8 @@ else
 	fi
 
 fi
-# Montage des partitions
+
+# Montage des partition
 #-----------------------------------------------------------------------------------
 
 echo "$STR_INSTALL_MOUNTING"
