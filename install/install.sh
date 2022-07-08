@@ -700,6 +700,7 @@ elif [ "$ROM" = "UEFI" ]; then
 		if [[ $boot_index =~ ^[0-9]+$ ]]; then
 			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
 				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
+				UEFI_ERASE=$(ask_yes_or_no_and_validate "Would you want to erase your UEFI partition ? (Select no if you are planning on dualbooting)" n)
 				clear_under_menu
 			else
 
@@ -1191,6 +1192,11 @@ else
 		mkfs.ext4 -F "$ROOT_PARTITION"
 	fi
 
+if [[  "$UEFI_ERASE" = "o" ||  "$UEFI_ERASE" = "oui" || "$UEFI_ERASE" = "y"  ||  "$UEFI_ERASE" = "yes"  ]]; then
+
+mkfs.vfat -F32 "$BOOT_PARTITION_UEFI"
+
+fi
 fi
 
 # Montage des partition
