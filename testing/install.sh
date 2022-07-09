@@ -147,7 +147,7 @@ ORCHID_VERSION[9]="Mate [2.4Go]"
 ORCHID_URL[9]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Mate
 #ORCHID_COUNT[4]=
 COUNTED_BY_TREE[9]=531753                                                              # Number of files in Mate
-ORCHID_ESYNC_SUPPORT[9]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
+ORCHID_ESYNC_SUPPORT[9]="ask"	
 ORCHID_LOGIN[9]="STANDARD"
 ORCHID_NAME[9]="MATE"
 
@@ -1202,7 +1202,7 @@ else
 fi
 
 if [ $partitionning_mode = "2" ]; then
-	auto_partitionnig_full_disk
+	automatic_partitionning
 else
 	echo " $STR_SWAP_ERASE"
 	mkswap "$SWAP_PARTITION"
