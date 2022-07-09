@@ -1186,7 +1186,7 @@ else
 fi
 
 if [ $partitionning_mode = "2" ]; then
-	auto_partitionnig_full_disk
+	auto_partitionning_full_disk
 else
 	echo " $STR_SWAP_ERASE"
 	mkswap "$SWAP_PARTITION"
