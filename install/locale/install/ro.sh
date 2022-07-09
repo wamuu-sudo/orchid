@@ -8,7 +8,7 @@ STR_INVALID_CHOICE="Alegere nevalidă:"
 
 STR_INSTALLER_STEPS="Bine ati venit|Conectarea la internet|Selectia versiuni de Orchid Linux |selectarea diskului|selectarea fisierului de system|hibernarea|selectarea placii de grafica|nume system|esync|Updates|crearea userului |parola pentru root(admin)|relua|Installare"
 # Function CLI_filesystem_selector
-
+SWAP_HIBERNATION_SWAP="SWAP-ul tău va avea o dimensiune de"
 STR_WHAT_IS_FILESYSTEM="Un sistem de fișiere organizează modul în care datele sunt stocate pe disc.
 Btrfs este now. Vă permite să faceți instantanee automate ale sistemului
 in caz daca un update nu merge cum trebuie.
@@ -97,7 +97,7 @@ instalarea sau utilizarea Orchid Linux.
 Vă rugăm să citiți instrucțiunile cu mare atenție.
 Vă mulțumim că ați ales Orchid Linux!${COLOR_RESET}"
 
-STR_WELCOME_START="apasă ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a începe instalarea."
+STR_WELCOME_START="Apasă ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a începe instalarea."
 
 STR_RAM_ISSUE="${COLOR_YELLOW}Ne pare rău, aveți nevoie de cel puțin 2 GB de RAM pentru a utiliza Orchid Linux. Sfârșitul instalării.${COLOR_RESET}"
 

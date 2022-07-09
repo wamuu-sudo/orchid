@@ -56,6 +56,7 @@ Different archives are availible in the links provided in the installation guide
 - [Babilinx](https://github.com/babilinx) : Project Optimisation.
 - [Crystal](https://crystal-trd.github.io) : English translation.
 - [MaxyMax](https://github.com/maxgmstudios) : Romanian translation.
+- Selphy#0777 : German translation. 
 - Piaf_Jaune : Graphist & Look'n Feel.
 - Kirik : Documentation verification.
 - [LoboTommy](https://github.com/s7relok) : Communication and CM
