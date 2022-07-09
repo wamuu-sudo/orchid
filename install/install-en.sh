@@ -103,13 +103,13 @@ ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
 
-ORCHID_VERSION[10]="Mate [2.4Go]"
-ORCHID_URL[10]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Gnome GE
+ORCHID_VERSION[9]="Mate [2.4Go]"
+ORCHID_URL[9]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
-COUNTED_BY_TREE[10]=531753                                                              # Number of files in Mate
-ORCHID_ESYNC_SUPPORT[10]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
-ORCHID_LOGIN[10]="STANDARD"
-ORCHID_NAME[10]="MATE"
+COUNTED_BY_TREE[9]=531753                                                              # Number of files in Mate
+ORCHID_ESYNC_SUPPORT[9]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
+ORCHID_LOGIN[9]="STANDARD"
+ORCHID_NAME[9]="MATE"
 
 #-----------------------------------------------------------------------------------
 
