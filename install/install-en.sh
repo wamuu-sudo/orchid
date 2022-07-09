@@ -103,14 +103,6 @@ ORCHID_ESYNC_SUPPORT[8]="ask"	# Ask for esync support
 ORCHID_LOGIN[8]="SYSTEMD-BASE"
 ORCHID_NAME[8]="BASE-SYSTEMD-X11"
 
-ORCHID_VERSION[9]="Budgie avec Systemd [2.3Go]"
-ORCHID_URL[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.tar.bz2"  # Budgie Systemd
-ORCHID_COUNT[9]="https://dl.orchid-linux.org/testing/stage4-orchid-budgie-latest.count"
-#ORCHID_COUNT[7]=
-ORCHID_ESYNC_SUPPORT[9]="ask"	# Ask for esync support
-ORCHID_LOGIN[9]="SYSTEMD-BUDGIE"
-ORCHID_NAME[9]="BUDGIE-SYSTEMD"
-
 ORCHID_VERSION[10]="Mate [2.4Go]"
 ORCHID_URL[10]='https://dl.orchid-linux.org/testing/stage4-orchid-mate-latest.tar.bz2'  # Gnome GE
 #ORCHID_COUNT[4]=
