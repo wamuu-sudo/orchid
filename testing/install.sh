@@ -145,6 +145,14 @@ ORCHID_ESYNC_SUPPORT[9]="yes"	# Do not ask for esync support, add esync support 
 ORCHID_LOGIN[9]="STANDARD"
 ORCHID_NAME[9]="MATE"
 
+ORCHID_VERSION[10]="Mate Gaming [2.8Go]"
+ORCHID_URL[10]='https://dl.orchid-linux.org/testing/stage4-orchid-mategaming-latest.tar.bz2'  # Mate gaming
+#ORCHID_COUNT[4]=
+COUNTED_BY_TREE[10]=615489                                                             # Number of files in Mate Gaming
+ORCHID_ESYNC_SUPPORT[10]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
+ORCHID_LOGIN[10]="STANDARD"
+ORCHID_NAME[10]="MATE"
+
 #-----------------------------------------------------------------------------------
 
 # Setup colors
