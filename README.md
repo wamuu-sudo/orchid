@@ -57,6 +57,7 @@ Les différentes archives sont disponibles au travers des liens fournis dans le 
 - [Babilinx](https://github.com/babilinx) : Optimisation du projet et développeur du projet.
 - [Crystal](https://crystal-trd.github.io) : Développeuse du projet.
 - [MaxyMax](https://github.com/maxgmstudios) : Traductrice vers la langue Roumaine. 
+- Selphy#0777 : Traductrice vers l'Allemand 
 - Piaf_Jaune : Responsable look et graphiste.
 - Kirik : Vérification de la documentation.
 - [LoboTommy](https://github.com/s7relok) : Communication et CM
