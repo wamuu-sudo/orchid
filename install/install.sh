@@ -1017,14 +1017,14 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
 ask_partitionning_mode(){
-	echo_center "Please select the partitionning mode you want to use"
-echo "1) Manual"
-echo "2) Automatic"
-read -p "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm: " partitionning_mode
+	echo_center "Sélectionnez le mode d'installation : "
+echo "1) Partitionnement manuel"
+echo "2) Partitionnement automatique"
+read -p "Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " partitionning_mode
 
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
-	echo "Please make sure you have made the partitions in either ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, or any other partitionning tool and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue"
+	echo "Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. Pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer. "
 	read
 	manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
