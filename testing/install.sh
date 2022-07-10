@@ -587,7 +587,8 @@ test_internet_access()
 	if ping -c 1 82.65.199.131 &> /dev/null; then                                       # This is orchid.juline.tech
 	  	test_ip=1                                                                       # We have internet access
 	else
-	  	test_ip=0                                                                       # We don't have internet access
+	  	net-setup
+		test_ip=0                                                                       # We don't have internet access
 	fi
 }
 
