@@ -1,5 +1,32 @@
 #!/bin/bash
 
+#===================================================================================
+#
+# FILE : .bashrc
+#
+# USAGE : N/A
+#
+# DESCRIPTION : BASHRC for the root user
+#
+# BUGS : ---
+# NOTES : ---
+# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu, Maite
+# CREATED : july 2022
+# REVISION: 10 july 2022
+#
+# LICENCE :
+# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal, Maite
+# This program is free software: you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free Software
+# Foundation, either version 3 of the License, or (at your option) any later
+# version.
+# This program is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
+# FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
+# You should have received a copy of the GNU General Public License along with
+# this program. If not, see https://www.gnu.org/licenses/.
+#===================================================================================
+
 if [ ! "$(grep nox /proc/cmdline)" ]
 then
 	if [ -x /usr/bin/X ]
@@ -102,33 +129,13 @@ test_connection() {
 
 		if [ $TEST_ROUND -eq 0 ]
 		then
-			echo -e "\n1) static"
-			echo "2) dhcp"
-			read -p "Please select the connecxtion mode : " network_config_mode
-			case $network_config_mode in
-				1)
-					net-setup	#Static gentoo network config
-					ping_server
-					if [ $TEST_CONNECTION -eq 0 ]
-					then
-						TEST_ROUND=15
-					fi
-					;;
-				2)
-					dhcpcd	#Get a DHCP IP
-					ping_server
-					if [ $TEST_CONNECTION -eq 0 ]
-					then
-						TEST_ROUND=15
-					fi
-					;;
-				*)
-					TEST_CONNECTION=0
-					TEST_ROUND=15
-					echo "Please select a choice"
-					;;
-			esac
-
+			net-setup #Network tools of gentoo
+			
+			ping_server
+			if [ $TEST_CONNECTION -eq 0 ]
+			then
+				TEST_ROUND=15
+			fi
 		fi
 		let "TEST_ROUND-=1"
 		sleep 1
