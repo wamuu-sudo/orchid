@@ -151,7 +151,7 @@ ORCHID_URL[10]='https://dl.orchid-linux.org/testing/stage4-orchid-mategaming-lat
 COUNTED_BY_TREE[10]=615489                                                             # Number of files in Mate Gaming
 ORCHID_ESYNC_SUPPORT[10]="yes"	# Do not ask for esync support, add esync support because this is a Gaming Edition
 ORCHID_LOGIN[10]="STANDARD"
-ORCHID_NAME[10]="MATE"
+ORCHID_NAME[10]="MATE-GAMING"
 
 #-----------------------------------------------------------------------------------
 
