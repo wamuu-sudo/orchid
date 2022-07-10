@@ -1029,7 +1029,7 @@ if [ $partitionning_mode = "1" ]; then
 	manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
 	clear_under_menu
-	automatic_partitionning
+	auto_partitionning_full_disk
 else
 	clear_under_menu
 echo "$STR_INVALID_CHOICE ($partitionning_mode)"
