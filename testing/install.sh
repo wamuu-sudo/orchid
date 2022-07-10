@@ -38,22 +38,28 @@ lang-selection() {
 	echo "1) Français/French(Originale)"
 	echo "2) Anglais/English(By Crystal)"
 	echo "3) Roumain/Romana(By Maxymax)"
+	echo "4) Allemand/German(By Selphy)"
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/fr.sh" -q -O locale/install/fr.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/fr.sh" -q -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
 		clear_under_menu
 	elif [ "$language" = "2" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/en.sh" -q -O locale/install/en.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/en.sh" -q -O locale/install/en.sh
 		source locale/install/en.sh
 		loadkeys us
 		clear_under_menu
 	elif [ "$language" = "3" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/main/install/locale/ro.sh" -q -O locale/install/ro.sh
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/ro.sh" -q -O locale/install/ro.sh
 		source locale/install/ro.sh
 		loadkeys ro
+		clear_under_menu
+	elif [ "$language" = "4" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/de.sh" -q -O locale/install/de.sh
+		source locale/install/de.sh
+		loadkeys de
 		clear_under_menu
 	else
 		clear_under_menu
@@ -98,7 +104,7 @@ ORCHID_LOGIN[3]="STANDARD"
 ORCHID_NAME[3]="XFCE-GE"
 
 ORCHID_VERSION[4]="KDE Plasma [3.2Go]"
-ORCHID_URL[4]='https://dl.orchid-linux.org/testing/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
+ORCHID_URL[4]='https://dl.orchid-linux.org/stage4-orchid-kdeplasma-latest.tar.bz2' # KDE
 #ORCHID_COUNT[3]=
 COUNTED_BY_TREE[4]=568451                                                               # Number of files in KDE stage
 ORCHID_ESYNC_SUPPORT[4]="ask"	# Ask for esync support
@@ -410,7 +416,7 @@ tput cup $((${LOGO_LINES}+1)) 0 # Move cursor to position row col
 
 CLI_filesystem_selector()
 {
-	WHAT_IS_FILESYSTEM=$STR_WHAT_IS_FILESYSTEM
+	WHAT_IS_FILESYSTEM="$STR_WHAT_IS_FILESYSTEM"
 	echo_center "$WHAT_IS_FILESYSTEM"
 	echo $STR_CHOOSE_FILESYSTEM
 	for (( i = 0; i < ${#FILESYSTEM_TYPE[@]}; i++ )); do
@@ -630,7 +636,150 @@ select_disk_to_install()
 	done
 }
 
+list_all_partitions()
+{
+	PARTITIONS=($(lsblk -p -l -n -o NAME))
+	SIZES=($(lsblk -p -l -n -o SIZE))
+	for partition_index in "${!PARTITIONS[@]}"; do
+		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]})";
+	done
 
+}
+automatic_partitionning()
+{
+	# Split an output on new lines:
+	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
+	IFS=$'\n'	# New line
+	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
+	IFS=$SAVEIFS	                                                                        # Restore original IFS
+
+	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
+		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
+	done
+
+	if [[ ${#DISKS[@]} == 1 ]]; then
+		CHOOSEN_DISK=${DISKS_LABEL[0]}
+		CHOOSEN_DISK_LABEL=${DISKS[0]}
+	else
+    select_disk_to_install
+	fi
+
+	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
+	echo "$STR_DISK_WARNING_INST_2"
+	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+	else
+		ROM="BIOS"
+	fi
+
+	echo "$STR_DISK_ROM ${ROM}"
+	echo ""
+	echo "$STR_DISK_ROM_2"
+	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
+	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
+		echo "$STR_ORCHID_CANCEL"
+		exit
+	fi
+}
+
+manual_partitionning()
+{
+	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+	else
+		ROM="BIOS"
+	fi
+CFDISK_MAN=$(ask_yes_or_no_and_validate "Would you want to open Cfdisk to partition your disk now ?" o)
+
+if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
+
+cfdisk 
+
+fi
+if [ "$ROM" = "BIOS" ]; then
+	echo "Please select the ${COLOR_GREEN}disk ${COLOR_RESET}you want to use (BIOS Only)"
+	list_all_partitions
+	read -p "Select the disk with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" disk_index
+	if [[ $disk_index =~ ^[0-9]+$ ]]; then
+		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
+			CHOOSEN_DISK="${PARTITIONS[$disk_index]}"
+			clear_under_menu
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+	else
+		clear_under_menu
+		echo "Please select a valid option"
+		manual_partitionning
+	fi
+elif [ "$ROM" = "UEFI" ]; then
+		echo "Please select the ${COLOR_RED}boot${COLOR_RESET} you want to use (UEFI Only)"
+		list_all_partitions
+		read -p "Select the boot partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" boot_index
+		if [[ $boot_index =~ ^[0-9]+$ ]]; then
+			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
+				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
+				UEFI_ERASE=$(ask_yes_or_no_and_validate "Would you want to erase your UEFI partition ? (Select no if you are planning on dualbooting)" n)
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+fi
+		echo "Please select the ${COLOR_LIGHTBLUE}root${COLOR_RESET} partition you want to use"
+		list_all_partitions
+		read -p "Select the root partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" root_index
+		if [[ $root_index =~ ^[0-9]+$ ]]; then
+			if (( $root_index < $((${#PARTITIONS[@]})) )); then
+				ROOT_PARTITION="${PARTITIONS[$root_index]}"
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+		echo "Please select the ${COLOR_GREEN}swap${COLOR_RESET} partition you want to use"
+		list_all_partitions
+		read -p "Select the swap partition with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm:" swap_index
+		if [[ $swap_index =~ ^[0-9]+$ ]]; then
+			if (( $swap_index < $((${#PARTITIONS[@]})) )); then
+				SWAP_PARTITION="${PARTITIONS[$swap_index]}"
+				clear_under_menu
+			else
+
+				clear_under_menu
+				echo "Please select a valid option"
+				manual_partitionning
+			fi
+		else
+
+			clear_under_menu
+			echo "Please select a valid option"
+			manual_partitionning
+		fi
+
+
+}
 auto_partitionning_full_disk()
 {
 	SFDISK_CONFIG="label: gpt
@@ -867,41 +1016,27 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	3)
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
+ask_partitionning_mode(){
+	echo_center "Please select the partitionning mode you want to use"
+echo "1) Manual"
+echo "2) Automatic"
+read -p "Select the partitionning mode with its number, ${COLOR_WHITE}[Enter]${COLOR_RESET} to confirm: " partitionning_mode
 
-	# Split an output on new lines:
-	SAVEIFS=$IFS	                                                                        # Save current IFS (Internal Field Separator)
-	IFS=$'\n'	# New line
-	DISKS=($(lsblk -d -p -n -o MODEL,SIZE,NAME -e 1,3,7,11,252))                            # Create an array with Disks: MODELs, SIZEs, NAMEs
-	IFS=$SAVEIFS	                                                                        # Restore original IFS
-
-	for (( i = 0; i < ${#DISKS[@]}; i++ )); do
-		DISKS_LABEL[$i]=$(echo "${DISKS[$i]}" | awk '{printf $NF}')		                    # Extract NAME into DISKS_LABEL, e.g. /dev/sda
-	done
-
-	if [[ ${#DISKS[@]} == 1 ]]; then
-		CHOOSEN_DISK=${DISKS_LABEL[0]}
-		CHOOSEN_DISK_LABEL=${DISKS[0]}
-	else
-    select_disk_to_install
-	fi
-
-	echo "$STR_DISK_WARNING_INST  ${CHOOSEN_DISK} : ${CHOOSEN_DISK_LABEL} ${COLOR_RESET}"
-	echo "$STR_DISK_WARNING_INST_2"
-	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
-		ROM="UEFI"
-	else
-		ROM="BIOS"
-	fi
-
-	echo "$STR_DISK_ROM ${ROM}"
-	echo ""
-	echo "$STR_DISK_ROM_2"
-	read -s -n 1 key	# -s: do not echo input character. -n 1: read only 1 character (separate with space)
-	if [[ ! $key = "" ]]; then	# Input is not the [Enter] key, aborting installation!
-		echo "$STR_ORCHID_CANCEL"
-		exit
-	fi
-
+if [ $partitionning_mode = "1" ]; then
+	clear_under_menu
+	echo "Please make sure you have made the partitions in either ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, or any other partitionning tool and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue"
+	read
+	manual_partitionning
+elif [ $partitionning_mode = "2" ]; then
+	clear_under_menu
+	automatic_partitionning
+else
+	clear_under_menu
+echo "$STR_INVALID_CHOICE ($partitionning_mode)"
+	ask_partitionning_mode
+fi
+}
+ask_partitionning_mode
 	UI_PAGE=4
 	;;
 	4)
@@ -1065,13 +1200,28 @@ if [[ "${CHOOSEN_DISK}" == *"nvme"* ]]; then
 else
 	DISK_PARTITIONS="${CHOOSEN_DISK}"
 fi
-auto_partitionning_full_disk
-echo $ROOT_PARTITION
-echo $BOOT_PARTITION_UEFI
-echo $BOOT_PARTITION_BIOS
-echo $SWAP_PARTITION
-read
-# Montage des partitions
+
+if [ $partitionning_mode = "2" ]; then
+	auto_partitionning_full_disk
+else
+	echo " $STR_SWAP_ERASE"
+	mkswap "$SWAP_PARTITION"
+	if [ "$FILESYSTEM" = "Btrfs" ]; then
+		echo "$STR_BTRFS_ERASE"
+		mkfs.btrfs -f "$ROOT_PARTITION"
+	elif [ "$FILESYSTEM" = "ext4" ]; then
+		echo "$STR_EXT4_ERASE"
+		mkfs.ext4 -F "$ROOT_PARTITION"
+	fi
+
+if [[  "$UEFI_ERASE" = "o" ||  "$UEFI_ERASE" = "oui" || "$UEFI_ERASE" = "y"  ||  "$UEFI_ERASE" = "yes"  ]]; then
+
+mkfs.vfat -F32 "$BOOT_PARTITION_UEFI"
+
+fi
+fi
+
+# Montage des partition
 #-----------------------------------------------------------------------------------
 
 echo "$STR_INSTALL_MOUNTING"
@@ -1142,7 +1292,7 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://github.com/wamuu-sudo/orchid/raw/main/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
+wget "https://github.com/wamuu-sudo/orchid/raw/german/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh
