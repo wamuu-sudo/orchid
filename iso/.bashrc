@@ -10,12 +10,12 @@
 #
 # BUGS : ---
 # NOTES : ---
-# CONTRUBUTORS : Babilinx, Chevek, Crystal, Wamuu, Maite
+# CONTRUBUTORS : Chevek, Wamuu, Maite
 # CREATED : july 2022
 # REVISION: 10 july 2022
 #
 # LICENCE :
-# Copyright (C) 2022 Babilinx, Yannick Defais aka Chevek, Wamuu-sudo, Crystal, Maite
+# Copyright (C) 2022 Yannick Defais aka Chevek, Wamuu-sudo, Maite
 # This program is free software: you can redistribute it and/or modify it under
 # the terms of the GNU General Public License as published by the Free Software
 # Foundation, either version 3 of the License, or (at your option) any later
