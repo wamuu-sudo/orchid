@@ -27,46 +27,6 @@
 # this program. If not, see https://www.gnu.org/licenses/.
 #===================================================================================
 
-#=== PRECONFIGURATION ==============================================================
-
-# Ask for the language and download the correct lang package
-#-----------------------------------------------------------------------------------
-lang-selection() {
-	mkdir -p locale/install
-	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
-	echo ""
-	echo "1) Français/French(Originale)"
-	echo "2) Anglais/English(By Crystal)"
-	echo "3) Roumain/Romana(By Maxymax)"
-	echo "4) Allemand/German(By Selphy)"
-	echo ""
-	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
-	if [ "$language" = "1" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/fr.sh" -q -O locale/install/fr.sh
-		source locale/install/fr.sh
-		loadkeys fr
-		clear_under_menu
-	elif [ "$language" = "2" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/en.sh" -q -O locale/install/en.sh
-		source locale/install/en.sh
-		loadkeys us
-		clear_under_menu
-	elif [ "$language" = "3" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/ro.sh" -q -O locale/install/ro.sh
-		source locale/install/ro.sh
-		loadkeys ro
-		clear_under_menu
-	elif [ "$language" = "4" ]; then
-		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/de.sh" -q -O locale/install/de.sh
-		source locale/install/de.sh
-		loadkeys de
-		clear_under_menu
-	else
-		clear_under_menu
-		lang-selection
-	fi
-}
-
 #-----------------------------------------------------------------------------------
 
 # Setup all informations from stages
@@ -263,6 +223,46 @@ BANNER="  ___           _     _     _   _     _
 
 # Setup functions
 #-----------------------------------------------------------------------------------
+
+#=== PRECONFIGURATION ==============================================================
+
+# Ask for the language and download the correct lang package
+#-----------------------------------------------------------------------------------
+lang-selection() {
+	mkdir -p locale/install
+	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
+	echo ""
+	echo "1) Français/French(Originale)"
+	echo "2) Anglais/English(By Crystal)"
+	echo "3) Roumain/Romana(By Maxymax)"
+	echo "4) Allemand/German(By Selphy)"
+	echo ""
+	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
+	if [ "$language" = "1" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/fr.sh" -q -O locale/install/fr.sh
+		source locale/install/fr.sh
+		loadkeys fr
+		clear_under_menu
+	elif [ "$language" = "2" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/en.sh" -q -O locale/install/en.sh
+		source locale/install/en.sh
+		loadkeys us
+		clear_under_menu
+	elif [ "$language" = "3" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/ro.sh" -q -O locale/install/ro.sh
+		source locale/install/ro.sh
+		loadkeys ro
+		clear_under_menu
+	elif [ "$language" = "4" ]; then
+		wget "https://github.com/wamuu-sudo/orchid/raw/german/install/locale/de.sh" -q -O locale/install/de.sh
+		source locale/install/de.sh
+		loadkeys de
+		clear_under_menu
+	else
+		clear_under_menu
+		lang-selection
+	fi
+}
 
 set_term_size() {
         TERM_LINES=`tput lines`
@@ -1316,7 +1316,12 @@ fi
 
 # Configuration pour Xfce (Firefox-bin as default Web Browser)
 if [ "${ORCHID_NAME[$no_archive]}" = "XFCE-GE" ]; then
-	chroot /mnt/orchid ./XFCE-config.sh ${USERNAME}
+	chroot /mnt/orchid ./XFCE-config.sh
+fi
+
+# Configuration pour MATE
+if [ "${ORCHID_NAME[$no_archive]}" = "MATE" -o "${ORCHID_NAME[$no_archive]}" = "MATE-GAMING" ]; then
+	chroot /mnt/orchid ./MATE-config.sh
 fi
 
 
@@ -1331,7 +1336,7 @@ fi
 #-----------------------------------------------------------------------------------
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
-rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh && rm -f /mnt/orchid/XFCE-config.sh
+rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh && rm -f /mnt/orchid/XFCE-config.sh && rm -f /mnt/orchid/MATE-config.sh
 rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png && rm -f /mnt/orchid/xfce4-desktop.xml
 cd /
 
