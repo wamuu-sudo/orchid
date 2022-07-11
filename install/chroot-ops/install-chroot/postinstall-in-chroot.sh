@@ -177,7 +177,7 @@ elif [ "$ORCHID_LOGIN" = "SYSTEMD-GNOME" ]; then
 	systemctl enable NetworkManager && systemctl enable gdm
 fi
 
-if [ "${ORCHID_NAME}" = "KDE" -o "${ORCHID_NAME}" = "XFCE-GE" ]; then
+if [ "${ORCHID_NAME}" = "KDE" -o "${ORCHID_NAME}" = "XFCE-GE" -o "${ORCHID_NAME}" = "MATE" -o "${ORCHID_NAME}" = "MATE-GAMING" ]; then
 	# Lock session password
 	echo "${COLOR_GREEN}*${COLOR_RESET} Activation de pam :"
 	emerge -q pam
@@ -208,33 +208,34 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Ajout des CPU_FLAGS_X86 personnalisés au ma
 echo "$(cpuid2cpuflags | sed 's/: /="/')\"" >> /etc/portage/make.conf
 # Remove LINGUAS if any to make.conf
 sed -i /LINGUAS=/d /etc/portage/make.conf
+# set langage if not french, which is default in our Gentoo's stage 4
 if [ "$LANGUAGE" = "English" ]; then
-sed -i /L10N=/d /etc/portage/make.conf
-echo "L10N=\"en\"" >> /etc/portage/make.conf
-echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-eselect locale set "en_US.UTF-8"
-emerge -vDN @world
-sed -i /keymap=/d /etc/conf.d/keymaps
-echo "keymap=\"us\"" >> /etc/conf.d/keymaps
+	sed -i /L10N=/d /etc/portage/make.conf
+	echo "L10N=\"en\"" >> /etc/portage/make.conf
+	echo "en_US.UTF-8 UTF-8" >> /etc/locale.gen
+	locale-gen
+	eselect locale set "en_US.UTF-8"
+	emerge -vDN @world
+	sed -i /keymap=/d /etc/conf.d/keymaps
+	echo "keymap=\"us\"" >> /etc/conf.d/keymaps
 elif [ "$LANGUAGE" = "Romana" ]; then
- sed -i /L10N=/d /etc/portage/make.conf
-echo "L10N=\"ro\"" >> /etc/portage/make.conf
-echo "ro_RO.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-eselect locale set "ro_RO.UTF-8"
-emerge -vDN @world
-sed -i /keymap=/d /etc/conf.d/keymaps
-echo "keymap=\"ro\"" >> /etc/conf.d/keymaps
+	sed -i /L10N=/d /etc/portage/make.conf
+	echo "L10N=\"ro\"" >> /etc/portage/make.conf
+	echo "ro_RO.UTF-8 UTF-8" >> /etc/locale.gen
+	locale-gen
+	eselect locale set "ro_RO.UTF-8"
+	emerge -vDN @world
+	sed -i /keymap=/d /etc/conf.d/keymaps
+	echo "keymap=\"ro\"" >> /etc/conf.d/keymaps
 elif [ "$LANGUAGE" = "German" ]; then
- sed -i /L10N=/d /etc/portage/make.conf
-echo "L10N=\"de\"" >> /etc/portage/make.conf
-echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
-locale-gen
-eselect locale set "de_DE.UTF-8"
-emerge -vDN @world
-sed -i /keymap=/d /etc/conf.d/keymaps
-echo "keymap=\"de\"" >> /etc/conf.d/keymaps
+	sed -i /L10N=/d /etc/portage/make.conf
+	echo "L10N=\"de\"" >> /etc/portage/make.conf
+	echo "de_DE.UTF-8 UTF-8" >> /etc/locale.gen
+	locale-gen
+	eselect locale set "de_DE.UTF-8"
+	emerge -vDN @world
+	sed -i /keymap=/d /etc/conf.d/keymaps
+	echo "keymap=\"de\"" >> /etc/conf.d/keymaps
 fi
 # Remove nvidia driver if not requested by user:
 if  [[ ! $(grep "nvidia" /etc/portage/make.conf) ]]; then
