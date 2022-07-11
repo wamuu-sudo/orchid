@@ -157,6 +157,7 @@ elif [ "$ROM" = "BIOS" ]; then
   # Installation de GRUB pour BIOS
   grub-install "${CHOOSEN_DISK}"
 fi
+emerge --quiet os-prober
 grub-mkconfig -o /boot/grub/grub.cfg
 
 #-----------------------------------------------------------------------------------
