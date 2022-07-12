@@ -1292,7 +1292,8 @@ mount --rbind /dev /mnt/orchid/dev
 mount --rbind /sys /mnt/orchid/sys
 mount --bind /run /mnt/orchid/run
 # Téléchargement et extraction des scripts d'install pour le chroot
-wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
+# FIXME: mate -> main
+wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/mate/install/chroot-ops/install-chroot.tar.xz" --output-document=install-chroot.tar.xz
 tar -xvf "install-chroot.tar.xz" -C /mnt/orchid
 # On rend les scripts exécutables
 chmod +x /mnt/orchid/postinstall-in-chroot.sh && chmod +x /mnt/orchid/DWM-config.sh && chmod +x /mnt/orchid/GNOME-config.sh && chmod +x /mnt/orchid/XFCE-config.sh && chmod +x /mnt/orchid/MATE-config.sh
@@ -1337,7 +1338,7 @@ fi
 
 rm -f /mnt/orchid/*.tar.bz2 && rm -f /mnt/orchid/*.tar.xz && rm -f /mnt/orchid/postinstall-in-chroot.sh
 rm -f /mnt/orchid/DWM-config.sh && rm -f /mnt/orchid/GNOME-config.sh && rm -f /mnt/orchid/XFCE-config.sh && rm -f /mnt/orchid/MATE-config.sh
-rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png && rm -f /mnt/orchid/xfce4-desktop.xml
+rm -f /mnt/orchid/orchid-backgrounds.xml && rm -f /mnt/orchid/orchid-logo.png && rm -f /mnt/orchid/xfce4-desktop.xml && rm -f /mnt/orchid/mate-orchid.xml
 cd /
 
 umount -R /mnt/orchid

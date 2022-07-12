@@ -25,8 +25,11 @@ echo "${COLOR_GREEN}*${COLOR_RESET} Configuration de MATE."
 # Set background image for Lightdm-gtk-greeter
 cp -f /usr/share/orchid/wallpapers/orchid_nw_01.jpg /usr/share/lightdm/backgrounds/
 sed -i 's/gentoo-bg_65.jpg/orchid_nw_01.jpg/g' /etc/lightdm/lightdm-gtk-greeter.conf
-# Add wallpapers to Xfce. Simply put them in this folder.
-#cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/xfce/
+# Add wallpapers to MATE.
+mkdir -p /usr/share/backgrounds/orchid
+cp -f /usr/share/orchid/wallpapers/*.{jpg,png} /usr/share/backgrounds/orchid/
+cp -f /mate-orchid.xml /usr/share/mate-background-properties/
 # Set default wallpaper for any new user
-#cp -f /xfce4-desktop.xml /etc/xdg/xfce4/xfconf/xfce-perchannel-xml/ # This is a seed for Xfce in which it will pull our default wallpaper
+sed -i 's#/usr/share/backgrounds/mate/desktop/Stripes.png#/usr/share/backgrounds/orchid/orchid_nw_01.jpg#g' /usr/share/glib-2.0/schemas/org.mate.background.gschema.xml
+glib-compile-schemas /usr/share/glib-2.0/schemas/
 
