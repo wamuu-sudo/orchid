@@ -638,10 +638,11 @@ select_disk_to_install()
 
 list_all_partitions()
 {
-	PARTITIONS=($(lsblk -p -l -n -o NAME))
-	SIZES=($(lsblk -p -l -n -o SIZE))
+	PARTITIONS=($(lsblk -p -l -n -o NAME,TYPE | awk '{if ($2 =="part") print $1}'))
+	SIZES=($(lsblk -p -l -n -o SIZE,TYPE | awk '{if ($2 =="part") print $1}'))
+  FSTYPE=($(lsblk -p -l -n -o TYPE,FSTYPE | awk '{if ($1 =="part") print $2}'))
 	for partition_index in "${!PARTITIONS[@]}"; do
-		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]})";
+		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]}) ${COLOR_GREEN}[${FSTYPE[$partition_index]}]${COLOR_RESET}";
 	done
 
 }
