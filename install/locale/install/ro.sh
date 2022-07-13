@@ -17,6 +17,15 @@ Este posibil să redimensionați sistemul din mers.
 Ext4 este robust datorită înregistrării operațiunilor,
 minimizează fragmentarea datelor și este testat pe scară largă.
 "
+
+STR_WHAT_IS_PARTITIONNING="Selectați modul de instalare:"
+STR_MANUAL_PART="1) Partiționare manuală"
+STR_AUTO_PART="2) Partiționare automată"
+STR_PART_NUM="Selectați modul de partiționare cu numărul său, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua:"
+STR_PART_MAN_WARNING="Acest mod este recomandat pentru utilizatorii avansați sau în caz de dualboot. Dacă partițiile dvs. nu sunt deja existente, puteți utiliza instrumente precum ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, dacă este necesar, vă sugerăm cfdisk în pasul următor. Apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua. "
+STR_PART_CFDISK_MAN="Doriți să folosiți cfdisk pentru a partaja? [y/n]"
+
+
 STR_LANGUAGE="Romana"
 STR_CHOOSE_FILESYSTEM="Alegeți tipul de sistem de fișiere pe care doriți să îl instalați:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
@@ -44,6 +53,18 @@ STR_GPU_DRIVERS_CHOICE="Selectați driverele pentru GPU-ul dvs. cu numărul, ${C
 
 STR_DISK_SEL="Alegeți discul pe care doriți să instalați Orchid Linux:
  ${COLOR_YELLOW}! AVERTIZARE ! toate datele de pe discul ales vor fi șterse !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Alegeți ${COLOR_GREEN}disk${COLOR_RESET} pe care doriți să-l modificați cu cfdisk"
+STR_DISK_SEL_MAN_READ="Alegeți ${COLOR_GREEN}discul ${COLOR_RESET} pe care doriți să-l modificați cu numărul acestuia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua:"
+STR_DISK_SEL_MAN_BIOS="Alegeți ${COLOR_GREEN}discul ${COLOR_RESET}complet pe care doriți să îl utilizați (modul BIOS):"
+STR_DISK_SEL_MAN_BIOS_NUM="Alegeți discul corespunzător cu numărul acestuia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_UEFI="Alegeți partiția ${COLOR_RED}UEFI${COLOR_RESET} pe care doriți să o utilizați (UEFI Mode): "
+STR_DISK_SEL_MAN_UEFI_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Doriți să formatați partiția UEFI? (Alegeți nu dacă sunteți într-un caz dualboot) [y/n]"
+STR_DISK_SEL_MAN_ROOT="Alegeți partiția rădăcină ${COLOR_LIGHTBLUE} ${{COLOR_RESET} pe care doriți să o utilizați: "
+STR_DISK_SEL_MAN_ROOT_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_SWAP="Alegeți partiția ${COLOR_GREEN}swap${{COLOR_RESET} pe care doriți să o utilizați: "
+STR_DISK_SEL_MAN_SWAP_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+
 
 # Function select_disk_to_install
 
@@ -124,7 +145,7 @@ Când îl porniți, desktopul va fi exact ca înainte să îl închideți.
 Pentru a face acest lucru, este necesar să copiați toată memoria RAM pe un disc (SWAP).
 În mod implicit, vă sugerăm să nu utilizați hibernation.
 "
-STR_USE_HIBERNATION_QUESTION="Doriți să puteți utiliza hibernarea ${COLOR_WHITE}[d/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_USE_HIBERNATION_QUESTION="Doriți să puteți utiliza hibernarea ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_YOUR_SWAP_SIZE=" ${COLOR_GREEN}*${COLOR_RESET} SWAP-ul tău va avea dimensiunea de ${SWAP_SIZE_GB} GB."
 
@@ -161,7 +182,7 @@ deoarece această operațiune poate fi consumatoare de timp și dacă alegeți s
 instalarea va trebui să așteptați fără a putea face nimic altceva.
 "
 
-STR_UPDATE_QUESTION="Doriți să vă actualizați Orchid Linux în timpul acestei instalări? ${COLOR_WHITE}[d/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_UPDATE_QUESTION="Doriți să vă actualizați Orchid Linux în timpul acestei instalări? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_WHAT_IS_USERNAME="Pe un sistem Linux, precum Orchid Linux, fiecare utilizator trebuie să aibă
 cont care îi identifică și le separă fișierele de altele.
