@@ -681,7 +681,32 @@ automatic_partitionning()
 		exit
 	fi
 }
+cfdisking()
+{
+		echo "$STR_DISK_SEL_MAN "
+PARTITIONS_DISK=($(lsblk -p -d -n -o NAME -e 1,3,7,11,252))
+	SIZES_DISK=($(lsblk -p -d -n -o SIZE -e 1,3,7,11,252))
+	for show_disk_index in "${!PARTITIONS_DISK[@]}"; do
+		echo "$show_disk_index)${PARTITIONS_DISK[$show_disk_index]} (${SIZES_DISK[$show_disk_index]})";
+	done
 
+	read -p "$STR_DISK_SEL_MAN_READ" disk_index
+	if [[ $disk_index =~ ^[0-9]+$ ]]; then
+		if (( $disk_index < $((${#PARTITIONS_DISK[@]})) )); then
+			cfdisk "${PARTITIONS_DISK[$disk_index]}"
+			clear_under_menu
+		else
+
+			clear_under_menu
+			echo "$STR_INVALID_CHOICE"
+			cfdisking
+		fi
+	else
+		clear_under_menu
+		echo "$STR_INVALID_CHOICE"
+		cfdisking
+	fi
+}
 manual_partitionning()
 {
 	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
@@ -689,58 +714,56 @@ manual_partitionning()
 	else
 		ROM="BIOS"
 	fi
-CFDISK_MAN=$(ask_yes_or_no_and_validate "Voulez-vous utilisez cfdisk afin de procéder au partionnement ? [o/n] " o)
-
-if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
-
-cfdisk 
-
-fi
 if [ "$ROM" = "BIOS" ]; then
-	echo "Choisissez le ${COLOR_GREEN}disque ${COLOR_RESET}complet que vous voulez utiliser (BIOS Mode) : "
-	list_all_partitions
-	read -p "Choisissez le disque correspondant avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " disk_index
+	echo "$STR_DISK_SEL_MAN_BIOS "
+PARTITIONS_DISK=($(lsblk -p -d -n -o NAME -e 1,3,7,11,252))
+	SIZES_DISK=($(lsblk -p -d -n -o SIZE -e 1,3,7,11,252))
+	for show_disk_index in "${!PARTITIONS_DISK[@]}"; do
+		echo "$show_disk_index)${PARTITIONS_DISK[$show_disk_index]} (${SIZES_DISK[$show_disk_index]})";
+	done
+
+	read -p "$STR_DISK_SEL_MAN_BIOS_NUM " disk_index
 	if [[ $disk_index =~ ^[0-9]+$ ]]; then
-		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
-			CHOOSEN_DISK="${PARTITIONS[$disk_index]}"
+		if (( $disk_index < $((${#PARTITIONS_DISK[@]})) )); then
+			CHOOSEN_DISK="${PARTITIONS_DISK[$disk_index]}"
 			clear_under_menu
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 	else
 		clear_under_menu
-		echo "Choisissez une option valide. "
+		echo "$STR_DISK_SEL_MAN_BIOS_NUM"
 		manual_partitionning
 	fi
 elif [ "$ROM" = "UEFI" ]; then
-		echo "Choisissez la partition ${COLOR_RED}UEFI${COLOR_RESET} que vous voulez utiliser (UEFI Mode) : "
+		echo "$STR_DISK_SEL_MAN_UEFI "
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " boot_index
+		read -p "$STR_DISK_SEL_MAN_UEFI_NUM" boot_index
 		if [[ $boot_index =~ ^[0-9]+$ ]]; then
 			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
 				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
-				UEFI_ERASE=$(ask_yes_or_no_and_validate "Voulez-vous formatter la partition UEFI ? (Choisissez non si vous êtes dans un cas de dualboot) [o/n] " n)
+				UEFI_ERASE=$(ask_yes_or_no_and_validate "$STR_DISK_SEL_MAN_UEFI_VALIDATE" n)
 				clear_under_menu
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
 fi
-		echo "Choisissez la partition ${COLOR_LIGHTBLUE}racine${COLOR_RESET} que vous voulez utiliser : "
+		echo "$STR_DISK_SEL_MAN_ROOT"
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " root_index
+		read -p "$STR_DISK_SEL_MAN_ROOT_NUM " root_index
 		if [[ $root_index =~ ^[0-9]+$ ]]; then
 			if (( $root_index < $((${#PARTITIONS[@]})) )); then
 				ROOT_PARTITION="${PARTITIONS[$root_index]}"
@@ -748,19 +771,19 @@ fi
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
-		echo "Choisissez la partition ${COLOR_GREEN}swap${COLOR_RESET} que vous voulez utiliser : "
+		echo "$STR_DISK_SEL_MAN_SWAP"
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " swap_index
+		read -p "$STR_DISK_SEL_MAN_SWAP_NUM" swap_index
 		if [[ $swap_index =~ ^[0-9]+$ ]]; then
 			if (( $swap_index < $((${#PARTITIONS[@]})) )); then
 				SWAP_PARTITION="${PARTITIONS[$swap_index]}"
@@ -768,13 +791,13 @@ fi
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
@@ -1017,16 +1040,22 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
 ask_partitionning_mode(){
-	echo_center "Sélectionnez le mode d'installation : "
-echo "1) Partitionnement manuel"
-echo "2) Partitionnement automatique"
-read -p "Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " partitionning_mode
+	echo_center "$STR_WHAT_IS_PARTITIONNING"
+echo "$STR_MANUAL_PART"
+echo "$STR_AUTO_PART"
+read -p "$STR_PART_NUM" partitionning_mode
 
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
-	echo "Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. Pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer. "
+	echo "$STR_PART_MAN_WARNING"
 	read
-	manual_partitionning
+CFDISK_MAN=$(ask_yes_or_no_and_validate "$STR_PART_CFDISK_MAN" o)
+
+if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
+
+cfdisking
+fi
+manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
 	clear_under_menu
 	automatic_partitionning
@@ -1046,7 +1075,8 @@ ask_partitionning_mode
 	UI_PAGE=5
 	;;
 	5)
-	WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
+	if [ $partitionning_mode = "2" ]; then
+WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 
 	echo_center "$WHAT_IS_HIBERNATION"
 	HIBERNATION=$(ask_yes_or_no_and_validate "$STR_USE_HIBERNATION_QUESTION" n)
@@ -1066,6 +1096,9 @@ ask_partitionning_mode
 	echo " ${COLOR_GREEN}*${COLOR_RESET} $STR_HIBERNATION_SWAP ${SWAP_SIZE_GB} GB."
 	read -p "$STR_CONTINUE"
 	#-----------------------------------------------------------------------------------
+	else
+		HIBERNATION="n"
+	fi
 	UI_PAGE=6
 	;;
 	6)

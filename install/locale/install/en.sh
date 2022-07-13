@@ -3,7 +3,7 @@
 # Common used strings
 
 STR_INVALID_CHOICE="Invalid choice :"
-
+STR_HIBERNATION_SWAP="Your SWAP will have a size of"
 STR_INSTALLER_STEPS="Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation"
 # Function CLI_filesystem_selector
 
@@ -68,7 +68,7 @@ STR_HIBERNATION_DANGER_3="GB on the disk"
 
 STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of"
 #{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Enter the size of the SWAP partition you want to create (in GB)" # Also in function swap_size_no_hibernation
 
@@ -123,7 +123,7 @@ When you turn it on, your desktop will be exactly as it was before you shut it d
 To do this, it is necessary to copy all the RAM to a disk (SWAP).
 By default, we suggest that you do not use hibernation.
 "
-STR_USE_HIBERNATION_QUESTION="Do you want to be able to use hibernation ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_USE_HIBERNATION_QUESTION="Do you want to be able to use hibernation ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_YOUR_SWAP_SIZE=" ${COLOR_GREEN}*${COLOR_RESET} Your SWAP will have a size of ${SWAP_SIZE_GB} GB."
 
@@ -142,14 +142,14 @@ that make heavy use of parallelism. It is especially useful if you use your comp
 if you use your computer for gaming.
 It requires a small modification of a security parameter
 (the significant increase of the number of file descriptors per process).
-By default, we suggest you enable it: ${COLOR_GREEN}o${COLOR_RESET}.
+By default, we suggest you enable it: ${COLOR_GREEN}y${COLOR_RESET}.
 "
 
 STR_ESYNC_GAMING="For Gaming editions, Orchid Linux automatically enables esync.
 "
 
 
-STR_ESYNC_CONFIGURE="Do you want to configure your installation with esync? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET}"
+STR_ESYNC_CONFIGURE="Do you want to configure your installation with esync? ${COLOR_WHITE}[${COLOR_GREEN}y${COLOR_WHITE}/n]${COLOR_RESET}"
 
 STR_WHAT_IS_UPDATE="Updating your computer is an operation that consists of verifying
 that the software on your computer is using the latest version available.
@@ -160,7 +160,7 @@ because this operation can be time consuming and if you choose to do it during t
 installation you will have to wait without being able to do anything else.
 "
 
-STR_UPDATE_QUESTION="Do you want to upgrade your Orchid Linux during this installation? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_UPDATE_QUESTION="Do you want to upgrade your Orchid Linux during this installation? ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_WHAT_IS_USERNAME="On a Linux system, like Orchid Linux, each user must have
 account that identifies them and separates their files from others.

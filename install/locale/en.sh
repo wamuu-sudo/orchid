@@ -15,6 +15,13 @@ It is possible to resize the system on the fly.
 Ext4 is robust thanks to operation logging,
 minimizes data fragmentation and is widely tested.
 "
+STR_WHAT_IS_PARTITIONNING="Select the installation mode:"
+STR_MANUAL_PART="1) Manual partitioning"
+STR_AUTO_PART="2) Automatic partitioning"
+STR_PART_NUM="Select the partitioning mode with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_PART_MAN_WARNING="This mode is recommended for advanced users, or in case of dualboot. If your partitions are not already existing, you can use tools like ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, if needed, we suggest cfdisk in the next step. Press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue. "
+STR_PART_CFDISK_MAN="Do you want to use cfdisk in order to proceed with partitioning? [y/n]"
+
 STR_LANGUAGE="English"
 STR_CHOOSE_FILESYSTEM="Choose the type of file system you want to install:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
@@ -42,6 +49,18 @@ STR_GPU_DRIVERS_CHOICE="Select the drivers for your GPU with their number, ${COL
 
 STR_DISK_SEL="Choose the disk on which you want to install Orchid Linux :
  ${COLOR_YELLOW}! WARNING ! all data on the chosen disk will be erased !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with cfdisk"
+STR_DISK_SEL_MAN_READ="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_DISK_SEL_MAN_BIOS="Choose the ${COLOR_GREEN}complete ${COLOR_RESET}disk you want to use (BIOS Mode):"
+STR_DISK_SEL_MAN_BIOS_NUM="Choose the corresponding disk with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI="Choose the ${COLOR_RED}UEFI${COLOR_RESET} partition you want to use (UEFI Mode): "
+STR_DISK_SEL_MAN_UEFI_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Do you want to format the UEFI partition? (Choose no if you are in a dualboot case) [y/n]"
+STR_DISK_SEL_MAN_ROOT="Choose the ${COLOR_LIGHTBLUE} root${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_ROOT_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_SWAP="Choose the ${COLOR_GREEN}swap${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_SWAP_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+
 
 # Function select_disk_to_install
 
