@@ -904,7 +904,36 @@ if ! (( ${RAM_SIZE_GB} + ${SWAP_SIZE_GB} >= (${PROCESSORS} * 2)  + 2 )); then # 
 	(( SWAP_SIZE_GB=(${PROCESSORS} * 2 ) - ${RAM_SIZE_GB} + 2 )) # we add 2GB for margin
 fi
 }
+swap_size_hibernation_man()
+{
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*2 )) 	                                        # 2 fois la taille de la RAM
 
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		                                    # 1.5 (3/2) fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
+	fi
+set_totalmemory_against_processors
+echo "$SWAP_SIZE_GB"
+}
+
+
+swap_size_no_hibernation_man()
+{
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		                                        # 1 fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+	fi
+set_totalmemory_against_processors
+echo "$SWAP_SIZE_GB"
+}
 swap_size_hibernation()
 {
 	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
@@ -1061,6 +1090,16 @@ echo "$STR_MANUAL_PART"
 echo "$STR_AUTO_PART"
 read -p "$STR_PART_NUM" partitionning_mode
 	PROCESSORS=$(grep -c processor /proc/cpuinfo)
+if [ "$language" = "1" ]; then
+		source locale/install/fr.sh
+	elif [ "$language" = "2" ]; then
+		source locale/install/en.sh
+	elif [ "$language" = "3" ]; then
+		source locale/install/ro.sh
+	elif [ "$language" = "4" ]; then
+		source locale/install/de.sh
+	else
+	fi
 
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu

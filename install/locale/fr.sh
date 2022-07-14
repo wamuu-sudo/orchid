@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
+
 
 # Common used strings
 
@@ -21,12 +31,11 @@ STR_MANUAL_PART="1) Partitionnement manuel"
 STR_AUTO_PART="2) Partitionnement automatique"
 STR_PART_NUM="Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer : "
 STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. 
-Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${PROCESSORS} ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante.
+Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante.
 Pour qu'Orchid Linux fonctionne il vous faut choisir :
-* le label gpt.
-Puis,
-* une partition (test BIOS||UEFI), de type (test BIOS = \"BIOS boot\"||UEFI = \"EFI System\" avec une taille recommandée de (test BIOS = 8Mo||UEFI = 512 Mo),
-* une partition swap de type \"Linux swap\", nous recommandons une taille de (appel à la routine  swap_size_no_hibernation) Go. Si vous souhaitez utiliser l'hibernation nous recommandons (appel à la routine swap_size_hibernation) Go,
+* Le label GPT
+* une partition $ROM, de type $ROM_PARTITION avec une taille recommandée de $ROM_SIZE
+* une partition swap de type \"Linux swap\", nous recommandons une taille de $(swap_size_no_hibernation_man) Go. Si vous souhaitez utiliser l'hibernation nous recommandons $(swap_size_hibernation_man) Go,
 * une partition racine pour Orchid Linux d'au moins 20 Go, de type \"Linux filesystem\"
 
 Une fois votre schéma de partition réalisé, n'oubliez pas de l'écrire sur le disque avec l'option [Write].
