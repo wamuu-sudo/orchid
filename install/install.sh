@@ -1098,7 +1098,6 @@ if [ "$language" = "1" ]; then
 		source locale/install/ro.sh
 	elif [ "$language" = "4" ]; then
 		source locale/install/de.sh
-	else
 	fi
 
 if [ $partitionning_mode = "1" ]; then
