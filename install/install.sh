@@ -1099,7 +1099,6 @@ if [ "$language" = "1" ]; then
 	elif [ "$language" = "4" ]; then
 		source locale/install/de.sh
 	fi
-
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
 	echo "$STR_PART_MAN_WARNING"
