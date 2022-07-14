@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
 
 # Common used strings
 

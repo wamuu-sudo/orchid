@@ -35,7 +35,7 @@ Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils
 Pour qu'Orchid Linux fonctionne il vous faut choisir :
 * Le label ${COLOR_RED}GPT${COLOR_RESET}
 * une partition ${COLOR_RED}$ROM${COLOR_RESET}, de type ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} avec une taille recommandée de ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
-* une partition ${COLOR_RED}swap${COLOR_RESET} de type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, nous recommandons une taille de ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Si vous souhaitez utiliser l'hibernation nous recommandons ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* une partition ${COLOR_RED}swap${COLOR_RESET} de type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, nous recommandons une taille d'au moins ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Si vous souhaitez utiliser l'hibernation nous recommandons au moins ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
 * une partition ${COLOR_RED}racine${COLOR_RESET} pour Orchid Linux d'au moins ${COLOR_RED}20 Go${COLOR_RESET}, de type ${COLOR_RED}\"Linux filesystem\"${COLOR_RESET}
 
 Une fois votre schéma de partition réalisé, n'oubliez pas de l'écrire sur le disque avec l'option ${COLOR_WHITE}[Write]${COLOR_RESET}.
