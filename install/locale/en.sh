@@ -28,7 +28,20 @@ STR_WHAT_IS_PARTITIONNING="Select the installation mode:"
 STR_MANUAL_PART="1) Manual partitioning"
 STR_AUTO_PART="2) Automatic partitioning"
 STR_PART_NUM="Select the partitioning mode with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
-STR_PART_MAN_WARNING="This mode is recommended for advanced users, or in case of dualboot. If your partitions are not already existing, you can use tools like ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, if needed, we suggest cfdisk in the next step. Press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue. "
+STR_PART_MAN_WARNING="This mode is recommended for advanced users, or in case of dualboot.
+If your partitions are not already existing, you can use tools like ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, if needed, we suggest cfdisk in the next step.
+For Orchid Linux to work you need to choose :
+* the label ${COLOR_RED}GPT${COLOR_RESET}
+* a ${COLOR_RED}$ROM${COLOR_RESET} partition, of type ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} with a recommended size of ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* a ${COLOR_RED}swap${COLOR_RESET} partition of type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, we recommend a size of at least ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. If you want to use hibernation we recommend at least ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* a ${COLOR_RED}root partition${COLOR_RESET} for Orchid Linux of at least ${COLOR_RED}20 GB${COLOR_RESET}, of type ${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}
+
+Once your partition scheme is done, don't forget to write it to the disk with the ${COLOR_WHITE}[Write]${COLOR_RESET} option.
+
+Please note the names of the ${COLOR_WHITE}\"Device\"${COLOR_RESET}, because you will be asked for them later.
+
+Press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue."
+
 STR_PART_CFDISK_MAN="Do you want to use cfdisk in order to proceed with partitioning? [y/n]"
 
 STR_LANGUAGE="English"

@@ -31,7 +31,19 @@ STR_WHAT_IS_PARTITIONNING="Selectați modul de instalare:"
 STR_MANUAL_PART="1) Partiționare manuală"
 STR_AUTO_PART="2) Partiționare automată"
 STR_PART_NUM="Selectați modul de partiționare cu numărul său, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua:"
-STR_PART_MAN_WARNING="Acest mod este recomandat pentru utilizatorii avansați sau în caz de dualboot. Dacă partițiile dvs. nu sunt deja existente, puteți utiliza instrumente precum ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, dacă este necesar, vă sugerăm cfdisk în pasul următor. Apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua. "
+STR_PART_MAN_WARNING="Acest mod este recomandat pentru utilizatorii avansați sau în caz de dualboot.
+Dacă partițiile dvs. nu sunt deja existente, puteți utiliza instrumente precum ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, dacă este necesar, vă sugerăm cfdisk în pasul următor.
+Pentru ca Orchid Linux să funcționeze trebuie să alegeți :
+* Eticheta ${COLOR_RED}GPT${COLOR_RESET}
+* o partiție ${COLOR_RED}$ROM${COLOR_RESET}, de tip ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} cu o dimensiune recomandată de ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* o partiție ${COLOR_RED}swap${COLOR_RESET} de tip ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, se recomandă o dimensiune de cel puțin ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Dacă doriți să utilizați hibernarea, vă recomandăm cel puțin ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* o partiție ${COLOR_RED} rădăcină ${COLOR_RESET} pentru Orchid Linux de cel puțin ${COLOR_RED}20 GB${COLOR_RESET}, de tip ${COLOR_RED} \"Sistem de fișiere Linux\"${COLOR_RED} "Linux filesystem"${COLOR_RESET}
+
+După ce ați creat schema de partiții, nu uitați să o scrieți pe disc cu opțiunea ${COLOR_WHITE}[Write]${COLOR_RESET}.
+
+Rețineți numele ${COLOR_WHITE}\"Device\"${COLOR_RESET}, deoarece vă vor fi solicitate mai târziu.
+
+Apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua. "
 STR_PART_CFDISK_MAN="Doriți să folosiți cfdisk pentru a partaja? [y/n]"
 
 

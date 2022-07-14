@@ -28,7 +28,20 @@ STR_WHAT_IS_PARTITIONNING="Wählen Sie den Installationsmodus:"
 STR_MANUAL_PART="1) Manuelle Partitionierung"
 STR_AUTO_PART="2) Automatische Partitionierung"
 STR_PART_NUM="Wählen Sie den Partitionierungsmodus mit seiner Ziffer aus und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
-STR_PART_MAN_WARNING="Dieser Modus wird für fortgeschrittene Benutzer oder im Falle eines Dualboots empfohlen. Wenn Ihre Partitionen nicht bereits vorhanden sind, können Sie Werkzeuge wie ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET} verwenden, bei Bedarf schlagen wir Ihnen cfdisk im nächsten Schritt vor. Drücken Sie ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren. "
+STR_PART_MAN_WARNING="Dieser Modus wird für fortgeschrittene Benutzer oder im Falle eines Dualboots empfohlen.
+Wenn Ihre Partitionen nicht bereits vorhanden sind, können Sie Werkzeuge wie ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET} verwenden, bei Bedarf schlagen wir Ihnen cfdisk im nächsten Schritt vor.
+Damit Orchid Linux funktioniert, müssen Sie wählen:
+* Das Label ${COLOR_RED}GPT${COLOR_RESET}
+* eine Partition ${COLOR_RED}$ROM${COLOR_RESET}, vom Typ ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} mit einer empfohlenen Größe von ${COLOR_RED}$ROM_SIZE${COLOR_RESET}.
+* eine ${COLOR_RED}swap${COLOR_RESET}-Partition vom Typ ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, empfehlen wir eine Größe von mindestens ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Wenn Sie den Winterschlaf nutzen möchten, empfehlen wir mindestens ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* eine ${COLOR_RED} Root-Partition ${COLOR_RESET} für Orchid Linux von mindestens ${COLOR_RED} 20 GB${COLOR_RESET}, vom Typ ${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}.
+
+Sobald Sie Ihr Partitionsschema erstellt haben, vergessen Sie nicht, es mit der Option ${COLOR_WHITE}[Write]${COLOR_RESET} auf die Festplatte zu schreiben.
+
+Bitte notieren Sie sich die Namen der ${COLOR_WHITE} \"Device\"${COLOR_RESET}, da Sie später danach gefragt werden.
+
+Drücken Sie ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren. "
+
 STR_PART_CFDISK_MAN="Möchten Sie cfdisk verwenden, um die Partitionierung durchzuführen? [o/n] "
 
 

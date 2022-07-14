@@ -244,17 +244,17 @@ lang-selection() {
 		loadkeys fr
 		clear_under_menu
 	elif [ "$language" = "2" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/en.sh" -q -O locale/install/en.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/emprove/locale/en.sh" -q -O locale/install/en.sh
 		source locale/install/en.sh
 		loadkeys us
 		clear_under_menu
 	elif [ "$language" = "3" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/ro.sh" -q -O locale/install/ro.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/emprove/locale/ro.sh" -q -O locale/install/ro.sh
 		source locale/install/ro.sh
 		loadkeys ro
 		clear_under_menu
 	elif [ "$language" = "4" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/de.sh" -q -O locale/install/de.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/emprove/locale/de.sh" -q -O locale/install/de.sh
 		source locale/install/de.sh
 		loadkeys de
 		clear_under_menu
