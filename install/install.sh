@@ -784,21 +784,7 @@ fi
 
 		echo "$STR_DISK_SEL_MAN_SWAP"
 		list_all_partitions
-PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
-if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		                                        # 1 fois la taille de la RAM
-
-	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
-
-	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
-		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
-		set_totalmemory_against_processors
-	fi
-		set_totalmemory_against_processors
-
-echo "$SWAP_SIZE_GB"
 		read -p "$STR_DISK_SEL_MAN_SWAP_NUM" swap_index
 		if [[ $swap_index =~ ^[0-9]+$ ]]; then
 			if (( $swap_index < $((${#PARTITIONS[@]})) )); then
@@ -817,7 +803,10 @@ echo "$SWAP_SIZE_GB"
 			manual_partitionning
 		fi
 
-
+echo "EFI Partition : $BOOT_PARTITION_UEFI"
+echo "SWAP : $SWAP_PARTITION"
+echo "Root partition : $ROOT_PARTITION"
+read
 }
 auto_partitionning_full_disk()
 {
