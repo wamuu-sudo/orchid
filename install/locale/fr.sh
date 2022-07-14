@@ -33,8 +33,8 @@ STR_PART_NUM="Sélectionnez le mode de partionnement avec son chiffre, puis pres
 STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. 
 Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante.
 Pour qu'Orchid Linux fonctionne il vous faut choisir :
-* Le label GPT
-* une partition $ROM, de type $ROM_PARTITION avec une taille recommandée de $ROM_SIZE
+* Le label ${COLOR_RED}GPT${COLOR_RESET}
+* une partition ${COLOR_RED} $ROM ${COLOR_RESET}, de type ${COLOR_RED} $ROM_PARTITION ${COLOR_RESET} avec une taille recommandée de ${COLOR_RED} $ROM_SIZE ${COLOR_RESET}
 * une partition swap de type \"Linux swap\", nous recommandons une taille de $(swap_size_no_hibernation_man) Go. Si vous souhaitez utiliser l'hibernation nous recommandons $(swap_size_hibernation_man) Go,
 * une partition racine pour Orchid Linux d'au moins 20 Go, de type \"Linux filesystem\"
 
