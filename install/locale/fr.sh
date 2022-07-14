@@ -34,13 +34,13 @@ STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou
 Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante.
 Pour qu'Orchid Linux fonctionne il vous faut choisir :
 * Le label ${COLOR_RED}GPT${COLOR_RESET}
-* une partition ${COLOR_RED} $ROM ${COLOR_RESET}, de type ${COLOR_RED} $ROM_PARTITION ${COLOR_RESET} avec une taille recommandée de ${COLOR_RED} $ROM_SIZE ${COLOR_RESET}
-* une partition swap de type \"Linux swap\", nous recommandons une taille de $(swap_size_no_hibernation_man) Go. Si vous souhaitez utiliser l'hibernation nous recommandons $(swap_size_hibernation_man) Go,
-* une partition racine pour Orchid Linux d'au moins 20 Go, de type \"Linux filesystem\"
+* une partition ${COLOR_RED}$ROM${COLOR_RESET}, de type \"${COLOR_RED}$ROM_PARTITION${COLOR_RESET}\" avec une taille recommandée de ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* une partition ${COLOR_RED}swap${COLOR_RESET} de type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, nous recommandons une taille de ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Si vous souhaitez utiliser l'hibernation nous recommandons ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* une partition ${COLOR_RED}racine${COLOR_RESET} pour Orchid Linux d'au moins ${COLOR_RED}20 Go${COLOR_RESET}, de type ${COLOR_RED}\"Linux filesystem\"${COLOR_RESET}
 
-Une fois votre schéma de partition réalisé, n'oubliez pas de l'écrire sur le disque avec l'option [Write].
+Une fois votre schéma de partition réalisé, n'oubliez pas de l'écrire sur le disque avec l'option ${COLOR_WHITE}[Write]${COLOR_RESET}.
 
-Veuillez noter le nom des \"Device\", car il vous seront demandé par la suite.
+Veuillez noter le nom des ${COLOR_WHITE}\"Device\"${COLOR_RESET}, car ils vous seront demandés par la suite.
 
 Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer. "
 STR_PART_CFDISK_MAN="Voulez-vous utilisez cfdisk afin de procéder au partionnement ? [${COLOR_RESET}o${COLOR_RESET}/n] "
