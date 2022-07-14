@@ -239,7 +239,7 @@ lang-selection() {
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/fr.sh" -q -O locale/install/fr.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/emprove/install/locale/fr.sh" -q -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
 		clear_under_menu
@@ -784,6 +784,21 @@ fi
 
 		echo "$STR_DISK_SEL_MAN_SWAP"
 		list_all_partitions
+PROCESSORS=$(grep -c processor /proc/cpuinfo)
+
+if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		                                        # 1 fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+		set_totalmemory_against_processors
+	fi
+		set_totalmemory_against_processors
+
+echo "$SWAP_SIZE_GB"
 		read -p "$STR_DISK_SEL_MAN_SWAP_NUM" swap_index
 		if [[ $swap_index =~ ^[0-9]+$ ]]; then
 			if (( $swap_index < $((${#PARTITIONS[@]})) )); then

@@ -20,8 +20,10 @@ STR_WHAT_IS_PARTITIONNING="Sélectionnez le mode d'installation :"
 STR_MANUAL_PART="1) Partitionnement manuel"
 STR_AUTO_PART="2) Partitionnement automatique"
 STR_PART_NUM="Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer : "
-STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer. "
-STR_PART_CFDISK_MAN="Voulez-vous utilisez cfdisk afin de procéder au partionnement ? [o/n] "
+STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. 
+Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. 
+Pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer. "
+STR_PART_CFDISK_MAN="Voulez-vous utilisez cfdisk afin de procéder au partionnement ? [${COLOR_RESET}o${COLOR_RESET}/n] "
 STR_LANGUAGE="French"
 STR_CHOOSE_FILESYSTEM="Choisissez le type de système de fichiers que vous souhaitez installer : [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 STR_HIBERNATION_SWAP="Votre SWAP aura une taille de "
