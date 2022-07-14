@@ -21,10 +21,9 @@ STR_MANUAL_PART="1) Partitionnement manuel"
 STR_AUTO_PART="2) Partitionnement automatique"
 STR_PART_NUM="Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} pour continuer : "
 STR_PART_MAN_WARNING="Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. 
-Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. 
+Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${PROCESSORS} ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante.
 Pour qu'Orchid Linux fonctionne il vous faut choisir :
 * le label gpt.
-${PROCESSORS}
 Puis,
 * une partition (test BIOS||UEFI), de type (test BIOS = \"BIOS boot\"||UEFI = \"EFI System\" avec une taille recommandée de (test BIOS = 8Mo||UEFI = 512 Mo),
 * une partition swap de type \"Linux swap\", nous recommandons une taille de (appel à la routine  swap_size_no_hibernation) Go. Si vous souhaitez utiliser l'hibernation nous recommandons (appel à la routine swap_size_hibernation) Go,

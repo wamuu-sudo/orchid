@@ -1060,6 +1060,7 @@ ask_partitionning_mode(){
 echo "$STR_MANUAL_PART"
 echo "$STR_AUTO_PART"
 read -p "$STR_PART_NUM" partitionning_mode
+	PROCESSORS=$(grep -c processor /proc/cpuinfo)
 
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
