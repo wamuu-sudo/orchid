@@ -101,24 +101,16 @@ STR_BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Format Btrfs partition."
 STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Format EXT4 partition."
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="We do not recommend using hibernation with your"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="GB of RAM, as it would require a SWAP partition of"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="GB on the disk"
+STR_HIBERNATION_DANGER="We do not recommend using hibernation with your ${RAM_SIZE_GB}GB of RAM, as it would require a SWAP partition of ${SWAP_SIZE_GB}GB on the disk"
 
-STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of ${SWAP_SIZE_GB}(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Enter the size of the SWAP partition you want to create (in GB)" # Also in function swap_size_no_hibernation
 
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Enter the password for the user:"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
-
+STR_CREATE_PASSWORD="${COLOR_WHITE}Enter the password for the user:(${USERNAME})${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Enter the password for the user:(Root)${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Enter the password again to confirm it :${COLOR_RESET}"
 
 # Function verify_password_concordance
@@ -174,9 +166,7 @@ By default, we suggest you call it ${COLOR_GREEN}orchid${COLOR_RESET}.
 "
 STR_CHOOSE_HOSTNAME="Enter the name of this system (hostname) to identify it on the network [${COLOR_GREEN}orchid${COLOR_RESET}]:"
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Sorry, (${COLOR_WHITE}"
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}) is invalid. Please try again."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Sorry, (${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}) is invalid. Please try again."
 
 STR_WHAT_IS_ESYNC="Esync is a technology created to improve the performance of games
 that make heavy use of parallelism. It is especially useful if you use your computer for gaming.
@@ -212,9 +202,7 @@ administration rights with the command ${COLOR_WHITE}sudo${COLOR_RESET}.
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Name of the account you want to create: ${COLOR_RESET}"
 
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Sorry ${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET} is invalid. Please try again."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Sorry ${COLOR_WHITE}${USERNAME}${COLOR_RESET} is invalid. Please try again."
 
 STR_WHAT_IS_ROOT="You will now choose the password for the root user.
 This particular account has full rights to the computer."
@@ -224,12 +212,8 @@ STR_RESUME_EDITION="Orchid Linux version chosen:"
 STR_RESUME_KEYBOARD="Switch keyboard to ${COLOR_GREEN}(en)${COLOR_RESET}: [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux will install on:"
 STR_RESUME_FS="The chosen file system is:"
-STR_RESUME_HIBERNATION="You will be able to use the ${COLOR_GREEN}hibernation${COLOR_RESET}: memory of"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="CPU cores, SWAP of ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="Your memory has a size of"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="CPU cores, SWAP of ${COLOR_GREEN}"
+STR_RESUME_HIBERNATION="You will be able to use the ${COLOR_GREEN}hibernation${COLOR_RESET}: memory of ${RAM_SIZE_GB}GB,${PROCESSORS}CPU cores, SWAP of ${COLOR_GREEN} ${SWAP_SIZE_GB}GB${COLOR_RESET}"
+STR_RESUME_HIBERNATIONNOT="Your memory has a size of ${RAM_SIZE_GB} GB, ${PROCESSORS}CPU cores, SWAP of ${COLOR_GREEN} ${SWAP_SIZE_GB} GB ${COLOR_RESET}"
 
 
 STR_RESUME_GPU="The following graphics drivers will be installed:"

@@ -100,22 +100,15 @@ STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatage de la partition EXT4."
 
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="Nous ne recommandons pas l'utilisation de l'hibernation avec votre"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="Go de RAM, car cela nécessiterait une partition SWAP de "
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="Go sur le disque".
+STR_HIBERNATION_DANGER="Nous ne recommandons pas l'utilisation de l'hibernation avec votre ${RAM_SIZE_GB} Go de RAM, car cela nécessiterait une partition SWAP de ${SWAP_SIZE_GB} Go sur le disque".
 
-STR_HIBERNATION_CONFIRM="Voulez-vous créer une partition SWAP de"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(Sinon, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Voulez-vous créer une partition SWAP de ${SWAP_SIZE_GB} (Sinon, la partition SWAP sera beaucoup plus petite et vous ne pourrez pas utiliser l'hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Entrez la taille de la partition SWAP que vous voulez créer (en Go)". # Egalement dans la fonction swap_size_no_hibernation
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Entrez le mot de passe pour :"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(le mot de passe vas pas s'afficher)${COLOR_RESET}"
+STR_CREATE_PASSWORD="${COLOR_WHITE}Entrez le mot de passe pour :($USERNAME) ${COLOR_YELLOW}(le mot de passe vas pas s'afficher)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Entrez le mot de passe pour :(Root) ${COLOR_YELLOW}(le mot de passe vas pas s'afficher)${COLOR_RESET}"
 
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Ressaisissez le mot de passe pour le confirmer :${COLOR_RESET}"
 
@@ -172,9 +165,7 @@ Par défaut, nous vous proposons de l'appeler ${COLOR_GREEN}orchid${COLOR_RESET}
 "
 STR_CHOOSE_HOSTNAME="Entrez le nom de ce système (hostname) pour l'identifier sur le réseau [${COLOR_GREEN}orchid${COLOR_RESET}] : "
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}"
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}\" est invalide. Veuillez recommencer."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE} ${HOSTNAME} ${COLOR_RESET}\" est invalide. Veuillez recommencer."
 
 STR_WHAT_IS_ESYNC="Esync est une technologie créée pour améliorer les performances de jeux
 qui utilisent fortement le parallélisme. Elle est particulièrement utile
@@ -208,9 +199,7 @@ les droits d'administration grâce à la commande ${COLOR_WHITE}sudo${COLOR_RESE
 
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Nom du compte que vous voulez créer : ${COLOR_RESET}"
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET}\" est invalide. Veuillez recommencer."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Désolé, \"${COLOR_WHITE} ${USERNAME} ${COLOR_RESET}\" est invalide. Veuillez recommencer."
 
 STR_WHAT_IS_ROOT="Vous allez maintenant choisir le mot de passe pour le superutilisateur (root).
 Ce compte particulier a tous les droits sur l'ordinateur."
@@ -220,12 +209,8 @@ STR_RESUME_EDITION="Version d'Orchid Linux choisie :"
 STR_RESUME_KEYBOARD="Passage du clavier en ${COLOR_GREEN}(fr)${COLOR_RESET} : [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux s'installera sur :"
 STR_RESUME_FS="Le système de fichiers choisi est :"
-STR_RESUME_HIBERNATION="Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="coeurs de processeur, SWAP de ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="Votre mémoire a une taille de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="coeurs de processeur, SWAP de ${COLOR_GREEN}"
+STR_RESUME_HIBERNATION="Vous pourrez utiliser l'${COLOR_GREEN}hibernation${COLOR_RESET} : mémoire de ${RAM_SIZE_GB} GB, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN} ${SWAP_SIZE_GB} GB${COLOR_RESET}."
+STR_RESUME_HIBERNATIONNOT="Votre mémoire a une taille de ${RAM_SIZE_GB} GB, ${PROCESSORS} coeurs de processeur, SWAP de ${COLOR_GREEN} ${SWAP_SIZE_GB} GB${COLOR_RESET}."
 
 STR_RESUME_GPU="Les pilotes graphiques suivants vont être installés :"
 STR_RESUME_HOSTNAME="Sur le réseau, ce système aura pour nom :"

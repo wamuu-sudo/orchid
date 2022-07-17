@@ -228,6 +228,18 @@ BANNER="  ___           _     _     _   _     _
 
 # Ask for the language and download the correct lang package
 #-----------------------------------------------------------------------------------
+sourcelang()
+{
+	if [ "$language" = "1" ]; then
+		source locale/install/fr.sh
+	elif [ "$language" = "2" ]; then
+		source locale/install/en.sh
+	elif [ "$language" = "3" ]; then
+		source locale/install/ro.sh
+	elif [ "$language" = "4" ]; then
+		source locale/install/de.sh
+	fi
+}
 lang-selection() {
 	mkdir -p locale/install
 	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
@@ -239,22 +251,22 @@ lang-selection() {
 	echo ""
 	read -p "Selectionnez votre langue et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET}/ Select your language and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} : " language
 	if [ "$language" = "1" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/emprove/install/locale/fr.sh" -q -O locale/install/fr.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/fr.sh" -q -O locale/install/fr.sh
 		source locale/install/fr.sh
 		loadkeys fr
 		clear_under_menu
 	elif [ "$language" = "2" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/emprove/install/locale/en.sh" -q -O locale/install/en.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/en.sh" -q -O locale/install/en.sh
 		source locale/install/en.sh
 		loadkeys us
 		clear_under_menu
 	elif [ "$language" = "3" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/emprove/install/locale/ro.sh" -q -O locale/install/ro.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/ro.sh" -q -O locale/install/ro.sh
 		source locale/install/ro.sh
 		loadkeys ro
 		clear_under_menu
 	elif [ "$language" = "4" ]; then
-		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/emprove/install/locale/de.sh" -q -O locale/install/de.sh
+		wget "https://raw.githubusercontent.com/wamuu-sudo/orchid/main/install/locale/de.sh" -q -O locale/install/de.sh
 		source locale/install/de.sh
 		loadkeys de
 		clear_under_menu
@@ -934,8 +946,9 @@ swap_size_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		set_totalmemory_against_processors
-		echo "$STR_HIBERNATION_DANGER ${RAM_SIZE_GB} $STR_HIBERNATION_DANGER_2 ${SWAP_SIZE_GB} $STR_HIBERNATION_DANGER_3"
-		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM ${SWAP_SIZE_GB} $STR_HIBERNATION_CONFIRM_2" n)
+		sourcelang
+		echo "$STR_HIBERNATION_DANGER"
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM " n)
 		if [[ "$HIBERNATION_HIGH" = "n" || "$HIBERNATION_HIGH" = "no" || "$HIBERNATION_HIGH" = "non" ]]; then
 			swap_size_no_hibernation
 
@@ -988,7 +1001,8 @@ if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
-	echo "$STR_CREATE_PASSWORD ($USERNAME) $STR_CREATE_PASSWORD_2"
+	sourcelang
+	echo "$STR_CREATE_PASSWORD"
     read -s ATTEMPT1
 	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
@@ -1163,7 +1177,8 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 		HOSTNAME=${HOSTNAME:-orchid}
 		test_if_hostname_is_valid
 		if [ $IS_HOSTNAME_VALID = 0 ]; then
-			echo "$STR_INCORRECT_HOSTNAME ${HOSTNAME} $STR_INCORRECT_HOSTNAME_2"
+			sourcelang
+			echo "$STR_INCORRECT_HOSTNAME"
 		fi
 		done
 	UI_PAGE=8
@@ -1205,7 +1220,8 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 		read -p "$STR_USERNAME_SELECT" USERNAME
 		test_if_username_is_valid
 		if [ $IS_USERNAME_VALID = 0 ]; then
-			echo "$STR_INCORRECT_USERNAME ${USERNAME} $STR_INCORRECT_USERNAME_2"
+			sourcelang
+			echo "$STR_INCORRECT_USERNAME"
 		fi
 	done
 
@@ -1220,7 +1236,7 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 	WHAT_IS_ROOT="$STR_WHAT_IS_ROOT"
 	echo_center "$WHAT_IS_ROOT"
 	echo ""
-	echo "$STR_CREATE_PASSWORD (Root) $STR_CREATE_PASSWORD_2"
+	echo "$STR_CREATE_PASSWORD_ROOT"
     read -s ATTEMPT1
 	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
@@ -1229,16 +1245,22 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 	UI_PAGE=12
 	;;
 	12)
+	sourcelang
 	echo_center "$STR_RESUME_INST"
 	echo "$STR_RESUME_CONNEXION_TEST"
 	echo "$STR_RESUME_EDITION ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "$STR_RESUME_KEYBOARD"
 	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+	echo "Root partition :${ROOT_PARTITION}"
+	echo "Swap partition :${SWAP_PARTITION}"
+	if [ -d /sys/firmware/efi ]; then
+	echo "EFI partition : ${BOOT_PARTITION_UEFI}"
+	fi
 	echo "$STR_RESUME_FS ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [[ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]]; then
-		echo "$STR_RESUME_HIBERNATION ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATION_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
+		echo "$STR_RESUME_HIBERNATION"
 	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then
-		echo "$STR_RESUME_HIBERNATIONNOT ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATIONNOT_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
+		echo "$STR_RESUME_HIBERNATIONNOT"
 	fi
 
 	echo "$STR_RESUME_GPU ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"

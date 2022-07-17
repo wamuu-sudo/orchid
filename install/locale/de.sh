@@ -102,23 +102,17 @@ STR_BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatierung der BTRFS partition.
 STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatierung der EXT4 partition."
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="Wir empfehlen ihnen dagegen Ruhemodus mit ihren"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="GB an RAM, zu verwenden denn es bräuchte eine SWAP partition von"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="GB auf der Festplatte"
+STR_HIBERNATION_DANGER="Wir empfehlen ihnen dagegen Ruhemodus mit ihren ${RAM_SIZE_GB} GB an RAM, zu verwenden denn es bräuchte eine SWAP partition von ${SWAP_SIZE_GB} GB auf der Festplatte"
 
-STR_HIBERNATION_CONFIRM="Wollen sie eine SWAP partition mit der folgenden größe erstellen?"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(falls nicht, wird die SWAP partition viel kleiner und sie werden keinen Ruhemodus verwenden können) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Wollen sie eine SWAP partition mit der folgenden größe erstellen?${SWAP_SIZE_GB} (falls nicht, wird die SWAP partition viel kleiner und sie werden keinen Ruhemodus verwenden können) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Tragen sie die Größe der  SWAP partition ein die sie erstellen wollen (in GB)" # Also in function swap_size_no_hibernation"
 
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Tragen sie das benutzerpasswort ein:"
+STR_CREATE_PASSWORD="${COLOR_WHITE}Tragen sie das benutzerpasswort ein:${USERNAME}${COLOR_YELLOW}(das password wird nicht angezeigt)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Tragen sie das benutzerpasswort ein:(Root)${COLOR_YELLOW}(das password wird nicht angezeigt)${COLOR_RESET}"
 
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(das password wird nicht angezeigt)${COLOR_RESET}"
 
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}geben sie das passwort nochmals ein um es zu bestätigen:${COLOR_RESET}"
 
@@ -176,10 +170,7 @@ Als Standard, empfehlen wir ihnen das sie ihn so bennenen: ${COLOR_GREEN}orchid$
 "
 STR_CHOOSE_HOSTNAME="Geben sie den namen ihres systems ein (hostname) um ihn auf dem netzwerk identifizieren zu können [${COLOR_GREEN}orchid${COLOR_RESET}]:"
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Tut uns leid, (${COLOR_WHITE}"
-
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}) ist ungültig. Bitte versuchen sie es erneut."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Tut uns leid, (${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}) ist ungültig. Bitte versuchen sie es erneut."
 
 STR_WHAT_IS_ESYNC="Esync ist eine Technologie erschaffen die Leistung von Spielen zu verbessern,
 diese macht starken nutzen aus parallelismus. Es ist vorallem nützlich wenn sie ihren Computer für das gaming benutzen.
@@ -214,9 +205,7 @@ administrator rechte mit dem folgenen kommando erhalten: ${COLOR_WHITE}sudo${COL
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Name des the accounts den sie erstellen wollen: ${COLOR_RESET}"
 
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Entschuldigung ${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET} ist ungültig. Bitte versuchen sie es erneut."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Entschuldigung ${COLOR_WHITE}${USERNAME}${COLOR_RESET} ist ungültig. Bitte versuchen sie es erneut."
 
 STR_WHAT_IS_ROOT="Sie werden jetzt das passwort für den root nutzer erstellen.
 Dieser account hat volle rechte über ihren Computer."
@@ -226,13 +215,8 @@ STR_RESUME_EDITION="gewählte Orchid Linux version:"
 STR_RESUME_KEYBOARD="tastatur wechsel zu ${COLOR_GREEN}(en)${COLOR_RESET}: [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux wird  installiert auf:"
 STR_RESUME_FS="Das gewählte Dateisystem ist:"
-STR_RESUME_HIBERNATION="Sie werden zur nutzung folgender ressourcen in der lage sein: ${COLOR_GREEN}hibernation${COLOR_RESET}: arbeitsspeicher von"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="CPU kerne von, SWAP von ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="ihr arbeitsspeicher hat eine größe von"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="CPU kerne, SWAP von ${COLOR_GREEN}"
-
+STR_RESUME_HIBERNATION="Sie werden zur nutzung folgender ressourcen in der lage sein: ${COLOR_GREEN}hibernation${COLOR_RESET}: arbeitsspeicher von ${RAM_SIZE_GB} GB, ${PROCESSORS}CPU kerne von, SWAP von ${COLOR_GREEN}${SWAP_SIZE_GB}GB ${COLOR_RESET}"
+STR_RESUME_HIBERNATIONNOT="ihr arbeitsspeicher hat eine größe von ${RAM_SIZE_GB} GB, ${PROCESSORS} CPU kerne, SWAP von ${COLOR_GREEN} ${SWAP_SIZE_GB} GB${COLOR_RESET}."
 
 STR_RESUME_GPU="Die folgenden grafiktreiber werden installiert:"
 STR_RESUME_HOSTNAME="Auf diesem netzwerk wird das system so bennant:"

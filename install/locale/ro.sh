@@ -104,23 +104,16 @@ STR_BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatați partiția Btrfs."
 STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatați partiția EXT4n."
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="Nu vă recomandăm să folosiți hibernarea cu dvs"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="GB de RAM, deoarece ar necesita o partiție SWAP a"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="GB pe disc"
+STR_HIBERNATION_DANGER="Nu vă recomandăm să folosiți hibernarea cu dvs ${RAM_SIZE_GB} GB de RAM, deoarece ar necesita o partiție SWAP a ${SWAP_SIZE_GB} GB pe disc"
 
-STR_HIBERNATION_CONFIRM="Doriți să creați o partiție SWAP de"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(Dacă nu, partiția SWAP va fi mult mai mică și nu veți putea folosi hibernarea) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Doriți să creați o partiție SWAP de ${SWAP_SIZE_GB} (Dacă nu, partiția SWAP va fi mult mai mică și nu veți putea folosi hibernarea) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Introduceți dimensiunea partiției SWAP pe care doriți să o creați (în GB)" # Also in function swap_size_no_hibernation
 
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Introduceți parola pentru utilizator:"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
+STR_CREATE_PASSWORD="${COLOR_WHITE}Introduceți parola pentru utilizator: (${USERNAME}) ${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Introduceți parola pentru utilizator: (Root) ${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
 
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Introduceți parola din nou pentru a o confirma:${COLOR_RESET}"
 
@@ -176,9 +169,7 @@ pentru a-l identifica în timpul comunicării.
 "
 STR_CHOOSE_HOSTNAME="Introduceți numele acestui sistem (nume de gazdă) pentru a-l identifica în rețea [${COLOR_GREEN}orchid${COLOR_RESET}]:"
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Îmi pare rău, (${COLOR_WHITE}"
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}) este invalid. Vă rugăm să încercați din nou."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Îmi pare rău, (${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}) este invalid. Vă rugăm să încercați din nou."
 
 STR_WHAT_IS_ESYNC="Esync este o tehnologie creată pentru a îmbunătăți performanța jocurilor
 care folosesc intens paralelismul. Este util mai ales dacă folosiți computerul pentru jocuri.
@@ -214,9 +205,7 @@ drepturi de administrare cu comanda ${COLOR_WHITE}sudo${COLOR_RESET}.
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Numele contului pe care doriți să-l creați: ${COLOR_RESET}"
 
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} scuze ${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET} este invalid. Vă rugăm să încercați din nou."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} scuze ${COLOR_WHITE}${USERNAME}${COLOR_RESET} este invalid. Vă rugăm să încercați din nou."
 
 STR_WHAT_IS_ROOT="Acum veți alege parola pentru utilizatorul root.
 Acest cont special are drepturi complete asupra computerului."
@@ -226,13 +215,8 @@ STR_RESUME_EDITION="Versiunea Orchid Linux aleasă:"
 STR_RESUME_KEYBOARD="Comutați tastatura la ${COLOR_GREEN}(ro)${COLOR_RESET}: [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux se va instala pe:"
 STR_RESUME_FS="Sistemul de fișiere ales este:"
-STR_RESUME_HIBERNATION="Veți putea folosi ${COLOR_GREEN}hibernare${COLOR_RESET}: memorie de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="coruri CPU, SWAP de ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="Memoria ta are o dimensiune de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="coruri CPU, SWAP de ${COLOR_GREEN}"
-
+STR_RESUME_HIBERNATION="Veți putea folosi ${COLOR_GREEN}hibernare${COLOR_RESET}: memorie de ${RAM_SIZE_GB} GB, ${PROCESSORS}coruri CPU, SWAP de ${COLOR_GREEN} ${SWAP_SIZE_GB} GB${COLOR_RESET}"
+STR_RESUME_HIBERNATIONNOT="Memoria ta are o dimensiune de ${RAM_SIZE_GB} GB, ${PROCESSORS}coruri CPU, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} GB${COLOR_RESET}"
 
 STR_RESUME_GPU="Vor fi instalate următoarele drivere grafice:"
 STR_RESUME_HOSTNAME="În rețea, acest sistem va fi numit:"
