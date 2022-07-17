@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
 
 # Common used strings
 
@@ -15,6 +24,26 @@ It is possible to resize the system on the fly.
 Ext4 is robust thanks to operation logging,
 minimizes data fragmentation and is widely tested.
 "
+STR_WHAT_IS_PARTITIONNING="Select the installation mode:"
+STR_MANUAL_PART="1) Manual partitioning"
+STR_AUTO_PART="2) Automatic partitioning"
+STR_PART_NUM="Select the partitioning mode with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_PART_MAN_WARNING="This mode is recommended for advanced users, or in case of dualboot.
+If your partitions are not already existing, you can use tools like ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, if needed, we suggest cfdisk in the next step.
+For Orchid Linux to work you need to choose :
+* the label ${COLOR_RED}GPT${COLOR_RESET}
+* a ${COLOR_RED}$ROM${COLOR_RESET} partition, of type ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} with a recommended size of ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* a ${COLOR_RED}swap${COLOR_RESET} partition of type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, we recommend a size of at least ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. If you want to use hibernation we recommend at least ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* a ${COLOR_RED}root partition${COLOR_RESET} for Orchid Linux of at least ${COLOR_RED}20 GB${COLOR_RESET}, of type ${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}
+
+Once your partition scheme is done, don't forget to write it to the disk with the ${COLOR_WHITE}[Write]${COLOR_RESET} option.
+
+Please note the names of the ${COLOR_WHITE}\"Device\"${COLOR_RESET}, because you will be asked for them later.
+
+Press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue."
+
+STR_PART_CFDISK_MAN="Do you want to use cfdisk in order to proceed with partitioning? [y/n]"
+
 STR_LANGUAGE="English"
 STR_CHOOSE_FILESYSTEM="Choose the type of file system you want to install:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
@@ -42,6 +71,18 @@ STR_GPU_DRIVERS_CHOICE="Select the drivers for your GPU with their number, ${COL
 
 STR_DISK_SEL="Choose the disk on which you want to install Orchid Linux :
  ${COLOR_YELLOW}! WARNING ! all data on the chosen disk will be erased !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with cfdisk"
+STR_DISK_SEL_MAN_READ="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_DISK_SEL_MAN_BIOS="Choose the ${COLOR_GREEN}complete ${COLOR_RESET}disk you want to use (BIOS Mode):"
+STR_DISK_SEL_MAN_BIOS_NUM="Choose the corresponding disk with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI="Choose the ${COLOR_RED}UEFI${COLOR_RESET} partition you want to use (UEFI Mode): "
+STR_DISK_SEL_MAN_UEFI_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Do you want to format the UEFI partition? (Choose no if you are in a dualboot case) [y/n]"
+STR_DISK_SEL_MAN_ROOT="Choose the ${COLOR_LIGHTBLUE} root${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_ROOT_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_SWAP="Choose the ${COLOR_GREEN}swap${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_SWAP_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+
 
 # Function select_disk_to_install
 
@@ -60,24 +101,16 @@ STR_BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Format Btrfs partition."
 STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Format EXT4 partition."
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="We do not recommend using hibernation with your"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="GB of RAM, as it would require a SWAP partition of"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="GB on the disk"
+STR_HIBERNATION_DANGER="We do not recommend using hibernation with your ${RAM_SIZE_GB}GB of RAM, as it would require a SWAP partition of ${SWAP_SIZE_GB}GB on the disk"
 
-STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of ${SWAP_SIZE_GB}(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Enter the size of the SWAP partition you want to create (in GB)" # Also in function swap_size_no_hibernation
 
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Enter the password for the user:"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
-
+STR_CREATE_PASSWORD="${COLOR_WHITE}Enter the password for the user:(${USERNAME})${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Enter the password for the user:(Root)${COLOR_YELLOW}(the password won't appear)${COLOR_RESET}"
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Enter the password again to confirm it :${COLOR_RESET}"
 
 # Function verify_password_concordance
@@ -133,9 +166,7 @@ By default, we suggest you call it ${COLOR_GREEN}orchid${COLOR_RESET}.
 "
 STR_CHOOSE_HOSTNAME="Enter the name of this system (hostname) to identify it on the network [${COLOR_GREEN}orchid${COLOR_RESET}]:"
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Sorry, (${COLOR_WHITE}"
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}) is invalid. Please try again."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Sorry, (${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}) is invalid. Please try again."
 
 STR_WHAT_IS_ESYNC="Esync is a technology created to improve the performance of games
 that make heavy use of parallelism. It is especially useful if you use your computer for gaming.
@@ -171,9 +202,7 @@ administration rights with the command ${COLOR_WHITE}sudo${COLOR_RESET}.
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Name of the account you want to create: ${COLOR_RESET}"
 
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Sorry ${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET} is invalid. Please try again."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} Sorry ${COLOR_WHITE}${USERNAME}${COLOR_RESET} is invalid. Please try again."
 
 STR_WHAT_IS_ROOT="You will now choose the password for the root user.
 This particular account has full rights to the computer."
@@ -183,12 +212,8 @@ STR_RESUME_EDITION="Orchid Linux version chosen:"
 STR_RESUME_KEYBOARD="Switch keyboard to ${COLOR_GREEN}(en)${COLOR_RESET}: [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux will install on:"
 STR_RESUME_FS="The chosen file system is:"
-STR_RESUME_HIBERNATION="You will be able to use the ${COLOR_GREEN}hibernation${COLOR_RESET}: memory of"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="CPU cores, SWAP of ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="Your memory has a size of"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="CPU cores, SWAP of ${COLOR_GREEN}"
+STR_RESUME_HIBERNATION="You will be able to use the ${COLOR_GREEN}hibernation${COLOR_RESET}: memory of ${RAM_SIZE_GB}GB,${PROCESSORS}CPU cores, SWAP of ${COLOR_GREEN} ${SWAP_SIZE_GB}GB${COLOR_RESET}"
+STR_RESUME_HIBERNATIONNOT="Your memory has a size of ${RAM_SIZE_GB} GB, ${PROCESSORS}CPU cores, SWAP of ${COLOR_GREEN} ${SWAP_SIZE_GB} GB ${COLOR_RESET}"
 
 
 STR_RESUME_GPU="The following graphics drivers will be installed:"

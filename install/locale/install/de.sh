@@ -1,4 +1,13 @@
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
 
 # Common used strings
 
@@ -8,13 +17,34 @@ STR_INSTALLER_STEPS="Wilkommen|Verbinde mit Internet|Auswahl der Orchid Linux Ed
 # Function CLI_filesystem_selector
 
 STR_WHAT_IS_FILESYSTEM="Ein datei system organisiert wie daten auf deinem speichermedium verwaltet werden.
-Btrfs ist neu. Es erlaubt das automatische anfertigen
-von snapshots vom System um es wiederherzustellen falls ein Update schief läuft.
+Btrfs ist neu. Es erlaubt das automatische anfertigen von snapshots
+vom System um es wiederherzustellen falls ein Update schief läuft.
 Alle Daten werden transparent komprimiert.
 Es ist möglich die Größe des Systems während es läuft zu ändern.
 Ext4 ist robust dank operations logging,
 minimiert daten fragmentation und ist extensiv getestet.
 "
+STR_WHAT_IS_PARTITIONNING="Wählen Sie den Installationsmodus:"
+STR_MANUAL_PART="1) Manuelle Partitionierung"
+STR_AUTO_PART="2) Automatische Partitionierung"
+STR_PART_NUM="Wählen Sie den Partitionierungsmodus mit seiner Ziffer aus und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
+STR_PART_MAN_WARNING="Dieser Modus wird für fortgeschrittene Benutzer oder im Falle eines Dualboots empfohlen.
+Wenn Ihre Partitionen nicht bereits vorhanden sind, können Sie Werkzeuge wie ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET} verwenden, bei Bedarf schlagen wir Ihnen cfdisk im nächsten Schritt vor.
+Damit Orchid Linux funktioniert, müssen Sie wählen:
+* Das Label ${COLOR_RED}GPT${COLOR_RESET}
+* eine Partition ${COLOR_RED}$ROM${COLOR_RESET}, vom Typ ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} mit einer empfohlenen Größe von ${COLOR_RED}$ROM_SIZE${COLOR_RESET}.
+* eine ${COLOR_RED}swap${COLOR_RESET}-Partition vom Typ ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, empfehlen wir eine Größe von mindestens ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Wenn Sie den Winterschlaf nutzen möchten, empfehlen wir mindestens ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* eine ${COLOR_RED} Root-Partition ${COLOR_RESET} für Orchid Linux von mindestens ${COLOR_RED} 20 GB${COLOR_RESET}, vom Typ ${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}.
+
+Sobald Sie Ihr Partitionsschema erstellt haben, vergessen Sie nicht, es mit der Option ${COLOR_WHITE}[Write]${COLOR_RESET} auf die Festplatte zu schreiben.
+
+Bitte notieren Sie sich die Namen der ${COLOR_WHITE} \"Device\"${COLOR_RESET}, da Sie später danach gefragt werden.
+
+Drücken Sie ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren. "
+
+STR_PART_CFDISK_MAN="Möchten Sie cfdisk verwenden, um die Partitionierung durchzuführen? [o/n] "
+
+
 STR_LANGUAGE="German"
 STR_CHOOSE_FILESYSTEM="Wählen sie die art des Dateisystems dass sie installieren wollen:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 STR_HIBERNATION_SWAP="Ihr SWAP hat eine Größe von"
@@ -42,6 +72,18 @@ STR_GPU_DRIVERS_CHOICE="Wählen sie die Treiber für ihre GPU mit deren nummer, 
 
 STR_DISK_SEL="Wählen sie die Festplatte auf der sie Orchid Linux installieren wollen:
  ${COLOR_YELLOW}! WARNUNG ! alle daten auf der ausgewählten Festplatte  werden gelöscht !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Wählen Sie die ${COLOR_GREEN}Diskette${COLOR_RESET}, die Sie ändern möchten, mit cfdisk".
+STR_DISK_SEL_MAN_READ="Wählen Sie die ${COLOR_GREEN}Diskette${COLOR_RESET}, die Sie ändern möchten, mit ihrer Ziffer aus und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren:".
+STR_DISK_SEL_MAN_BIOS="Wählen Sie die komplette ${COLOR_GREEN}-Diskette ${COLOR_RESET}, die Sie verwenden möchten (BIOS-Modus): "
+STR_DISK_SEL_MAN_BIOS_NUM="Wählen Sie das entsprechende Laufwerk mit seiner Ziffer und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
+STR_DISK_SEL_MAN_UEFI="Wählen Sie die Partition ${COLOR_RED}UEFI${COLOR_RESET}, die Sie verwenden möchten (UEFI-Modus): "
+STR_DISK_SEL_MAN_UEFI_NUM="Wählen Sie die entsprechende Partition mit ihrer Ziffer und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Möchten Sie die UEFI-Partition formatieren? (Wählen Sie "Nein", wenn Sie sich in einem Dualboot-Fall befinden) [o/n] "
+STR_DISK_SEL_MAN_ROOT="Wählen Sie die Partition ${COLOR_LIGHTBLUE}racine${COLOR_RESET}, die Sie verwenden möchten: "
+STR_DISK_SEL_MAN_ROOT_NUM="Wählen Sie die entsprechende Partition mit ihrer Ziffer und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
+STR_DISK_SEL_MAN_SWAP="Wählen Sie die Partition ${COLOR_GREEN}swap${COLOR_RESET}, die Sie verwenden möchten: "
+STR_DISK_SEL_MAN_SWAP_NUM="Wählen Sie die entsprechende Partition mit ihrer Ziffer und drücken Sie dann ${COLOR_WHITE}[Enter]${COLOR_RESET}, um fortzufahren: "
+
 
 # Function select_disk_to_install
 

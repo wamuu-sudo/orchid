@@ -228,6 +228,18 @@ BANNER="  ___           _     _     _   _     _
 
 # Ask for the language and download the correct lang package
 #-----------------------------------------------------------------------------------
+sourcelang()
+{
+	if [ "$language" = "1" ]; then
+		source locale/install/fr.sh
+	elif [ "$language" = "2" ]; then
+		source locale/install/en.sh
+	elif [ "$language" = "3" ]; then
+		source locale/install/ro.sh
+	elif [ "$language" = "4" ]; then
+		source locale/install/de.sh
+	fi
+}
 lang-selection() {
 	mkdir -p locale/install
 	echo "Veuillez choisir votre langue préférée avec son numéro et pressez ${COLOR_WHITE}[Entrée]${COLOR_RESET} / Please Select your prefered language with it number and hit ${COLOR_WHITE}[Enter]${COLOR_RESET} :"
@@ -638,10 +650,11 @@ select_disk_to_install()
 
 list_all_partitions()
 {
-	PARTITIONS=($(lsblk -p -l -n -o NAME))
-	SIZES=($(lsblk -p -l -n -o SIZE))
+	PARTITIONS=($(lsblk -p -l -n -o NAME,TYPE | awk '{if ($2 =="part") print $1}'))
+	SIZES=($(lsblk -p -l -n -o SIZE,TYPE | awk '{if ($2 =="part") print $1}'))
+  FSTYPE=($(lsblk -p -l -n -o TYPE,FSTYPE | awk '{if ($1 =="part") print $2}'))
 	for partition_index in "${!PARTITIONS[@]}"; do
-		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]})";
+		echo "$partition_index)${PARTITIONS[$partition_index]} (${SIZES[$partition_index]}) ${COLOR_GREEN}[${FSTYPE[$partition_index]}]${COLOR_RESET}";
 	done
 
 }
@@ -681,7 +694,32 @@ automatic_partitionning()
 		exit
 	fi
 }
+cfdisking()
+{
+		echo "$STR_DISK_SEL_MAN "
+PARTITIONS_DISK=($(lsblk -p -d -n -o NAME -e 1,3,7,11,252))
+	SIZES_DISK=($(lsblk -p -d -n -o SIZE -e 1,3,7,11,252))
+	for show_disk_index in "${!PARTITIONS_DISK[@]}"; do
+		echo "$show_disk_index)${PARTITIONS_DISK[$show_disk_index]} (${SIZES_DISK[$show_disk_index]})";
+	done
 
+	read -p "$STR_DISK_SEL_MAN_READ" disk_index
+	if [[ $disk_index =~ ^[0-9]+$ ]]; then
+		if (( $disk_index < $((${#PARTITIONS_DISK[@]})) )); then
+			cfdisk "${PARTITIONS_DISK[$disk_index]}"
+			clear_under_menu
+		else
+
+			clear_under_menu
+			echo "$STR_INVALID_CHOICE"
+			cfdisking
+		fi
+	else
+		clear_under_menu
+		echo "$STR_INVALID_CHOICE"
+		cfdisking
+	fi
+}
 manual_partitionning()
 {
 	if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
@@ -689,58 +727,56 @@ manual_partitionning()
 	else
 		ROM="BIOS"
 	fi
-CFDISK_MAN=$(ask_yes_or_no_and_validate "Voulez-vous utilisez cfdisk afin de procéder au partionnement ? [o/n] " o)
-
-if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
-
-cfdisk 
-
-fi
 if [ "$ROM" = "BIOS" ]; then
-	echo "Choisissez le ${COLOR_GREEN}disque ${COLOR_RESET}complet que vous voulez utiliser (BIOS Mode) : "
-	list_all_partitions
-	read -p "Choisissez le disque correspondant avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " disk_index
+	echo "$STR_DISK_SEL_MAN_BIOS "
+PARTITIONS_DISK=($(lsblk -p -d -n -o NAME -e 1,3,7,11,252))
+	SIZES_DISK=($(lsblk -p -d -n -o SIZE -e 1,3,7,11,252))
+	for show_disk_index in "${!PARTITIONS_DISK[@]}"; do
+		echo "$show_disk_index)${PARTITIONS_DISK[$show_disk_index]} (${SIZES_DISK[$show_disk_index]})";
+	done
+
+	read -p "$STR_DISK_SEL_MAN_BIOS_NUM " disk_index
 	if [[ $disk_index =~ ^[0-9]+$ ]]; then
-		if (( $disk_index < $((${#PARTITIONS[@]})) )); then
-			CHOOSEN_DISK="${PARTITIONS[$disk_index]}"
+		if (( $disk_index < $((${#PARTITIONS_DISK[@]})) )); then
+			CHOOSEN_DISK="${PARTITIONS_DISK[$disk_index]}"
 			clear_under_menu
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 	else
 		clear_under_menu
-		echo "Choisissez une option valide. "
+		echo "$STR_DISK_SEL_MAN_BIOS_NUM"
 		manual_partitionning
 	fi
 elif [ "$ROM" = "UEFI" ]; then
-		echo "Choisissez la partition ${COLOR_RED}UEFI${COLOR_RESET} que vous voulez utiliser (UEFI Mode) : "
+		echo "$STR_DISK_SEL_MAN_UEFI "
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " boot_index
+		read -p "$STR_DISK_SEL_MAN_UEFI_NUM" boot_index
 		if [[ $boot_index =~ ^[0-9]+$ ]]; then
 			if (( $boot_index < $((${#PARTITIONS[@]})) )); then
 				BOOT_PARTITION_UEFI="${PARTITIONS[$boot_index]}"
-				UEFI_ERASE=$(ask_yes_or_no_and_validate "Voulez-vous formatter la partition UEFI ? (Choisissez non si vous êtes dans un cas de dualboot) [o/n] " n)
+				UEFI_ERASE=$(ask_yes_or_no_and_validate "$STR_DISK_SEL_MAN_UEFI_VALIDATE" n)
 				clear_under_menu
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
 fi
-		echo "Choisissez la partition ${COLOR_LIGHTBLUE}racine${COLOR_RESET} que vous voulez utiliser : "
+		echo "$STR_DISK_SEL_MAN_ROOT"
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " root_index
+		read -p "$STR_DISK_SEL_MAN_ROOT_NUM " root_index
 		if [[ $root_index =~ ^[0-9]+$ ]]; then
 			if (( $root_index < $((${#PARTITIONS[@]})) )); then
 				ROOT_PARTITION="${PARTITIONS[$root_index]}"
@@ -748,19 +784,20 @@ fi
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
-		echo "Choisissez la partition ${COLOR_GREEN}swap${COLOR_RESET} que vous voulez utiliser : "
+		echo "$STR_DISK_SEL_MAN_SWAP"
 		list_all_partitions
-		read -p "Choisissez la partition correspondante avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " swap_index
+
+		read -p "$STR_DISK_SEL_MAN_SWAP_NUM" swap_index
 		if [[ $swap_index =~ ^[0-9]+$ ]]; then
 			if (( $swap_index < $((${#PARTITIONS[@]})) )); then
 				SWAP_PARTITION="${PARTITIONS[$swap_index]}"
@@ -768,17 +805,20 @@ fi
 			else
 
 				clear_under_menu
-				echo "Choisissez une option valide. "
+				echo "$STR_INVALID_CHOICE"
 				manual_partitionning
 			fi
 		else
 
 			clear_under_menu
-			echo "Choisissez une option valide. "
+			echo "$STR_INVALID_CHOICE"
 			manual_partitionning
 		fi
 
-
+echo "EFI Partition : $BOOT_PARTITION_UEFI"
+echo "SWAP : $SWAP_PARTITION"
+echo "Root partition : $ROOT_PARTITION"
+read
 }
 auto_partitionning_full_disk()
 {
@@ -865,7 +905,36 @@ if ! (( ${RAM_SIZE_GB} + ${SWAP_SIZE_GB} >= (${PROCESSORS} * 2)  + 2 )); then # 
 	(( SWAP_SIZE_GB=(${PROCESSORS} * 2 ) - ${RAM_SIZE_GB} + 2 )) # we add 2GB for margin
 fi
 }
+swap_size_hibernation_man()
+{
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*2 )) 	                                        # 2 fois la taille de la RAM
 
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))		                                    # 1.5 (3/2) fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
+	fi
+set_totalmemory_against_processors
+echo "$SWAP_SIZE_GB"
+}
+
+
+swap_size_no_hibernation_man()
+{
+	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB} ))		                                        # 1 fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 8 && ${RAM_SIZE_GB} < 64 )); then	                        # Pour une taille de RAM comprise entre 8 et 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))		                                    # 0.5 (1/2) fois la taille de la RAM
+
+	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
+		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*1/2 ))
+	fi
+set_totalmemory_against_processors
+echo "$SWAP_SIZE_GB"
+}
 swap_size_hibernation()
 {
 	if (( ${RAM_SIZE_GB} >= 2 && ${RAM_SIZE_GB} < 8 )); then	                        # Pour une taille de RAM comprise entre 2 et 8 Go
@@ -877,8 +946,9 @@ swap_size_hibernation()
 	elif (( ${RAM_SIZE_GB} >= 64 )); then	                                            # Pour une taille de RAM supérieure à 64 Go
 		(( SWAP_SIZE_GB = ${RAM_SIZE_GB}*3/2 ))
 		set_totalmemory_against_processors
-		echo "$STR_HIBERNATION_DANGER ${RAM_SIZE_GB} $STR_HIBERNATION_DANGER_2 ${SWAP_SIZE_GB} $STR_HIBERNATION_DANGER_3"
-		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM ${SWAP_SIZE_GB} $STR_HIBERNATION_CONFIRM_2" n)
+		sourcelang
+		echo "$STR_HIBERNATION_DANGER"
+		HIBERNATION_HIGH=$(ask_yes_or_no_and_validate "$STR_HIBERNATION_CONFIRM " n)
 		if [[ "$HIBERNATION_HIGH" = "n" || "$HIBERNATION_HIGH" = "no" || "$HIBERNATION_HIGH" = "non" ]]; then
 			swap_size_no_hibernation
 
@@ -931,7 +1001,8 @@ if [[ "$USERNAME" =~ $VALID_USERNAME_REGEX ]]; then
 
 create_passwd() # Spécifier le nom de l'utilisateur en $1
 {
-	echo "$STR_CREATE_PASSWORD ($USERNAME) $STR_CREATE_PASSWORD_2"
+	sourcelang
+	echo "$STR_CREATE_PASSWORD"
     read -s ATTEMPT1
 	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
@@ -1017,16 +1088,31 @@ INSTALLER_STEPS="$STR_INSTALLER_STEPS"
 	# Partitionnement
 	#-----------------------------------------------------------------------------------
 ask_partitionning_mode(){
-	echo_center "Sélectionnez le mode d'installation : "
-echo "1) Partitionnement manuel"
-echo "2) Partitionnement automatique"
-read -p "Sélectionnez le mode de partionnement avec son chiffre, puis pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer : " partitionning_mode
-
+	echo_center "$STR_WHAT_IS_PARTITIONNING"
+echo "$STR_MANUAL_PART"
+echo "$STR_AUTO_PART"
+read -p "$STR_PART_NUM" partitionning_mode
+	PROCESSORS=$(grep -c processor /proc/cpuinfo)
+if [ "$language" = "1" ]; then
+		source locale/install/fr.sh
+	elif [ "$language" = "2" ]; then
+		source locale/install/en.sh
+	elif [ "$language" = "3" ]; then
+		source locale/install/ro.sh
+	elif [ "$language" = "4" ]; then
+		source locale/install/de.sh
+	fi
 if [ $partitionning_mode = "1" ]; then
 	clear_under_menu
-	echo "Ce mode est recommandé pour les utilisateurs avancés, ou en cas de dualboot. Si vos partitions ne sont pas déjà existantes, vous pouvez utiliser des outils comme ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, si besoin, nous vous proposons cfdisk à l'étape suivante. Pressez ${COLOR_WHITE}[Enter]${COLOR_RESET} pour continuer. "
+	echo "$STR_PART_MAN_WARNING"
 	read
-	manual_partitionning
+CFDISK_MAN=$(ask_yes_or_no_and_validate "$STR_PART_CFDISK_MAN" o)
+
+if [[  "$CFDISK_MAN" = "o" ||  "$CFDISK_MAN" = "oui" || "$CFDISK_MAN" = "y"  ||  "$CFDISK_MAN" = "yes"  ]]; then
+
+cfdisking
+fi
+manual_partitionning
 elif [ $partitionning_mode = "2" ]; then
 	clear_under_menu
 	automatic_partitionning
@@ -1046,7 +1132,8 @@ ask_partitionning_mode
 	UI_PAGE=5
 	;;
 	5)
-	WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
+	if [ $partitionning_mode = "2" ]; then
+WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 
 	echo_center "$WHAT_IS_HIBERNATION"
 	HIBERNATION=$(ask_yes_or_no_and_validate "$STR_USE_HIBERNATION_QUESTION" n)
@@ -1066,6 +1153,9 @@ ask_partitionning_mode
 	echo " ${COLOR_GREEN}*${COLOR_RESET} $STR_HIBERNATION_SWAP ${SWAP_SIZE_GB} GB."
 	read -p "$STR_CONTINUE"
 	#-----------------------------------------------------------------------------------
+	else
+		HIBERNATION="n"
+	fi
 	UI_PAGE=6
 	;;
 	6)
@@ -1087,7 +1177,8 @@ ask_partitionning_mode
 		HOSTNAME=${HOSTNAME:-orchid}
 		test_if_hostname_is_valid
 		if [ $IS_HOSTNAME_VALID = 0 ]; then
-			echo "$STR_INCORRECT_HOSTNAME ${HOSTNAME} $STR_INCORRECT_HOSTNAME_2"
+			sourcelang
+			echo "$STR_INCORRECT_HOSTNAME"
 		fi
 		done
 	UI_PAGE=8
@@ -1129,7 +1220,8 @@ ask_partitionning_mode
 		read -p "$STR_USERNAME_SELECT" USERNAME
 		test_if_username_is_valid
 		if [ $IS_USERNAME_VALID = 0 ]; then
-			echo "$STR_INCORRECT_USERNAME ${USERNAME} $STR_INCORRECT_USERNAME_2"
+			sourcelang
+			echo "$STR_INCORRECT_USERNAME"
 		fi
 	done
 
@@ -1144,7 +1236,7 @@ ask_partitionning_mode
 	WHAT_IS_ROOT="$STR_WHAT_IS_ROOT"
 	echo_center "$WHAT_IS_ROOT"
 	echo ""
-	echo "$STR_CREATE_PASSWORD (Root) $STR_CREATE_PASSWORD_2"
+	echo "$STR_CREATE_PASSWORD_ROOT"
     read -s ATTEMPT1
 	echo "$STR_CREATE_PASSWORD_REPEAT"
     read -s ATTEMPT2
@@ -1153,16 +1245,22 @@ ask_partitionning_mode
 	UI_PAGE=12
 	;;
 	12)
+	sourcelang
 	echo_center "$STR_RESUME_INST"
 	echo "$STR_RESUME_CONNEXION_TEST"
 	echo "$STR_RESUME_EDITION ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "$STR_RESUME_KEYBOARD"
 	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+	echo "Root partition :${ROOT_PARTITION}"
+	echo "Swap partition :${SWAP_PARTITION}"
+	if [ -d /sys/firmware/efi ]; then
+	echo "EFI partition : ${BOOT_PARTITION_UEFI}"
+	fi
 	echo "$STR_RESUME_FS ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [[ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]]; then
-		echo "$STR_RESUME_HIBERNATION ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATION_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
+		echo "$STR_RESUME_HIBERNATION"
 	elif [[ "$HIBERNATION" = "n" || "$HIBERNATION" = "no" || "$HIBERNATION" = "non" ]]; then
-		echo "$STR_RESUME_HIBERNATIONNOT ${RAM_SIZE_GB} GB, ${PROCESSORS} $STR_RESUME_HIBERNATIONNOT_2 ${SWAP_SIZE_GB} GB${COLOR_RESET}."
+		echo "$STR_RESUME_HIBERNATIONNOT"
 	fi
 
 	echo "$STR_RESUME_GPU ${COLOR_GREEN}${SELECTED_GPU_DRIVERS_TO_INSTALL}${COLOR_RESET}"

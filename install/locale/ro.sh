@@ -1,5 +1,14 @@
 # Credits : MAXYMAX!
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
 
 
 # Common used strings
@@ -17,6 +26,27 @@ Este posibil să redimensionați sistemul din mers.
 Ext4 este robust datorită înregistrării operațiunilor,
 minimizează fragmentarea datelor și este testat pe scară largă.
 "
+
+STR_WHAT_IS_PARTITIONNING="Selectați modul de instalare:"
+STR_MANUAL_PART="1) Partiționare manuală"
+STR_AUTO_PART="2) Partiționare automată"
+STR_PART_NUM="Selectați modul de partiționare cu numărul său, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua:"
+STR_PART_MAN_WARNING="Acest mod este recomandat pentru utilizatorii avansați sau în caz de dualboot.
+Dacă partițiile dvs. nu sunt deja existente, puteți utiliza instrumente precum ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, dacă este necesar, vă sugerăm cfdisk în pasul următor.
+Pentru ca Orchid Linux să funcționeze trebuie să alegeți :
+* Eticheta ${COLOR_RED}GPT${COLOR_RESET}
+* o partiție ${COLOR_RED}$ROM${COLOR_RESET}, de tip ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} cu o dimensiune recomandată de ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* o partiție ${COLOR_RED}swap${COLOR_RESET} de tip ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, se recomandă o dimensiune de cel puțin ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. Dacă doriți să utilizați hibernarea, vă recomandăm cel puțin ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* o partiție ${COLOR_RED} rădăcină ${COLOR_RESET} pentru Orchid Linux de cel puțin ${COLOR_RED}20 GB${COLOR_RESET}, de tip ${COLOR_RED} \"Sistem de fișiere Linux\"${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}
+
+După ce ați creat schema de partiții, nu uitați să o scrieți pe disc cu opțiunea ${COLOR_WHITE}[Write]${COLOR_RESET}.
+
+Rețineți numele ${COLOR_WHITE}\"Device\"${COLOR_RESET}, deoarece vă vor fi solicitate mai târziu.
+
+Apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua. "
+STR_PART_CFDISK_MAN="Doriți să folosiți cfdisk pentru a partaja? [y/n]"
+
+
 STR_LANGUAGE="Romana"
 STR_CHOOSE_FILESYSTEM="Alegeți tipul de sistem de fișiere pe care doriți să îl instalați:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
@@ -44,6 +74,18 @@ STR_GPU_DRIVERS_CHOICE="Selectați driverele pentru GPU-ul dvs. cu numărul, ${C
 
 STR_DISK_SEL="Alegeți discul pe care doriți să instalați Orchid Linux:
  ${COLOR_YELLOW}! AVERTIZARE ! toate datele de pe discul ales vor fi șterse !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Alegeți ${COLOR_GREEN}disk${COLOR_RESET} pe care doriți să-l modificați cu cfdisk"
+STR_DISK_SEL_MAN_READ="Alegeți ${COLOR_GREEN}discul ${COLOR_RESET} pe care doriți să-l modificați cu numărul acestuia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua:"
+STR_DISK_SEL_MAN_BIOS="Alegeți ${COLOR_GREEN}discul ${COLOR_RESET}complet pe care doriți să îl utilizați (modul BIOS):"
+STR_DISK_SEL_MAN_BIOS_NUM="Alegeți discul corespunzător cu numărul acestuia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_UEFI="Alegeți partiția ${COLOR_RED}UEFI${COLOR_RESET} pe care doriți să o utilizați (UEFI Mode): "
+STR_DISK_SEL_MAN_UEFI_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Doriți să formatați partiția UEFI? (Alegeți nu dacă sunteți într-un caz dualboot) [y/n]"
+STR_DISK_SEL_MAN_ROOT="Alegeți partiția rădăcină ${COLOR_LIGHTBLUE} ${{COLOR_RESET} pe care doriți să o utilizați: "
+STR_DISK_SEL_MAN_ROOT_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+STR_DISK_SEL_MAN_SWAP="Alegeți partiția ${COLOR_GREEN}swap${{COLOR_RESET} pe care doriți să o utilizați: "
+STR_DISK_SEL_MAN_SWAP_NUM="Alegeți partiția corespunzătoare cu numărul acesteia, apoi apăsați ${COLOR_WHITE}[Enter]${COLOR_RESET} pentru a continua: "
+
 
 # Function select_disk_to_install
 
@@ -62,23 +104,16 @@ STR_BTRFS_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatați partiția Btrfs."
 STR_EXT4_ERASE="${COLOR_GREEN}*${COLOR_RESET} Formatați partiția EXT4n."
 # Function swap_size_hibernation
 
-STR_HIBERNATION_DANGER="Nu vă recomandăm să folosiți hibernarea cu dvs"
-#{RAM_SIZE_GB}
-STR_HIBERNATION_DANGER_2="GB de RAM, deoarece ar necesita o partiție SWAP a"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_DANGER_3="GB pe disc"
+STR_HIBERNATION_DANGER="Nu vă recomandăm să folosiți hibernarea cu dvs ${RAM_SIZE_GB} GB de RAM, deoarece ar necesita o partiție SWAP a ${SWAP_SIZE_GB} GB pe disc"
 
-STR_HIBERNATION_CONFIRM="Doriți să creați o partiție SWAP de"
-#{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(Dacă nu, partiția SWAP va fi mult mai mică și nu veți putea folosi hibernarea) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM="Doriți să creați o partiție SWAP de ${SWAP_SIZE_GB} (Dacă nu, partiția SWAP va fi mult mai mică și nu veți putea folosi hibernarea) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Introduceți dimensiunea partiției SWAP pe care doriți să o creați (în GB)" # Also in function swap_size_no_hibernation
 
 # Function create_password
 
-STR_CREATE_PASSWORD="${COLOR_WHITE}Introduceți parola pentru utilizator:"
-
-STR_CREATE_PASSWORD_2="${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
+STR_CREATE_PASSWORD="${COLOR_WHITE}Introduceți parola pentru utilizator: (${USERNAME}) ${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
+STR_CREATE_PASSWORD_ROOT="${COLOR_WHITE}Introduceți parola pentru utilizator: (Root) ${COLOR_YELLOW}(parola nu va apărea)${COLOR_RESET}"
 
 STR_CREATE_PASSWORD_REPEAT="${COLOR_WHITE}Introduceți parola din nou pentru a o confirma:${COLOR_RESET}"
 
@@ -134,9 +169,7 @@ pentru a-l identifica în timpul comunicării.
 "
 STR_CHOOSE_HOSTNAME="Introduceți numele acestui sistem (nume de gazdă) pentru a-l identifica în rețea [${COLOR_GREEN}orchid${COLOR_RESET}]:"
 
-STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Îmi pare rău, (${COLOR_WHITE}"
-# Here there will be the hostname of the user
-STR_INCORRECT_HOSTNAME_2="${COLOR_RESET}) este invalid. Vă rugăm să încercați din nou."
+STR_INCORRECT_HOSTNAME="${COLOR_RED}*${COLOR_RESET} Îmi pare rău, (${COLOR_WHITE}${HOSTNAME}${COLOR_RESET}) este invalid. Vă rugăm să încercați din nou."
 
 STR_WHAT_IS_ESYNC="Esync este o tehnologie creată pentru a îmbunătăți performanța jocurilor
 care folosesc intens paralelismul. Este util mai ales dacă folosiți computerul pentru jocuri.
@@ -172,9 +205,7 @@ drepturi de administrare cu comanda ${COLOR_WHITE}sudo${COLOR_RESET}.
 STR_USERNAME_SELECT="${COLOR_GREEN}*${COLOR_RESET} ${COLOR_WHITE}Numele contului pe care doriți să-l creați: ${COLOR_RESET}"
 
 
-STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} scuze ${COLOR_WHITE}"
-# Here there will be the Username of the users
-STR_INCORRECT_USERNAME_2="${COLOR_RESET} este invalid. Vă rugăm să încercați din nou."
+STR_INCORRECT_USERNAME="${COLOR_RED}*${COLOR_RESET} scuze ${COLOR_WHITE}${USERNAME}${COLOR_RESET} este invalid. Vă rugăm să încercați din nou."
 
 STR_WHAT_IS_ROOT="Acum veți alege parola pentru utilizatorul root.
 Acest cont special are drepturi complete asupra computerului."
@@ -184,13 +215,8 @@ STR_RESUME_EDITION="Versiunea Orchid Linux aleasă:"
 STR_RESUME_KEYBOARD="Comutați tastatura la ${COLOR_GREEN}(ro)${COLOR_RESET}: [${COLOR_GREEN}OK${COLOR_RESET}]"
 STR_RESUME_DISK="Orchid Linux se va instala pe:"
 STR_RESUME_FS="Sistemul de fișiere ales este:"
-STR_RESUME_HIBERNATION="Veți putea folosi ${COLOR_GREEN}hibernare${COLOR_RESET}: memorie de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATION_2="coruri CPU, SWAP de ${COLOR_GREEN}"
-STR_RESUME_HIBERNATIONNOT="Memoria ta are o dimensiune de"
-# Here we show the user his RAM + His CPU cores
-STR_RESUME_HIBERNATIONNOT_2="coruri CPU, SWAP de ${COLOR_GREEN}"
-
+STR_RESUME_HIBERNATION="Veți putea folosi ${COLOR_GREEN}hibernare${COLOR_RESET}: memorie de ${RAM_SIZE_GB} GB, ${PROCESSORS}coruri CPU, SWAP de ${COLOR_GREEN} ${SWAP_SIZE_GB} GB${COLOR_RESET}"
+STR_RESUME_HIBERNATIONNOT="Memoria ta are o dimensiune de ${RAM_SIZE_GB} GB, ${PROCESSORS}coruri CPU, SWAP de ${COLOR_GREEN}${SWAP_SIZE_GB} GB${COLOR_RESET}"
 
 STR_RESUME_GPU="Vor fi instalate următoarele drivere grafice:"
 STR_RESUME_HOSTNAME="În rețea, acest sistem va fi numit:"

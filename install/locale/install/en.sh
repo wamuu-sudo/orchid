@@ -1,9 +1,18 @@
 #!/usr/bin/env bash
+if [ -d /sys/firmware/efi ]; then	                                                    # Test for UEFI or BIOS
+		ROM="UEFI"
+        ROM_PARTITION="EFI System"
+        ROM_SIZE="512MB"
+	else
+		ROM="BIOS"
+        ROM_PARTITION="BIOS boot"
+        ROM_SIZE="8MB"
+fi
 
 # Common used strings
 
 STR_INVALID_CHOICE="Invalid choice :"
-
+STR_HIBERNATION_SWAP="Your SWAP will have a size of"
 STR_INSTALLER_STEPS="Welcome|Connecting to internet|Selection of the Orchid Linux Edition|Disk selection|File system selection|Hibernation|Graphics card selection|System name|esync|Updates|User creation|Root password|Resume|Installation"
 # Function CLI_filesystem_selector
 
@@ -15,6 +24,26 @@ It is possible to resize the system on the fly.
 Ext4 is robust thanks to operation logging,
 minimizes data fragmentation and is widely tested.
 "
+STR_WHAT_IS_PARTITIONNING="Select the installation mode:"
+STR_MANUAL_PART="1) Manual partitioning"
+STR_AUTO_PART="2) Automatic partitioning"
+STR_PART_NUM="Select the partitioning mode with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_PART_MAN_WARNING="This mode is recommended for advanced users, or in case of dualboot.
+If your partitions are not already existing, you can use tools like ${COLOR_GREEN}GParted${COLOR_RESET}, ${COLOR_GREEN}Cfdisk${COLOR_RESET}, if needed, we suggest cfdisk in the next step.
+For Orchid Linux to work you need to choose :
+* the label ${COLOR_RED}GPT${COLOR_RESET}
+* a ${COLOR_RED}$ROM${COLOR_RESET} partition, of type ${COLOR_RED}\"$ROM_PARTITION\"${COLOR_RESET} with a recommended size of ${COLOR_RED}$ROM_SIZE${COLOR_RESET}
+* a ${COLOR_RED}swap${COLOR_RESET} partition of type ${COLOR_RED}\"Linux swap\"${COLOR_RESET}, we recommend a size of at least ${COLOR_RED}$(swap_size_no_hibernation_man) Go${COLOR_RESET}. If you want to use hibernation we recommend at least ${COLOR_RED}$(swap_size_hibernation_man) Go${COLOR_RESET},
+* a ${COLOR_RED}root partition${COLOR_RESET} for Orchid Linux of at least ${COLOR_RED}20 GB${COLOR_RESET}, of type ${COLOR_RED} \"Linux filesystem\"${COLOR_RESET}
+
+Once your partition scheme is done, don't forget to write it to the disk with the ${COLOR_WHITE}[Write]${COLOR_RESET} option.
+
+Please note the names of the ${COLOR_WHITE}\"Device\"${COLOR_RESET}, because you will be asked for them later.
+
+Press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue."
+
+STR_PART_CFDISK_MAN="Do you want to use cfdisk in order to proceed with partitioning? [y/n]"
+
 STR_LANGUAGE="English"
 STR_CHOOSE_FILESYSTEM="Choose the type of file system you want to install:  [${COLOR_GREEN}Btrfs${COLOR_RESET}]"
 
@@ -42,6 +71,18 @@ STR_GPU_DRIVERS_CHOICE="Select the drivers for your GPU with their number, ${COL
 
 STR_DISK_SEL="Choose the disk on which you want to install Orchid Linux :
  ${COLOR_YELLOW}! WARNING ! all data on the chosen disk will be erased !${COLOR_RESET}"
+STR_DISK_SEL_MAN="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with cfdisk"
+STR_DISK_SEL_MAN_READ="Choose the ${COLOR_GREEN}disk${COLOR_RESET} you want to modify with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue:"
+STR_DISK_SEL_MAN_BIOS="Choose the ${COLOR_GREEN}complete ${COLOR_RESET}disk you want to use (BIOS Mode):"
+STR_DISK_SEL_MAN_BIOS_NUM="Choose the corresponding disk with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI="Choose the ${COLOR_RED}UEFI${COLOR_RESET} partition you want to use (UEFI Mode): "
+STR_DISK_SEL_MAN_UEFI_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_UEFI_VALIDATE="Do you want to format the UEFI partition? (Choose no if you are in a dualboot case) [y/n]"
+STR_DISK_SEL_MAN_ROOT="Choose the ${COLOR_LIGHTBLUE} root${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_ROOT_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+STR_DISK_SEL_MAN_SWAP="Choose the ${COLOR_GREEN}swap${COLOR_RESET} partition you want to use: "
+STR_DISK_SEL_MAN_SWAP_NUM="Choose the corresponding partition with its number, then press ${COLOR_WHITE}[Enter]${COLOR_RESET} to continue: "
+
 
 # Function select_disk_to_install
 
@@ -68,7 +109,7 @@ STR_HIBERNATION_DANGER_3="GB on the disk"
 
 STR_HIBERNATION_CONFIRM="Do you want to create a SWAP partition of"
 #{SWAP_SIZE_GB}
-STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
+STR_HIBERNATION_CONFIRM_2="(If not, the SWAP partition will be much smaller and you will not be able to use hibernation) ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET} "
 
 STR_SWAP_SIZE_QUESTION="Enter the size of the SWAP partition you want to create (in GB)" # Also in function swap_size_no_hibernation
 
@@ -123,7 +164,7 @@ When you turn it on, your desktop will be exactly as it was before you shut it d
 To do this, it is necessary to copy all the RAM to a disk (SWAP).
 By default, we suggest that you do not use hibernation.
 "
-STR_USE_HIBERNATION_QUESTION="Do you want to be able to use hibernation ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_USE_HIBERNATION_QUESTION="Do you want to be able to use hibernation ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_YOUR_SWAP_SIZE=" ${COLOR_GREEN}*${COLOR_RESET} Your SWAP will have a size of ${SWAP_SIZE_GB} GB."
 
@@ -142,14 +183,14 @@ that make heavy use of parallelism. It is especially useful if you use your comp
 if you use your computer for gaming.
 It requires a small modification of a security parameter
 (the significant increase of the number of file descriptors per process).
-By default, we suggest you enable it: ${COLOR_GREEN}o${COLOR_RESET}.
+By default, we suggest you enable it: ${COLOR_GREEN}y${COLOR_RESET}.
 "
 
 STR_ESYNC_GAMING="For Gaming editions, Orchid Linux automatically enables esync.
 "
 
 
-STR_ESYNC_CONFIGURE="Do you want to configure your installation with esync? ${COLOR_WHITE}[${COLOR_GREEN}o${COLOR_WHITE}/n]${COLOR_RESET}"
+STR_ESYNC_CONFIGURE="Do you want to configure your installation with esync? ${COLOR_WHITE}[${COLOR_GREEN}y${COLOR_WHITE}/n]${COLOR_RESET}"
 
 STR_WHAT_IS_UPDATE="Updating your computer is an operation that consists of verifying
 that the software on your computer is using the latest version available.
@@ -160,7 +201,7 @@ because this operation can be time consuming and if you choose to do it during t
 installation you will have to wait without being able to do anything else.
 "
 
-STR_UPDATE_QUESTION="Do you want to upgrade your Orchid Linux during this installation? ${COLOR_WHITE}[o/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
+STR_UPDATE_QUESTION="Do you want to upgrade your Orchid Linux during this installation? ${COLOR_WHITE}[y/${COLOR_GREEN}n${COLOR_WHITE}]${COLOR_RESET}"
 
 STR_WHAT_IS_USERNAME="On a Linux system, like Orchid Linux, each user must have
 account that identifies them and separates their files from others.
