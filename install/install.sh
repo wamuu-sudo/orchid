@@ -1247,11 +1247,13 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 	echo "$STR_RESUME_EDITION ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "$STR_RESUME_KEYBOARD"
 	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
+if [ $partitionning_mode = "1" ]; then
 	echo "Root partition :${COLOR_GREEN}${ROOT_PARTITION}${COLOR_RESET}"
 	echo "Swap partition :${COLOR_GREEN}${SWAP_PARTITION}${COLOR_RESET}"
 	if [ -d /sys/firmware/efi ]; then
 	echo "EFI partition : ${BOOT_PARTITION_UEFI}"
 	fi
+fi
 	echo "$STR_RESUME_FS ${COLOR_GREEN}${FILESYSTEM}${COLOR_RESET}"
 	if [[ "$HIBERNATION" = "o" || "$HIBERNATION" = "y" || "$HIBERNATION" = "yes" || "$HIBERNATION" = "oui" ]]; then
 		echo "$STR_RESUME_HIBERNATION"
