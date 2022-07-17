@@ -815,10 +815,6 @@ fi
 			manual_partitionning
 		fi
 
-echo "EFI Partition : $BOOT_PARTITION_UEFI"
-echo "SWAP : $SWAP_PARTITION"
-echo "Root partition : $ROOT_PARTITION"
-read
 }
 auto_partitionning_full_disk()
 {
@@ -1251,8 +1247,8 @@ WHAT_IS_HIBERNATION="$STR_WHAT_IS_HIBERNATION"
 	echo "$STR_RESUME_EDITION ${COLOR_GREEN}${ORCHID_VERSION[$no_archive]}${COLOR_RESET}."
 	echo "$STR_RESUME_KEYBOARD"
 	echo "$STR_RESUME_DISK ${COLOR_GREEN}${CHOOSEN_DISK_LABEL}${COLOR_RESET}"
-	echo "Root partition :${ROOT_PARTITION}"
-	echo "Swap partition :${SWAP_PARTITION}"
+	echo "Root partition :${COLOR_GREEN}${ROOT_PARTITION}${COLOR_RESET}"
+	echo "Swap partition :${COLOR_GREEN}${SWAP_PARTITION}${COLOR_RESET}"
 	if [ -d /sys/firmware/efi ]; then
 	echo "EFI partition : ${BOOT_PARTITION_UEFI}"
 	fi
